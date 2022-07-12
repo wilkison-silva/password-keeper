@@ -7,7 +7,7 @@
     android:background="@color/purple">
 
     <TextView
-        android:id="@+id/tbTitle"
+        android:id="@+id/tvTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
@@ -33,7 +33,7 @@
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tbTitle" />
+        app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
 
     <ImageView
         android:id="@+id/imageView"
@@ -50,11 +50,11 @@
         android:id="@+id/clHome2"
         android:layout_width="match_parent"
         android:layout_height="460dp"
-        android:background="@color/white"
+        android:background="@drawable/background_rounded_tops"
         app:layout_constraintBottom_toBottomOf="parent" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/email"
+        android:id="@+id/tiEmail"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="50dp"
@@ -62,6 +62,10 @@
         android:layout_marginTop="50dp"
         android:layout_marginEnd="55dp"
         android:hint="@string/hint_email"
+        app:boxCornerRadiusBottomEnd="10dp"
+        app:boxCornerRadiusBottomStart="10dp"
+        app:boxCornerRadiusTopEnd="10dp"
+        app:boxCornerRadiusTopStart="10dp"
         app:errorEnabled="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -76,7 +80,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/password"
+        android:id="@+id/tiPassword"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="50dp"
@@ -84,11 +88,15 @@
         android:layout_marginTop="60dp"
         android:layout_marginEnd="55dp"
         android:hint="@string/password"
+        app:boxCornerRadiusBottomEnd="10dp"
+        app:boxCornerRadiusBottomStart="10dp"
+        app:boxCornerRadiusTopEnd="10dp"
+        app:boxCornerRadiusTopStart="10dp"
         app:cornerRadius="30dp"
         app:errorEnabled="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/email"
+        app:layout_constraintTop_toTopOf="@+id/tiEmail"
         app:startIconDrawable="@drawable/ic_lock">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -99,7 +107,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/signIn"
+        android:id="@+id/mbSignIn"
         android:layout_width="250dp"
         android:layout_height="50dp"
         android:layout_marginTop="30dp"
@@ -111,10 +119,10 @@
         app:cornerRadius="30dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/password" />
+        app:layout_constraintTop_toBottomOf="@+id/tiPassword" />
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/signUp"
+        android:id="@+id/mbSignUp"
         android:layout_width="250dp"
         android:layout_height="50dp"
         android:layout_marginTop="12dp"
@@ -126,7 +134,7 @@
         app:cornerRadius="30dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/signIn" />
+        app:layout_constraintTop_toBottomOf="@+id/mbSignIn" />
 
     <TextView
         android:id="@+id/tvOr"
@@ -138,7 +146,7 @@
         android:textColor="@color/purple"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/signUp" />
+        app:layout_constraintTop_toBottomOf="@+id/mbSignUp" />
 
     <View
         android:id="@+id/viewLeft"
@@ -150,7 +158,7 @@
         android:background="@color/gray"
         app:layout_constraintEnd_toStartOf="@+id/tvOr"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/signUp" />
+        app:layout_constraintTop_toBottomOf="@+id/mbSignUp" />
 
     <View
         android:id="@+id/viewRight"
@@ -162,6 +170,24 @@
         android:background="@color/gray"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/tvOr"
-        app:layout_constraintTop_toBottomOf="@id/signUp" />
+        app:layout_constraintTop_toBottomOf="@id/mbSignUp" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/mbGoogle"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="35dp"
+        android:backgroundTint="@color/white"
+        android:fontFamily="@font/inter_bold"
+        android:text="@string/sign_in_with_google"
+        android:textColor="@color/purple"
+        android:textSize="12sp"
+        app:cornerRadius="30dp"
+        app:icon="@drawable/ic_google"
+        app:iconTint="#ffffff"
+        app:iconTintMode="multiply"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/tvOr" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
