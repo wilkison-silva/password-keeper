@@ -57,9 +57,9 @@
         android:id="@+id/tiEmail"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="55dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="30dp"
         android:layout_marginEnd="55dp"
         android:hint="@string/hint_email"
         app:boxCornerRadiusBottomEnd="10dp"
@@ -83,9 +83,8 @@
         android:id="@+id/tiPassword"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="55dp"
-        android:layout_marginTop="60dp"
         android:layout_marginEnd="55dp"
         android:hint="@string/password"
         app:boxCornerRadiusBottomEnd="10dp"
@@ -96,21 +95,20 @@
         app:errorEnabled="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/tiEmail"
+        app:layout_constraintTop_toBottomOf="@+id/tiEmail"
         app:startIconDrawable="@drawable/ic_lock">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/inputPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="numberPassword" />
+             />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/mbSignIn"
         android:layout_width="250dp"
         android:layout_height="50dp"
-        android:layout_marginTop="30dp"
         android:backgroundTint="@color/purple"
         android:fontFamily="@font/inter_bold"
         android:text="@string/sign_in"
@@ -125,9 +123,9 @@
         android:id="@+id/mbSignUp"
         android:layout_width="250dp"
         android:layout_height="50dp"
-        android:layout_marginTop="12dp"
         android:backgroundTint="@color/white"
         android:fontFamily="@font/inter_bold"
+        android:layout_marginTop="10dp"
         android:text="@string/sign_up"
         android:textColor="@color/purple"
         android:textSize="12sp"
