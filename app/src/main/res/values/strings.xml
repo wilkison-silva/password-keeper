@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">Password Keeper</string>
+    <string name="hint_email">Email</string>
+    <string name="password">Password</string>
+    <string name="sign_in">Sign in</string>
+    <string name="sign_up">Sign up</string>
+    <string name="or">Or</string>
+    <string name="password_keeper">Password Keeper</string>
+    <string name="subtitle">An easy way for you to remember =)</string>
+    <string name="image_description">Ícone de uma chave, representando ícone do app</string>
+    <string name="sign_in_with_google">Sign in with google</string>
 </resources>
