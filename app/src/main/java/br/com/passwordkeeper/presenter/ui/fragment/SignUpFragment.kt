@@ -35,12 +35,22 @@ class SignUpFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupBackButton()
+        setupCreateAccountButton()
     }
 
     fun setupBackButton() {
         val buttonBack: MaterialButton = binding.buttonBack
-        buttonBack.setOnClickListener{
+        buttonBack.setOnClickListener {
             navController.popBackStack()
+        }
+    }
+
+    fun setupCreateAccountButton() {
+        val createAccount: MaterialButton = binding.buttonSignUpCreateAccount
+        createAccount.setOnClickListener {
+            val directions =
+                SignUpFragmentDirections.actionSignUpFragmentToSignUpCongratsFragment2()
+            navController.navigate(directions)
         }
     }
 }

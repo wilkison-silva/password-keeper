@@ -23,7 +23,20 @@
         android:id="@+id/signUpFragment"
         android:name="br.com.passwordkeeper.presenter.ui.fragment.SignUpFragment"
         android:label="SignUpFragment"
-        tools:layout="@layout/sign_up_fragment"/>
+        tools:layout="@layout/sign_up_fragment">
+        <action
+            android:id="@+id/action_signUpFragment_to_signUpCongratsFragment2"
+            app:destination="@id/signUpCongratsFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"/>
+    </fragment>
+    <fragment
+        android:id="@+id/signUpCongratsFragment"
+        android:name="br.com.passwordkeeper.presenter.ui.fragment.SignUpCongratsFragment"
+        android:label="SignUpCongratsFragment"
+        tools:layout="@layout/sign_up_congrats_fragment"/>
 
 
 </navigation>
