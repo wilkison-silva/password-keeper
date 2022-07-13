@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import br.com.passwordkeeper.databinding.LoginFragmentBinding
 import br.com.passwordkeeper.databinding.SignUpFragmentBinding
+import com.google.android.material.button.MaterialButton
 
 class SignUpFragment : Fragment() {
     private val navController by lazy {
@@ -33,5 +34,13 @@ class SignUpFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setupBackButton()
+    }
+
+    fun setupBackButton() {
+        val buttonBack: MaterialButton = binding.buttonBack
+        buttonBack.setOnClickListener{
+            navController.popBackStack()
+        }
     }
 }
