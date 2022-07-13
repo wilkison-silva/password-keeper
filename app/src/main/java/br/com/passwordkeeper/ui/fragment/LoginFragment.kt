@@ -34,5 +34,6 @@ class LoginFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val email = binding.inputEmail.text.toString()
+        //testando commit no notebook 2
     }
 }
