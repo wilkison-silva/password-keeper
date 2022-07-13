@@ -9,4 +9,10 @@
     <string name="subtitle">An easy way for you to remember =)</string>
     <string name="image_description">Ícone de uma chave, representando ícone do app</string>
     <string name="sign_in_with_google">Sign in with google</string>
+    <string name="sign_up_title">Sign up</string>
+    <string name="sign_up_to_join">Sign up to join</string>
+    <string name="just_a_few_steps">Just a few steps</string>
+    <string name="create_an_account">Create an account</string>
+    <string name="confirm_password">Confirm password</string>
+    <string name="name">Your first name/nickname here</string>
 </resources>

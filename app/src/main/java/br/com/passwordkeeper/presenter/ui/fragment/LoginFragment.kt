@@ -1,4 +1,4 @@
-package br.com.passwordkeeper.ui.fragment
+package br.com.passwordkeeper.presenter.ui.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -14,6 +14,7 @@ class LoginFragment: Fragment() {
     }
 
     private lateinit var binding: LoginFragmentBinding
+    private lateinit var layoutSingnUpFragmentBinding: LoginFragmentBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,5 +35,6 @@ class LoginFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val email = binding.inputEmail.text.toString()
+//        val google = binding.mbGoogle.setOnClickListener(layoutSingnUpFragmentBinding.mbGoogle)
     }
 }
