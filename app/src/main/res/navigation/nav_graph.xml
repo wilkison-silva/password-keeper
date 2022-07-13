@@ -7,7 +7,19 @@
 
     <fragment
         android:id="@+id/loginFragment"
-        android:name="br.com.passwordkeeper.ui.fragment.LoginFragment"
+        android:name="br.com.passwordkeeper.presenter.ui.fragment.LoginFragment"
         android:label="LoginFragment"
-        tools:layout="@layout/login_fragment"/>
+        tools:layout="@layout/login_fragment">
+        <action
+            android:id="@+id/action_loginFragment_to_signUpFragment"
+            app:destination="@id/signUpFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/signUpFragment"
+        android:name="br.com.passwordkeeper.presenter.ui.fragment.SignUpFragment"
+        android:label="SignUpFragment"
+        tools:layout="@layout/sign_up_fragment"/>
+
+
 </navigation>

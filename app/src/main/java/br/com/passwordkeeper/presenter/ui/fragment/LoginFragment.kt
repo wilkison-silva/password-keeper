@@ -1,4 +1,4 @@
-package br.com.passwordkeeper.ui.fragment
+package br.com.passwordkeeper.presenter.ui.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,8 +7,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import br.com.passwordkeeper.databinding.LoginFragmentBinding
+import com.google.android.material.button.MaterialButton
 
-class LoginFragment: Fragment() {
+class LoginFragment : Fragment() {
     private val navController by lazy {
         findNavController()
     }
@@ -33,6 +34,15 @@ class LoginFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val email = binding.inputEmail.text.toString()
+        setupSignUpButton()
+    }
+
+    fun setupSignUpButton() {
+        val mbSignUp: MaterialButton = binding.mbSignUp
+        mbSignUp.setOnClickListener{
+            val directions =
+                LoginFragmentDirections.actionLoginFragmentToSignUpFragment()
+            navController.navigate(directions)
+        }
     }
 }
