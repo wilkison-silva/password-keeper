@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/clSignUp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/purple">
+
+    <TextView
+        android:id="@+id/textViewSignUpTitleCongrats"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="65dp"
+        android:fontFamily="@font/inter_bold"
+        android:text="Congrats!"
+        android:textColor="@color/white"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <TextView
+        android:id="@+id/textViewSignUpSubtitleCongrats"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/inter_bold"
+        android:text="Now enjoy remember everything"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        android:layout_marginStart="40dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewSignUpTitleCongrats" />
+
+    <ImageView
+        android:id="@+id/imageViewCongrats"
+        android:layout_width="170dp"
+        android:layout_height="170dp"
+        android:layout_marginTop="100dp"
+        android:src="@drawable/ic_congrats"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewSignUpSubtitleCongrats"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/mbSignUp"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:backgroundTint="@color/white"
+        android:fontFamily="@font/inter_bold"
+        android:layout_marginTop="120dp"
+        android:text="Proceed"
+        android:textColor="@color/purple"
+        android:textSize="12sp"
+        app:cornerRadius="30dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageViewCongrats" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
