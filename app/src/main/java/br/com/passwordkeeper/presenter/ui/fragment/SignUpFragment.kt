@@ -7,21 +7,21 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import br.com.passwordkeeper.databinding.LoginFragmentBinding
-import com.google.android.material.button.MaterialButton
+import br.com.passwordkeeper.databinding.SignUpFragmentBinding
 
-class LoginFragment : Fragment() {
+class SignUpFragment : Fragment() {
     private val navController by lazy {
         findNavController()
     }
 
-    private lateinit var binding: LoginFragmentBinding
+    private lateinit var binding: SignUpFragmentBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val binding = LoginFragmentBinding
+        val binding = SignUpFragmentBinding
             .inflate(
                 inflater,
                 container,
@@ -29,20 +29,9 @@ class LoginFragment : Fragment() {
             )
         this.binding = binding
         return binding.root
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setupSignUpButton()
-    }
-
-    fun setupSignUpButton() {
-        val mbSignUp: MaterialButton = binding.mbSignUp
-        mbSignUp.setOnClickListener{
-            val directions =
-                LoginFragmentDirections.actionLoginFragmentToSignUpFragment()
-            navController.navigate(directions)
-        }
     }
 }
