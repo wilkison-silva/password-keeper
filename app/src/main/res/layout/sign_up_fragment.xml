@@ -6,13 +6,13 @@
     android:layout_height="match_parent"
     android:background="@color/purple">
 
-    <com.google.android.material.button.MaterialButton
+    <ImageButton
         android:id="@+id/buttonBack"
-        android:layout_width="50dp"
-        android:layout_height="40dp"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:backgroundTint="@color/purple"
-        app:icon="@drawable/ic_back"
+        android:src="@drawable/ic_back"
         android:layout_marginTop="22dp"
         android:layout_marginStart="15dp"
         app:layout_constraintStart_toStartOf="parent"
