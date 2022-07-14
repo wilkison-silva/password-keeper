@@ -9,7 +9,8 @@
     <com.google.android.material.button.MaterialButton
         android:id="@+id/buttonBack"
         android:layout_width="50dp"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
         android:backgroundTint="@color/purple"
         app:icon="@drawable/ic_back"
         android:layout_marginTop="22dp"
