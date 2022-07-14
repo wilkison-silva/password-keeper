@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import br.com.passwordkeeper.databinding.LoginFragmentBinding
@@ -39,8 +40,8 @@ class SignUpFragment : Fragment() {
     }
 
     fun setupBackButton() {
-        val buttonBack: MaterialButton = binding.buttonBack
-        buttonBack.setOnClickListener {
+        val buttonBack: ImageButton = binding.buttonBack
+        buttonBack.setOnClickListener{
             navController.popBackStack()
         }
     }
