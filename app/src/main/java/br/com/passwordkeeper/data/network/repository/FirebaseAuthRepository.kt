@@ -15,7 +15,7 @@ class FirebaseAuthRepository(
     ) {
         firebaseAuth.signInWithEmailAndPassword(email, password)
             .addOnSuccessListener {
-                callbackResult(FirebaseAuthSignInResult.Success)
+                callbackResult(FirebaseAuthSignInResult.Success(it.user))
             }
             .addOnFailureListener {
                 when (it) {
