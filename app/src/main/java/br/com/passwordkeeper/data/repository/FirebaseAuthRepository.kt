@@ -1,15 +1,15 @@
-package br.com.passwordkeeper.domain.repository
+package br.com.passwordkeeper.data.repository
 
-import br.com.passwordkeeper.data.source.web.result.FirebaseAuthCreateUserResult
-import br.com.passwordkeeper.data.source.web.result.FirebaseAuthGetCurrentUserResult
-import br.com.passwordkeeper.data.source.web.result.FirebaseAuthSignInResult
+import br.com.passwordkeeper.data.repository.source.web.result.FirebaseAuthCreateUserResult
+import br.com.passwordkeeper.data.repository.source.web.result.FirebaseAuthGetCurrentUserResult
+import br.com.passwordkeeper.data.repository.source.web.result.SignInResult
 
 interface FirebaseAuthRepository {
 
     fun signIn(
         email: String,
         password: String,
-        callbackResult: (firebaseAuthSignInResult: FirebaseAuthSignInResult) -> Unit
+        callbackResult: (signInResult: SignInResult) -> Unit
     )
 
     fun signOut()

@@ -1,9 +1,9 @@
-package br.com.passwordkeeper.data.source.web
+package br.com.passwordkeeper.data.repository.source.web
 
-import br.com.passwordkeeper.domain.repository.FirebaseAuthRepository
-import br.com.passwordkeeper.data.source.web.result.FirebaseAuthCreateUserResult
-import br.com.passwordkeeper.data.source.web.result.FirebaseAuthGetCurrentUserResult
-import br.com.passwordkeeper.data.source.web.result.FirebaseAuthSignInResult
+import br.com.passwordkeeper.data.repository.FirebaseAuthRepository
+import br.com.passwordkeeper.data.repository.source.web.result.FirebaseAuthCreateUserResult
+import br.com.passwordkeeper.data.repository.source.web.result.FirebaseAuthGetCurrentUserResult
+import br.com.passwordkeeper.data.repository.source.web.result.SignInResult
 import com.google.firebase.auth.*
 
 class FirebaseAuthRepositoryImpl(
@@ -13,21 +13,21 @@ class FirebaseAuthRepositoryImpl(
     override fun signIn(
         email: String,
         password: String,
-        callbackResult: (firebaseAuthSignInResult: FirebaseAuthSignInResult) -> Unit
+        callbackResult: (signInResult: SignInResult) -> Unit
     ) {
         firebaseAuth.signInWithEmailAndPassword(email, password)
             .addOnSuccessListener {
-                it.user?.let { currentUser: FirebaseUser ->
-                    callbackResult(FirebaseAuthSignInResult.Success(currentUser))
-                } ?: callbackResult(FirebaseAuthSignInResult.ErrorUserNotFound)
+                it.user?.email?.let { email: String ->
+                    callbackResult(SignInResult.Success(email))
+                } ?: callbackResult(SignInResult.ErrorUserNotFound)
             }
             .addOnFailureListener {
                 when (it) {
                     is FirebaseAuthInvalidUserException,
                     is FirebaseAuthInvalidCredentialsException -> callbackResult(
-                        FirebaseAuthSignInResult.ErrorEmailOrPasswordIncorrect
+                        SignInResult.ErrorEmailOrPasswordIncorrect
                     )
-                    else -> callbackResult(FirebaseAuthSignInResult.ErrorUnknown)
+                    else -> callbackResult(SignInResult.ErrorUnknown)
                 }
             }
     }

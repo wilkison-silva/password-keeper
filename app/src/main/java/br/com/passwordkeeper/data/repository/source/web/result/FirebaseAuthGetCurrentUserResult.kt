@@ -1,4 +1,4 @@
-package br.com.passwordkeeper.data.source.web.result
+package br.com.passwordkeeper.data.repository.source.web.result
 
 import com.google.firebase.auth.FirebaseUser
 

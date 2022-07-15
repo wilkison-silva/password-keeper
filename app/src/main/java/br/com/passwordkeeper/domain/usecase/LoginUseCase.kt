@@ -1,22 +1,21 @@
 package br.com.passwordkeeper.domain.usecase
 
-import br.com.passwordkeeper.data.source.web.result.FirebaseAuthSignInResult
-import br.com.passwordkeeper.domain.repository.FirebaseAuthRepository
+import br.com.passwordkeeper.data.repository.source.web.result.SignInResult
+import br.com.passwordkeeper.data.repository.FirebaseAuthRepository
 
 class LoginUseCase(
     private val firebaseAuthRepository: FirebaseAuthRepository
 ) {
 
     fun signIn(email: String, password: String) {
-        firebaseAuthRepository.signIn(email, password) { firebaseAuthSignInResult ->
-            when (firebaseAuthSignInResult) {
-                is FirebaseAuthSignInResult.Success -> {
-                    firebaseAuthSignInResult.firebaseUser.email?.let {
-                        //TODO return user email to viewmodel, and in case of null email return
-                        //TODO user not found
+        firebaseAuthRepository.signIn(email, password) { signInResult: SignInResult ->
+            when (signInResult) {
+                is SignInResult.Success -> {
+                    signInResult.emailUser.let { emailUser: String ->
+
                     }
                 }
-                is FirebaseAuthSignInResult.ErrorEmailOrPasswordIncorrect -> {
+                is SignInResult.ErrorEmailOrPasswordIncorrect -> {
                     //TODO return a error about email or password to viewmodel
                 }
                 else -> {
