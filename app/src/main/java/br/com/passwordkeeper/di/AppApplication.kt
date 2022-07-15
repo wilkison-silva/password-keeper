@@ -11,6 +11,7 @@ class AppApplication : Application() {
             androidContext(this@AppApplication)
             modules(
                 listOf(
+                    firebaseModule,
                     repositoryModule,
                     useCaseModule
                 )
