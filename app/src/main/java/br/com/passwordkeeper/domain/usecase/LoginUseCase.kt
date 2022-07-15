@@ -1,6 +1,6 @@
 package br.com.passwordkeeper.domain.usecase
 
-import br.com.passwordkeeper.data.repository.source.web.result.SignInResult
+import br.com.passwordkeeper.domain.result.SignInResult
 import br.com.passwordkeeper.data.repository.FirebaseAuthRepository
 
 class LoginUseCase(
