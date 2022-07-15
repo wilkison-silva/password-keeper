@@ -1,6 +1,6 @@
 package br.com.passwordkeeper.di
 
-import br.com.passwordkeeper.data.network.repository.FirebaseAuthRepository
+import br.com.passwordkeeper.data.datasource.repository.FirebaseAuthRepositoryImpl
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -11,5 +11,5 @@ val firebaseModule = module {
 }
 
 val repositoryModule = module {
-    single<FirebaseAuthRepository> { FirebaseAuthRepository(get<FirebaseAuth>()) }
+    single<FirebaseAuthRepositoryImpl> { FirebaseAuthRepositoryImpl(get<FirebaseAuth>()) }
 }

@@ -1,21 +1,24 @@
-package br.com.passwordkeeper.data.network.repository
+package br.com.passwordkeeper.data.datasource.repository
 
-import br.com.passwordkeeper.data.network.result.FirebaseAuthCreateUserResult
-import br.com.passwordkeeper.data.network.result.FirebaseAuthSignInResult
+import br.com.passwordkeeper.data.datasource.web.result.FirebaseAuthCreateUserResult
+import br.com.passwordkeeper.data.datasource.web.result.FirebaseAuthGetCurrentUserResult
+import br.com.passwordkeeper.data.datasource.web.result.FirebaseAuthSignInResult
 import com.google.firebase.auth.*
 
-class FirebaseAuthRepository(
+class FirebaseAuthRepositoryImpl(
     private val firebaseAuth: FirebaseAuth
-) {
+) : FirebaseAuthRepository {
 
-    fun signIn(
+    override fun signIn(
         email: String,
         password: String,
         callbackResult: (firebaseAuthSignInResult: FirebaseAuthSignInResult) -> Unit
     ) {
         firebaseAuth.signInWithEmailAndPassword(email, password)
             .addOnSuccessListener {
-                callbackResult(FirebaseAuthSignInResult.Success(it.user))
+                it.user?.let { currentUser: FirebaseUser ->
+                    callbackResult(FirebaseAuthSignInResult.Success(currentUser))
+                } ?: callbackResult(FirebaseAuthSignInResult.ErrorUserNotFound)
             }
             .addOnFailureListener {
                 when (it) {
@@ -28,11 +31,11 @@ class FirebaseAuthRepository(
             }
     }
 
-    fun signOut() {
+    override fun signOut() {
         firebaseAuth.signOut()
     }
 
-    fun createUser(
+    override fun createUser(
         email: String,
         password: String,
         callbackResult: (firebaseAuthCreateUserResult: FirebaseAuthCreateUserResult) -> Unit
@@ -56,6 +59,14 @@ class FirebaseAuthRepository(
             }
     }
 
-    fun getCurrentUser(): FirebaseUser? = firebaseAuth.currentUser
+    override fun getCurrentUser(
+        callbackResult: (
+            firebaseAuthGetCurrentUserResult: FirebaseAuthGetCurrentUserResult
+        ) -> Unit
+    ) {
+        firebaseAuth.currentUser?.let { currentUser: FirebaseUser ->
+            callbackResult(FirebaseAuthGetCurrentUserResult.Success(currentUser))
+        } ?: callbackResult(FirebaseAuthGetCurrentUserResult.ErrorNoUserFound)
+    }
 
 }
