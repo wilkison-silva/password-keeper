@@ -19,12 +19,11 @@ class FirebaseAuthRepository(
             }
             .addOnFailureListener {
                 when (it) {
-                    is FirebaseAuthInvalidUserException -> {
-                        callbackResult(FirebaseAuthSignInResult.ErrorEmailNotFound)
-                    }
-                    is FirebaseAuthInvalidCredentialsException -> {
-                        callbackResult(FirebaseAuthSignInResult.ErrorPasswordIncorrect)
-                    }
+                    is FirebaseAuthInvalidUserException,
+                    is FirebaseAuthInvalidCredentialsException -> callbackResult(
+                        FirebaseAuthSignInResult.ErrorEmailOrPasswordIncorrect
+                    )
+                    else -> callbackResult(FirebaseAuthSignInResult.ErrorUnknown)
                 }
             }
     }
@@ -43,7 +42,7 @@ class FirebaseAuthRepository(
                 callbackResult(FirebaseAuthCreateUserResult.Success)
             }
             .addOnFailureListener {
-                when(it){
+                when (it) {
                     is FirebaseAuthWeakPasswordException -> {
                         callbackResult(FirebaseAuthCreateUserResult.ErrorWeakPassword)
                     }
