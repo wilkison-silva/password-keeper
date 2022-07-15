@@ -1,4 +1,4 @@
-package br.com.passwordkeeper.presenter.ui.activity
+package br.com.passwordkeeper.presentation.ui.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
