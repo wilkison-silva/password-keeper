@@ -43,6 +43,16 @@ class LoginFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setupSignUpButton()
         setupSignInButton()
+        binding.tvTitle.setOnClickListener {
+            lifecycleScope.launch {
+                loginUseCase.getCurrentUser()
+            }
+        }
+        binding.mbGoogle.setOnClickListener {
+            lifecycleScope.launch {
+                loginUseCase.singOut()
+            }
+        }
     }
 
     private fun setupSignInButton() {

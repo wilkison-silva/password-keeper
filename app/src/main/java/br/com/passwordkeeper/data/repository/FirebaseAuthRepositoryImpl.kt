@@ -53,8 +53,8 @@ class FirebaseAuthRepositoryImpl(
     }
 
     override suspend fun getCurrentUser(): GetCurrentUserResult {
-        return firebaseAuth.currentUser?.let { currentUser: FirebaseUser ->
-            GetCurrentUserResult.Success(currentUser)
+        return firebaseAuth.currentUser?.email?.let { emailUser: String ->
+            GetCurrentUserResult.Success(emailUser)
         } ?: GetCurrentUserResult.ErrorNoUserFound
     }
 
