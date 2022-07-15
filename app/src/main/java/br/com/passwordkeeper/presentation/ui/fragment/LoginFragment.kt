@@ -1,4 +1,4 @@
-package br.com.passwordkeeper.presenter.ui.fragment
+package br.com.passwordkeeper.presentation.ui.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater

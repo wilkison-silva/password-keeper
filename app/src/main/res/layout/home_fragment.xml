@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/homeFragment"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/purple">
+
+    <TextView
+        android:id="@+id/textViewHello"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="50dp"
+        android:fontFamily="@font/inter_light"
+        android:text="Hello, "
+        android:textColor="@color/white"
+        android:textSize="24sp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <TextView
+        android:id="@+id/textViewName"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:textColor="@color/white"
+        android:fontFamily="@font/inter_bold"
+        android:textSize="24dp"
+        tools:text="Francis!"
+        android:layout_marginTop="50dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@id/textViewHello"/>
+
+    <TextView
+        android:id="@+id/textViewAdviceOfMoment"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/inter_bold"
+        android:text="Advice of moment =)"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:layout_marginStart="25dp"
+        app:layout_constraintTop_toBottomOf="@+id/textViewHello"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <TextView
+        android:id="@+id/textViewMessage"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/inter_bold"
+        android:textStyle="italic"
+        android:text="Most things are not as bad as you think they are."
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:layout_marginStart="25dp"
+        app:layout_constraintTop_toBottomOf="@+id/textViewAdviceOfMoment"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputSearch"
+        app:hintEnabled="false"
+        app:endIconMode="clear_text"
+        style="@style/InputLayout"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="25dp"
+        android:layout_marginTop="35dp"
+        android:background="@color/purple"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewMessage">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/textInputSearchIcon"
+            style="@style/TextInputEditText"
+            android:imeOptions="actionSearch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Search"
+            android:inputType="text" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <ImageButton
+        android:id="@+id/imageViewSearchButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_search"
+        android:background="@color/white"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toBottomOf="@+id/textInputSearch"
+        app:layout_constraintStart_toStartOf="@+id/textInputSearch"
+        app:layout_constraintTop_toTopOf="@+id/textInputSearch" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/ConstraintFavorite"
+        android:layout_width="match_parent"
+        android:layout_height="460dp"
+        android:background="@drawable/background_rounded_tops"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <TextView
+        android:id="@+id/textViewFavorite"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:text="Favorite"
+        android:fontFamily="@font/inter_bold"
+        android:textColor="@color/purple"
+        android:textSize="20sp"
+        android:layout_marginTop="32dp"
+        android:layout_marginStart="28dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/ConstraintFavorite"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
