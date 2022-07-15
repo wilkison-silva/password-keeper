@@ -1,4 +1,4 @@
-package br.com.passwordkeeper.di
+package br.com.passwordkeeper.data.di
 
 import android.app.Application
 import org.koin.android.ext.koin.androidContext
@@ -11,7 +11,8 @@ class AppApplication : Application() {
             androidContext(this@AppApplication)
             modules(
                 listOf(
-                    repositoryModule
+                    repositoryModule,
+                    useCaseModule
                 )
             )
         }

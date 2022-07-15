@@ -1,4 +1,4 @@
-package br.com.passwordkeeper.presenter.ui.fragment
+package br.com.passwordkeeper.presentation.ui.fragment
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import br.com.passwordkeeper.databinding.LoginFragmentBinding
 import br.com.passwordkeeper.databinding.SignUpFragmentBinding
 import com.google.android.material.button.MaterialButton
 

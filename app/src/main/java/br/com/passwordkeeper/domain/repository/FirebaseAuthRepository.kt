@@ -1,4 +1,4 @@
-package br.com.passwordkeeper.data.repository
+package br.com.passwordkeeper.domain.repository
 
 import br.com.passwordkeeper.data.source.web.result.FirebaseAuthCreateUserResult
 import br.com.passwordkeeper.data.source.web.result.FirebaseAuthGetCurrentUserResult
