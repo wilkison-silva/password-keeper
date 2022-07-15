@@ -1,4 +1,4 @@
-package br.com.passwordkeeper.data.datasource.web.result
+package br.com.passwordkeeper.data.source.web.result
 
 sealed class FirebaseAuthCreateUserResult {
     object Success : FirebaseAuthCreateUserResult()
