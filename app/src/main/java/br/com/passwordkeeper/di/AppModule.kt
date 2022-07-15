@@ -1,6 +1,6 @@
 package br.com.passwordkeeper.di
 
-import br.com.passwordkeeper.data.repository.source.web.FirebaseAuthRepositoryImpl
+import br.com.passwordkeeper.data.repository.FirebaseAuthRepositoryImpl
 import br.com.passwordkeeper.domain.usecase.LoginUseCase
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth

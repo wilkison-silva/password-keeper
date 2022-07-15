@@ -1,8 +1,8 @@
 package br.com.passwordkeeper.data.repository
 
-import br.com.passwordkeeper.data.repository.source.web.result.FirebaseAuthCreateUserResult
-import br.com.passwordkeeper.data.repository.source.web.result.FirebaseAuthGetCurrentUserResult
-import br.com.passwordkeeper.data.repository.source.web.result.SignInResult
+import br.com.passwordkeeper.domain.result.FirebaseAuthCreateUserResult
+import br.com.passwordkeeper.domain.result.FirebaseAuthGetCurrentUserResult
+import br.com.passwordkeeper.domain.result.SignInResult
 
 interface FirebaseAuthRepository {
 

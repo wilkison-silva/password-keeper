@@ -1,9 +1,8 @@
-package br.com.passwordkeeper.data.repository.source.web
+package br.com.passwordkeeper.data.repository
 
-import br.com.passwordkeeper.data.repository.FirebaseAuthRepository
-import br.com.passwordkeeper.data.repository.source.web.result.FirebaseAuthCreateUserResult
-import br.com.passwordkeeper.data.repository.source.web.result.FirebaseAuthGetCurrentUserResult
-import br.com.passwordkeeper.data.repository.source.web.result.SignInResult
+import br.com.passwordkeeper.domain.result.FirebaseAuthCreateUserResult
+import br.com.passwordkeeper.domain.result.FirebaseAuthGetCurrentUserResult
+import br.com.passwordkeeper.domain.result.SignInResult
 import com.google.firebase.auth.*
 
 class FirebaseAuthRepositoryImpl(
