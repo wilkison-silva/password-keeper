@@ -20,8 +20,8 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
             <ImageView
                 android:id="@+id/imageViewType"
@@ -34,7 +34,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:src="@drawable/ic_stream" />
+                android:src="@drawable/ic_stream"/>
 
             <TextView
                 android:id="@+id/textViewTextType"
@@ -52,7 +52,7 @@
                 tools:text="@string/text_type" />
 
             <TextView
-                android:id="@+id/number"
+                android:id="@+id/textViewQuantity"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"

@@ -14,6 +14,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:shapeAppearanceOverlay="@style/roundedImage"
-        tools:src="@drawable/image_example" />
+        android:src="@drawable/image_example" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
