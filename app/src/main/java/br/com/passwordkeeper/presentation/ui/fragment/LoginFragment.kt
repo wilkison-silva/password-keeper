@@ -43,27 +43,6 @@ class LoginFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setupSignUpButton()
         setupSignInButton()
-        binding.tvTitle.setOnClickListener {
-            lifecycleScope.launch {
-                loginUseCase.getCurrentUser()
-            }
-        }
-        binding.mbGoogle.setOnClickListener {
-            lifecycleScope.launch {
-                loginUseCase.singOut()
-            }
-        }
-    }
-
-    private fun setupSignInButton() {
-        binding.mbSignIn.setOnClickListener {
-            lifecycleScope.launch {
-                loginUseCase.signIn(
-                    email = "teste@teste.com.br",
-                    password = "Teste123"
-                )
-            }
-        }
     }
 
     fun setupSignUpButton() {
@@ -71,6 +50,15 @@ class LoginFragment : Fragment() {
         mbSignUp.setOnClickListener{
             val directions =
                 LoginFragmentDirections.actionLoginFragmentToSignUpFragment()
+            navController.navigate(directions)
+        }
+    }
+
+    fun setupSignInButton() {
+        val mbSignIn: MaterialButton = binding.mbSignIn
+        mbSignIn.setOnClickListener{
+            val directions =
+              LoginFragmentDirections.actionLoginFragmentToHomeFragment()
             navController.navigate(directions)
         }
     }
