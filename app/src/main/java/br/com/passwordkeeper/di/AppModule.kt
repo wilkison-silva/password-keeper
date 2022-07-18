@@ -1,7 +1,9 @@
 package br.com.passwordkeeper.di
 
+import br.com.passwordkeeper.data.repository.AuthRepository
 import br.com.passwordkeeper.data.repository.FirebaseAuthRepositoryImpl
 import br.com.passwordkeeper.domain.usecase.LoginUseCase
+import br.com.passwordkeeper.domain.usecase.LoginUseCaseImpl
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -12,9 +14,9 @@ val firebaseModule = module {
 }
 
 val repositoryModule = module {
-    single<FirebaseAuthRepositoryImpl> { FirebaseAuthRepositoryImpl(get<FirebaseAuth>()) }
+    single<AuthRepository> { FirebaseAuthRepositoryImpl(get<FirebaseAuth>()) }
 }
 
 val useCaseModule = module {
-    single<LoginUseCase> { LoginUseCase(get<FirebaseAuthRepositoryImpl>()) }
+    single<LoginUseCase> { LoginUseCaseImpl(get<AuthRepository>()) }
 }
