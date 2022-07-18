@@ -35,6 +35,7 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupSignUpButton()
+        setupSignInButton()
     }
 
     fun setupSignUpButton() {
@@ -42,6 +43,15 @@ class LoginFragment : Fragment() {
         mbSignUp.setOnClickListener{
             val directions =
                 LoginFragmentDirections.actionLoginFragmentToSignUpFragment()
+            navController.navigate(directions)
+        }
+    }
+
+    fun setupSignInButton() {
+        val mbSignIn: MaterialButton = binding.mbSignIn
+        mbSignIn.setOnClickListener{
+            val directions =
+              LoginFragmentDirections.actionLoginFragmentToHomeFragment()
             navController.navigate(directions)
         }
     }

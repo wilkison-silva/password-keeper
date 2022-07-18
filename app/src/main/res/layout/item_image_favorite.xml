@@ -3,18 +3,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_marginEnd="15dp">
 
     <com.google.android.material.imageview.ShapeableImageView
-        android:id="@+id/ivBrewery"
+        android:id="@+id/ImageViewExample"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:scaleType="centerCrop"
-        android:layout_marginHorizontal="8dp"
-        app:shapeAppearanceOverlay="@style/roundedImage"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        tools:src="@drawable/ic_facebook"/>
+        app:layout_constraintTop_toTopOf="parent"
+        app:shapeAppearanceOverlay="@style/roundedImage"
+        android:src="@drawable/image_example" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
