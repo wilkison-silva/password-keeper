@@ -8,9 +8,9 @@ class AdviceWebClient(private val adviceService: AdviceService) {
 
     suspend fun getAdvice(): GetAdviceWebClientResult {
         try {
-            val response = adviceService.getAdvice()
-            if (response.isSuccessful) {
-                return GetAdviceWebClientResult.Success(response.body()?.slip)
+            val advice = adviceService.getAdvice()
+            if (advice.isSuccessful) {
+                return GetAdviceWebClientResult.Success(advice.body()?.slip)
             }
         }
         catch (e: Exception) {

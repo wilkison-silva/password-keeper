@@ -14,7 +14,9 @@ class AppApplication : Application() {
                     firebaseModule,
                     repositoryModule,
                     useCaseModule,
-                    retrofitModule
+                    retrofitModule,
+                    webClientModule,
+                    serviceModule
                 )
             )
         }
