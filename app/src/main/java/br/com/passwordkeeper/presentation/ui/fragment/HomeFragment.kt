@@ -5,16 +5,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import br.com.passwordkeeper.databinding.HomeFragmentBinding
 import br.com.passwordkeeper.domain.model.CardType
+import br.com.passwordkeeper.domain.result.GetAdviceState
 import br.com.passwordkeeper.presentation.ui.recyclerview.adapter.TypeAdapter
+import br.com.passwordkeeper.presentation.ui.viewModel.HomeViewModel
+import kotlinx.coroutines.launch
+import org.koin.android.ext.android.inject
 
 class HomeFragment: Fragment() {
     private val navController by lazy {
         findNavController()
     }
 
+    private val homeViewModel: HomeViewModel by inject()
     private lateinit var binding: HomeFragmentBinding
     private val typeAdapter = TypeAdapter()
 
@@ -46,7 +52,30 @@ class HomeFragment: Fragment() {
                 CardType("Card", 7)
             )
         )
+        updateAdviceState()
+        observeAdviceState()
     }
 
+    private fun observeAdviceState() {
+        homeViewModel.adviceState.observe(viewLifecycleOwner) {
+            when(it) {
+                is GetAdviceState.Success -> {
+                   binding.textViewMessage.text = it.advice.message
+                }
+                is GetAdviceState.SuccessWithoutMessage -> {
+                    binding.textViewMessage.text = "Sorry, no message found!"
+                }
+                is GetAdviceState.ErrorUnknown -> {
+                    binding.textViewMessage.text = "Sorry, an error happend!"
+                }
+            }
+        }
+    }
+
+    private fun updateAdviceState() {
+        lifecycleScope.launch{
+            homeViewModel.updateAdvice()
+        }
+    }
 
 }

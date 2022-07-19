@@ -13,7 +13,11 @@ class AppApplication : Application() {
                 listOf(
                     firebaseModule,
                     repositoryModule,
-                    useCaseModule
+                    useCaseModule,
+                    retrofitModule,
+                    webClientModule,
+                    serviceModule,
+                    viewModelModule
                 )
             )
         }
