@@ -63,6 +63,14 @@ dependencies {
     def koin_version = "3.2.0"
     implementation "io.insert-koin:koin-android:$koin_version"
 
+    //retrofit
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-moshi:2.9.0'
+    implementation("com.squareup.okhttp3:logging-interceptor:4.10.0")
+
+    // OkHttp
+    androidTestImplementation "com.squareup.okhttp3:mockwebserver:4.9.3"
+
     //coroutines support for firebase operations
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.6.4'
     //coroutines

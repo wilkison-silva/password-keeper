@@ -1,5 +1,11 @@
 package br.com.passwordkeeper.data.source.web.service
 
-class AdviceService {
-    //TODO implementar classe de service com url para api de advices
+import br.com.passwordkeeper.data.source.web.model.SlipResponse
+import retrofit2.Response
+import retrofit2.http.GET
+
+interface AdviceService {
+
+    @GET("/advice")
+    suspend fun getAdvice(): Response<SlipResponse>
 }
