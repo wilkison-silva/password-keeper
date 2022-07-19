@@ -164,12 +164,21 @@
             android:layout_marginTop="8dp"
             android:orientation="horizontal"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textViewTypes"
             app:layout_constraintVertical_bias="0.0"
             tools:listitem="@layout/item_image_types" />
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:layout_width="0dp"
+            android:layout_height="60dp"
+            android:background="?android:attr/windowBackground"
+            app:layout_constraintTop_toBottomOf="@+id/recyclerViewTypes"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:menu="@menu/menu_bottom_navigation"/>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -23,4 +23,6 @@
     <string name="advice_of_moment">Advice of moment =)</string>
     <string name="cone_de_pesquisa">Ícone de pesquisa</string>
     <string name="text_type">Streaming</string>
+    <string name="new_note">New note</string>
+    <string name="settings">Settings</string>
 </resources>
