@@ -1,4 +1,4 @@
-package br.com.passwordkeeper.data.source.web.model
+package br.com.passwordkeeper.domain.model
 
 import com.squareup.moshi.Json
 

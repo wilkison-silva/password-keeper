@@ -1,4 +1,3 @@
-
 package br.com.passwordkeeper.di
 
 import br.com.passwordkeeper.BuildConfig
@@ -8,6 +7,8 @@ import br.com.passwordkeeper.data.repository.AuthRepository
 import br.com.passwordkeeper.data.repository.FirebaseAuthRepositoryImpl
 import br.com.passwordkeeper.data.source.web.AdviceWebClient
 import br.com.passwordkeeper.data.source.web.service.AdviceService
+import br.com.passwordkeeper.domain.usecase.AdviceUseCase
+import br.com.passwordkeeper.domain.usecase.AdviceUseCaseImpl
 import br.com.passwordkeeper.domain.usecase.LoginUseCase
 import br.com.passwordkeeper.domain.usecase.LoginUseCaseImpl
 import com.google.firebase.auth.FirebaseAuth
@@ -55,9 +56,10 @@ val webClientModule = module {
 
 val repositoryModule = module {
     single<AuthRepository> { FirebaseAuthRepositoryImpl(get<FirebaseAuth>()) }
-    single <AdviceRepository>{ AdviceRepositoryImpl(get<AdviceWebClient>()) }
+    single<AdviceRepository> { AdviceRepositoryImpl(get<AdviceWebClient>()) }
 }
 
 val useCaseModule = module {
     single<LoginUseCase> { LoginUseCaseImpl(get<AuthRepository>()) }
+    single<AdviceUseCase> { AdviceUseCaseImpl(get<AdviceRepository>()) }
 }

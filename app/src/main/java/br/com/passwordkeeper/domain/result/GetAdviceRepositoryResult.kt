@@ -1,6 +1,6 @@
 package br.com.passwordkeeper.domain.result
 
-import br.com.passwordkeeper.data.source.web.model.AdviceResponse
+import br.com.passwordkeeper.domain.model.AdviceResponse
 
 sealed class GetAdviceRepositoryResult {
     data class Success(val adviceResponse: AdviceResponse?) : GetAdviceRepositoryResult()

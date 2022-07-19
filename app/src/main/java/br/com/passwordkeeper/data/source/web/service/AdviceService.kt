@@ -1,6 +1,6 @@
 package br.com.passwordkeeper.data.source.web.service
 
-import br.com.passwordkeeper.data.source.web.model.SlipResponse
+import br.com.passwordkeeper.domain.model.SlipResponse
 import retrofit2.Response
 import retrofit2.http.GET
 
