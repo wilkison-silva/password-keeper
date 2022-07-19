@@ -11,11 +11,13 @@ import br.com.passwordkeeper.domain.usecase.AdviceUseCase
 import br.com.passwordkeeper.domain.usecase.AdviceUseCaseImpl
 import br.com.passwordkeeper.domain.usecase.LoginUseCase
 import br.com.passwordkeeper.domain.usecase.LoginUseCaseImpl
+import br.com.passwordkeeper.presentation.ui.viewModel.HomeViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
@@ -62,4 +64,8 @@ val repositoryModule = module {
 val useCaseModule = module {
     single<LoginUseCase> { LoginUseCaseImpl(get<AuthRepository>()) }
     single<AdviceUseCase> { AdviceUseCaseImpl(get<AdviceRepository>()) }
+}
+
+val viewModelModule = module {
+   viewModel<HomeViewModel>{ HomeViewModel(get<AdviceUseCase>()) }
 }

@@ -16,7 +16,8 @@ class AppApplication : Application() {
                     useCaseModule,
                     retrofitModule,
                     webClientModule,
-                    serviceModule
+                    serviceModule,
+                    viewModelModule
                 )
             )
         }
