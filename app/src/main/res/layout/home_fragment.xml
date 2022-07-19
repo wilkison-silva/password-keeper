@@ -106,7 +106,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:background="@color/white"
-                android:contentDescription="@string/cone_de_pesquisa"
+                android:contentDescription="@string/icone_de_pesquisa"
                 android:src="@drawable/ic_search"
                 app:layout_constraintBottom_toBottomOf="@+id/textInputSearch"
                 app:layout_constraintStart_toStartOf="@+id/textInputSearch"
@@ -120,8 +120,10 @@
                 android:background="@drawable/background_rounded_tops"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textInputSearch" />
+                app:layout_constraintTop_toBottomOf="@+id/textInputSearch"
+                app:layout_constraintVertical_bias="0.0" />
 
             <TextView
                 android:id="@+id/textViewFavorite"
@@ -192,7 +194,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/scrollViewHomeFragment"
         app:menu="@menu/menu_bottom_navigation" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 
