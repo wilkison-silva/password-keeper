@@ -1,9 +1,10 @@
 package br.com.passwordkeeper.data.repository
 
-import br.com.passwordkeeper.domain.result.CreateUserResult
-import br.com.passwordkeeper.domain.result.GetCurrentUserResult
-import br.com.passwordkeeper.domain.result.SignInResult
-import br.com.passwordkeeper.domain.result.SignOutResult
+import br.com.passwordkeeper.domain.model.UserResponse
+import br.com.passwordkeeper.domain.result.CreateUserRepositoryResult
+import br.com.passwordkeeper.domain.result.GetCurrentUserRepositoryResult
+import br.com.passwordkeeper.domain.result.SignInRepositoryResult
+import br.com.passwordkeeper.domain.result.SignOutRepositoryResult
 import com.google.firebase.auth.*
 import kotlinx.coroutines.tasks.await
 
@@ -11,51 +12,61 @@ class FirebaseAuthRepositoryImpl(
     private val firebaseAuth: FirebaseAuth
 ) : AuthRepository {
 
-    override suspend fun signIn(email: String, password: String): SignInResult {
+    override suspend fun signIn(email: String, password: String): SignInRepositoryResult {
 
         return try {
             val response = firebaseAuth
                 .signInWithEmailAndPassword(email, password).await()
-            response.user?.email?.let {
-                SignInResult.Success(it)
-            } ?: SignInResult.ErrorUserNotFound
+            response.user?.email?.let { emailUser: String ->
+                //TODO get name from another api from firebase
+                val userResponse = UserResponse(
+                    email = emailUser,
+                    name = "Nome de Teste"
+                )
+                SignInRepositoryResult.Success(userResponse.convertToUser())
+            } ?: SignInRepositoryResult.ErrorUserNotFound
         } catch (exception: Exception) {
             when (exception) {
                 is FirebaseAuthInvalidUserException,
                 is FirebaseAuthInvalidCredentialsException ->
-                    SignInResult.ErrorEmailOrPasswordIncorrect
-                else -> SignInResult.ErrorUnknown
+                    SignInRepositoryResult.ErrorEmailOrPasswordIncorrect
+                else -> SignInRepositoryResult.ErrorUnknown
             }
         }
     }
 
-    override suspend fun signOut(): SignOutResult {
+    override suspend fun signOut(): SignOutRepositoryResult {
         return try {
             firebaseAuth.signOut()
-            SignOutResult.Success
+            SignOutRepositoryResult.Success
         } catch (exception: Exception) {
-            SignOutResult.ErrorUnknown
+            SignOutRepositoryResult.ErrorUnknown
         }
     }
 
-    override suspend fun createUser(email: String, password: String): CreateUserResult {
+    override suspend fun createUser(email: String, password: String): CreateUserRepositoryResult {
         return try {
             firebaseAuth.createUserWithEmailAndPassword(email, password).await()
-            CreateUserResult.Success
+            CreateUserRepositoryResult.Success
         } catch (exception: Exception) {
             when (exception) {
-                is FirebaseAuthWeakPasswordException -> CreateUserResult.ErrorWeakPassword
-                is FirebaseAuthInvalidCredentialsException -> CreateUserResult.ErrorEmailMalformed
-                is FirebaseAuthUserCollisionException -> CreateUserResult.ErrorEmailAlreadyExists
-                else -> CreateUserResult.ErrorUnknown
+                is FirebaseAuthWeakPasswordException -> CreateUserRepositoryResult.ErrorWeakPassword
+                is FirebaseAuthInvalidCredentialsException -> CreateUserRepositoryResult.ErrorEmailMalformed
+                is FirebaseAuthUserCollisionException -> CreateUserRepositoryResult.ErrorEmailAlreadyExists
+                else -> CreateUserRepositoryResult.ErrorUnknown
             }
         }
     }
 
-    override suspend fun getCurrentUser(): GetCurrentUserResult {
+    override suspend fun getCurrentUser(): GetCurrentUserRepositoryResult {
         return firebaseAuth.currentUser?.email?.let { emailUser: String ->
-            GetCurrentUserResult.Success(emailUser)
-        } ?: GetCurrentUserResult.ErrorNoUserFound
+            //TODO get name from another api from firebase
+            val userResponse = UserResponse(
+                email = emailUser,
+                name = "Nome de Teste"
+            )
+            GetCurrentUserRepositoryResult.Success(userResponse.convertToUser())
+        } ?: GetCurrentUserRepositoryResult.ErrorNoUserRepositoryFound
     }
 
 }

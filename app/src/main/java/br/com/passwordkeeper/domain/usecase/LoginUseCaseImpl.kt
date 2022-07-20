@@ -1,73 +1,71 @@
 package br.com.passwordkeeper.domain.usecase
 
 import android.util.Log
-import br.com.passwordkeeper.domain.result.SignInResult
 import br.com.passwordkeeper.data.repository.AuthRepository
-import br.com.passwordkeeper.domain.result.CreateUserResult
-import br.com.passwordkeeper.domain.result.GetCurrentUserResult
-import br.com.passwordkeeper.domain.result.SignOutResult
+import br.com.passwordkeeper.domain.model.User
+import br.com.passwordkeeper.domain.model.UserView
+import br.com.passwordkeeper.domain.result.*
 
 class LoginUseCaseImpl(
     private val authRepository: AuthRepository
 ) : LoginUseCase {
 
-    override suspend fun signIn(email: String, password: String) {
-        val signInResult: SignInResult = authRepository.signIn(email, password)
-        when (signInResult) {
-            is SignInResult.Success -> {
-                signInResult.emailUser.let { emailUser: String ->
-                    Log.i("LoginUseCaseImpl", "Email que fez login: $emailUser")
-                }
+    override suspend fun signIn(email: String, password: String): SignInUseCaseResult {
+        val signInRepositoryResult: SignInRepositoryResult = authRepository.signIn(email, password)
+        return when (signInRepositoryResult) {
+            is SignInRepositoryResult.Success -> {
+                val user: User = signInRepositoryResult.user
+                SignInUseCaseResult.Success(user.convertToUserView())
             }
-            is SignInResult.ErrorEmailOrPasswordIncorrect -> {
-                Log.e("LoginUseCaseImpl", "Email ou senha inválida")
+            is SignInRepositoryResult.ErrorEmailOrPasswordIncorrect -> {
+                SignInUseCaseResult.ErrorEmailOrPasswordWrong
             }
             else -> {
-                Log.e("LoginUseCaseImpl", "Erro desconhecido")
+                SignInUseCaseResult.ErrorUnknown
             }
         }
     }
 
-    override suspend fun singOut() {
-        when(authRepository.signOut()){
-            is SignOutResult.Success -> {
-                Log.i("LoginUseCaseImpl", "Sign Out com sucesso")
+    override suspend fun singOut(): SignOutUseCaseResult {
+        return when(authRepository.signOut()){
+            is SignOutRepositoryResult.Success -> {
+                SignOutUseCaseResult.Success
             }
-            is SignOutResult.ErrorUnknown -> {
-                Log.e("LoginUseCaseImpl", "Sign Out com erro desconhecido")
-            }
-        }
-    }
-
-    override suspend fun createUser(email: String, password: String) {
-        when (authRepository.createUser(email, password)) {
-            is CreateUserResult.Success -> {
-                Log.i("LoginUseCaseImpl", "Usuário criado no firebase com sucesso")
-            }
-            is CreateUserResult.ErrorEmailAlreadyExists -> {
-                Log.e("LoginUseCaseImpl", "Encontramos uma conta com esse email")
-            }
-            is CreateUserResult.ErrorEmailMalformed -> {
-                Log.e("LoginUseCaseImpl", "E-mail mal formatado")
-            }
-            is CreateUserResult.ErrorWeakPassword -> {
-                Log.e("LoginUseCaseImpl", "Senha muito fraca")
-            }
-            is CreateUserResult.ErrorUnknown -> {
-                Log.e("LoginUseCaseImpl", "Erro desconhecido")
+            is SignOutRepositoryResult.ErrorUnknown -> {
+                SignOutUseCaseResult.ErrorUnknown
             }
         }
     }
 
-    override suspend fun getCurrentUser() {
-        val getCurrentUserResult = authRepository.getCurrentUser()
-        when (getCurrentUserResult) {
-            is GetCurrentUserResult.Success -> {
-                val emailUser = getCurrentUserResult.emailUser
-                Log.i("LoginUseCaseImpl", "usuário atual: $emailUser")
+    override suspend fun createUser(email: String, password: String): CreateUserUseCaseResult {
+        return when (authRepository.createUser(email, password)) {
+            is CreateUserRepositoryResult.Success -> {
+                CreateUserUseCaseResult.Success
             }
-            is GetCurrentUserResult.ErrorNoUserFound -> {
-                Log.e("LoginUseCaseImpl", "Sem usuário logado no sistema")
+            is CreateUserRepositoryResult.ErrorEmailAlreadyExists -> {
+                CreateUserUseCaseResult.ErrorEmailAlreadyExists
+            }
+            is CreateUserRepositoryResult.ErrorEmailMalformed -> {
+                CreateUserUseCaseResult.ErrorEmailMalformed
+            }
+            is CreateUserRepositoryResult.ErrorWeakPassword -> {
+                CreateUserUseCaseResult.ErrorWeakPassword
+            }
+            is CreateUserRepositoryResult.ErrorUnknown -> {
+                CreateUserUseCaseResult.ErrorUnknown
+            }
+        }
+    }
+
+    override suspend fun getCurrentUser(): GetCurrentUserUseCaseResult {
+        val getCurrentUserRepositoryResult = authRepository.getCurrentUser()
+        return when (getCurrentUserRepositoryResult) {
+            is GetCurrentUserRepositoryResult.Success -> {
+                val user = getCurrentUserRepositoryResult.user
+                GetCurrentUserUseCaseResult.Success(user.convertToUserView())
+            }
+            is GetCurrentUserRepositoryResult.ErrorNoUserRepositoryFound -> {
+                GetCurrentUserUseCaseResult.ErrorUnknown
             }
         }
     }
