@@ -7,15 +7,16 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import br.com.passwordkeeper.R
 import br.com.passwordkeeper.databinding.HomeFragmentBinding
 import br.com.passwordkeeper.domain.model.CardType
-import br.com.passwordkeeper.domain.result.GetAdviceState
+import br.com.passwordkeeper.domain.result.GetAdviceStateResult
 import br.com.passwordkeeper.presentation.ui.recyclerview.adapter.TypeAdapter
 import br.com.passwordkeeper.presentation.ui.viewModel.HomeViewModel
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 
-class HomeFragment: Fragment() {
+class HomeFragment : Fragment() {
     private val navController by lazy {
         findNavController()
     }
@@ -58,24 +59,25 @@ class HomeFragment: Fragment() {
 
     private fun observeAdviceState() {
         homeViewModel.adviceState.observe(viewLifecycleOwner) {
-            when(it) {
-                is GetAdviceState.Success -> {
-                   binding.textViewMessage.text = it.advice.message
+            when (it) {
+                is GetAdviceStateResult.Loading -> {
+                    binding.textViewMessage.text = getString(R.string.message_loading)
                 }
-                is GetAdviceState.SuccessWithoutMessage -> {
-                    binding.textViewMessage.text = "Sorry, no message found!"
+                is GetAdviceStateResult.Success -> {
+                    binding.textViewMessage.text = it.advice.message
                 }
-                is GetAdviceState.ErrorUnknown -> {
-                    binding.textViewMessage.text = "Sorry, an error happend!"
+                is GetAdviceStateResult.SuccessWithoutMessage -> {
+                    binding.textViewMessage.text = getString(R.string.no_message_found)
+                }
+                is GetAdviceStateResult.ErrorUnknown -> {
+                    binding.textViewMessage.text = getString(R.string.error_happend)
                 }
             }
         }
     }
 
     private fun updateAdviceState() {
-        lifecycleScope.launch{
-            homeViewModel.updateAdvice()
-        }
+        homeViewModel.updateAdvice()
     }
 
 }
