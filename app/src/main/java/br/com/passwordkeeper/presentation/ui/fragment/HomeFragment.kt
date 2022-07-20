@@ -7,11 +7,13 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import br.com.passwordkeeper.R
 import br.com.passwordkeeper.databinding.HomeFragmentBinding
 import br.com.passwordkeeper.domain.model.CardType
 import br.com.passwordkeeper.domain.result.GetAdviceState
 import br.com.passwordkeeper.presentation.ui.recyclerview.adapter.TypeAdapter
 import br.com.passwordkeeper.presentation.ui.viewModel.HomeViewModel
+import com.google.android.material.button.MaterialButton
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 
@@ -54,6 +56,7 @@ class HomeFragment: Fragment() {
         )
         updateAdviceState()
         observeAdviceState()
+        setupAskForAdviceButton()
     }
 
     private fun observeAdviceState() {
@@ -63,10 +66,10 @@ class HomeFragment: Fragment() {
                    binding.textViewMessage.text = it.advice.message
                 }
                 is GetAdviceState.SuccessWithoutMessage -> {
-                    binding.textViewMessage.text = "Sorry, no message found!"
+                    binding.textViewMessage.text = getString(R.string.no_message_found)
                 }
                 is GetAdviceState.ErrorUnknown -> {
-                    binding.textViewMessage.text = "Sorry, an error happend!"
+                    binding.textViewMessage.text = getString(R.string.error)
                 }
             }
         }
@@ -75,6 +78,15 @@ class HomeFragment: Fragment() {
     private fun updateAdviceState() {
         lifecycleScope.launch{
             homeViewModel.updateAdvice()
+        }
+    }
+
+    private fun setupAskForAdviceButton() {
+        val buttonAskForAdvice: MaterialButton = binding.buttonAskForAdvice
+        buttonAskForAdvice.setOnClickListener{
+            lifecycleScope.launch {
+                homeViewModel.updateAdvice()
+            }
         }
     }
 

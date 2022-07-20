@@ -48,10 +48,28 @@
                 tools:text="Francis!" />
 
             <TextView
+                android:id="@+id/tvLetterBreweryDetails"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@drawable/rounded_textview"
+                android:scaleType="centerCrop"
+                android:layout_marginTop="25dp"
+                android:layout_marginStart="150dp"
+                android:text="F"
+                android:fontFamily="@font/inter"
+                android:textFontWeight="700"
+                android:gravity="center"
+                android:textSize="32sp"
+                android:textColor="@color/purple"
+                app:layout_constraintStart_toEndOf="@+id/textViewName"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <TextView
                 android:id="@+id/textViewAdviceOfMoment"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="25dp"
+                android:layout_marginTop="8dp"
                 android:fontFamily="@font/inter_bold"
                 android:text="@string/advice_of_moment"
                 android:textColor="@color/white"
@@ -67,13 +85,57 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="25dp"
                 android:fontFamily="@font/inter_light"
-                tools:text="@string/message"
                 android:textColor="@color/white"
                 android:textSize="16sp"
                 android:textStyle="italic"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textViewAdviceOfMoment" />
+                app:layout_constraintTop_toBottomOf="@+id/textViewAdviceOfMoment"
+                tools:text="@string/message" />
+
+            <View
+                android:id="@+id/ViewMessage"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginStart="25dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="25dp"
+                android:background="@color/gray"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewMessage" />
+
+            <TextView
+                android:id="@+id/textViewTheAdviceAbove"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="25dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="25dp"
+                android:fontFamily="@font/inter"
+                android:text="@string/the_advice_above"
+                android:textColor="@color/white"
+                android:textFontWeight="400"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ViewMessage" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/buttonAskForAdvice"
+                android:layout_width="100dp"
+                android:layout_height="30dp"
+                android:layout_marginStart="230dp"
+                android:background="@color/purple_light"
+                android:text="@string/ask_for_advice"
+                android:textSize="7dp"
+                app:boxCornerRadiusBottomEnd="20dp"
+                app:boxCornerRadiusBottomStart="20dp"
+                app:boxCornerRadiusTopEnd="20dp"
+                app:boxCornerRadiusTopStart="20dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewTheAdviceAbove" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/textInputSearch"
@@ -81,7 +143,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="25dp"
-                android:layout_marginTop="35dp"
+                android:layout_marginTop="100dp"
                 android:background="@color/purple"
                 app:endIconMode="clear_text"
                 app:hintEnabled="false"
