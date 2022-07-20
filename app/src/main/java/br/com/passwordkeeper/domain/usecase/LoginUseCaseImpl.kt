@@ -25,13 +25,13 @@ class LoginUseCaseImpl(
         }
     }
 
-    override suspend fun singOut() {
-        when(authRepository.signOut()){
+    override suspend fun singOut(): SignOutUseCaseResult {
+        return when(authRepository.signOut()){
             is SignOutRepositoryResult.Success -> {
-                Log.i("LoginUseCaseImpl", "Sign Out com sucesso")
+                SignOutUseCaseResult.Success
             }
             is SignOutRepositoryResult.ErrorUnknown -> {
-                Log.e("LoginUseCaseImpl", "Sign Out com erro desconhecido")
+                SignOutUseCaseResult.ErrorUnknown
             }
         }
     }
