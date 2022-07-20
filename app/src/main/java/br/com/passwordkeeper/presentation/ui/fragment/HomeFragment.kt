@@ -45,12 +45,12 @@ class HomeFragment : Fragment() {
         binding.recyclerViewTypes.adapter = typeAdapter
         typeAdapter.updateList(
             listCardType = listOf(
-                CardType("streaming", 25),
-                CardType("social media", 8),
-                CardType("banks", 3),
-                CardType("Education", 5),
-                CardType("Work", 2),
-                CardType("Card", 7)
+                CardType("streaming", 25, R.drawable.ic_stream_type),
+                CardType("social media", 8, R.drawable.ic_social_media),
+                CardType("banks", 3, R.drawable.ic_bank),
+                CardType("Education", 5, R.drawable.ic_education),
+                CardType("Work", 2, R.drawable.ic_work),
+                CardType("Card", 7, R.drawable.ic_card)
             )
         )
         updateAdviceState()
