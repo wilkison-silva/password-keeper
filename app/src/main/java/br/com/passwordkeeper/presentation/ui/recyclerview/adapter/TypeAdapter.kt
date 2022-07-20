@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import br.com.passwordkeeper.R
 import br.com.passwordkeeper.databinding.HomeFragmentBinding
 import br.com.passwordkeeper.databinding.ItemImageTypesBinding
 import br.com.passwordkeeper.domain.model.CardType
@@ -48,6 +49,7 @@ class TypeAdapter(cardTypeList: List<CardType> = listOf()) :
         fun bind(cardType: CardType) {
             binding.textViewTextType.text = cardType.typeName
             binding.textViewQuantity.text = cardType.quantity.toString()
+            binding.imageViewType.setImageResource(cardType.icon)
         }
     }
 }
