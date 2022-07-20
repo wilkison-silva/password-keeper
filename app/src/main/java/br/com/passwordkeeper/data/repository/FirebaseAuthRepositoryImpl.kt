@@ -60,7 +60,12 @@ class FirebaseAuthRepositoryImpl(
 
     override suspend fun getCurrentUser(): GetCurrentUserRepositoryResult {
         return firebaseAuth.currentUser?.email?.let { emailUser: String ->
-            GetCurrentUserRepositoryResult.Success(emailUser)
+            //TODO get name from another api from firebase
+            val userResponse = UserResponse(
+                email = emailUser,
+                name = "Nome de Teste"
+            )
+            GetCurrentUserRepositoryResult.Success(userResponse.convertToUser())
         } ?: GetCurrentUserRepositoryResult.ErrorNoUserRepositoryFound
     }
 

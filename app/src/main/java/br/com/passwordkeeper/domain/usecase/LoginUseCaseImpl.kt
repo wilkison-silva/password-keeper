@@ -3,6 +3,7 @@ package br.com.passwordkeeper.domain.usecase
 import android.util.Log
 import br.com.passwordkeeper.data.repository.AuthRepository
 import br.com.passwordkeeper.domain.model.User
+import br.com.passwordkeeper.domain.model.UserView
 import br.com.passwordkeeper.domain.result.*
 
 class LoginUseCaseImpl(
@@ -36,35 +37,35 @@ class LoginUseCaseImpl(
         }
     }
 
-    override suspend fun createUser(email: String, password: String) {
-        when (authRepository.createUser(email, password)) {
+    override suspend fun createUser(email: String, password: String): CreateUserUseCaseResult {
+        return when (authRepository.createUser(email, password)) {
             is CreateUserRepositoryResult.Success -> {
-                Log.i("LoginUseCaseImpl", "Usuário criado no firebase com sucesso")
+                CreateUserUseCaseResult.Success
             }
             is CreateUserRepositoryResult.ErrorEmailAlreadyExists -> {
-                Log.e("LoginUseCaseImpl", "Encontramos uma conta com esse email")
+                CreateUserUseCaseResult.ErrorEmailAlreadyExists
             }
             is CreateUserRepositoryResult.ErrorEmailMalformed -> {
-                Log.e("LoginUseCaseImpl", "E-mail mal formatado")
+                CreateUserUseCaseResult.ErrorEmailMalformed
             }
             is CreateUserRepositoryResult.ErrorWeakPassword -> {
-                Log.e("LoginUseCaseImpl", "Senha muito fraca")
+                CreateUserUseCaseResult.ErrorWeakPassword
             }
             is CreateUserRepositoryResult.ErrorUnknown -> {
-                Log.e("LoginUseCaseImpl", "Erro desconhecido")
+                CreateUserUseCaseResult.ErrorUnknown
             }
         }
     }
 
-    override suspend fun getCurrentUser() {
-        val getCurrentUserResult = authRepository.getCurrentUser()
-        when (getCurrentUserResult) {
+    override suspend fun getCurrentUser(): GetCurrentUserUseCaseResult {
+        val getCurrentUserRepositoryResult = authRepository.getCurrentUser()
+        return when (getCurrentUserRepositoryResult) {
             is GetCurrentUserRepositoryResult.Success -> {
-                val emailUser = getCurrentUserResult.emailUser
-                Log.i("LoginUseCaseImpl", "usuário atual: $emailUser")
+                val user = getCurrentUserRepositoryResult.user
+                GetCurrentUserUseCaseResult.Success(user.convertToUserView())
             }
             is GetCurrentUserRepositoryResult.ErrorNoUserRepositoryFound -> {
-                Log.e("LoginUseCaseImpl", "Sem usuário logado no sistema")
+                GetCurrentUserUseCaseResult.ErrorUnknown
             }
         }
     }
