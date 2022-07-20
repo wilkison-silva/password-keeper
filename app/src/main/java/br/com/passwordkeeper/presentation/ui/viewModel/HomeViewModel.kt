@@ -3,30 +3,37 @@ package br.com.passwordkeeper.presentation.ui.viewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import br.com.passwordkeeper.domain.result.GetAdviceState
+import androidx.lifecycle.viewModelScope
+import br.com.passwordkeeper.domain.result.GetAdviceStateResult
 import br.com.passwordkeeper.domain.result.GetAdviceUseCaseResult
 import br.com.passwordkeeper.domain.usecase.AdviceUseCase
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class HomeViewModel(
     private val adviceUseCase: AdviceUseCase
-): ViewModel() {
+) : ViewModel() {
 
-    private val _adviceState = MutableLiveData<GetAdviceState>()
-    val adviceState: LiveData<GetAdviceState>
+    private val _adviceState = MutableLiveData<GetAdviceStateResult>()
+    val adviceState: LiveData<GetAdviceStateResult>
         get() = _adviceState
 
-    suspend fun updateAdvice() {
-        val getAdviceUseCaseResult = adviceUseCase.getAdvice()
-        when(getAdviceUseCaseResult) {
-            is GetAdviceUseCaseResult.Success -> {
-                _adviceState.postValue(GetAdviceState.Success(getAdviceUseCaseResult.advice))
-            }
-            is GetAdviceUseCaseResult.SuccessAdviceWithoutMessage -> {
-                _adviceState.postValue(GetAdviceState.SuccessWithoutMessage)
-            }
-            is GetAdviceUseCaseResult.ErrorUnknown -> {
-                _adviceState.postValue(GetAdviceState.ErrorUnknown)
+    fun updateAdvice() {
+        viewModelScope.launch {
+            _adviceState.postValue(GetAdviceStateResult.Loading)
+            val getAdviceUseCaseResult = adviceUseCase.getAdvice()
+            when (getAdviceUseCaseResult) {
+                is GetAdviceUseCaseResult.Success -> {
+                    _adviceState.postValue(GetAdviceStateResult.Success(getAdviceUseCaseResult.advice))
+                }
+                is GetAdviceUseCaseResult.SuccessAdviceWithoutMessage -> {
+                    _adviceState.postValue(GetAdviceStateResult.SuccessWithoutMessage)
+                }
+                is GetAdviceUseCaseResult.ErrorUnknown -> {
+                    _adviceState.postValue(GetAdviceStateResult.ErrorUnknown)
+                }
             }
         }
+
     }
 }
