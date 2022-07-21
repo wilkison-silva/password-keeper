@@ -19,8 +19,6 @@ class LoginFragment : Fragment() {
         findNavController()
     }
 
-    private val loginUseCase: LoginUseCase by inject()
-
     private lateinit var binding: LoginFragmentBinding
 
     override fun onCreateView(

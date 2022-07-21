@@ -7,7 +7,10 @@ import br.com.passwordkeeper.domain.result.SignInRepositoryResult
 import br.com.passwordkeeper.domain.result.SignOutRepositoryResult
 import com.google.firebase.auth.*
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.toObject
 import kotlinx.coroutines.tasks.await
+
+private const val COLLECTION_USERS = "users"
 
 class FirebaseAuthRepositoryImpl(
     private val firebaseAuth: FirebaseAuth,
@@ -15,20 +18,17 @@ class FirebaseAuthRepositoryImpl(
 ) : AuthRepository {
 
     override suspend fun signIn(email: String, password: String): SignInRepositoryResult {
-
-        return try {
-            val response = firebaseAuth
-                .signInWithEmailAndPassword(email, password).await()
+        try {
+            val response = firebaseAuth.signInWithEmailAndPassword(email, password).await()
             response.user?.email?.let { emailUser: String ->
-                //TODO get name from another api from firebase
-                val userResponse = UserResponse(
-                    email = emailUser,
-                    name = "Nome de Teste"
-                )
-                SignInRepositoryResult.Success(userResponse.convertToUser())
-            } ?: SignInRepositoryResult.ErrorUserNotFound
+                val userResponse = getUserData(emailUser)
+                if (userResponse.email.isNotBlank()) {
+                    return SignInRepositoryResult.Success(userResponse.convertToUser())
+                }
+                return SignInRepositoryResult.ErrorUserNotFound
+            } ?: return SignInRepositoryResult.ErrorUserNotFound
         } catch (exception: Exception) {
-            when (exception) {
+            return when (exception) {
                 is FirebaseAuthInvalidUserException,
                 is FirebaseAuthInvalidCredentialsException ->
                     SignInRepositoryResult.ErrorEmailOrPasswordIncorrect
@@ -61,14 +61,27 @@ class FirebaseAuthRepositoryImpl(
     }
 
     override suspend fun getCurrentUser(): GetCurrentUserRepositoryResult {
-        return firebaseAuth.currentUser?.email?.let { emailUser: String ->
-            //TODO get name from another api from firebase
-            val userResponse = UserResponse(
-                email = emailUser,
-                name = "Nome de Teste"
-            )
-            GetCurrentUserRepositoryResult.Success(userResponse.convertToUser())
-        } ?: GetCurrentUserRepositoryResult.ErrorNoUserRepositoryFound
+        firebaseAuth.currentUser?.email?.let { emailUser: String ->
+            val userResponse = getUserData(emailUser)
+            if (userResponse.email.isNotBlank()) {
+                return GetCurrentUserRepositoryResult.Success(userResponse.convertToUser())
+            }
+            return GetCurrentUserRepositoryResult.ErrorNoUserRepositoryFound
+        } ?: return GetCurrentUserRepositoryResult.ErrorNoUserRepositoryFound
+    }
+
+    private suspend fun getUserData(emailUser: String): UserResponse {
+        try {
+            val documentSnapshot = fireStore
+                .collection(COLLECTION_USERS)
+                .document(emailUser).get().await()
+            documentSnapshot?.toObject<UserResponse>()?.let { userResponse: UserResponse ->
+                return userResponse
+            }
+        } catch (exception: Exception) {
+            exception.printStackTrace()
+        }
+        return UserResponse()
     }
 
 }
