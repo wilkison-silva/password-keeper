@@ -14,6 +14,8 @@ import br.com.passwordkeeper.domain.usecase.LoginUseCaseImpl
 import br.com.passwordkeeper.presentation.ui.viewModel.HomeViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -46,6 +48,7 @@ val retrofitModule = module {
 
 val firebaseModule = module {
     single<FirebaseAuth> { Firebase.auth }
+    single<FirebaseFirestore> { Firebase.firestore }
 }
 
 val serviceModule = module {
@@ -57,7 +60,12 @@ val webClientModule = module {
 }
 
 val repositoryModule = module {
-    single<AuthRepository> { FirebaseAuthRepositoryImpl(get<FirebaseAuth>()) }
+    single<AuthRepository> {
+        FirebaseAuthRepositoryImpl(
+            get<FirebaseAuth>(),
+            get<FirebaseFirestore>()
+        )
+    }
     single<AdviceRepository> { AdviceRepositoryImpl(get<AdviceWebClient>()) }
 }
 
@@ -67,5 +75,5 @@ val useCaseModule = module {
 }
 
 val viewModelModule = module {
-   viewModel<HomeViewModel>{ HomeViewModel(get<AdviceUseCase>()) }
+    viewModel<HomeViewModel> { HomeViewModel(get<AdviceUseCase>()) }
 }

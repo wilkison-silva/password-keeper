@@ -6,10 +6,12 @@ import br.com.passwordkeeper.domain.result.GetCurrentUserRepositoryResult
 import br.com.passwordkeeper.domain.result.SignInRepositoryResult
 import br.com.passwordkeeper.domain.result.SignOutRepositoryResult
 import com.google.firebase.auth.*
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.tasks.await
 
 class FirebaseAuthRepositoryImpl(
-    private val firebaseAuth: FirebaseAuth
+    private val firebaseAuth: FirebaseAuth,
+    private val fireStore: FirebaseFirestore
 ) : AuthRepository {
 
     override suspend fun signIn(email: String, password: String): SignInRepositoryResult {
