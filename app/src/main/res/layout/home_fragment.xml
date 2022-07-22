@@ -48,10 +48,29 @@
                 tools:text="Francis!" />
 
             <TextView
+                android:id="@+id/textViewProfilePhoto"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="25dp"
+                android:background="@drawable/rounded_textview"
+                android:fontFamily="@font/inter"
+                android:gravity="center"
+                android:scaleType="centerCrop"
+                android:text="F"
+                android:layout_marginEnd="25dp"
+                android:textColor="@color/purple"
+                android:textFontWeight="700"
+                android:textSize="32sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <TextView
                 android:id="@+id/textViewAdviceOfMoment"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="25dp"
+                android:layout_marginTop="8dp"
                 android:fontFamily="@font/inter_bold"
                 android:text="@string/advice_of_moment"
                 android:textColor="@color/white"
@@ -60,20 +79,77 @@
                 app:layout_constraintTop_toBottomOf="@+id/textViewHello" />
 
             <TextView
+                android:id="@+id/firstLetter"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="25dp"
+                android:layout_marginTop="9dp"
+                android:layout_marginEnd="25dp"
+                android:fontFamily="@font/inter_extrabold"
+                android:textColor="@color/white"
+                android:textFontWeight="700"
+                android:textSize="16sp"
+                android:textStyle="italic"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewAdviceOfMoment"
+                tools:text="M" />
+
+            <TextView
                 android:id="@+id/textViewMessage"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="25dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="25dp"
-                android:fontFamily="@font/inter_light"
-                tools:text="@string/message"
+                android:fontFamily="@font/inter"
                 android:textColor="@color/white"
+                android:textFontWeight="300"
                 android:textSize="16sp"
                 android:textStyle="italic"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textViewAdviceOfMoment" />
+                app:layout_constraintTop_toBottomOf="@+id/textViewAdviceOfMoment"
+                tools:text="@string/message" />
+
+            <View
+                android:id="@+id/ViewMessage"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_marginStart="25dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="25dp"
+                android:background="@color/gray"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewMessage" />
+
+            <TextView
+                android:id="@+id/textViewTheAdviceAbove"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="25dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="25dp"
+                android:fontFamily="@font/inter"
+                android:text="@string/the_advice_above"
+                android:textColor="@color/white"
+                android:textFontWeight="400"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ViewMessage" />
+
+            <Button
+                android:id="@+id/buttonAskForAdvice"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:layout_marginEnd="20dp"
+                android:background="@drawable/background_rounded_button"
+                android:text="@string/ask_for_advice"
+                android:textSize="11sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewTheAdviceAbove" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/textInputSearch"
@@ -81,13 +157,13 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="25dp"
-                android:layout_marginTop="35dp"
+                android:layout_marginTop="10dp"
                 android:background="@color/purple"
                 app:endIconMode="clear_text"
                 app:hintEnabled="false"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textViewMessage">
+                app:layout_constraintTop_toBottomOf="@+id/buttonAskForAdvice">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/textInputSearchIcon"
