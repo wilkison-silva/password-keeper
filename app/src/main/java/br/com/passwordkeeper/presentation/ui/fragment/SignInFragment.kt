@@ -9,7 +9,7 @@ import androidx.navigation.fragment.findNavController
 import br.com.passwordkeeper.databinding.LoginFragmentBinding
 import com.google.android.material.button.MaterialButton
 
-class LoginFragment : Fragment() {
+class SignInFragment : Fragment() {
     private val navController by lazy {
         findNavController()
     }
@@ -38,20 +38,20 @@ class LoginFragment : Fragment() {
         setupSignInButton()
     }
 
-    fun setupSignUpButton() {
+    private fun setupSignUpButton() {
         val mbSignUp: MaterialButton = binding.mbSignUp
         mbSignUp.setOnClickListener{
             val directions =
-                LoginFragmentDirections.actionLoginFragmentToSignUpFragment()
+                SignInFragmentDirections.actionLoginFragmentToSignUpFragment()
             navController.navigate(directions)
         }
     }
 
-    fun setupSignInButton() {
+    private fun setupSignInButton() {
         val mbSignIn: MaterialButton = binding.mbSignIn
         mbSignIn.setOnClickListener{
             val directions =
-              LoginFragmentDirections.actionLoginFragmentToHomeFragment()
+              SignInFragmentDirections.actionLoginFragmentToHomeFragment()
             navController.navigate(directions)
         }
     }

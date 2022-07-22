@@ -46,9 +46,14 @@ class FirebaseAuthRepositoryImpl(
         }
     }
 
-    override suspend fun createUser(email: String, password: String): CreateUserRepositoryResult {
+    override suspend fun createUser(
+        name: String,
+        email: String,
+        password: String
+    ): CreateUserRepositoryResult {
         return try {
             firebaseAuth.createUserWithEmailAndPassword(email, password).await()
+            setUserData(email, name)
             CreateUserRepositoryResult.Success
         } catch (exception: Exception) {
             when (exception) {
@@ -68,6 +73,20 @@ class FirebaseAuthRepositoryImpl(
             }
             return GetCurrentUserRepositoryResult.ErrorNoUserRepositoryFound
         } ?: return GetCurrentUserRepositoryResult.ErrorNoUserRepositoryFound
+    }
+
+    private suspend fun setUserData(emailUser: String, name: String) {
+        try {
+            fireStore.collection(COLLECTION_USERS)
+                .document(emailUser).set(
+                    UserResponse(
+                        email = emailUser,
+                        name = name
+                    )
+                ).await()
+        } catch (exception: Exception) {
+            exception.printStackTrace()
+        }
     }
 
     private suspend fun getUserData(emailUser: String): UserResponse {

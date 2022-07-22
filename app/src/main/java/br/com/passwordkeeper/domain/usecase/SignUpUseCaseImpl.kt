@@ -8,8 +8,12 @@ class SignUpUseCaseImpl(
     private val authRepository: AuthRepository
 ) : SignUpUseCase {
 
-    override suspend fun createUser(email: String, password: String): CreateUserUseCaseResult {
-        return when (authRepository.createUser(email, password)) {
+    override suspend fun createUser(
+        name: String,
+        email: String,
+        password: String
+    ): CreateUserUseCaseResult {
+        return when (authRepository.createUser(name, email, password)) {
             is CreateUserRepositoryResult.Success -> {
                 CreateUserUseCaseResult.Success
             }

@@ -4,6 +4,6 @@ import br.com.passwordkeeper.domain.result.CreateUserUseCaseResult
 
 interface SignUpUseCase {
 
-    suspend fun createUser(email: String, password: String): CreateUserUseCaseResult
+    suspend fun createUser(name: String, email: String, password: String): CreateUserUseCaseResult
 
 }
