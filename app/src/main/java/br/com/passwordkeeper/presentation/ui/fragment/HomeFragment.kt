@@ -65,11 +65,10 @@ class HomeFragment : Fragment() {
                     binding.firstLetter.text = ""
                 }
                 is GetAdviceStateResult.Success -> {
-                    binding.textViewMessage.text = it.adviceDomain.message
-                    //val countWords = countWords(it.adviceDomain.message)
-                    //binding.textViewTheAdviceAbove.text =
-                       // getString(R.string.the_advice_above, countWords)
-                   // binding.firstLetter.text = getFirstLetter(it.adviceDomain.message)
+                    val adviceView = it.adviceView
+                    binding.textViewMessage.text = adviceView.advice
+                    binding.textViewTheAdviceAbove.text = getString(R.string.the_advice_above, adviceView.quantityWords)
+                    binding.firstLetter.text = adviceView.firstLetter
                 }
                 is GetAdviceStateResult.SuccessWithoutMessage -> {
                     binding.textViewMessage.text = getString(R.string.no_message_found)

@@ -20,10 +20,9 @@ class HomeViewModel(
     fun updateAdvice() {
         viewModelScope.launch {
             _adviceState.postValue(GetAdviceStateResult.Loading)
-            val getAdviceUseCaseResult = adviceUseCase.getAdvice()
-            when (getAdviceUseCaseResult) {
+            when (val getAdviceUseCaseResult = adviceUseCase.getAdvice()) {
                 is GetAdviceUseCaseResult.Success -> {
-                   // _adviceState.postValue(GetAdviceStateResult.Success(getAdviceUseCaseResult.adviceDomain))
+                    _adviceState.postValue(GetAdviceStateResult.Success(getAdviceUseCaseResult.adviceView))
                 }
                 is GetAdviceUseCaseResult.SuccessAdviceWithoutMessage -> {
                     _adviceState.postValue(GetAdviceStateResult.SuccessWithoutMessage)
@@ -35,5 +34,4 @@ class HomeViewModel(
         }
 
     }
-
 }
