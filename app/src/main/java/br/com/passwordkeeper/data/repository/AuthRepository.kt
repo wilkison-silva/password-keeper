@@ -1,18 +1,18 @@
 package br.com.passwordkeeper.data.repository
 
-import br.com.passwordkeeper.domain.result.CreateUserResult
-import br.com.passwordkeeper.domain.result.GetCurrentUserResult
-import br.com.passwordkeeper.domain.result.SignInResult
-import br.com.passwordkeeper.domain.result.SignOutResult
+import br.com.passwordkeeper.domain.result.CreateUserRepositoryResult
+import br.com.passwordkeeper.domain.result.GetCurrentUserRepositoryResult
+import br.com.passwordkeeper.domain.result.SignInRepositoryResult
+import br.com.passwordkeeper.domain.result.SignOutRepositoryResult
 
 interface AuthRepository {
 
-    suspend fun signIn(email: String, password: String): SignInResult
+    suspend fun signIn(email: String, password: String): SignInRepositoryResult
 
-    suspend fun signOut(): SignOutResult
+    suspend fun signOut(): SignOutRepositoryResult
 
-    suspend fun createUser(email: String, password: String): CreateUserResult
+    suspend fun createUser(email: String, password: String): CreateUserRepositoryResult
 
-    suspend fun getCurrentUser(): GetCurrentUserResult
+    suspend fun getCurrentUser(): GetCurrentUserRepositoryResult
 
 }

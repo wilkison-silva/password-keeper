@@ -13,7 +13,7 @@ import androidx.navigation.fragment.findNavController
 import br.com.passwordkeeper.R
 import br.com.passwordkeeper.databinding.HomeFragmentBinding
 import br.com.passwordkeeper.domain.model.CardType
-import br.com.passwordkeeper.domain.result.GetAdviceState
+import br.com.passwordkeeper.domain.result.GetAdviceStateResult
 import br.com.passwordkeeper.presentation.ui.recyclerview.adapter.TypeAdapter
 import br.com.passwordkeeper.presentation.ui.viewModel.HomeViewModel
 import com.google.android.material.button.MaterialButton
@@ -49,12 +49,12 @@ class HomeFragment : Fragment() {
         binding.recyclerViewTypes.adapter = typeAdapter
         typeAdapter.updateList(
             listCardType = listOf(
-                CardType("streaming", 25),
-                CardType("social media", 8),
-                CardType("banks", 3),
-                CardType("Education", 5),
-                CardType("Work", 2),
-                CardType("Card", 7)
+                CardType("streaming", 25, R.drawable.ic_stream_type),
+                CardType("social media", 8, R.drawable.ic_social_media),
+                CardType("banks", 3, R.drawable.ic_bank),
+                CardType("Education", 5, R.drawable.ic_education),
+                CardType("Work", 2, R.drawable.ic_work),
+                CardType("Card", 7, R.drawable.ic_card)
             )
         )
         updateAdviceState()
