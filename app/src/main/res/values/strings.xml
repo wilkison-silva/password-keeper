@@ -30,4 +30,5 @@
     <string name="no_message_found">Sorry, no message found!</string>
     <string name="error">Sorry, an error happend!</string>
     <string name="message">&#160;&#160;&#160;ost things are not as bad as you think they are. Most things are not as bad as you think they are Most things are not as bad as you think they are</string>
+    <string name="loading">Wait a minute, we\'re getting a nice one for you</string>
 </resources>

@@ -65,16 +65,21 @@ class HomeFragment : Fragment() {
     private fun observeAdviceState() {
         homeViewModel.adviceState.observe(viewLifecycleOwner) {
             when (it) {
-                is GetAdviceState.Success -> {
+                is GetAdviceStateResult.Loading -> {
+                    binding.textViewMessage.text = getString(R.string.loading)
+                    binding.firstLetter.text = ""
+                }
+                is GetAdviceStateResult.Success -> {
                     binding.textViewMessage.text = it.advice.message
                     val countWords = countWords(it.advice.message)
-                    binding.textViewTheAdviceAbove.text = getString(R.string.the_advice_above, countWords)
+                    binding.textViewTheAdviceAbove.text =
+                        getString(R.string.the_advice_above, countWords)
                     binding.firstLetter.text = getFirstLetter(it.advice.message)
                 }
-                is GetAdviceState.SuccessWithoutMessage -> {
+                is GetAdviceStateResult.SuccessWithoutMessage -> {
                     binding.textViewMessage.text = getString(R.string.no_message_found)
                 }
-                is GetAdviceState.ErrorUnknown -> {
+                is GetAdviceStateResult.ErrorUnknown -> {
                     binding.textViewMessage.text = getString(R.string.error)
                 }
             }
@@ -82,17 +87,13 @@ class HomeFragment : Fragment() {
     }
 
     private fun updateAdviceState() {
-        lifecycleScope.launch {
-            homeViewModel.updateAdvice()
-        }
+        homeViewModel.updateAdvice()
     }
 
     private fun setupAskForAdviceButton() {
         val buttonAskForAdvice: Button = binding.buttonAskForAdvice
         buttonAskForAdvice.setOnClickListener {
-            lifecycleScope.launch {
-                homeViewModel.updateAdvice()
-            }
+            homeViewModel.updateAdvice()
         }
     }
 
