@@ -1,11 +1,11 @@
 package br.com.passwordkeeper.domain.model
 
-data class UserResponse(
+data class UserData(
     val email: String = "",
     val name: String = "",
 ) {
-    fun convertToUser(): User {
-        return User(
+    fun convertToUserDomain(): UserDomain {
+        return UserDomain(
             email = this.email,
             name = this.name
         )

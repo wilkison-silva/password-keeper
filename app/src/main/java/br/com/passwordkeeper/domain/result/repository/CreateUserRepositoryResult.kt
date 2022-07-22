@@ -1,4 +1,4 @@
-package br.com.passwordkeeper.domain.result
+package br.com.passwordkeeper.domain.result.repository
 
 sealed class CreateUserRepositoryResult {
     object Success : CreateUserRepositoryResult()

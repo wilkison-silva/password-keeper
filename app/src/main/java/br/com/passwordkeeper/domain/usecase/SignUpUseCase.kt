@@ -1,6 +1,6 @@
 package br.com.passwordkeeper.domain.usecase
 
-import br.com.passwordkeeper.domain.result.CreateUserUseCaseResult
+import br.com.passwordkeeper.domain.result.usecase.CreateUserUseCaseResult
 
 interface SignUpUseCase {
 

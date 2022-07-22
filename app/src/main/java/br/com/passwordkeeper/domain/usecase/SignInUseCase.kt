@@ -1,8 +1,8 @@
 package br.com.passwordkeeper.domain.usecase
 
-import br.com.passwordkeeper.domain.result.GetCurrentUserUseCaseResult
-import br.com.passwordkeeper.domain.result.SignInUseCaseResult
-import br.com.passwordkeeper.domain.result.SignOutUseCaseResult
+import br.com.passwordkeeper.domain.result.usecase.GetCurrentUserUseCaseResult
+import br.com.passwordkeeper.domain.result.usecase.SignInUseCaseResult
+import br.com.passwordkeeper.domain.result.usecase.SignOutUseCaseResult
 
 interface SignInUseCase {
 

@@ -1,4 +1,4 @@
-package br.com.passwordkeeper.domain.result
+package br.com.passwordkeeper.domain.result.usecase
 
 sealed class CreateUserUseCaseResult {
     object Success : CreateUserUseCaseResult()
