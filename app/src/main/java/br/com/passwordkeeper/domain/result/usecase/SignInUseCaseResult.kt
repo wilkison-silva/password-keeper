@@ -1,4 +1,4 @@
-package br.com.passwordkeeper.domain.result
+package br.com.passwordkeeper.domain.result.usecase
 
 import br.com.passwordkeeper.domain.model.UserView
 

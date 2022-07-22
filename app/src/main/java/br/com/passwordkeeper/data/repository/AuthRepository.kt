@@ -1,9 +1,9 @@
 package br.com.passwordkeeper.data.repository
 
-import br.com.passwordkeeper.domain.result.CreateUserRepositoryResult
-import br.com.passwordkeeper.domain.result.GetCurrentUserRepositoryResult
-import br.com.passwordkeeper.domain.result.SignInRepositoryResult
-import br.com.passwordkeeper.domain.result.SignOutRepositoryResult
+import br.com.passwordkeeper.domain.result.repository.CreateUserRepositoryResult
+import br.com.passwordkeeper.domain.result.repository.GetCurrentUserRepositoryResult
+import br.com.passwordkeeper.domain.result.repository.SignInRepositoryResult
+import br.com.passwordkeeper.domain.result.repository.SignOutRepositoryResult
 
 interface AuthRepository {
 

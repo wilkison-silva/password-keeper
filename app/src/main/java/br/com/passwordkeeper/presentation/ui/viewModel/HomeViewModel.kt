@@ -4,10 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import br.com.passwordkeeper.domain.result.GetAdviceStateResult
-import br.com.passwordkeeper.domain.result.GetAdviceUseCaseResult
+import br.com.passwordkeeper.domain.result.viewmodelstate.GetAdviceStateResult
+import br.com.passwordkeeper.domain.result.usecase.GetAdviceUseCaseResult
 import br.com.passwordkeeper.domain.usecase.AdviceUseCase
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class HomeViewModel(
@@ -21,10 +20,9 @@ class HomeViewModel(
     fun updateAdvice() {
         viewModelScope.launch {
             _adviceState.postValue(GetAdviceStateResult.Loading)
-            val getAdviceUseCaseResult = adviceUseCase.getAdvice()
-            when (getAdviceUseCaseResult) {
+            when (val getAdviceUseCaseResult = adviceUseCase.getAdvice()) {
                 is GetAdviceUseCaseResult.Success -> {
-                    _adviceState.postValue(GetAdviceStateResult.Success(getAdviceUseCaseResult.advice))
+                    _adviceState.postValue(GetAdviceStateResult.Success(getAdviceUseCaseResult.adviceView))
                 }
                 is GetAdviceUseCaseResult.SuccessAdviceWithoutMessage -> {
                     _adviceState.postValue(GetAdviceStateResult.SuccessWithoutMessage)
@@ -36,5 +34,4 @@ class HomeViewModel(
         }
 
     }
-
 }

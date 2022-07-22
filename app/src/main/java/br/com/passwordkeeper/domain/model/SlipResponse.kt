@@ -4,6 +4,6 @@ import com.squareup.moshi.Json
 
 data class SlipResponse(
 
-    @field:Json(name = "slip") val slip: AdviceResponse
+    @field:Json(name = "slip") val slip: AdviceData
 )
 

@@ -1,6 +1,6 @@
 package br.com.passwordkeeper.domain.model
 
-data class User(
+data class UserDomain(
     private val email: String,
     private val name: String
 ) {
