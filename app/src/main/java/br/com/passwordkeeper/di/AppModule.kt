@@ -7,10 +7,7 @@ import br.com.passwordkeeper.data.repository.AuthRepository
 import br.com.passwordkeeper.data.repository.FirebaseAuthRepositoryImpl
 import br.com.passwordkeeper.data.source.web.AdviceWebClient
 import br.com.passwordkeeper.data.source.web.service.AdviceService
-import br.com.passwordkeeper.domain.usecase.AdviceUseCase
-import br.com.passwordkeeper.domain.usecase.AdviceUseCaseImpl
-import br.com.passwordkeeper.domain.usecase.LoginUseCase
-import br.com.passwordkeeper.domain.usecase.LoginUseCaseImpl
+import br.com.passwordkeeper.domain.usecase.*
 import br.com.passwordkeeper.presentation.ui.viewModel.HomeViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -23,7 +20,6 @@ import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
-import java.util.logging.Level
 
 private const val URL_BASE = "https://api.adviceslip.com"
 
@@ -70,7 +66,8 @@ val repositoryModule = module {
 }
 
 val useCaseModule = module {
-    single<LoginUseCase> { LoginUseCaseImpl(get<AuthRepository>()) }
+    single<SignInUseCase> { SignInUseCaseImpl(get<AuthRepository>()) }
+    single<SignUpUseCase> { SignUpUseCaseImpl(get<AuthRepository>()) }
     single<AdviceUseCase> { AdviceUseCaseImpl(get<AdviceRepository>()) }
 }
 

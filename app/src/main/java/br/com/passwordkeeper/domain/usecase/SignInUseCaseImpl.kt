@@ -4,9 +4,9 @@ import br.com.passwordkeeper.data.repository.AuthRepository
 import br.com.passwordkeeper.domain.model.User
 import br.com.passwordkeeper.domain.result.*
 
-class LoginUseCaseImpl(
+class SignInUseCaseImpl(
     private val authRepository: AuthRepository
-) : LoginUseCase {
+) : SignInUseCase {
 
     override suspend fun signIn(email: String, password: String): SignInUseCaseResult {
         return when (
@@ -32,26 +32,6 @@ class LoginUseCaseImpl(
             }
             is SignOutRepositoryResult.ErrorUnknown -> {
                 SignOutUseCaseResult.ErrorUnknown
-            }
-        }
-    }
-
-    override suspend fun createUser(email: String, password: String): CreateUserUseCaseResult {
-        return when (authRepository.createUser(email, password)) {
-            is CreateUserRepositoryResult.Success -> {
-                CreateUserUseCaseResult.Success
-            }
-            is CreateUserRepositoryResult.ErrorEmailAlreadyExists -> {
-                CreateUserUseCaseResult.ErrorEmailAlreadyExists
-            }
-            is CreateUserRepositoryResult.ErrorEmailMalformed -> {
-                CreateUserUseCaseResult.ErrorEmailMalformed
-            }
-            is CreateUserRepositoryResult.ErrorWeakPassword -> {
-                CreateUserUseCaseResult.ErrorWeakPassword
-            }
-            is CreateUserRepositoryResult.ErrorUnknown -> {
-                CreateUserUseCaseResult.ErrorUnknown
             }
         }
     }

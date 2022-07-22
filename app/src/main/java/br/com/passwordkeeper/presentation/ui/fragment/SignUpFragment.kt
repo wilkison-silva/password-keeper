@@ -10,7 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import br.com.passwordkeeper.databinding.SignUpFragmentBinding
-import br.com.passwordkeeper.domain.usecase.LoginUseCase
+import br.com.passwordkeeper.domain.usecase.SignInUseCase
 import com.google.android.material.button.MaterialButton
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
@@ -21,7 +21,7 @@ class SignUpFragment : Fragment() {
     }
 
     private lateinit var binding: SignUpFragmentBinding
-    private val loginUseCase: LoginUseCase by inject()
+    private val loginUseCase: SignInUseCase by inject()
 
     override fun onCreateView(
         inflater: LayoutInflater,
