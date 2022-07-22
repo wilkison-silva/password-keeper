@@ -48,21 +48,22 @@
                 tools:text="Francis!" />
 
             <TextView
-                android:id="@+id/tvLetterBreweryDetails"
+                android:id="@+id/textViewProfilePhoto"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:background="@drawable/rounded_textview"
-                android:scaleType="centerCrop"
                 android:layout_marginTop="25dp"
-                android:layout_marginStart="150dp"
-                android:text="F"
+                android:background="@drawable/rounded_textview"
                 android:fontFamily="@font/inter"
-                android:textFontWeight="700"
                 android:gravity="center"
-                android:textSize="32sp"
+                android:scaleType="centerCrop"
+                android:text="F"
+                android:layout_marginEnd="25dp"
                 android:textColor="@color/purple"
-                app:layout_constraintStart_toEndOf="@+id/textViewName"
-                app:layout_constraintTop_toTopOf="parent"/>
+                android:textFontWeight="700"
+                android:textSize="32sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
 
             <TextView
                 android:id="@+id/textViewAdviceOfMoment"
@@ -78,14 +79,32 @@
                 app:layout_constraintTop_toBottomOf="@+id/textViewHello" />
 
             <TextView
+                android:id="@+id/firstLetter"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="25dp"
+                android:layout_marginTop="9dp"
+                android:layout_marginEnd="25dp"
+                android:fontFamily="@font/inter_extrabold"
+                android:textColor="@color/white"
+                android:textFontWeight="700"
+                android:textSize="16sp"
+                android:textStyle="italic"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/textViewAdviceOfMoment"
+                tools:text="M" />
+
+            <TextView
                 android:id="@+id/textViewMessage"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="25dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="25dp"
-                android:fontFamily="@font/inter_light"
+                android:fontFamily="@font/inter"
                 android:textColor="@color/white"
+                android:textFontWeight="300"
                 android:textSize="16sp"
                 android:textStyle="italic"
                 app:layout_constraintEnd_toEndOf="parent"

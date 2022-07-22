@@ -4,8 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import br.com.passwordkeeper.R
 import br.com.passwordkeeper.databinding.HomeFragmentBinding
@@ -17,7 +19,7 @@ import com.google.android.material.button.MaterialButton
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 
-class HomeFragment: Fragment() {
+class HomeFragment : Fragment() {
     private val navController by lazy {
         findNavController()
     }
@@ -61,9 +63,12 @@ class HomeFragment: Fragment() {
 
     private fun observeAdviceState() {
         homeViewModel.adviceState.observe(viewLifecycleOwner) {
-            when(it) {
+            when (it) {
                 is GetAdviceState.Success -> {
-                   binding.textViewMessage.text = it.advice.message
+                    binding.textViewMessage.text = it.advice.message
+                    val countWords = countWords(it.advice.message)
+                    binding.textViewTheAdviceAbove.text = getString(R.string.the_advice_above, countWords)
+                    binding.firstLetter.text = getFirstLetter(it.advice.message)
                 }
                 is GetAdviceState.SuccessWithoutMessage -> {
                     binding.textViewMessage.text = getString(R.string.no_message_found)
@@ -76,18 +81,27 @@ class HomeFragment: Fragment() {
     }
 
     private fun updateAdviceState() {
-        lifecycleScope.launch{
+        lifecycleScope.launch {
             homeViewModel.updateAdvice()
         }
     }
 
     private fun setupAskForAdviceButton() {
         val buttonAskForAdvice: MaterialButton = binding.buttonAskForAdvice
-        buttonAskForAdvice.setOnClickListener{
+        buttonAskForAdvice.setOnClickListener {
             lifecycleScope.launch {
                 homeViewModel.updateAdvice()
             }
         }
+    }
+
+    private fun countWords(phrase: String): Int {
+        val wordsList = phrase.trim().split(" ")
+        return wordsList.size
+    }
+
+    private fun getFirstLetter(phrase: String): String {
+        return phrase.trim()[0].toString()
     }
 
 }
