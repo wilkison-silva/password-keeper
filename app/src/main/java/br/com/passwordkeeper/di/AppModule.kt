@@ -69,6 +69,8 @@ val useCaseModule = module {
     single<SignInUseCase> { SignInUseCaseImpl(get<AuthRepository>()) }
     single<SignUpUseCase> { SignUpUseCaseImpl(get<AuthRepository>()) }
     single<AdviceUseCase> { AdviceUseCaseImpl(get<AdviceRepository>()) }
+    single<ValidationFormSignInUseCase> { ValidationFormSignInUseCaseImpl() }
+    single<ValidationFormSignUpUseCase> { ValidationFormSignUpUseCaseImpl() }
 }
 
 val viewModelModule = module {
