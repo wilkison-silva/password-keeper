@@ -30,7 +30,7 @@ class SignInUseCaseImpl(
         }
     }
 
-    override suspend fun singOut(): SignOutUseCaseResult {
+    override suspend fun signOut(): SignOutUseCaseResult {
         return when (authRepository.signOut()) {
             is SignOutRepositoryResult.Success -> {
                 SignOutUseCaseResult.Success

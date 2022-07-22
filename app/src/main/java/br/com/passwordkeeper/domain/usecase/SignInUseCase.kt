@@ -8,7 +8,7 @@ interface SignInUseCase {
 
     suspend fun signIn(email: String, password: String): SignInUseCaseResult
 
-    suspend fun singOut(): SignOutUseCaseResult
+    suspend fun signOut(): SignOutUseCaseResult
 
     suspend fun getCurrentUser(): GetCurrentUserUseCaseResult
 
