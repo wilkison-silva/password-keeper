@@ -2,9 +2,10 @@ package br.com.passwordkeeper.domain.usecase
 
 import br.com.passwordkeeper.domain.result.usecase.ValidationFormSignUpUseCaseResult
 import br.com.passwordkeeper.extensions.isValidEmail
-import br.com.passwordkeeper.extensions.isValidPassword
 
-class ValidationFormSignUpUseCaseImpl : ValidationFormSignUpUseCase {
+class ValidationFormSignUpUseCaseImpl(
+    private val passwordValidationUseCase: PasswordValidationUseCase
+) : ValidationFormSignUpUseCase {
 
     override fun validateForm(
         name: String,
@@ -19,7 +20,7 @@ class ValidationFormSignUpUseCaseImpl : ValidationFormSignUpUseCase {
             return ValidationFormSignUpUseCaseResult.ErrorEmailMalFormed
         if (password.isBlank())
             return ValidationFormSignUpUseCaseResult.ErrorPasswordIsBlank
-        if (!password.isValidPassword())
+        if (!passwordValidationUseCase.isValidPassword(password))
             return ValidationFormSignUpUseCaseResult.ErrorPasswordTooWeak
         return ValidationFormSignUpUseCaseResult.Success
     }
