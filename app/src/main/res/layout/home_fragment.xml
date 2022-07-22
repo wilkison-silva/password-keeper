@@ -140,20 +140,15 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/ViewMessage" />
 
-            <com.google.android.material.button.MaterialButton
+            <Button
                 android:id="@+id/buttonAskForAdvice"
-                android:layout_width="100dp"
-                android:layout_height="30dp"
-                android:layout_marginStart="230dp"
-                android:background="@color/purple_light"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:layout_marginEnd="20dp"
+                android:background="@drawable/background_rounded_button"
                 android:text="@string/ask_for_advice"
-                android:textSize="7dp"
-                app:boxCornerRadiusBottomEnd="20dp"
-                app:boxCornerRadiusBottomStart="20dp"
-                app:boxCornerRadiusTopEnd="20dp"
-                app:boxCornerRadiusTopStart="20dp"
+                android:textSize="11sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/textViewTheAdviceAbove" />
 
             <com.google.android.material.textfield.TextInputLayout
@@ -162,13 +157,13 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="25dp"
-                android:layout_marginTop="100dp"
+                android:layout_marginTop="10dp"
                 android:background="@color/purple"
                 app:endIconMode="clear_text"
                 app:hintEnabled="false"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textViewMessage">
+                app:layout_constraintTop_toBottomOf="@+id/buttonAskForAdvice">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/textInputSearchIcon"

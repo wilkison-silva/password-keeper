@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
@@ -87,7 +88,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun setupAskForAdviceButton() {
-        val buttonAskForAdvice: MaterialButton = binding.buttonAskForAdvice
+        val buttonAskForAdvice: Button = binding.buttonAskForAdvice
         buttonAskForAdvice.setOnClickListener {
             lifecycleScope.launch {
                 homeViewModel.updateAdvice()
