@@ -1,8 +1,8 @@
 package br.com.passwordkeeper.domain.model
 
 data class UserResponse(
-    private val email: String,
-    private val name: String,
+    val email: String = "",
+    val name: String = "",
 ) {
     fun convertToUser(): User {
         return User(

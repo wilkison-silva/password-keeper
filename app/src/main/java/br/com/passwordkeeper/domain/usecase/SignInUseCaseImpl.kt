@@ -1,18 +1,17 @@
 package br.com.passwordkeeper.domain.usecase
 
-import android.util.Log
 import br.com.passwordkeeper.data.repository.AuthRepository
 import br.com.passwordkeeper.domain.model.User
-import br.com.passwordkeeper.domain.model.UserView
 import br.com.passwordkeeper.domain.result.*
 
-class LoginUseCaseImpl(
+class SignInUseCaseImpl(
     private val authRepository: AuthRepository
-) : LoginUseCase {
+) : SignInUseCase {
 
     override suspend fun signIn(email: String, password: String): SignInUseCaseResult {
-        val signInRepositoryResult: SignInRepositoryResult = authRepository.signIn(email, password)
-        return when (signInRepositoryResult) {
+        return when (
+            val signInRepositoryResult: SignInRepositoryResult = authRepository
+                .signIn(email, password)) {
             is SignInRepositoryResult.Success -> {
                 val user: User = signInRepositoryResult.user
                 SignInUseCaseResult.Success(user.convertToUserView())
@@ -27,7 +26,7 @@ class LoginUseCaseImpl(
     }
 
     override suspend fun singOut(): SignOutUseCaseResult {
-        return when(authRepository.signOut()){
+        return when (authRepository.signOut()) {
             is SignOutRepositoryResult.Success -> {
                 SignOutUseCaseResult.Success
             }
@@ -37,29 +36,8 @@ class LoginUseCaseImpl(
         }
     }
 
-    override suspend fun createUser(email: String, password: String): CreateUserUseCaseResult {
-        return when (authRepository.createUser(email, password)) {
-            is CreateUserRepositoryResult.Success -> {
-                CreateUserUseCaseResult.Success
-            }
-            is CreateUserRepositoryResult.ErrorEmailAlreadyExists -> {
-                CreateUserUseCaseResult.ErrorEmailAlreadyExists
-            }
-            is CreateUserRepositoryResult.ErrorEmailMalformed -> {
-                CreateUserUseCaseResult.ErrorEmailMalformed
-            }
-            is CreateUserRepositoryResult.ErrorWeakPassword -> {
-                CreateUserUseCaseResult.ErrorWeakPassword
-            }
-            is CreateUserRepositoryResult.ErrorUnknown -> {
-                CreateUserUseCaseResult.ErrorUnknown
-            }
-        }
-    }
-
     override suspend fun getCurrentUser(): GetCurrentUserUseCaseResult {
-        val getCurrentUserRepositoryResult = authRepository.getCurrentUser()
-        return when (getCurrentUserRepositoryResult) {
+        return when (val getCurrentUserRepositoryResult = authRepository.getCurrentUser()) {
             is GetCurrentUserRepositoryResult.Success -> {
                 val user = getCurrentUserRepositoryResult.user
                 GetCurrentUserUseCaseResult.Success(user.convertToUserView())

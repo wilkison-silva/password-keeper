@@ -11,7 +11,7 @@ interface AuthRepository {
 
     suspend fun signOut(): SignOutRepositoryResult
 
-    suspend fun createUser(email: String, password: String): CreateUserRepositoryResult
+    suspend fun createUser(name: String, email: String, password: String): CreateUserRepositoryResult
 
     suspend fun getCurrentUser(): GetCurrentUserRepositoryResult
 
