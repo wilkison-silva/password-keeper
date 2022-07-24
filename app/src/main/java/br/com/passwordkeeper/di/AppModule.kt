@@ -1,10 +1,7 @@
 package br.com.passwordkeeper.di
 
 import br.com.passwordkeeper.BuildConfig
-import br.com.passwordkeeper.data.repository.AdviceRepository
-import br.com.passwordkeeper.data.repository.AdviceRepositoryImpl
-import br.com.passwordkeeper.data.repository.AuthRepository
-import br.com.passwordkeeper.data.repository.FirebaseAuthRepositoryImpl
+import br.com.passwordkeeper.data.repository.*
 import br.com.passwordkeeper.data.source.web.AdviceWebClient
 import br.com.passwordkeeper.data.source.web.service.AdviceService
 import br.com.passwordkeeper.domain.usecase.*
@@ -63,6 +60,7 @@ val repositoryModule = module {
         )
     }
     single<AdviceRepository> { AdviceRepositoryImpl(get<AdviceWebClient>()) }
+    single<CardRepository> { FirebaseCardRepositoryImpl() }
 }
 
 val useCaseModule = module {
