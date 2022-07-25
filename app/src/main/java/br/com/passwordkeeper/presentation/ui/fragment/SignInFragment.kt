@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import br.com.passwordkeeper.data.repository.CardRepository
 import br.com.passwordkeeper.databinding.LoginFragmentBinding
 import br.com.passwordkeeper.domain.usecase.SignInUseCase
 import com.google.android.material.button.MaterialButton
@@ -16,6 +17,7 @@ import org.koin.android.ext.android.inject
 class SignInFragment : Fragment() {
 
     private val signInUseCase: SignInUseCase by inject()
+    private val cardRepository: CardRepository by inject()
 
     private val navController by lazy {
         findNavController()
@@ -62,6 +64,9 @@ class SignInFragment : Fragment() {
                     email = "francis@teste.com.br",
                     password = "Teste123"
                 )
+            }
+            lifecycleScope.launch {
+                cardRepository.deleteCard("AyWd8K0mBaXmMcrLpKMN")
             }
             val directions =
               SignInFragmentDirections.actionLoginFragmentToHomeFragment()
