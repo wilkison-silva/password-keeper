@@ -1,6 +1,7 @@
 package br.com.passwordkeeper.data.repository
 
 import br.com.passwordkeeper.domain.model.UserData
+import br.com.passwordkeeper.domain.model.UserFirestore
 import br.com.passwordkeeper.domain.result.repository.CreateUserRepositoryResult
 import br.com.passwordkeeper.domain.result.repository.GetCurrentUserRepositoryResult
 import br.com.passwordkeeper.domain.result.repository.SignInRepositoryResult
@@ -9,8 +10,6 @@ import com.google.firebase.auth.*
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.toObject
 import kotlinx.coroutines.tasks.await
-
-private const val COLLECTION_USERS = "users"
 
 class FirebaseAuthRepositoryImpl(
     private val firebaseAuth: FirebaseAuth,
@@ -21,12 +20,10 @@ class FirebaseAuthRepositoryImpl(
         try {
             val response = firebaseAuth.signInWithEmailAndPassword(email, password).await()
             response.user?.email?.let { emailUser: String ->
-                val userResponse = getUserData(emailUser)
-                if (userResponse.email.isNotBlank()) {
-                    return SignInRepositoryResult.Success(userResponse.convertToUserDomain())
-                }
-                return SignInRepositoryResult.ErrorUserNotFound
-            } ?: return SignInRepositoryResult.ErrorUserNotFound
+                val userData = getUserData(emailUser)
+                if (userData.email.isNotBlank())
+                    return SignInRepositoryResult.Success(userData.convertToUserDomain())
+            }
         } catch (exception: Exception) {
             return when (exception) {
                 is FirebaseAuthInvalidUserException,
@@ -35,6 +32,7 @@ class FirebaseAuthRepositoryImpl(
                 else -> SignInRepositoryResult.ErrorUnknown
             }
         }
+        return SignInRepositoryResult.ErrorUserNotFound
     }
 
     override suspend fun signOut(): SignOutRepositoryResult {
@@ -52,8 +50,8 @@ class FirebaseAuthRepositoryImpl(
         password: String
     ): CreateUserRepositoryResult {
         return try {
-            firebaseAuth.createUserWithEmailAndPassword(email, password).await()
-            setUserData(email, name)
+            createUserInFirebaseAuthentication(email, password)
+            createUserInFirebaseFirestore(email, name)
             CreateUserRepositoryResult.Success
         } catch (exception: Exception) {
             when (exception) {
@@ -65,21 +63,28 @@ class FirebaseAuthRepositoryImpl(
         }
     }
 
+    private suspend fun createUserInFirebaseAuthentication(
+        email: String,
+        password: String
+    ) {
+        firebaseAuth.createUserWithEmailAndPassword(email, password).await()
+    }
+
     override suspend fun getCurrentUser(): GetCurrentUserRepositoryResult {
         firebaseAuth.currentUser?.email?.let { emailUser: String ->
-            val userResponse = getUserData(emailUser)
-            if (userResponse.email.isNotBlank()) {
-                return GetCurrentUserRepositoryResult.Success(userResponse.convertToUserDomain())
+            val userData = getUserData(emailUser)
+            if (userData.email.isNotBlank()) {
+                return GetCurrentUserRepositoryResult.Success(userData.convertToUserDomain())
             }
             return GetCurrentUserRepositoryResult.ErrorNoUserRepositoryFound
         } ?: return GetCurrentUserRepositoryResult.ErrorNoUserRepositoryFound
     }
 
-    private suspend fun setUserData(emailUser: String, name: String) {
+    private suspend fun createUserInFirebaseFirestore(emailUser: String, name: String) {
         try {
             fireStore.collection(COLLECTION_USERS)
                 .document(emailUser).set(
-                    UserData(
+                    UserFirestore(
                         email = emailUser,
                         name = name
                     )
@@ -91,16 +96,16 @@ class FirebaseAuthRepositoryImpl(
 
     private suspend fun getUserData(emailUser: String): UserData {
         try {
-            val documentSnapshot = fireStore
+            val userDocumentSnapshot = fireStore
                 .collection(COLLECTION_USERS)
                 .document(emailUser).get().await()
-            documentSnapshot?.toObject<UserData>()?.let { userData: UserData ->
-                return userData
+            val userFirestore = userDocumentSnapshot?.toObject<UserFirestore>()
+            userFirestore?.let {
+                return it.convertToUserData()
             }
         } catch (exception: Exception) {
             exception.printStackTrace()
         }
         return UserData()
     }
-
 }

@@ -7,7 +7,8 @@ interface FormValidationSignUpUseCase {
     fun validateForm(
         name: String,
         email: String,
-        password: String
+        password: String,
+        confirmedPassword: String
     ): FormValidationSignUpUseCaseResult
 
 }

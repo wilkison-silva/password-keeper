@@ -5,11 +5,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import br.com.passwordkeeper.data.repository.CardRepository
 import br.com.passwordkeeper.databinding.LoginFragmentBinding
+import br.com.passwordkeeper.domain.usecase.SignInUseCase
 import com.google.android.material.button.MaterialButton
+import kotlinx.coroutines.launch
+import org.koin.android.ext.android.inject
 
 class SignInFragment : Fragment() {
+
+    private val signInUseCase: SignInUseCase by inject()
+    private val cardRepository: CardRepository by inject()
+
     private val navController by lazy {
         findNavController()
     }
@@ -50,6 +59,12 @@ class SignInFragment : Fragment() {
     private fun setupSignInButton() {
         val mbSignIn: MaterialButton = binding.mbSignIn
         mbSignIn.setOnClickListener{
+            lifecycleScope.launch {
+                signInUseCase.signIn(
+                    email = "francis@teste.com.br",
+                    password = "Teste123"
+                )
+            }
             val directions =
               SignInFragmentDirections.actionLoginFragmentToHomeFragment()
             navController.navigate(directions)

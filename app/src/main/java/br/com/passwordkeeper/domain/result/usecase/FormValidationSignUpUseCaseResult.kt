@@ -7,4 +7,5 @@ sealed class FormValidationSignUpUseCaseResult {
     object ErrorEmailMalFormed: FormValidationSignUpUseCaseResult()
     object ErrorPasswordIsBlank: FormValidationSignUpUseCaseResult()
     object ErrorPasswordTooWeak: FormValidationSignUpUseCaseResult()
+    object ErrorPasswordsDoNotMatch: FormValidationSignUpUseCaseResult()
 }

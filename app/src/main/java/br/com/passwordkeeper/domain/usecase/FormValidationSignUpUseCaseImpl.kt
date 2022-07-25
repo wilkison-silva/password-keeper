@@ -10,7 +10,8 @@ class FormValidationSignUpUseCaseImpl(
     override fun validateForm(
         name: String,
         email: String,
-        password: String
+        password: String,
+        confirmedPassword: String
     ): FormValidationSignUpUseCaseResult {
         if (name.isBlank())
             return FormValidationSignUpUseCaseResult.ErrorNameIsBlank
@@ -22,6 +23,10 @@ class FormValidationSignUpUseCaseImpl(
             return FormValidationSignUpUseCaseResult.ErrorPasswordIsBlank
         if (!passwordValidationUseCase.isValidPassword(password))
             return FormValidationSignUpUseCaseResult.ErrorPasswordTooWeak
+        if (password != confirmedPassword)
+            return FormValidationSignUpUseCaseResult.ErrorPasswordsDoNotMatch
+
+
         return FormValidationSignUpUseCaseResult.Success
     }
 
