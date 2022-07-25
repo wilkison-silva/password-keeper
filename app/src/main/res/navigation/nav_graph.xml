@@ -48,7 +48,11 @@
         android:id="@+id/homeFragment"
         android:name="br.com.passwordkeeper.presentation.ui.fragment.HomeFragment"
         android:label="HomeFragment"
-        tools:layout="@layout/home_fragment"/>
+        tools:layout="@layout/home_fragment">
+        <argument
+            android:name="userView"
+            app:argType="br.com.passwordkeeper.domain.model.UserView" />
+    </fragment>
 
 
 </navigation>

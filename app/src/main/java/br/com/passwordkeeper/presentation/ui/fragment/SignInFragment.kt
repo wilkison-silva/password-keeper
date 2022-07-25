@@ -93,6 +93,9 @@ class SignInFragment : Fragment() {
             when (it) {
                 is SignInStateResult.Success -> {
                     val userView = it.userView
+                    val directions =
+                        SignInFragmentDirections.actionLoginFragmentToHomeFragment(userView)
+                    navController.navigate(directions)
                 }
                 is SignInStateResult.ErrorEmailOrPasswordWrong -> {
                     view?.let {

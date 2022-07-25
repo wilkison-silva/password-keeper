@@ -6,10 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavArgument
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import br.com.passwordkeeper.R
 import br.com.passwordkeeper.databinding.HomeFragmentBinding
 import br.com.passwordkeeper.domain.model.CardType
+import br.com.passwordkeeper.domain.model.UserView
 import br.com.passwordkeeper.domain.result.viewmodelstate.GetAdviceStateResult
 import br.com.passwordkeeper.presentation.ui.recyclerview.adapter.TypeAdapter
 import br.com.passwordkeeper.presentation.ui.viewModel.HomeViewModel
@@ -20,6 +23,10 @@ class HomeFragment : Fragment() {
         findNavController()
     }
 
+    private val arguments by  navArgs<HomeFragmentArgs>()
+    private val userView: UserView by lazy {
+        arguments.userView
+    }
     private val homeViewModel: HomeViewModel by inject()
     private lateinit var binding: HomeFragmentBinding
     private val typeAdapter = TypeAdapter()
@@ -55,6 +62,7 @@ class HomeFragment : Fragment() {
         updateAdviceState()
         observeAdviceState()
         setupAskForAdviceButton()
+        bindUserInfo()
     }
 
     private fun observeAdviceState() {
@@ -91,4 +99,8 @@ class HomeFragment : Fragment() {
         }
     }
 
+    private fun bindUserInfo() {
+        binding.textViewName.text = userView.name
+        binding.textViewFirstLetterName.text = userView.firstCharacterName
+    }
 }
