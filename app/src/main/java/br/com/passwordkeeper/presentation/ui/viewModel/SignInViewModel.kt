@@ -8,22 +8,34 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.com.passwordkeeper.domain.model.UserView
+import br.com.passwordkeeper.domain.result.usecase.FormValidationSignInUseCaseResult
 import br.com.passwordkeeper.domain.result.viewmodelstate.GetAdviceStateResult
 import br.com.passwordkeeper.domain.result.usecase.GetAdviceUseCaseResult
 import br.com.passwordkeeper.domain.result.usecase.SignInUseCaseResult
 import br.com.passwordkeeper.domain.usecase.AdviceUseCase
+import br.com.passwordkeeper.domain.usecase.FormValidationSignInUseCase
 import br.com.passwordkeeper.domain.usecase.SignInUseCase
+import br.com.passwordkeeper.extensions.isValidEmail
 import kotlinx.coroutines.launch
 
 class SignInViewModel(
-    private val signInUseCase: SignInUseCase
+    private val signInUseCase: SignInUseCase,
+    private val formValidationSignInUseCase: FormValidationSignInUseCase
 ) : ViewModel() {
 
     private val _signIn = MutableLiveData<SignInUseCaseResult>()
     val signIn: LiveData<SignInUseCaseResult>
         get() = _signIn
 
-    fun updateSignIn() {
+    private val _formValidation = MutableLiveData<FormValidationSignInUseCaseResult>()
+    val formValidation: LiveData<FormValidationSignInUseCaseResult>
+        get() = _formValidation
+
+    fun updateSignIn(email: String, password: String) {
+        //primeiro implementar o formValidationSignInUseCase
+        val formValidationSignInUseCaseResult: FormValidationSignInUseCaseResult
+
+
         viewModelScope.launch {
             when (val signInUseCaseResult = signInUseCase.signIn(email = "francis@teste.com.br", password = "Teste123")) {
                 is SignInUseCaseResult.Success -> {
