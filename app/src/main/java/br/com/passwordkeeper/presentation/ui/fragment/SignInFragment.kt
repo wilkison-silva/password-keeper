@@ -20,8 +20,6 @@ class SignInFragment : Fragment() {
     private val navController by lazy {
         findNavController()
     }
-
-    private lateinit var emailTextInputEditText: TextInputEditText
     private lateinit var binding: LoginFragmentBinding
     private val signInViewModel: SignInViewModel by inject()
 
@@ -50,8 +48,7 @@ class SignInFragment : Fragment() {
     }
 
     private fun setupSignUpButton() {
-        val mbSignUp: MaterialButton = binding.mbSignUp
-        mbSignUp.setOnClickListener {
+        binding.mbSignUp.setOnClickListener {
             val directions =
                 SignInFragmentDirections.actionLoginFragmentToSignUpFragment()
             navController.navigate(directions)
@@ -59,33 +56,33 @@ class SignInFragment : Fragment() {
     }
 
     private fun setupSignInButton() {
-        val mbSignIn: MaterialButton = binding.mbSignIn
-        mbSignIn.setOnClickListener {
-            signInViewModel.updateFormValidationState(email = "francis@teste.com.br", password = "Teste123")
+        binding.mbSignIn.setOnClickListener {
+            val email = binding.inputSignInEmail.text.toString()
+            val password = binding.inputPassword.text.toString()
+            signInViewModel.updateFormValidationState(email, password)
         }
-
     }
 
     private fun observeFormValidation() {
         signInViewModel.formValidationState.observe(viewLifecycleOwner) {
             when (it) {
-               is FormValidationSignInStateResult.ErrorEmailIsBlank ->
-                   view?.let {
-                       showMessage(it, "Email is blank")
-                   }
-               is FormValidationSignInStateResult.ErrorEmailMalFormed ->
-                   view?.let {
-                       showMessage(it, "Email not accepted")
-                   }
-               is FormValidationSignInStateResult.ErrorPasswordIsBlank ->
-                   view?.let {
-                       showMessage(it, "Password is blank")
-                   }
-               is FormValidationSignInStateResult.Success -> {
-                   val email = it.email
-                   val password = it.password
-                   signInViewModel.updateSignInState(email, password)
-               }
+                is FormValidationSignInStateResult.ErrorEmailIsBlank ->
+                    view?.let {
+                        showMessage(it, getString(R.string.email_field_is_empty))
+                    }
+                is FormValidationSignInStateResult.ErrorEmailMalFormed ->
+                    view?.let {
+                        showMessage(it, getString(R.string.invalid_email))
+                    }
+                is FormValidationSignInStateResult.ErrorPasswordIsBlank ->
+                    view?.let {
+                        showMessage(it, getString(R.string.password_field_is_empty))
+                    }
+                is FormValidationSignInStateResult.Success -> {
+                    val email = it.email
+                    val password = it.password
+                    signInViewModel.updateSignInState(email, password)
+                }
 
             }
         }
@@ -96,9 +93,6 @@ class SignInFragment : Fragment() {
             when (it) {
                 is SignInStateResult.Success -> {
                     val userView = it.userView
-                    view?.let {
-                        showMessage(it, "Login com sucesso")
-                    }
                 }
                 is SignInStateResult.ErrorEmailOrPasswordWrong -> {
                     view?.let {
