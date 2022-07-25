@@ -11,8 +11,6 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.toObject
 import kotlinx.coroutines.tasks.await
 
-private const val COLLECTION_USERS = "users"
-
 class FirebaseAuthRepositoryImpl(
     private val firebaseAuth: FirebaseAuth,
     private val fireStore: FirebaseFirestore

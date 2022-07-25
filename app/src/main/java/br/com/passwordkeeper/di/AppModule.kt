@@ -60,7 +60,7 @@ val repositoryModule = module {
         )
     }
     single<AdviceRepository> { AdviceRepositoryImpl(get<AdviceWebClient>()) }
-    single<CardRepository> { FirebaseCardRepositoryImpl() }
+    single<CardRepository> { FirebaseCardRepositoryImpl(get<FirebaseFirestore>()) }
 }
 
 val useCaseModule = module {

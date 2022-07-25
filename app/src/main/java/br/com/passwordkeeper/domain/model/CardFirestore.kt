@@ -6,5 +6,12 @@ data class CardFirestore(
     val password: String = "",
     val type: String = ""
 ) {
-
+    fun convertToCardData() : CardData {
+        return CardData(
+            description = description,
+            login = login,
+            password = password,
+            type = type
+        )
+    }
 }
