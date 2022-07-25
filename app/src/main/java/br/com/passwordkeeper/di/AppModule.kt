@@ -69,8 +69,10 @@ val useCaseModule = module {
     single<AdviceUseCase> { AdviceUseCaseImpl(get<AdviceRepository>()) }
     single<PasswordValidationUseCase> { PasswordValidationUseCaseImpl() }
     single<FormValidationSignInUseCase> { FormValidationSignInUseCaseImpl() }
-    single<FormValidationSignUpUseCase> { FormValidationSignUpUseCaseImpl(get<PasswordValidationUseCase>()) }
-
+    single<FormValidationSignUpUseCase> {
+        FormValidationSignUpUseCaseImpl(get<PasswordValidationUseCase>())
+    }
+    single<CardUseCase> { FirebaseCardUseCaseImpl(get<CardRepository>()) }
 }
 
 val viewModelModule = module {
