@@ -1,16 +1,9 @@
 package br.com.passwordkeeper.domain.usecase
 
 import br.com.passwordkeeper.data.repository.CardRepository
-import br.com.passwordkeeper.domain.model.CardData
 import br.com.passwordkeeper.domain.model.CardDomain
-import br.com.passwordkeeper.domain.result.repository.CreateCardRepositoryResult
-import br.com.passwordkeeper.domain.result.repository.GetAllCardsRepositoryResult
-import br.com.passwordkeeper.domain.result.repository.GetCardByIdRepositoryResult
-import br.com.passwordkeeper.domain.result.repository.UpdateCardRepositoryResult
-import br.com.passwordkeeper.domain.result.usecase.CreateCardUseCaseResult
-import br.com.passwordkeeper.domain.result.usecase.GetAllCardsUseCaseResult
-import br.com.passwordkeeper.domain.result.usecase.GetCardByIdUseCaseResult
-import br.com.passwordkeeper.domain.result.usecase.UpdateCardUseCaseResult
+import br.com.passwordkeeper.domain.result.repository.*
+import br.com.passwordkeeper.domain.result.usecase.*
 
 class FirebaseCardUseCaseImpl(
     private val cardRepository: CardRepository
@@ -71,6 +64,17 @@ class FirebaseCardUseCaseImpl(
             }
             is UpdateCardRepositoryResult.ErrorUnknown -> {
                 UpdateCardUseCaseResult.ErrorUnknown
+            }
+        }
+    }
+
+    override suspend fun deleteCard(cardId: String): DeleteCardUseCaseResult {
+        return when (cardRepository.deleteCard(cardId)) {
+            is DeleteCardRepositoryResult.Success -> {
+                DeleteCardUseCaseResult.Success
+            }
+            is DeleteCardRepositoryResult.ErrorUnknown -> {
+                DeleteCardUseCaseResult.ErrorUnknown
             }
         }
     }
