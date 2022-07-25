@@ -6,6 +6,7 @@ import br.com.passwordkeeper.data.source.web.AdviceWebClient
 import br.com.passwordkeeper.data.source.web.service.AdviceService
 import br.com.passwordkeeper.domain.usecase.*
 import br.com.passwordkeeper.presentation.ui.viewModel.HomeViewModel
+import br.com.passwordkeeper.presentation.ui.viewModel.SignInViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -75,4 +76,10 @@ val useCaseModule = module {
 
 val viewModelModule = module {
     viewModel<HomeViewModel> { HomeViewModel(get<AdviceUseCase>()) }
+    viewModel<SignInViewModel> {
+        SignInViewModel(
+            get<SignInUseCase>(),
+            get<FormValidationSignInUseCase>()
+        )
+    }
 }

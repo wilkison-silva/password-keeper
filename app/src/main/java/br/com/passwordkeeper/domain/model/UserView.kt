@@ -1,6 +1,10 @@
 package br.com.passwordkeeper.domain.model
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 data class UserView(
-    private val name: String,
-    private val firstCharacterName: String,
-)
+    val name: String,
+    val firstCharacterName: String,
+): Parcelable

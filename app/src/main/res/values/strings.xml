@@ -31,4 +31,8 @@
     <string name="error">Sorry, an error happend!</string>
     <string name="message">&#160;&#160;&#160;ost things are not as bad as you think they are. Most things are not as bad as you think they are Most things are not as bad as you think they are</string>
     <string name="loading">Wait a minute, we\'re getting a nice one for you</string>
+    <string name="email_or_password_wrong">Sorry, email or password is wrong!</string>
+    <string name="email_field_is_empty">Email field is empty</string>
+    <string name="invalid_email">Invalid email</string>
+    <string name="password_field_is_empty">Password field is empty</string>
 </resources>

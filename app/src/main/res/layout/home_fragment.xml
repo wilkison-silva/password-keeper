@@ -48,7 +48,7 @@
                 tools:text="Francis!" />
 
             <TextView
-                android:id="@+id/textViewProfilePhoto"
+                android:id="@+id/textViewFirstLetterName"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_marginTop="25dp"
