@@ -5,6 +5,7 @@ import br.com.passwordkeeper.domain.model.CardDomain
 import br.com.passwordkeeper.domain.result.usecase.CreateCardUseCaseResult
 import br.com.passwordkeeper.domain.result.usecase.GetAllCardsUseCaseResult
 import br.com.passwordkeeper.domain.result.usecase.GetCardByIdUseCaseResult
+import br.com.passwordkeeper.domain.result.usecase.UpdateCardUseCaseResult
 
 interface CardUseCase {
 
@@ -13,8 +14,8 @@ interface CardUseCase {
     suspend fun getCardById(cardId: String): GetCardByIdUseCaseResult
 
     suspend fun createCard(cardDomain: CardDomain, emailUser: String): CreateCardUseCaseResult
-//
-//    suspend fun updateCard(cardData: CardData, emailUser: String): UpdateCardRepositoryResult
+
+    suspend fun updateCard(cardDomain: CardDomain, emailUser: String): UpdateCardUseCaseResult
 //
 //    suspend fun deleteCard(cardId: String): DeleteCardRepositoryResult
 

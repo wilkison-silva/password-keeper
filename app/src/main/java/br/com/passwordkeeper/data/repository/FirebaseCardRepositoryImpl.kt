@@ -73,10 +73,11 @@ class FirebaseCardRepositoryImpl(
     }
 
     override suspend fun updateCard(
-        cardData: CardData,
+        cardDomain: CardDomain,
         emailUser: String
     ): UpdateCardRepositoryResult {
         try {
+            val cardData = cardDomain.convertToCardData()
             cardData.cardId?.let { cardId: String ->
                 val userDocumentReference = getUserDocumentReference(emailUser)
                 val cardDocumentReference = fireStore.collection(COLLECTION_CARDS).document(cardId)
