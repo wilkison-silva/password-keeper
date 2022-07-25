@@ -1,6 +1,5 @@
 package br.com.passwordkeeper.data.repository
 
-import android.util.Log
 import br.com.passwordkeeper.domain.model.CardData
 import br.com.passwordkeeper.domain.model.CardDomain
 import br.com.passwordkeeper.domain.model.CardFirestore
@@ -56,12 +55,13 @@ class FirebaseCardRepositoryImpl(
     }
 
     override suspend fun createCard(
-        cardData: CardData,
+        cardDomain: CardDomain,
         emailUser: String
     ): CreateCardRepositoryResult {
         try {
             val userDocumentReference = getUserDocumentReference(emailUser)
             val cardDocumentReference = fireStore.collection(COLLECTION_CARDS).document()
+            val cardData = cardDomain.convertToCardData()
             cardDocumentReference
                 .set(cardData.convertToCardFireStore(userDocumentReference))
                 .await()
@@ -73,10 +73,11 @@ class FirebaseCardRepositoryImpl(
     }
 
     override suspend fun updateCard(
-        cardData: CardData,
+        cardDomain: CardDomain,
         emailUser: String
     ): UpdateCardRepositoryResult {
         try {
+            val cardData = cardDomain.convertToCardData()
             cardData.cardId?.let { cardId: String ->
                 val userDocumentReference = getUserDocumentReference(emailUser)
                 val cardDocumentReference = fireStore.collection(COLLECTION_CARDS).document(cardId)
@@ -94,10 +95,8 @@ class FirebaseCardRepositoryImpl(
     override suspend fun deleteCard(cardId: String): DeleteCardRepositoryResult {
         try {
             fireStore.collection(COLLECTION_CARDS).document(cardId).delete()
-            Log.i("Testando", "card deletado com sucesso")
             return DeleteCardRepositoryResult.Success
         } catch (exception: Exception) {
-            Log.i("Testando", "card deletado com erro")
             exception.printStackTrace()
         }
         return DeleteCardRepositoryResult.ErrorUnknown
