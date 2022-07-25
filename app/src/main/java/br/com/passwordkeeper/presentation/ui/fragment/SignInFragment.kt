@@ -65,9 +65,6 @@ class SignInFragment : Fragment() {
                     password = "Teste123"
                 )
             }
-            lifecycleScope.launch {
-                cardRepository.deleteCard("AyWd8K0mBaXmMcrLpKMN")
-            }
             val directions =
               SignInFragmentDirections.actionLoginFragmentToHomeFragment()
             navController.navigate(directions)
