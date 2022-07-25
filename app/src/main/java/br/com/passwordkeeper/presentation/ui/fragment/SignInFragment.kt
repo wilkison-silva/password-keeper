@@ -4,15 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import br.com.passwordkeeper.R
 import br.com.passwordkeeper.databinding.LoginFragmentBinding
-import br.com.passwordkeeper.domain.model.UserView
-import br.com.passwordkeeper.domain.result.usecase.SignInUseCaseResult
-import br.com.passwordkeeper.domain.result.viewmodelstate.GetAdviceStateResult
-import br.com.passwordkeeper.presentation.ui.viewModel.HomeViewModel
+import br.com.passwordkeeper.domain.result.viewmodelstate.FormValidationSignInStateResult
+import br.com.passwordkeeper.domain.result.viewmodelstate.SignInStateResult
+import br.com.passwordkeeper.extensions.showMessage
 import br.com.passwordkeeper.presentation.ui.viewModel.SignInViewModel
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
@@ -48,11 +46,12 @@ class SignInFragment : Fragment() {
         setupSignUpButton()
         setupSignInButton()
         observeSignIn()
+        observeFormValidation()
     }
 
     private fun setupSignUpButton() {
         val mbSignUp: MaterialButton = binding.mbSignUp
-        mbSignUp.setOnClickListener{
+        mbSignUp.setOnClickListener {
             val directions =
                 SignInFragmentDirections.actionLoginFragmentToSignUpFragment()
             navController.navigate(directions)
@@ -62,29 +61,54 @@ class SignInFragment : Fragment() {
     private fun setupSignInButton() {
         val mbSignIn: MaterialButton = binding.mbSignIn
         mbSignIn.setOnClickListener {
-            signInViewModel.updateSignIn()
-        }
-//            val directions =
-//                SignInFragmentDirections.
-//            navController.navigate(directions)
-
+            signInViewModel.updateFormValidationState(email = "francis@teste.com.br", password = "Teste123")
         }
 
+    }
+
+    private fun observeFormValidation() {
+        signInViewModel.formValidationState.observe(viewLifecycleOwner) {
+            when (it) {
+               is FormValidationSignInStateResult.ErrorEmailIsBlank ->
+                   view?.let {
+                       showMessage(it, "Email is blank")
+                   }
+               is FormValidationSignInStateResult.ErrorEmailMalFormed ->
+                   view?.let {
+                       showMessage(it, "Email not accepted")
+                   }
+               is FormValidationSignInStateResult.ErrorPasswordIsBlank ->
+                   view?.let {
+                       showMessage(it, "Password is blank")
+                   }
+               is FormValidationSignInStateResult.Success -> {
+                   val email = it.email
+                   val password = it.password
+                   signInViewModel.updateSignInState(email, password)
+               }
+
+            }
+        }
+    }
 
     private fun observeSignIn() {
-        signInViewModel.signIn.observe(viewLifecycleOwner) {
+        signInViewModel.signInState.observe(viewLifecycleOwner) {
             when (it) {
-                is SignInUseCaseResult.Success -> {
+                is SignInStateResult.Success -> {
                     val userView = it.userView
-                    binding.mbSignIn.text = userView.name
-                    binding.mbSignIn.text = userView.firstCharacterName
+                    view?.let {
+                        showMessage(it, "Login com sucesso")
+                    }
                 }
-                is SignInUseCaseResult.ErrorEmailOrPasswordWrong -> {
-                    binding.mbSignIn.text = getString(R.string.email_or_password_wrong)
+                is SignInStateResult.ErrorEmailOrPasswordWrong -> {
+                    view?.let {
+                        showMessage(it, getString(R.string.email_or_password_wrong))
+                    }
                 }
-                is SignInUseCaseResult.ErrorUnknown -> {
-                    binding.mbSignIn.text = getString(R.string.error)
-
+                is SignInStateResult.ErrorUnknown -> {
+                    view?.let {
+                        showMessage(it, getString(R.string.error))
+                    }
                 }
             }
         }

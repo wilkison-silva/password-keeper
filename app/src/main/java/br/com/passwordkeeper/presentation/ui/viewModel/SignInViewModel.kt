@@ -1,21 +1,15 @@
 package br.com.passwordkeeper.presentation.ui.viewModel
 
-import android.text.TextUtils
-import android.util.Patterns
-import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import br.com.passwordkeeper.domain.model.UserView
 import br.com.passwordkeeper.domain.result.usecase.FormValidationSignInUseCaseResult
-import br.com.passwordkeeper.domain.result.viewmodelstate.GetAdviceStateResult
-import br.com.passwordkeeper.domain.result.usecase.GetAdviceUseCaseResult
 import br.com.passwordkeeper.domain.result.usecase.SignInUseCaseResult
-import br.com.passwordkeeper.domain.usecase.AdviceUseCase
+import br.com.passwordkeeper.domain.result.viewmodelstate.FormValidationSignInStateResult
+import br.com.passwordkeeper.domain.result.viewmodelstate.SignInStateResult
 import br.com.passwordkeeper.domain.usecase.FormValidationSignInUseCase
 import br.com.passwordkeeper.domain.usecase.SignInUseCase
-import br.com.passwordkeeper.extensions.isValidEmail
 import kotlinx.coroutines.launch
 
 class SignInViewModel(
@@ -23,33 +17,45 @@ class SignInViewModel(
     private val formValidationSignInUseCase: FormValidationSignInUseCase
 ) : ViewModel() {
 
-    private val _signIn = MutableLiveData<SignInUseCaseResult>()
-    val signIn: LiveData<SignInUseCaseResult>
-        get() = _signIn
+    private val _signInState = MutableLiveData<SignInStateResult>()
+    val signInState: LiveData<SignInStateResult>
+        get() = _signInState
 
-    private val _formValidation = MutableLiveData<FormValidationSignInUseCaseResult>()
-    val formValidation: LiveData<FormValidationSignInUseCaseResult>
-        get() = _formValidation
+    private val _formValidationState = MutableLiveData<FormValidationSignInStateResult>()
+    val formValidationState: LiveData<FormValidationSignInStateResult>
+        get() = _formValidationState
 
-    fun updateSignIn(email: String, password: String) {
+    fun updateFormValidationState(email: String, password: String) {
         //primeiro implementar o formValidationSignInUseCase
-        val formValidationSignInUseCaseResult: FormValidationSignInUseCaseResult
+        val formValidationSignInUseCaseResult =
+            formValidationSignInUseCase.validateForm(email, password)
+        when (formValidationSignInUseCaseResult) {
+            is FormValidationSignInUseCaseResult.ErrorEmailIsBlank ->
+                _formValidationState.postValue(FormValidationSignInStateResult.ErrorEmailIsBlank)
+            is FormValidationSignInUseCaseResult.ErrorEmailMalFormed ->
+                _formValidationState.postValue(FormValidationSignInStateResult.ErrorEmailMalFormed)
+            is FormValidationSignInUseCaseResult.ErrorPasswordIsBlank ->
+                _formValidationState.postValue(FormValidationSignInStateResult.ErrorPasswordIsBlank)
+            is FormValidationSignInUseCaseResult.Success ->
+                _formValidationState.postValue(FormValidationSignInStateResult.Success(email, password))
+        }
+    }
 
-
+    fun updateSignInState(email: String, password: String) {
         viewModelScope.launch {
-            when (val signInUseCaseResult = signInUseCase.signIn(email = "francis@teste.com.br", password = "Teste123")) {
+            when (val signInUseCaseResult =
+                signInUseCase.signIn(email, password)) {
                 is SignInUseCaseResult.Success -> {
-                    _signIn.postValue(SignInUseCaseResult.Success(signInUseCaseResult.userView))
+                    _signInState.postValue(SignInStateResult.Success(signInUseCaseResult.userView))
                 }
                 is SignInUseCaseResult.ErrorEmailOrPasswordWrong -> {
-                    _signIn.postValue(SignInUseCaseResult.ErrorEmailOrPasswordWrong)
+                    _signInState.postValue(SignInStateResult.ErrorEmailOrPasswordWrong)
                 }
                 is SignInUseCaseResult.ErrorUnknown -> {
-                    _signIn.postValue(SignInUseCaseResult.ErrorUnknown)
+                    _signInState.postValue(SignInStateResult.ErrorUnknown)
                 }
             }
         }
-
     }
 
     private val _email = MutableLiveData<String>()
@@ -64,9 +70,9 @@ class SignInViewModel(
     val password: LiveData<String>
         get() = _password
 
-   fun updatePassword(password: String) {
-       _password.postValue(password)
-   }
+    fun updatePassword(password: String) {
+        _password.postValue(password)
+    }
 
 }
 
