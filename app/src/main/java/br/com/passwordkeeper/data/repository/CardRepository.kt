@@ -1,6 +1,7 @@
 package br.com.passwordkeeper.data.repository
 
 import br.com.passwordkeeper.domain.model.CardData
+import br.com.passwordkeeper.domain.model.CardDomain
 import br.com.passwordkeeper.domain.result.repository.*
 
 interface CardRepository {
@@ -9,7 +10,7 @@ interface CardRepository {
 
     suspend fun getCardById(cardId: String): GetCardByIdRepositoryResult
 
-    suspend fun createCard(cardData: CardData, emailUser: String): CreateCardRepositoryResult
+    suspend fun createCard(cardDomain: CardDomain, emailUser: String): CreateCardRepositoryResult
 
     suspend fun updateCard(cardData: CardData, emailUser: String): UpdateCardRepositoryResult
 

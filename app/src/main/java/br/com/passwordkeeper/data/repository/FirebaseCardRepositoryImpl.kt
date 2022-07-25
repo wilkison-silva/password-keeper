@@ -55,12 +55,13 @@ class FirebaseCardRepositoryImpl(
     }
 
     override suspend fun createCard(
-        cardData: CardData,
+        cardDomain: CardDomain,
         emailUser: String
     ): CreateCardRepositoryResult {
         try {
             val userDocumentReference = getUserDocumentReference(emailUser)
             val cardDocumentReference = fireStore.collection(COLLECTION_CARDS).document()
+            val cardData = cardDomain.convertToCardData()
             cardDocumentReference
                 .set(cardData.convertToCardFireStore(userDocumentReference))
                 .await()
