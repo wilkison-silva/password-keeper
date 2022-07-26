@@ -26,7 +26,6 @@ class SignInViewModel(
         get() = _formValidationState
 
     fun updateFormValidationState(email: String, password: String) {
-        //primeiro implementar o formValidationSignInUseCase
         val formValidationSignInUseCaseResult =
             formValidationSignInUseCase.validateForm(email, password)
         when (formValidationSignInUseCaseResult) {
