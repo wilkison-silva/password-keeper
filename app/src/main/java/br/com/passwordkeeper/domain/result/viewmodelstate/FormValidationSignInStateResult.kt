@@ -5,4 +5,5 @@ sealed class FormValidationSignInStateResult {
     object ErrorEmailIsBlank: FormValidationSignInStateResult()
     object ErrorEmailMalFormed: FormValidationSignInStateResult()
     object ErrorPasswordIsBlank: FormValidationSignInStateResult()
+    object EmptyState: FormValidationSignInStateResult()
 }

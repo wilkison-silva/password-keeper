@@ -12,4 +12,5 @@ sealed class FormValidationSignUpStateResult {
     object ErrorPasswordIsBlank : FormValidationSignUpStateResult()
     object ErrorPasswordTooWeak : FormValidationSignUpStateResult()
     object ErrorPasswordsDoNotMatch : FormValidationSignUpStateResult()
+    object EmptyState: FormValidationSignUpStateResult()
 }

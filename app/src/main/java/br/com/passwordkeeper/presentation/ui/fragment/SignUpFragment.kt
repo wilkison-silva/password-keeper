@@ -90,6 +90,9 @@ class SignUpFragment : Fragment() {
                     val password = it.password
                     signUpViewModel.updateSignUpState(name, email, password)
                 }
+                is FormValidationSignUpStateResult.EmptyState -> {
+
+                }
             }
         }
     }
@@ -107,7 +110,7 @@ class SignUpFragment : Fragment() {
                     }
                 is CreateUserStateResult.ErrorUnknown ->
                     view?.let {
-                        showMessage(it, "Erro")
+                        showMessage(it, getString(R.string.error))
                     }
                 is CreateUserStateResult.ErrorWeakPassword ->
                     view?.let {
@@ -117,6 +120,10 @@ class SignUpFragment : Fragment() {
                     val directions =
                         SignUpFragmentDirections.actionSignUpFragmentToSignUpCongratsFragment2()
                     navController.navigate(directions)
+                    signUpViewModel.updateStatesToEmptyState()
+                }
+                is CreateUserStateResult.EmptyState -> {
+
                 }
             }
         }

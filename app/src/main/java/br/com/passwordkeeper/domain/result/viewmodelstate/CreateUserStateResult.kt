@@ -6,4 +6,5 @@ sealed class CreateUserStateResult {
     object ErrorEmailMalformed: CreateUserStateResult()
     object ErrorEmailAlreadyExists: CreateUserStateResult()
     object ErrorUnknown: CreateUserStateResult()
+    object EmptyState: CreateUserStateResult()
 }

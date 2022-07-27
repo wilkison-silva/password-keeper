@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
-import androidx.navigation.NavArgument
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import br.com.passwordkeeper.R
@@ -77,6 +76,7 @@ class HomeFragment : Fragment() {
                     binding.textViewMessage.text = adviceView.advice
                     binding.textViewTheAdviceAbove.text = getString(R.string.the_advice_above, adviceView.quantityWords)
                     binding.firstLetter.text = adviceView.firstLetter
+
                 }
                 is GetAdviceStateResult.SuccessWithoutMessage -> {
                     binding.textViewMessage.text = getString(R.string.no_message_found)

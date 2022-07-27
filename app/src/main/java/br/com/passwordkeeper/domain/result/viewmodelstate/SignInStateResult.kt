@@ -6,4 +6,5 @@ sealed class SignInStateResult {
     data class Success(val userView: UserView) : SignInStateResult()
     object ErrorEmailOrPasswordWrong: SignInStateResult()
     object ErrorUnknown: SignInStateResult()
+    object EmptyState: SignInStateResult()
 }

@@ -12,8 +12,6 @@ import br.com.passwordkeeper.domain.result.viewmodelstate.FormValidationSignInSt
 import br.com.passwordkeeper.domain.result.viewmodelstate.SignInStateResult
 import br.com.passwordkeeper.extensions.showMessage
 import br.com.passwordkeeper.presentation.ui.viewModel.SignInViewModel
-import com.google.android.material.button.MaterialButton
-import com.google.android.material.textfield.TextInputEditText
 import org.koin.android.ext.android.inject
 
 class SignInFragment : Fragment() {
@@ -70,6 +68,7 @@ class SignInFragment : Fragment() {
                     view?.let {
                         showMessage(it, getString(R.string.email_field_is_empty))
                     }
+
                 is FormValidationSignInStateResult.ErrorEmailMalFormed ->
                     view?.let {
                         showMessage(it, getString(R.string.invalid_email))
@@ -83,7 +82,9 @@ class SignInFragment : Fragment() {
                     val password = it.password
                     signInViewModel.updateSignInState(email, password)
                 }
+                is FormValidationSignInStateResult.EmptyState -> {
 
+                }
             }
         }
     }
@@ -96,6 +97,7 @@ class SignInFragment : Fragment() {
                     val directions =
                         SignInFragmentDirections.actionLoginFragmentToHomeFragment(userView)
                     navController.navigate(directions)
+                    signInViewModel.updateStatesToEmptyState()
                 }
                 is SignInStateResult.ErrorEmailOrPasswordWrong -> {
                     view?.let {
@@ -106,6 +108,9 @@ class SignInFragment : Fragment() {
                     view?.let {
                         showMessage(it, getString(R.string.error))
                     }
+                }
+                is SignInStateResult.EmptyState -> {
+
                 }
             }
         }

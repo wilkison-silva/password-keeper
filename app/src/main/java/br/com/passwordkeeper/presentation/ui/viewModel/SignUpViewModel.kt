@@ -56,8 +56,7 @@ class SignUpViewModel(
 
     fun updateSignUpState(name: String, email: String, password: String) {
         viewModelScope.launch {
-            when (val signUpUseCaseResult =
-                signUpUseCase.createUser(name, email, password)) {
+            when (signUpUseCase.createUser(name, email, password)) {
                 CreateUserUseCaseResult.ErrorEmailAlreadyExists ->
                     _createUserState.postValue(CreateUserStateResult.ErrorEmailAlreadyExists)
                     CreateUserUseCaseResult.ErrorEmailMalformed ->
@@ -70,5 +69,10 @@ class SignUpViewModel(
                     _createUserState.postValue(CreateUserStateResult.Success)
             }
         }
+    }
+
+    fun updateStatesToEmptyState() {
+        _createUserState.postValue(CreateUserStateResult.EmptyState)
+        _formValidationState.postValue(FormValidationSignUpStateResult.EmptyState)
     }
 }

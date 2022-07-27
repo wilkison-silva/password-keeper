@@ -57,20 +57,9 @@ class SignInViewModel(
         }
     }
 
-    private val _email = MutableLiveData<String>()
-    val email: LiveData<String>
-        get() = _email
-
-    fun updateEmail(email: String) {
-        _email.postValue(email)
-    }
-
-    private val _password = MutableLiveData<String>()
-    val password: LiveData<String>
-        get() = _password
-
-    fun updatePassword(password: String) {
-        _password.postValue(password)
+    fun updateStatesToEmptyState() {
+        _signInState.postValue(SignInStateResult.EmptyState)
+        _formValidationState.postValue(FormValidationSignInStateResult.EmptyState)
     }
 
 }
