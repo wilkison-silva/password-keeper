@@ -41,7 +41,7 @@ class FirebaseCardUseCaseImpl(
         emailUser: String
     ): CreateCardUseCaseResult {
         return when (val createCardRepositoryResult =
-            cardRepository.createCard(cardDomain, emailUser)) {
+            cardRepository.createCard(cardDomain.convertToCardData(), emailUser)) {
             is CreateCardRepositoryResult.Success -> {
                 val cardId = createCardRepositoryResult.cardId
                 CreateCardUseCaseResult.Success(cardId)

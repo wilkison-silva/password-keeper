@@ -55,13 +55,12 @@ class FirebaseCardRepositoryImpl(
     }
 
     override suspend fun createCard(
-        cardDomain: CardDomain,
+        cardData: CardData,
         emailUser: String
     ): CreateCardRepositoryResult {
         try {
             val userDocumentReference = getUserDocumentReference(emailUser)
             val cardDocumentReference = fireStore.collection(COLLECTION_CARDS).document()
-            val cardData = cardDomain.convertToCardData()
             cardDocumentReference
                 .set(cardData.convertToCardFireStore(userDocumentReference))
                 .await()
@@ -73,11 +72,10 @@ class FirebaseCardRepositoryImpl(
     }
 
     override suspend fun updateCard(
-        cardDomain: CardDomain,
+        cardData: CardData,
         emailUser: String
     ): UpdateCardRepositoryResult {
         try {
-            val cardData = cardDomain.convertToCardData()
             cardData.cardId?.let { cardId: String ->
                 val userDocumentReference = getUserDocumentReference(emailUser)
                 val cardDocumentReference = fireStore.collection(COLLECTION_CARDS).document(cardId)
