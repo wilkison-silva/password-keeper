@@ -4,11 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import br.com.passwordkeeper.databinding.SignUpCongratsFragmentBinding
 
-class SignUpCongratsFragment: Fragment() {
+class SignUpCongratsFragment : Fragment() {
 
     private val navController by lazy {
         findNavController()
@@ -33,5 +34,12 @@ class SignUpCongratsFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setupProceedButton()
+    }
+
+    private fun setupProceedButton() {
+        binding.materialButtonProceed.setOnClickListener {
+            navController.popBackStack()
+        }
     }
 }

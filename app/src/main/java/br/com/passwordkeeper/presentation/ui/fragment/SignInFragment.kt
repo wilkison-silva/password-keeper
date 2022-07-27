@@ -12,8 +12,6 @@ import br.com.passwordkeeper.domain.result.viewmodelstate.FormValidationSignInSt
 import br.com.passwordkeeper.domain.result.viewmodelstate.SignInStateResult
 import br.com.passwordkeeper.extensions.showMessage
 import br.com.passwordkeeper.presentation.ui.viewModel.SignInViewModel
-import com.google.android.material.button.MaterialButton
-import com.google.android.material.textfield.TextInputEditText
 import org.koin.android.ext.android.inject
 
 class SignInFragment : Fragment() {
@@ -48,7 +46,7 @@ class SignInFragment : Fragment() {
     }
 
     private fun setupSignUpButton() {
-        binding.mbSignUp.setOnClickListener {
+        binding.materialButtonSignUp.setOnClickListener {
             val directions =
                 SignInFragmentDirections.actionLoginFragmentToSignUpFragment()
             navController.navigate(directions)
@@ -64,12 +62,13 @@ class SignInFragment : Fragment() {
     }
 
     private fun observeFormValidation() {
-        signInViewModel.formValidationState.observe(viewLifecycleOwner) {
-            when (it) {
+        signInViewModel.formValidationState.observe(viewLifecycleOwner) {formValidationSignInStateResult ->
+            when (formValidationSignInStateResult) {
                 is FormValidationSignInStateResult.ErrorEmailIsBlank ->
                     view?.let {
                         showMessage(it, getString(R.string.email_field_is_empty))
                     }
+
                 is FormValidationSignInStateResult.ErrorEmailMalFormed ->
                     view?.let {
                         showMessage(it, getString(R.string.invalid_email))
@@ -79,23 +78,26 @@ class SignInFragment : Fragment() {
                         showMessage(it, getString(R.string.password_field_is_empty))
                     }
                 is FormValidationSignInStateResult.Success -> {
-                    val email = it.email
-                    val password = it.password
+                    val email = formValidationSignInStateResult.email
+                    val password = formValidationSignInStateResult.password
                     signInViewModel.updateSignInState(email, password)
                 }
+                is FormValidationSignInStateResult.EmptyState -> {
 
+                }
             }
         }
     }
 
     private fun observeSignIn() {
-        signInViewModel.signInState.observe(viewLifecycleOwner) {
-            when (it) {
+        signInViewModel.signInState.observe(viewLifecycleOwner) {signInStateResult ->
+            when (signInStateResult) {
                 is SignInStateResult.Success -> {
-                    val userView = it.userView
+                    val userView = signInStateResult.userView
                     val directions =
                         SignInFragmentDirections.actionLoginFragmentToHomeFragment(userView)
                     navController.navigate(directions)
+                    signInViewModel.updateStatesToEmptyState()
                 }
                 is SignInStateResult.ErrorEmailOrPasswordWrong -> {
                     view?.let {
@@ -106,6 +108,9 @@ class SignInFragment : Fragment() {
                     view?.let {
                         showMessage(it, getString(R.string.error))
                     }
+                }
+                is SignInStateResult.EmptyState -> {
+
                 }
             }
         }

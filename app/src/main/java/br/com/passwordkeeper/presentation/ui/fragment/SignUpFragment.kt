@@ -10,13 +10,9 @@ import androidx.navigation.fragment.findNavController
 import br.com.passwordkeeper.R
 import br.com.passwordkeeper.databinding.SignUpFragmentBinding
 import br.com.passwordkeeper.domain.result.viewmodelstate.CreateUserStateResult
-import br.com.passwordkeeper.domain.result.viewmodelstate.FormValidationSignInStateResult
 import br.com.passwordkeeper.domain.result.viewmodelstate.FormValidationSignUpStateResult
-import br.com.passwordkeeper.domain.result.viewmodelstate.SignInStateResult
 import br.com.passwordkeeper.extensions.showMessage
-import br.com.passwordkeeper.presentation.ui.viewModel.SignInViewModel
 import br.com.passwordkeeper.presentation.ui.viewModel.SignUpViewModel
-import com.google.android.material.button.MaterialButton
 import org.koin.android.ext.android.inject
 
 class SignUpFragment : Fragment() {
@@ -58,8 +54,8 @@ class SignUpFragment : Fragment() {
     }
 
     private fun observeFormValidation() {
-        signUpViewModel.formValidationState.observe(viewLifecycleOwner) {
-            when (it) {
+        signUpViewModel.formValidationState.observe(viewLifecycleOwner) { formValidationSignUpStateResult ->
+            when (formValidationSignUpStateResult) {
                 is FormValidationSignUpStateResult.ErrorEmailIsBlank ->
                     view?.let {
                         showMessage(it, getString(R.string.email_field_is_empty))
@@ -85,18 +81,21 @@ class SignUpFragment : Fragment() {
                         showMessage(it, getString(R.string.password_not_match))
                     }
                 is FormValidationSignUpStateResult.Success -> {
-                    val name = it.name
-                    val email = it.email
-                    val password = it.password
+                    val name = formValidationSignUpStateResult.name
+                    val email = formValidationSignUpStateResult.email
+                    val password = formValidationSignUpStateResult.password
                     signUpViewModel.updateSignUpState(name, email, password)
+                }
+                is FormValidationSignUpStateResult.EmptyState -> {
+
                 }
             }
         }
     }
 
     private fun observeSignUp() {
-        signUpViewModel.createUserState.observe(viewLifecycleOwner) {
-            when (it) {
+        signUpViewModel.createUserState.observe(viewLifecycleOwner) { createUserStateResult ->
+            when (createUserStateResult) {
                 is CreateUserStateResult.ErrorEmailAlreadyExists ->
                     view?.let {
                         showMessage(it, getString(R.string.email_already_exist))
@@ -107,7 +106,7 @@ class SignUpFragment : Fragment() {
                     }
                 is CreateUserStateResult.ErrorUnknown ->
                     view?.let {
-                        showMessage(it, "Erro")
+                        showMessage(it, getString(R.string.error))
                     }
                 is CreateUserStateResult.ErrorWeakPassword ->
                     view?.let {
@@ -117,6 +116,10 @@ class SignUpFragment : Fragment() {
                     val directions =
                         SignUpFragmentDirections.actionSignUpFragmentToSignUpCongratsFragment2()
                     navController.navigate(directions)
+                    signUpViewModel.updateStatesToEmptyState()
+                }
+                is CreateUserStateResult.EmptyState -> {
+
                 }
             }
         }
