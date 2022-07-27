@@ -39,9 +39,7 @@ class SignUpCongratsFragment : Fragment() {
 
     private fun setupProceedButton() {
         binding.materialButtonProceed.setOnClickListener {
-            val directions =
-                SignUpCongratsFragmentDirections.actionSignUpCongratsFragmentToSignInFragment()
-            navController.navigate(directions)
+            navController.popBackStack()
         }
     }
 }
