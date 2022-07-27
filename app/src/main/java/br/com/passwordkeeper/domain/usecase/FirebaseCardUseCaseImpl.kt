@@ -57,7 +57,7 @@ class FirebaseCardUseCaseImpl(
         emailUser: String
     ): UpdateCardUseCaseResult {
         return when (val updateCardUseCaseResult =
-            cardRepository.updateCard(cardDomain, emailUser)) {
+            cardRepository.updateCard(cardDomain.convertToCardData(), emailUser)) {
             is UpdateCardRepositoryResult.Success -> {
                 val cardId = updateCardUseCaseResult.cardId
                 UpdateCardUseCaseResult.Success(cardId)

@@ -12,7 +12,7 @@ import kotlinx.coroutines.tasks.await
 
 
 class FirebaseCardRepositoryImpl(
-    private val fireStore: FirebaseFirestore
+    private val fireStore: FirebaseFirestore,
 ) : CardRepository {
 
     override suspend fun getAllCards(email: String): GetAllCardsRepositoryResult {
@@ -56,7 +56,7 @@ class FirebaseCardRepositoryImpl(
 
     override suspend fun createCard(
         cardData: CardData,
-        emailUser: String
+        emailUser: String,
     ): CreateCardRepositoryResult {
         try {
             val userDocumentReference = getUserDocumentReference(emailUser)
@@ -73,7 +73,7 @@ class FirebaseCardRepositoryImpl(
 
     override suspend fun updateCard(
         cardData: CardData,
-        emailUser: String
+        emailUser: String,
     ): UpdateCardRepositoryResult {
         try {
             cardData.cardId?.let { cardId: String ->
