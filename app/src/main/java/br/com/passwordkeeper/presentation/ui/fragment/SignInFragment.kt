@@ -46,7 +46,7 @@ class SignInFragment : Fragment() {
     }
 
     private fun setupSignUpButton() {
-        binding.mbSignUp.setOnClickListener {
+        binding.materialButtonSignUp.setOnClickListener {
             val directions =
                 SignInFragmentDirections.actionLoginFragmentToSignUpFragment()
             navController.navigate(directions)
@@ -62,8 +62,8 @@ class SignInFragment : Fragment() {
     }
 
     private fun observeFormValidation() {
-        signInViewModel.formValidationState.observe(viewLifecycleOwner) {
-            when (it) {
+        signInViewModel.formValidationState.observe(viewLifecycleOwner) {formValidationSignInStateResult ->
+            when (formValidationSignInStateResult) {
                 is FormValidationSignInStateResult.ErrorEmailIsBlank ->
                     view?.let {
                         showMessage(it, getString(R.string.email_field_is_empty))
@@ -78,8 +78,8 @@ class SignInFragment : Fragment() {
                         showMessage(it, getString(R.string.password_field_is_empty))
                     }
                 is FormValidationSignInStateResult.Success -> {
-                    val email = it.email
-                    val password = it.password
+                    val email = formValidationSignInStateResult.email
+                    val password = formValidationSignInStateResult.password
                     signInViewModel.updateSignInState(email, password)
                 }
                 is FormValidationSignInStateResult.EmptyState -> {
@@ -90,10 +90,10 @@ class SignInFragment : Fragment() {
     }
 
     private fun observeSignIn() {
-        signInViewModel.signInState.observe(viewLifecycleOwner) {
-            when (it) {
+        signInViewModel.signInState.observe(viewLifecycleOwner) {signInStateResult ->
+            when (signInStateResult) {
                 is SignInStateResult.Success -> {
-                    val userView = it.userView
+                    val userView = signInStateResult.userView
                     val directions =
                         SignInFragmentDirections.actionLoginFragmentToHomeFragment(userView)
                     navController.navigate(directions)
