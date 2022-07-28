@@ -1,7 +1,9 @@
 package br.com.passwordkeeper.domain.usecase
 
+import br.com.passwordkeeper.domain.result.usecase.PasswordValidationUseCaseResult
+
 interface PasswordValidationUseCase {
 
-    fun isValidPassword(password: String): Boolean
+    fun validatePassword(password: String): PasswordValidationUseCaseResult
 
 }
