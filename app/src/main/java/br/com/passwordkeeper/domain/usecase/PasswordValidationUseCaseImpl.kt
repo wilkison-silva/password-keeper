@@ -3,6 +3,8 @@ package br.com.passwordkeeper.domain.usecase
 import br.com.passwordkeeper.domain.result.usecase.PasswordValidationUseCaseResult
 import java.util.regex.Pattern
 
+private const val MIN_LENGTH_PASSWORD = 16
+
 class PasswordValidationUseCaseImpl : PasswordValidationUseCase {
 
     override fun validatePassword(password: String): PasswordValidationUseCaseResult {
@@ -41,7 +43,7 @@ class PasswordValidationUseCaseImpl : PasswordValidationUseCase {
         )
         if (regex1SpecialCharacter.matcher(password).matches())
             return PasswordValidationUseCaseResult.ErrorOneSpecialCharacterNotFound
-        if (password.length < 16)
+        if (password.length < MIN_LENGTH_PASSWORD)
             return PasswordValidationUseCaseResult.ErrorPasswordLengthNotMatch
 
         return PasswordValidationUseCaseResult.Success
