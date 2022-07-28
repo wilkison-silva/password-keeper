@@ -7,7 +7,8 @@ data class CardData(
     val description: String,
     val login: String,
     val password: String,
-    val category: String
+    val category: String,
+    val favorite: Boolean
 ) {
     fun convertToCardFireStore(userDocumentReference: DocumentReference): CardFirestore {
         return CardFirestore(
@@ -15,7 +16,8 @@ data class CardData(
             login = login,
             password = password,
             category = category,
-            userDocumentReference = userDocumentReference
+            userDocumentReference = userDocumentReference,
+            favorite = favorite
         )
     }
 
@@ -25,7 +27,8 @@ data class CardData(
             description = description,
             login = login,
             password = password,
-            category = category
+            category = category,
+            favorite = favorite
         )
     }
 }

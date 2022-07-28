@@ -5,7 +5,8 @@ data class CardDomain(
     val description: String,
     val login: String,
     val password: String,
-    val category: String
+    val category: String,
+    val favorite: Boolean
 ) {
     fun convertToCardView() : CardView {
         return CardView(
@@ -13,7 +14,8 @@ data class CardDomain(
             description = description,
             login = login,
             password = password,
-            category = category
+            category = category,
+            favorite = favorite
         )
     }
 
@@ -23,7 +25,8 @@ data class CardDomain(
             description = description,
             login = login,
             password = password,
-            category = category
+            category = category,
+            favorite = favorite
         )
     }
 }
