@@ -7,7 +7,7 @@ import br.com.passwordkeeper.domain.result.repository.SignInRepositoryResult
 import br.com.passwordkeeper.domain.result.repository.SignOutRepositoryResult
 import br.com.passwordkeeper.domain.result.usecase.GetCurrentUserUseCaseResult
 import br.com.passwordkeeper.domain.result.usecase.SignInUseCaseResult
-import br.com.passwordkeeper.domain.result.usecase.SignUpUseCaseResult
+import br.com.passwordkeeper.domain.result.usecase.SignOutUseCaseResult
 
 class SignInUseCaseImpl(
     private val authRepository: AuthRepository
@@ -30,13 +30,13 @@ class SignInUseCaseImpl(
         }
     }
 
-    override suspend fun signUp(): SignUpUseCaseResult {
+    override suspend fun signOut(): SignOutUseCaseResult {
         return when (authRepository.signOut()) {
             is SignOutRepositoryResult.Success -> {
-                SignUpUseCaseResult.Success
+                SignOutUseCaseResult.Success
             }
             is SignOutRepositoryResult.ErrorUnknown -> {
-                SignUpUseCaseResult.ErrorUnknown
+                SignOutUseCaseResult.ErrorUnknown
             }
         }
     }
