@@ -7,7 +7,8 @@ data class UserDomain(
     fun convertToUserView(): UserView {
         return UserView(
             name = this.name,
-            firstCharacterName = this.name.substring(0, 1)
+            firstCharacterName = this.name.substring(0, 1),
+            email = email
         )
     }
 }
