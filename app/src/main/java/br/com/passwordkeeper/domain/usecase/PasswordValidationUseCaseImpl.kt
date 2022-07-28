@@ -1,5 +1,6 @@
 package br.com.passwordkeeper.domain.usecase
 
+import br.com.passwordkeeper.domain.result.usecase.ErrorsValidationPassword
 import br.com.passwordkeeper.domain.result.usecase.PasswordValidationUseCaseResult
 
 private const val REGEX_UPPER_CASE = ".*[A-Z]"
@@ -11,20 +12,25 @@ private const val MIN_LENGTH_PASSWORD = 16
 class PasswordValidationUseCaseImpl : PasswordValidationUseCase {
 
     override fun validatePassword(password: String): PasswordValidationUseCaseResult {
+        val errorList = mutableListOf<ErrorsValidationPassword>()
+
         if (!password.contains(REGEX_UPPER_CASE.toRegex()))
-            return PasswordValidationUseCaseResult.ErrorOneUpperLetterNotFound
+            errorList.add(ErrorsValidationPassword.ErrorOneUpperLetterNotFound)
 
         if (!password.contains(REGEX_LOWER_CASE.toRegex()))
-            return PasswordValidationUseCaseResult.ErrorOneLowerLetterNotFound
+            errorList.add(ErrorsValidationPassword.ErrorOneLowerLetterNotFound)
 
         if (!password.contains(REGEX_SPECIAL_LETTER.toRegex()))
-            return PasswordValidationUseCaseResult.ErrorOneSpecialCharacterNotFound
+            errorList.add(ErrorsValidationPassword.ErrorOneSpecialCharacterNotFound)
 
         if (!password.contains(REGEX_NUMBER.toRegex()))
-            return PasswordValidationUseCaseResult.ErrorOneNumericCharacterNotFound
+            errorList.add(ErrorsValidationPassword.ErrorOneNumericCharacterNotFound)
 
         if (password.length < MIN_LENGTH_PASSWORD)
-            return PasswordValidationUseCaseResult.ErrorPasswordLengthNotMatch
+            errorList.add(ErrorsValidationPassword.ErrorPasswordLengthNotMatch)
+
+        if (errorList.size > 0)
+            return PasswordValidationUseCaseResult.ErrorsFound(errorList)
 
         return PasswordValidationUseCaseResult.Success
     }
