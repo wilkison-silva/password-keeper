@@ -12,6 +12,7 @@ import br.com.passwordkeeper.databinding.SignUpFragmentBinding
 import br.com.passwordkeeper.domain.result.viewmodelstate.CreateUserStateResult
 import br.com.passwordkeeper.domain.result.viewmodelstate.FormValidationSignUpStateResult
 import br.com.passwordkeeper.extensions.showMessage
+import br.com.passwordkeeper.extensions.textInputEditText
 import br.com.passwordkeeper.presentation.ui.viewModel.SignUpViewModel
 import org.koin.android.ext.android.inject
 
@@ -89,6 +90,7 @@ class SignUpFragment : Fragment() {
                 is FormValidationSignUpStateResult.EmptyState -> {
 
                 }
+
             }
         }
     }
@@ -132,6 +134,7 @@ class SignUpFragment : Fragment() {
             val password = binding.inputSignUpPassword.text.toString()
             val confirmedPassword = binding.inputConfirmPassword.text.toString()
             signUpViewModel.updateFormValidationState(name, email, password, confirmedPassword)
+            it.textInputEditText()
         }
     }
 }
