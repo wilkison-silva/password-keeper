@@ -89,6 +89,7 @@ class SignUpFragment : Fragment() {
                 is FormValidationSignUpStateResult.EmptyState -> {
 
                 }
+
             }
         }
     }
