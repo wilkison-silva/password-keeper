@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import android.widget.ImageButton
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -11,6 +12,7 @@ import br.com.passwordkeeper.R
 import br.com.passwordkeeper.databinding.SignUpFragmentBinding
 import br.com.passwordkeeper.domain.result.viewmodelstate.CreateUserStateResult
 import br.com.passwordkeeper.domain.result.viewmodelstate.FormValidationSignUpStateResult
+import br.com.passwordkeeper.extensions.hideKeyboard
 import br.com.passwordkeeper.extensions.showMessage
 import br.com.passwordkeeper.presentation.ui.viewModel.SignUpViewModel
 import org.koin.android.ext.android.inject
@@ -26,7 +28,7 @@ class SignUpFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         val binding = SignUpFragmentBinding
             .inflate(
@@ -42,8 +44,18 @@ class SignUpFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setupBackButton()
         setupCreateAccountButton()
+        setupConfirmedPasswordEditText()
         observeFormValidation()
         observeSignUp()
+    }
+
+    private fun setupConfirmedPasswordEditText() {
+        binding.inputConfirmPassword.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                binding.inputConfirmPassword.hideKeyboard()
+            }
+            true
+        }
     }
 
     private fun setupBackButton() {
