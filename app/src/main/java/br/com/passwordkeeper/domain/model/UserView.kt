@@ -7,4 +7,5 @@ import kotlinx.parcelize.Parcelize
 data class UserView(
     val name: String,
     val firstCharacterName: String,
+    val email: String
 ): Parcelable
