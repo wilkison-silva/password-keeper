@@ -1,8 +1,8 @@
 package br.com.passwordkeeper.domain.model
 
-data class CardType(
+data class CategoryView(
     val typeName: String,
-    val quantity: Int,
+    val size: Int,
     val icon: Int
 ) {
 }

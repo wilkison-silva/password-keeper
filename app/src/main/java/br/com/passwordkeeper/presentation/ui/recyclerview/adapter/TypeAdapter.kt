@@ -1,22 +1,17 @@
 package br.com.passwordkeeper.presentation.ui.recyclerview.adapter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import br.com.passwordkeeper.R
-import br.com.passwordkeeper.databinding.HomeFragmentBinding
 import br.com.passwordkeeper.databinding.ItemImageTypesBinding
-import br.com.passwordkeeper.domain.model.CardType
+import br.com.passwordkeeper.domain.model.CategoryView
 
 
-class TypeAdapter(cardTypeList: List<CardType> = listOf()) :
+class TypeAdapter(categoryViewList: List<CategoryView> = listOf()) :
     RecyclerView.Adapter<TypeAdapter.TypeViewHolder>() {
-    var onClickItem: (cardType: CardType) -> Unit = {}
+    var onClickItem: (categoryView: CategoryView) -> Unit = {}
 
-    private var cardTypeList = cardTypeList.toMutableList()
+    private var cardTypeList = categoryViewList.toMutableList()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TypeViewHolder {
 
         val binding = ItemImageTypesBinding.inflate(
@@ -28,17 +23,17 @@ class TypeAdapter(cardTypeList: List<CardType> = listOf()) :
     }
 
     override fun onBindViewHolder(holder: TypeViewHolder, position: Int) {
-        val cardType: CardType = cardTypeList[position]
-        holder.bind(cardType)
+        val categoryView: CategoryView = cardTypeList[position]
+        holder.bind(categoryView)
     }
 
     override fun getItemCount(): Int {
         return cardTypeList.size
     }
 
-    fun updateList(listCardType: List<CardType>) {
+    fun updateList(listCategoryView: List<CategoryView>) {
         cardTypeList.clear()
-        cardTypeList.addAll(listCardType)
+        cardTypeList.addAll(listCategoryView)
         notifyDataSetChanged()
     }
 
@@ -46,10 +41,10 @@ class TypeAdapter(cardTypeList: List<CardType> = listOf()) :
         private val binding: ItemImageTypesBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(cardType: CardType) {
-            binding.textViewTextType.text = cardType.typeName
-            binding.textViewQuantity.text = cardType.quantity.toString()
-            binding.imageViewType.setImageResource(cardType.icon)
+        fun bind(categoryView: CategoryView) {
+            binding.textViewTextType.text = categoryView.typeName
+            binding.textViewQuantity.text = categoryView.size.toString()
+            binding.imageViewType.setImageResource(categoryView.icon)
         }
     }
 }

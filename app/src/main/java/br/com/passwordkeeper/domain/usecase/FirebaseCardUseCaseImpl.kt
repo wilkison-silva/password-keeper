@@ -12,7 +12,7 @@ class FirebaseCardUseCaseImpl(
     override suspend fun getAllCards(email: String): GetAllCardsUseCaseResult {
         return when (val getAllCardsRepositoryResult = cardRepository.getAllCards(email)) {
             is GetAllCardsRepositoryResult.Success -> {
-                val cardDomainList = getAllCardsRepositoryResult.cardDataList
+                val cardDomainList = getAllCardsRepositoryResult.cardDomainList
                 val cardViewList = cardDomainList.map { cardDomain: CardDomain ->
                     cardDomain.convertToCardView()
                 }
@@ -82,7 +82,7 @@ class FirebaseCardUseCaseImpl(
     override suspend fun getFavorites(email: String): GetFavoriteCardsUseCaseResult {
         return when (val getFavoriteCardsRepositoryResult = cardRepository.getFavorites(email)) {
             is GetFavoriteCardsRepositoryResult.Success -> {
-                val cardDomainList = getFavoriteCardsRepositoryResult.cardDataList
+                val cardDomainList = getFavoriteCardsRepositoryResult.cardDomainList
                 val cardViewList = cardDomainList.map { cardDomain: CardDomain ->
                     cardDomain.convertToCardView()
                 }

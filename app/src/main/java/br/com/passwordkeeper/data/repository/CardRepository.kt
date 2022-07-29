@@ -16,4 +16,6 @@ interface CardRepository {
     suspend fun deleteCard(cardId: String): DeleteCardRepositoryResult
 
     suspend fun getFavorites(email: String): GetFavoriteCardsRepositoryResult
+
+    suspend fun getCategories(email: String): GetFavoriteCardsRepositoryResult
 }
