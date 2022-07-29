@@ -27,8 +27,6 @@ class SignInFragment : Fragment() {
     }
     private lateinit var binding: LoginFragmentBinding
     private val signInViewModel: SignInViewModel by inject()
-    private val cardUseCase: CardUseCase by inject()
-    private val cardRepository: CardRepository by inject()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -52,30 +50,6 @@ class SignInFragment : Fragment() {
         setupSignInButton()
         observeSignIn()
         observeFormValidation()
-        lifecycleScope.launch {
-            when(val result = cardUseCase.getAllCards("francis@teste.com.br")){
-                is GetAllCardsUseCaseResult.ErrorUnknown -> {
-                    Log.i("testando", "erro desconehcido")
-                }
-                is GetAllCardsUseCaseResult.SuccessWithCards -> {
-                    val cardViewList = result.cardViewList
-                    cardViewList.forEach {
-                        Log.i("testando", "cardview -> $it")
-                    }
-                }
-            }
-            when(val result = cardRepository.getFavorites("francis@teste.com.br")){
-                is GetFavoriteCardsRepositoryResult.ErrorUnknown -> {
-                    Log.i("testando", "erro desconehcido")
-                }
-                is GetFavoriteCardsRepositoryResult.Success -> {
-                    val cardDomainList = result.cardDataList
-                    cardDomainList.forEach {
-                        Log.i("testando", "cardDomain favorite -> $it")
-                    }
-                }
-            }
-        }
     }
 
     private fun setupSignUpButton() {

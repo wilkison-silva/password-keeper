@@ -1,6 +1,7 @@
 package br.com.passwordkeeper.domain.usecase
 
 import br.com.passwordkeeper.domain.model.CardDomain
+import br.com.passwordkeeper.domain.result.repository.GetFavoriteCardsRepositoryResult
 import br.com.passwordkeeper.domain.result.usecase.*
 
 interface CardUseCase {
@@ -14,5 +15,7 @@ interface CardUseCase {
     suspend fun updateCard(cardDomain: CardDomain, emailUser: String): UpdateCardUseCaseResult
 
     suspend fun deleteCard(cardId: String): DeleteCardUseCaseResult
+
+    suspend fun getFavorites(email: String): GetFavoriteCardsUseCaseResult
 
 }

@@ -78,4 +78,19 @@ class FirebaseCardUseCaseImpl(
             }
         }
     }
+
+    override suspend fun getFavorites(email: String): GetFavoriteCardsUseCaseResult {
+        return when (val getFavoriteCardsRepositoryResult = cardRepository.getFavorites(email)) {
+            is GetFavoriteCardsRepositoryResult.Success -> {
+                val cardDomainList = getFavoriteCardsRepositoryResult.cardDataList
+                val cardViewList = cardDomainList.map { cardDomain: CardDomain ->
+                    cardDomain.convertToCardView()
+                }
+                GetFavoriteCardsUseCaseResult.Success(cardViewList)
+            }
+            is GetFavoriteCardsRepositoryResult.ErrorUnknown -> {
+                GetFavoriteCardsUseCaseResult.ErrorUnknown
+            }
+        }
+    }
 }
