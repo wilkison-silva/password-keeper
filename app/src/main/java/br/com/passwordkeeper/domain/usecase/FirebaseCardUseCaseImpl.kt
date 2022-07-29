@@ -97,69 +97,41 @@ class FirebaseCardUseCaseImpl(
     override suspend fun getCategories(email: String): GetCategoriesUseCaseResult {
         when (val getAllCardsRepositoryResult = cardRepository.getAllCards(email)) {
             is GetAllCardsRepositoryResult.Success -> {
-                val cardDomainList = getAllCardsRepositoryResult.cardDomainList
-                val streamingSize = cardDomainList.filter { it.category == STREAMING_TYPE }.size
-                val socialMediaSize =
-                    cardDomainList.filter { it.category == SOCIAL_MEDIA_TYPE }.size
-                val banksSize = cardDomainList.filter { it.category == BANKS_TYPE }.size
-                val educationSize = cardDomainList.filter { it.category == EDUCATION_TYPE }.size
-                val workSize = cardDomainList.filter { it.category == WORK_TYPE }.size
-                val cardsSize = cardDomainList.filter { it.category == CARD_TYPE }.size
+                val categoriesList = getAllCardsRepositoryResult.cardDomainList.map { it.category }
+                if (categoriesList.isNotEmpty()) {
+                    val categoriesViewList = mutableListOf<CategoryView>()
 
-                val categoryViewList = mutableListOf<CategoryView>()
-                if (streamingSize > 0) {
-                    categoryViewList.add(
-                        CategoryDomain(
-                            typeName = STREAMING_TYPE,
-                            size = streamingSize
-                        ).convertToCategoryView()
-                    )
+                    addCategoryView(categoriesList, categoriesViewList, STREAMING_TYPE)
+                    addCategoryView(categoriesList, categoriesViewList, SOCIAL_MEDIA_TYPE)
+                    addCategoryView(categoriesList, categoriesViewList, BANKS_TYPE)
+                    addCategoryView(categoriesList, categoriesViewList, EDUCATION_TYPE)
+                    addCategoryView(categoriesList, categoriesViewList, WORK_TYPE)
+                    addCategoryView(categoriesList, categoriesViewList, CARD_TYPE)
+
+                    return GetCategoriesUseCaseResult.SuccessWithElements(categoriesViewList)
                 }
-                if (socialMediaSize > 0) {
-                    categoryViewList.add(
-                        CategoryDomain(
-                            typeName = SOCIAL_MEDIA_TYPE,
-                            size = socialMediaSize
-                        ).convertToCategoryView()
-                    )
-                }
-                if (banksSize > 0) {
-                    categoryViewList.add(
-                        CategoryDomain(
-                            typeName = BANKS_TYPE,
-                            size = banksSize
-                        ).convertToCategoryView()
-                    )
-                }
-                if (educationSize > 0) {
-                    categoryViewList.add(
-                        CategoryDomain(
-                            typeName = EDUCATION_TYPE,
-                            size = educationSize
-                        ).convertToCategoryView()
-                    )
-                }
-                if (workSize > 0) {
-                    categoryViewList.add(
-                        CategoryDomain(
-                            typeName = WORK_TYPE,
-                            size = workSize
-                        ).convertToCategoryView()
-                    )
-                }
-                if (cardsSize > 0) {
-                    categoryViewList.add(
-                        CategoryDomain(
-                            typeName = CARD_TYPE,
-                            size = cardsSize
-                        ).convertToCategoryView()
-                    )
-                }
-                return GetCategoriesUseCaseResult.Success(categoryViewList)
+                return GetCategoriesUseCaseResult.SuccessWithoutElements
             }
-            is GetAllCardsRepositoryResult.ErrorUnknown -> {
+            is GetAllCardsRepositoryResult.ErrorUnknown ->
                 return GetCategoriesUseCaseResult.ErrorUnknown
+        }
+    }
+
+    private fun addCategoryView(
+        categoriesList: List<String>,
+        categoriesViewList: MutableList<CategoryView>,
+        typeName: String,
+    ) {
+        categoriesList.filter { it == typeName }.size.let { size ->
+            if (size > 0) {
+                categoriesViewList.add(
+                    CategoryDomain(
+                        typeName = typeName,
+                        size = size
+                    ).convertToCategoryView()
+                )
             }
         }
     }
+
 }
