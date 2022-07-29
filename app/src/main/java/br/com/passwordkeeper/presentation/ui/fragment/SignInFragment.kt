@@ -1,17 +1,24 @@
 package br.com.passwordkeeper.presentation.ui.fragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import br.com.passwordkeeper.R
+import br.com.passwordkeeper.data.repository.CardRepository
 import br.com.passwordkeeper.databinding.LoginFragmentBinding
+import br.com.passwordkeeper.domain.result.repository.GetFavoriteCardsRepositoryResult
+import br.com.passwordkeeper.domain.result.usecase.GetAllCardsUseCaseResult
 import br.com.passwordkeeper.domain.result.viewmodelstate.FormValidationSignInStateResult
 import br.com.passwordkeeper.domain.result.viewmodelstate.SignInStateResult
+import br.com.passwordkeeper.domain.usecase.CardUseCase
 import br.com.passwordkeeper.extensions.showMessage
 import br.com.passwordkeeper.presentation.ui.viewModel.SignInViewModel
+import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 
 class SignInFragment : Fragment() {
@@ -20,6 +27,8 @@ class SignInFragment : Fragment() {
     }
     private lateinit var binding: LoginFragmentBinding
     private val signInViewModel: SignInViewModel by inject()
+    private val cardUseCase: CardUseCase by inject()
+    private val cardRepository: CardRepository by inject()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -43,6 +52,30 @@ class SignInFragment : Fragment() {
         setupSignInButton()
         observeSignIn()
         observeFormValidation()
+        lifecycleScope.launch {
+            when(val result = cardUseCase.getAllCards("francis@teste.com.br")){
+                is GetAllCardsUseCaseResult.ErrorUnknown -> {
+                    Log.i("testando", "erro desconehcido")
+                }
+                is GetAllCardsUseCaseResult.SuccessWithCards -> {
+                    val cardViewList = result.cardViewList
+                    cardViewList.forEach {
+                        Log.i("testando", "cardview -> $it")
+                    }
+                }
+            }
+            when(val result = cardRepository.getFavorites("francis@teste.com.br")){
+                is GetFavoriteCardsRepositoryResult.ErrorUnknown -> {
+                    Log.i("testando", "erro desconehcido")
+                }
+                is GetFavoriteCardsRepositoryResult.Success -> {
+                    val cardDomainList = result.cardDataList
+                    cardDomainList.forEach {
+                        Log.i("testando", "cardDomain favorite -> $it")
+                    }
+                }
+            }
+        }
     }
 
     private fun setupSignUpButton() {

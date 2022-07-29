@@ -16,7 +16,7 @@ data class CardData(
             login = login,
             password = password,
             category = category,
-            userDocumentReference = userDocumentReference,
+            user = userDocumentReference,
             favorite = favorite
         )
     }

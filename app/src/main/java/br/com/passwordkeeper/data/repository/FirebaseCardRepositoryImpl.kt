@@ -100,4 +100,26 @@ class FirebaseCardRepositoryImpl(
         return DeleteCardRepositoryResult.ErrorUnknown
     }
 
+    override suspend fun getFavorites(email: String): GetFavoriteCardsRepositoryResult {
+        try {
+            val userDocumentReference = getUserDocumentReference(email)
+            val querySnapshot = fireStore
+                .collection(COLLECTION_CARDS)
+                .whereEqualTo(FIELD_USER, userDocumentReference)
+                .whereEqualTo(FIELD_FAVORITE, true)
+                .get().await()
+            val cardDomainList: List<CardDomain> =
+                querySnapshot.documents.mapNotNull { documentSnapshot: DocumentSnapshot? ->
+                    documentSnapshot
+                        ?.toObject<CardFirestore>()
+                        ?.convertToCardData(documentSnapshot.id)
+                        ?.convertToCardDomain()
+                }
+            return GetFavoriteCardsRepositoryResult.Success(cardDomainList)
+        } catch (exception: Exception) {
+            exception.printStackTrace()
+        }
+        return GetFavoriteCardsRepositoryResult.ErrorUnknown
+    }
+
 }
