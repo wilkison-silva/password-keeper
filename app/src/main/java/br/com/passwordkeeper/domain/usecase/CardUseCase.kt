@@ -18,4 +18,6 @@ interface CardUseCase {
 
     suspend fun getFavorites(email: String): GetFavoriteCardsUseCaseResult
 
+    suspend fun getCategories(email: String): GetCategoriesUseCaseResult
+
 }

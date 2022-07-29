@@ -2,12 +2,12 @@ package br.com.passwordkeeper.domain.model
 
 import br.com.passwordkeeper.R
 
-private const val STREAMING_TYPE = "Streaming"
-private const val SOCIAL_MEDIA_TYPE = "Social Media"
-private const val BANKS_TYPE = "Banks"
-private const val EDUCATION_TYPE = "Education"
-private const val WORK_TYPE = "Work"
-private const val CARD_TYPE = "Card"
+const val STREAMING_TYPE = "Streaming"
+const val SOCIAL_MEDIA_TYPE = "Social Media"
+const val BANKS_TYPE = "Banks"
+const val EDUCATION_TYPE = "Education"
+const val WORK_TYPE = "Work"
+const val CARD_TYPE = "Card"
 
 data class CategoryDomain(
     val typeName: String,

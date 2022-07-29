@@ -17,5 +17,4 @@ interface CardRepository {
 
     suspend fun getFavorites(email: String): GetFavoriteCardsRepositoryResult
 
-    suspend fun getCategories(email: String): GetFavoriteCardsRepositoryResult
 }
