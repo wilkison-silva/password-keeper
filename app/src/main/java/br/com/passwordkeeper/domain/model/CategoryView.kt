@@ -1,8 +1,11 @@
 package br.com.passwordkeeper.domain.model
 
+import androidx.annotation.DrawableRes
+import androidx.annotation.StringRes
+
 data class CategoryView(
-    val typeName: String,
+    @StringRes val StringResourceId: Int,
     val size: Int,
-    val icon: Int
+    @DrawableRes val DrawableResourceId: Int
 ) {
 }

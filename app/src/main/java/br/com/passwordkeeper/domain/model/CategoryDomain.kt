@@ -2,35 +2,38 @@ package br.com.passwordkeeper.domain.model
 
 import br.com.passwordkeeper.R
 
-const val STREAMING_TYPE = "Streaming"
-const val SOCIAL_MEDIA_TYPE = "Social Media"
-const val BANKS_TYPE = "Banks"
-const val EDUCATION_TYPE = "Education"
-const val WORK_TYPE = "Work"
-const val CARD_TYPE = "Card"
-
 data class CategoryDomain(
-    val typeName: String,
+    val category: Categories,
     val size: Int,
 ) {
 
     fun convertToCategoryView(): CategoryView {
         return CategoryView(
-            typeName = typeName,
+            StringResourceId = getNameForCategory(category),
             size = size,
-            icon = getIconForCategory(typeName)
+            DrawableResourceId = getIconForCategory(category)
         )
     }
 
-    private fun getIconForCategory(typeName: String): Int {
-        return when (typeName) {
-            STREAMING_TYPE -> R.drawable.ic_stream_type
-            SOCIAL_MEDIA_TYPE ->R.drawable.ic_social_media
-            BANKS_TYPE -> R.drawable.ic_bank
-            EDUCATION_TYPE -> R.drawable.ic_education
-            WORK_TYPE -> R.drawable.ic_work
-            CARD_TYPE -> R.drawable.ic_card
-            else -> R.drawable.ic_404_not_found
+    private fun getNameForCategory(category: Categories): Int {
+        return when (category) {
+            Categories.STREAMING_TYPE -> R.string.streaming
+            Categories.SOCIAL_MEDIA_TYPE -> R.string.social_media
+            Categories.BANKS_TYPE -> R.string.banks
+            Categories.EDUCATION_TYPE -> R.string.education
+            Categories.WORK_TYPE -> R.string.work
+            Categories.CARD_TYPE -> R.string.cards
+        }
+    }
+
+    private fun getIconForCategory(category: Categories): Int {
+        return when (category) {
+            Categories.STREAMING_TYPE -> R.drawable.ic_stream_type
+            Categories.SOCIAL_MEDIA_TYPE -> R.drawable.ic_social_media
+            Categories.BANKS_TYPE -> R.drawable.ic_bank
+            Categories.EDUCATION_TYPE -> R.drawable.ic_education
+            Categories.WORK_TYPE -> R.drawable.ic_work
+            Categories.CARD_TYPE -> R.drawable.ic_card
         }
     }
 

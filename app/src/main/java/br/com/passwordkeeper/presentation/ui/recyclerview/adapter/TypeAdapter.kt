@@ -1,5 +1,7 @@
 package br.com.passwordkeeper.presentation.ui.recyclerview.adapter
 
+import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -7,13 +9,15 @@ import br.com.passwordkeeper.databinding.ItemImageTypesBinding
 import br.com.passwordkeeper.domain.model.CategoryView
 
 
-class TypeAdapter(categoryViewList: List<CategoryView> = listOf()) :
+class TypeAdapter(
+    private val context: Context,
+    categoryViewList: List<CategoryView> = listOf()
+) :
     RecyclerView.Adapter<TypeAdapter.TypeViewHolder>() {
     var onClickItem: (categoryView: CategoryView) -> Unit = {}
 
     private var cardTypeList = categoryViewList.toMutableList()
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TypeViewHolder {
-
         val binding = ItemImageTypesBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
@@ -42,9 +46,9 @@ class TypeAdapter(categoryViewList: List<CategoryView> = listOf()) :
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(categoryView: CategoryView) {
-            binding.textViewTextType.text = categoryView.typeName
+            binding.textViewTextType.text = context.getString(categoryView.StringResourceId)
             binding.textViewQuantity.text = categoryView.size.toString()
-            binding.imageViewType.setImageResource(categoryView.icon)
+            binding.imageViewType.setImageResource(categoryView.DrawableResourceId)
         }
     }
 }

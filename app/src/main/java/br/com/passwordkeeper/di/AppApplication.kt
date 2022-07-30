@@ -17,7 +17,8 @@ class AppApplication : Application() {
                     retrofitModule,
                     webClientModule,
                     serviceModule,
-                    viewModelModule
+                    viewModelModule,
+                    recyclerViewAdaptersModule
                 )
             )
         }

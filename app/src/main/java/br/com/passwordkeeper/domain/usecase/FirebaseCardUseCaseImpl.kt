@@ -97,16 +97,26 @@ class FirebaseCardUseCaseImpl(
     override suspend fun getCategories(email: String): GetCategoriesUseCaseResult {
         when (val getAllCardsRepositoryResult = cardRepository.getAllCards(email)) {
             is GetAllCardsRepositoryResult.Success -> {
-                val categoriesList = getAllCardsRepositoryResult.cardDomainList.map { it.category }
+                val categoriesList: MutableList<Categories> =
+                    getAllCardsRepositoryResult.cardDomainList.map { cardDomain ->
+                        when (cardDomain.category) {
+                            STREAMING_TYPE -> Categories.STREAMING_TYPE
+                            SOCIAL_MEDIA_TYPE -> Categories.SOCIAL_MEDIA_TYPE
+                            BANKS_TYPE -> Categories.BANKS_TYPE
+                            EDUCATION_TYPE -> Categories.EDUCATION_TYPE
+                            WORK_TYPE -> Categories.WORK_TYPE
+                            else -> Categories.CARD_TYPE
+                        }
+                    }.toMutableList()
                 if (categoriesList.isNotEmpty()) {
                     val categoriesViewList = mutableListOf<CategoryView>()
 
-                    addCategoryView(categoriesList, categoriesViewList, STREAMING_TYPE)
-                    addCategoryView(categoriesList, categoriesViewList, SOCIAL_MEDIA_TYPE)
-                    addCategoryView(categoriesList, categoriesViewList, BANKS_TYPE)
-                    addCategoryView(categoriesList, categoriesViewList, EDUCATION_TYPE)
-                    addCategoryView(categoriesList, categoriesViewList, WORK_TYPE)
-                    addCategoryView(categoriesList, categoriesViewList, CARD_TYPE)
+                    addCategoryView(categoriesList, categoriesViewList, Categories.STREAMING_TYPE)
+                    addCategoryView(categoriesList, categoriesViewList, Categories.SOCIAL_MEDIA_TYPE)
+                    addCategoryView(categoriesList, categoriesViewList, Categories.BANKS_TYPE)
+                    addCategoryView(categoriesList, categoriesViewList, Categories.EDUCATION_TYPE)
+                    addCategoryView(categoriesList, categoriesViewList, Categories.WORK_TYPE)
+                    addCategoryView(categoriesList, categoriesViewList, Categories.CARD_TYPE)
 
                     return GetCategoriesUseCaseResult.SuccessWithElements(categoriesViewList)
                 }
@@ -118,20 +128,21 @@ class FirebaseCardUseCaseImpl(
     }
 
     private fun addCategoryView(
-        categoriesList: List<String>,
+        categoriesList: MutableList<Categories>,
         categoriesViewList: MutableList<CategoryView>,
-        typeName: String,
+        category: Categories,
     ) {
-        categoriesList.filter { it == typeName }.size.let { size ->
+        categoriesList.filter { it == category }.size.let { size ->
             if (size > 0) {
                 categoriesViewList.add(
                     CategoryDomain(
-                        typeName = typeName,
+                        category = category,
                         size = size
                     ).convertToCategoryView()
                 )
             }
         }
+        categoriesList.removeAll { it == category }
     }
 
 }

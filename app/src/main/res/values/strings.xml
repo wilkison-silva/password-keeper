@@ -28,7 +28,7 @@
     <string name="the_advice_above">The advice above has %1$d words that can change your day. Try a new one!</string>
     <string name="ask_for_advice">Ask for advice</string>
     <string name="no_message_found">Sorry, no message found!</string>
-    <string name="error">Sorry, an error happend!</string>
+    <string name="error">Sorry, an error happened!</string>
     <string name="message">&#160;&#160;&#160;ost things are not as bad as you think they are. Most things are not as bad as you think they are Most things are not as bad as you think they are</string>
     <string name="loading">Wait a minute, we\'re getting a nice one for you</string>
     <string name="email_or_password_wrong">Sorry, email or password is wrong!</string>
@@ -45,4 +45,10 @@
     <string name="at_least_1_special_character_amp"><![CDATA[At least 1 special character: !@#$%^&+=-]]></string>
     <string name="at_least_1_numeric_character">At least 1 numeric character</string>
     <string name="at_least_16_characteres">At least 16 characteres</string>
+    <string name="streaming">Streaming</string>
+    <string name="social_media">Social Media</string>
+    <string name="banks">Banks</string>
+    <string name="education">Education</string>
+    <string name="work">Work</string>
+    <string name="cards">Cards</string>
 </resources>
