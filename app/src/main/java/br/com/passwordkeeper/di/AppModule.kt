@@ -98,5 +98,5 @@ val viewModelModule = module {
 }
 
 val recyclerViewAdaptersModule = module {
-    single<TypeAdapter> { TypeAdapter(get<Context>()) }
+    factory<TypeAdapter> { TypeAdapter(get<Context>()) }
 }

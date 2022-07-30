@@ -11,12 +11,13 @@ import br.com.passwordkeeper.domain.model.CategoryView
 
 class TypeAdapter(
     private val context: Context,
-    categoryViewList: List<CategoryView> = listOf()
-) :
-    RecyclerView.Adapter<TypeAdapter.TypeViewHolder>() {
+    categoryViewList: List<CategoryView> = listOf(),
     var onClickItem: (categoryView: CategoryView) -> Unit = {}
+) : RecyclerView.Adapter<TypeAdapter.TypeViewHolder>() {
+
 
     private var cardTypeList = categoryViewList.toMutableList()
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TypeViewHolder {
         val binding = ItemImageTypesBinding.inflate(
             LayoutInflater.from(parent.context),
@@ -42,7 +43,7 @@ class TypeAdapter(
     }
 
     inner class TypeViewHolder(
-        private val binding: ItemImageTypesBinding
+        private val binding: ItemImageTypesBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(categoryView: CategoryView) {

@@ -94,6 +94,9 @@ class FirebaseCardUseCaseImpl(
         }
     }
 
+    //renomear função getCategories para getQuantityOfCategories
+    //criar função para retornar elementos filtrados por categoria
+    //criar arrumar TypeAdapter
     override suspend fun getCategories(email: String): GetCategoriesUseCaseResult {
         when (val getAllCardsRepositoryResult = cardRepository.getAllCards(email)) {
             is GetAllCardsRepositoryResult.Success -> {
