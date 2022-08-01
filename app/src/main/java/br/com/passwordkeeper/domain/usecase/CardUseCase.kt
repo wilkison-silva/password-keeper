@@ -1,7 +1,6 @@
 package br.com.passwordkeeper.domain.usecase
 
 import br.com.passwordkeeper.domain.model.CardDomain
-import br.com.passwordkeeper.domain.result.repository.GetFavoriteCardsRepositoryResult
 import br.com.passwordkeeper.domain.result.usecase.*
 
 interface CardUseCase {
@@ -18,6 +17,7 @@ interface CardUseCase {
 
     suspend fun getFavorites(email: String): GetFavoriteCardsUseCaseResult
 
-    suspend fun getCategories(email: String): GetCategoriesUseCaseResult
+    suspend fun getCategoriesSize(email: String): GetCategoriesSizeUseCaseResult
 
+    suspend fun getCardsByCategory(category: String, email: String): GetCardsByCategoryUseCaseResult
 }

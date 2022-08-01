@@ -94,10 +94,7 @@ class FirebaseCardUseCaseImpl(
         }
     }
 
-    //renomear função getCategories para getQuantityOfCategories
-    //criar função para retornar elementos filtrados por categoria
-    //criar arrumar TypeAdapter
-    override suspend fun getCategories(email: String): GetCategoriesUseCaseResult {
+    override suspend fun getCategoriesSize(email: String): GetCategoriesSizeUseCaseResult {
         when (val getAllCardsRepositoryResult = cardRepository.getAllCards(email)) {
             is GetAllCardsRepositoryResult.Success -> {
                 val categoriesList: MutableList<Categories> =
@@ -111,22 +108,41 @@ class FirebaseCardUseCaseImpl(
                             else -> Categories.CARD_TYPE
                         }
                     }.toMutableList()
-                if (categoriesList.isNotEmpty()) {
-                    val categoriesViewList = mutableListOf<CategoryView>()
+                val categoriesViewList = mutableListOf<CategoryView>()
 
-                    addCategoryView(categoriesList, categoriesViewList, Categories.STREAMING_TYPE)
-                    addCategoryView(categoriesList, categoriesViewList, Categories.SOCIAL_MEDIA_TYPE)
-                    addCategoryView(categoriesList, categoriesViewList, Categories.BANKS_TYPE)
-                    addCategoryView(categoriesList, categoriesViewList, Categories.EDUCATION_TYPE)
-                    addCategoryView(categoriesList, categoriesViewList, Categories.WORK_TYPE)
-                    addCategoryView(categoriesList, categoriesViewList, Categories.CARD_TYPE)
+                addCategoryView(categoriesList, categoriesViewList, Categories.STREAMING_TYPE)
+                addCategoryView(categoriesList,
+                    categoriesViewList,
+                    Categories.SOCIAL_MEDIA_TYPE)
+                addCategoryView(categoriesList, categoriesViewList, Categories.BANKS_TYPE)
+                addCategoryView(categoriesList, categoriesViewList, Categories.EDUCATION_TYPE)
+                addCategoryView(categoriesList, categoriesViewList, Categories.WORK_TYPE)
+                addCategoryView(categoriesList, categoriesViewList, Categories.CARD_TYPE)
 
-                    return GetCategoriesUseCaseResult.SuccessWithElements(categoriesViewList)
-                }
-                return GetCategoriesUseCaseResult.SuccessWithoutElements
+                return GetCategoriesSizeUseCaseResult.Success(categoriesViewList)
+
             }
             is GetAllCardsRepositoryResult.ErrorUnknown ->
-                return GetCategoriesUseCaseResult.ErrorUnknown
+                return GetCategoriesSizeUseCaseResult.ErrorUnknown
+        }
+    }
+
+    override suspend fun getCardsByCategory(
+        category: String,
+        email: String,
+    ): GetCardsByCategoryUseCaseResult {
+        return when (val getCardsByCategoryRepositoryResult =
+            cardRepository.getCardsByCategory(category, email)) {
+            is GetCardsByCategoryRepositoryResult.Success -> {
+                val cardDomainList = getCardsByCategoryRepositoryResult.cardDomainList
+                val cardViewList = cardDomainList.map { cardDomain: CardDomain ->
+                    cardDomain.convertToCardView()
+                }
+                GetCardsByCategoryUseCaseResult.Success(cardViewList)
+            }
+            is GetCardsByCategoryRepositoryResult.ErrorUnknown -> {
+                GetCardsByCategoryUseCaseResult.ErrorUnknown
+            }
         }
     }
 

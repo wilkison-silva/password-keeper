@@ -3,6 +3,7 @@ package br.com.passwordkeeper.data.repository
 import br.com.passwordkeeper.domain.model.CardData
 import br.com.passwordkeeper.domain.model.CardDomain
 import br.com.passwordkeeper.domain.model.CardFirestore
+import br.com.passwordkeeper.domain.model.Categories
 import br.com.passwordkeeper.domain.result.repository.*
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.DocumentSnapshot
@@ -120,6 +121,31 @@ class FirebaseCardRepositoryImpl(
             exception.printStackTrace()
         }
         return GetFavoriteCardsRepositoryResult.ErrorUnknown
+    }
+
+    override suspend fun getCardsByCategory(
+        category: String,
+        email: String,
+    ): GetCardsByCategoryRepositoryResult {
+        try {
+            val userDocumentReference = getUserDocumentReference(email)
+            val querySnapshot = fireStore
+                .collection(COLLECTION_CARDS)
+                .whereEqualTo(FIELD_USER, userDocumentReference)
+                .whereEqualTo(FIELD_CATEGORY, category)
+                .get().await()
+            val cardDomainList: List<CardDomain> =
+                querySnapshot.documents.mapNotNull { documentSnapshot: DocumentSnapshot? ->
+                    documentSnapshot
+                        ?.toObject<CardFirestore>()
+                        ?.convertToCardData(documentSnapshot.id)
+                        ?.convertToCardDomain()
+                }
+            return GetCardsByCategoryRepositoryResult.Success(cardDomainList)
+        } catch (exception: Exception){
+            exception.printStackTrace()
+        }
+        return GetCardsByCategoryRepositoryResult.ErrorUnknown
     }
 
 }
