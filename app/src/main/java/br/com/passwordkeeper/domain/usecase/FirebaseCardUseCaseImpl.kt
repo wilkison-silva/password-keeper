@@ -111,9 +111,7 @@ class FirebaseCardUseCaseImpl(
                 val categoriesViewList = mutableListOf<CategoryView>()
 
                 addCategoryView(categoriesList, categoriesViewList, Categories.STREAMING_TYPE)
-                addCategoryView(categoriesList,
-                    categoriesViewList,
-                    Categories.SOCIAL_MEDIA_TYPE)
+                addCategoryView(categoriesList, categoriesViewList, Categories.SOCIAL_MEDIA_TYPE)
                 addCategoryView(categoriesList, categoriesViewList, Categories.BANKS_TYPE)
                 addCategoryView(categoriesList, categoriesViewList, Categories.EDUCATION_TYPE)
                 addCategoryView(categoriesList, categoriesViewList, Categories.WORK_TYPE)
