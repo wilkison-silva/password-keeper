@@ -7,17 +7,15 @@ import androidx.lifecycle.viewModelScope
 import br.com.passwordkeeper.domain.result.usecase.*
 import br.com.passwordkeeper.domain.result.viewmodelstate.*
 import br.com.passwordkeeper.domain.usecase.FormValidationSignUpUseCase
+import br.com.passwordkeeper.domain.usecase.PasswordValidationUseCase
 import br.com.passwordkeeper.domain.usecase.SignUpUseCase
 import kotlinx.coroutines.launch
 
 class SignUpViewModel(
     private val signUpUseCase: SignUpUseCase,
-    private val formValidationSignUpUseCase: FormValidationSignUpUseCase
+    private val formValidationSignUpUseCase: FormValidationSignUpUseCase,
+    private val passwordValidationUseCase: PasswordValidationUseCase
 ) : ViewModel() {
-
-//    private val _signUpState = MutableLiveData<SignUpStateResult>()
-//    val signUpState: LiveData<SignUpStateResult>
-//        get() = _signUpState
 
     private val _createUserState = MutableLiveData<CreateUserStateResult>()
     val createUserState: LiveData<CreateUserStateResult>
@@ -26,6 +24,30 @@ class SignUpViewModel(
     private val _formValidationState = MutableLiveData<FormValidationSignUpStateResult>()
     val formValidationState: LiveData<FormValidationSignUpStateResult>
         get() = _formValidationState
+
+    private val _passwordValidationState = MutableLiveData<PasswordValidationStateResult>()
+    val passwordValidationState: LiveData<PasswordValidationStateResult>
+        get() = _passwordValidationState
+
+    private val _passwordUpperLetterState = MutableLiveData<ValidationStateResult>()
+    val passwordUpperLetterState: LiveData<ValidationStateResult>
+        get() = _passwordUpperLetterState
+
+    private val _passwordLowerLetterState = MutableLiveData<ValidationStateResult>()
+    val passwordLowerLetterState: LiveData<ValidationStateResult>
+        get() = _passwordLowerLetterState
+
+    private val _specialCharacterState = MutableLiveData<ValidationStateResult>()
+    val specialCharacterState: LiveData<ValidationStateResult>
+        get() = _specialCharacterState
+
+    private val _numericCharacterState = MutableLiveData<ValidationStateResult>()
+    val numericCharactersState: LiveData<ValidationStateResult>
+        get() = _numericCharacterState
+
+    private val _passwordLengthState= MutableLiveData<ValidationStateResult>()
+    val passwordLengthState: LiveData<ValidationStateResult>
+        get() = _passwordLengthState
 
     fun updateFormValidationState(
         name: String,
@@ -49,7 +71,13 @@ class SignUpViewModel(
             is FormValidationSignUpUseCaseResult.ErrorPasswordsDoNotMatch ->
                 _formValidationState.postValue(FormValidationSignUpStateResult.ErrorPasswordsDoNotMatch)
             is FormValidationSignUpUseCaseResult.Success ->
-                _formValidationState.postValue(FormValidationSignUpStateResult.Success(name, email, password))
+                _formValidationState.postValue(
+                    FormValidationSignUpStateResult.Success(
+                        name,
+                        email,
+                        password
+                    )
+                )
         }
 
     }
@@ -59,8 +87,8 @@ class SignUpViewModel(
             when (signUpUseCase.createUser(name, email, password)) {
                 CreateUserUseCaseResult.ErrorEmailAlreadyExists ->
                     _createUserState.postValue(CreateUserStateResult.ErrorEmailAlreadyExists)
-                    CreateUserUseCaseResult.ErrorEmailMalformed ->
-                        _createUserState.postValue(CreateUserStateResult.ErrorEmailMalformed)
+                CreateUserUseCaseResult.ErrorEmailMalformed ->
+                    _createUserState.postValue(CreateUserStateResult.ErrorEmailMalformed)
                 CreateUserUseCaseResult.ErrorUnknown ->
                     _createUserState.postValue(CreateUserStateResult.ErrorUnknown)
                 CreateUserUseCaseResult.ErrorWeakPassword ->
@@ -74,5 +102,71 @@ class SignUpViewModel(
     fun updateStatesToEmptyState() {
         _createUserState.postValue(CreateUserStateResult.EmptyState)
         _formValidationState.postValue(FormValidationSignUpStateResult.EmptyState)
+    }
+
+    fun updatePasswordValidation(password: String) {
+        val passwordValidationUseCaseResult = passwordValidationUseCase.validatePassword(password)
+        when (passwordValidationUseCaseResult) {
+            is PasswordValidationUseCaseResult.ErrorsFound -> {
+                var listError = passwordValidationUseCaseResult.errorList
+                var hasError = false
+                for (error in listError) {
+                    if (error is ErrorsValidationPassword.ErrorOneUpperLetterNotFound)
+                        hasError = true
+                }
+                if (hasError == true) {
+                    _passwordUpperLetterState.postValue(ValidationStateResult.Error)
+                } else {
+                    _passwordUpperLetterState.postValue(ValidationStateResult.Success)
+                }
+
+                hasError = false
+                for (error in listError) {
+                    if(error is ErrorsValidationPassword.ErrorOneLowerLetterNotFound)
+                        hasError = true
+                }
+                if(hasError == true) {
+                    _passwordLowerLetterState.postValue(ValidationStateResult.Error)
+                } else {
+                    _passwordLowerLetterState.postValue(ValidationStateResult.Success)
+                }
+
+                hasError = false
+                for (error in listError) {
+                    if(error is ErrorsValidationPassword.ErrorOneSpecialCharacterNotFound)
+                        hasError = true
+                }
+                if(hasError == true) {
+                    _specialCharacterState.postValue(ValidationStateResult.Error)
+                } else {
+                    _specialCharacterState.postValue(ValidationStateResult.Success)
+                }
+
+                hasError = false
+                for (error in listError) {
+                    if(error is ErrorsValidationPassword.ErrorOneNumericCharacterNotFound)
+                        hasError = true
+                }
+                if(hasError == true) {
+                    _numericCharacterState.postValue(ValidationStateResult.Error)
+                } else {
+                    _numericCharacterState.postValue(ValidationStateResult.Success)
+                }
+
+                hasError = false
+                for (error in listError) {
+                    if(error is ErrorsValidationPassword.ErrorPasswordLengthNotMatch)
+                        hasError = true
+                }
+                if(hasError == true) {
+                   _passwordLengthState.postValue(ValidationStateResult.Error)
+                } else {
+                    _passwordLengthState.postValue(ValidationStateResult.Success)
+                }
+            }
+
+            is PasswordValidationUseCaseResult.Success ->
+                _passwordValidationState.postValue(PasswordValidationStateResult.Success)
+        }
     }
 }

@@ -1,17 +1,22 @@
 package br.com.passwordkeeper.presentation.ui.fragment
 
+import android.content.res.ColorStateList
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.ImageButton
+import androidx.core.content.ContextCompat
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import br.com.passwordkeeper.R
 import br.com.passwordkeeper.databinding.SignUpFragmentBinding
 import br.com.passwordkeeper.domain.result.viewmodelstate.CreateUserStateResult
 import br.com.passwordkeeper.domain.result.viewmodelstate.FormValidationSignUpStateResult
+import br.com.passwordkeeper.domain.result.viewmodelstate.PasswordValidationStateResult
+import br.com.passwordkeeper.domain.result.viewmodelstate.ValidationStateResult
 import br.com.passwordkeeper.extensions.hideKeyboard
 import br.com.passwordkeeper.extensions.showMessage
 import br.com.passwordkeeper.presentation.ui.viewModel.SignUpViewModel
@@ -47,6 +52,9 @@ class SignUpFragment : Fragment() {
         setupConfirmedPasswordEditText()
         observeFormValidation()
         observeSignUp()
+        setupEditText()
+        observePasswordValidation()
+        observeValidationStates()
     }
 
     private fun setupConfirmedPasswordEditText() {
@@ -59,7 +67,7 @@ class SignUpFragment : Fragment() {
     }
 
     private fun setupBackButton() {
-        val buttonBack: ImageButton = binding.buttonBack
+        val buttonBack: ImageButton = binding.imageButtonBack
         buttonBack.setOnClickListener {
             navController.popBackStack()
         }
@@ -145,6 +153,92 @@ class SignUpFragment : Fragment() {
             val password = binding.inputSignUpPassword.text.toString()
             val confirmedPassword = binding.inputConfirmPassword.text.toString()
             signUpViewModel.updateFormValidationState(name, email, password, confirmedPassword)
+        }
+    }
+
+    private fun configColor(color: Int) : ColorStateList {
+        val colorInt = ContextCompat.getColor(requireActivity(), color)
+        val csl = ColorStateList.valueOf(colorInt)
+        return csl
+    }
+
+    private fun observeValidationStates() {
+        signUpViewModel.passwordUpperLetterState.observe(viewLifecycleOwner) {validationStateResult ->
+           when(validationStateResult) {
+               is ValidationStateResult.Error -> {
+                   binding.textViewUpperCase.setTextColor(configColor(R.color.red))
+               }
+               is ValidationStateResult.Success -> {
+                   binding.textViewUpperCase.setTextColor(configColor(R.color.green))
+               }
+           }
+        }
+        signUpViewModel.passwordLowerLetterState.observe(viewLifecycleOwner) {validationStateResult ->
+            when(validationStateResult) {
+                is ValidationStateResult.Error -> {
+                   binding.textViewLowerCase.setTextColor(configColor(R.color.red))
+                }
+                is ValidationStateResult.Success -> {
+                    binding.textViewLowerCase.setTextColor(configColor(R.color.green))
+                }
+            }
+        }
+
+        signUpViewModel.specialCharacterState.observe(viewLifecycleOwner) { validationStateResult ->
+            when(validationStateResult) {
+                is ValidationStateResult.Error -> {
+                  binding.textViewSpecialCharacter.setTextColor(configColor(R.color.red))
+                }
+                is ValidationStateResult.Success -> {
+                    binding.textViewSpecialCharacter.setTextColor(configColor(R.color.green))
+                }
+            }
+        }
+
+        signUpViewModel.numericCharactersState.observe(viewLifecycleOwner) { validationStateResult ->
+            when(validationStateResult) {
+                is ValidationStateResult.Error -> {
+                    binding.textViewNumericCharacter.setTextColor(configColor(R.color.red))
+                }
+                is ValidationStateResult.Success -> {
+                    binding.textViewNumericCharacter.setTextColor(configColor(R.color.green))
+                }
+            }
+        }
+
+        signUpViewModel.passwordLengthState.observe(viewLifecycleOwner) { validationStateResult ->
+            when(validationStateResult) {
+                is ValidationStateResult.Error -> {
+                    binding.textViewPasswordLength.setTextColor(configColor(R.color.red))
+                }
+                is ValidationStateResult.Success -> {
+                    binding.textViewPasswordLength.setTextColor(configColor(R.color.green))
+                }
+            }
+        }
+    }
+
+    private fun observePasswordValidation() {
+//        signUpViewModel.passwordValidationState.observe(viewLifecycleOwner) { passwordValidationStateResult ->
+//            when (passwordValidationStateResult) {
+//                is PasswordValidationStateResult.ErrorsFound -> {}
+//                is PasswordValidationStateResult.Success -> {
+//                    val colorInt = ContextCompat.getColor(requireActivity(), R.color.green)
+//                    val csl = ColorStateList.valueOf(colorInt)
+//                    binding.textViewUpperCase.setTextColor(csl)
+//                    binding.textViewLowerCase.setTextColor(csl)
+//                    binding.textViewSpecialCharacter.setTextColor(csl)
+//                    binding.textViewNumericCharacter.setTextColor(csl)
+//                    binding.textViewPasswordLength.setTextColor(csl)
+//                }
+//            }
+//        }
+    }
+
+    private fun setupEditText() {
+        binding.inputSignUpPassword.addTextChangedListener {
+            val password = binding.inputSignUpPassword.text.toString()
+            signUpViewModel.updatePasswordValidation(password)
         }
     }
 }
