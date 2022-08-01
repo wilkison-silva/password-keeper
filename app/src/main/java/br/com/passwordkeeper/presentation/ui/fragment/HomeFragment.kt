@@ -28,7 +28,7 @@ class HomeFragment : Fragment() {
     }
     private val homeViewModel: HomeViewModel by inject()
     private lateinit var binding: HomeFragmentBinding
-    private val typeAdapter = TypeAdapter()
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -47,17 +47,7 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.recyclerViewTypes.adapter = typeAdapter
-        typeAdapter.updateList(
-            listCategoryView = listOf(
-                CategoryView("streaming", 25, R.drawable.ic_stream_type),
-                CategoryView("social media", 8, R.drawable.ic_social_media),
-                CategoryView("banks", 3, R.drawable.ic_bank),
-                CategoryView("Education", 5, R.drawable.ic_education),
-                CategoryView("Work", 2, R.drawable.ic_work),
-                CategoryView("Card", 7, R.drawable.ic_card)
-            )
-        )
+
         updateAdviceState()
         observeAdviceState()
         setupAskForAdviceButton()
