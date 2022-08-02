@@ -22,7 +22,7 @@ class FormValidationSignUpUseCaseImpl(
             return FormValidationSignUpUseCaseResult.ErrorEmailMalFormed
         if (password.isBlank())
             return FormValidationSignUpUseCaseResult.ErrorPasswordIsBlank
-        if (passwordValidationUseCase.validatePassword(password) !is PasswordValidationUseCaseResult.Success)
+        if (passwordValidationUseCase.validatePassword(password) !is PasswordValidationUseCaseResult.PasswordFieldEmpty)
             return FormValidationSignUpUseCaseResult.ErrorPasswordTooWeak
         if (password != confirmedPassword)
             return FormValidationSignUpUseCaseResult.ErrorPasswordsDoNotMatch

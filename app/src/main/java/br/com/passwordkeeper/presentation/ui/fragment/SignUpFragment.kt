@@ -15,7 +15,6 @@ import br.com.passwordkeeper.R
 import br.com.passwordkeeper.databinding.SignUpFragmentBinding
 import br.com.passwordkeeper.domain.result.viewmodelstate.CreateUserStateResult
 import br.com.passwordkeeper.domain.result.viewmodelstate.FormValidationSignUpStateResult
-import br.com.passwordkeeper.domain.result.viewmodelstate.PasswordValidationStateResult
 import br.com.passwordkeeper.domain.result.viewmodelstate.ValidationStateResult
 import br.com.passwordkeeper.extensions.hideKeyboard
 import br.com.passwordkeeper.extensions.showMessage
@@ -156,27 +155,27 @@ class SignUpFragment : Fragment() {
         }
     }
 
-    private fun configColor(color: Int) : ColorStateList {
+    private fun configColor(color: Int): ColorStateList {
         val colorInt = ContextCompat.getColor(requireActivity(), color)
         val csl = ColorStateList.valueOf(colorInt)
         return csl
     }
 
     private fun observeValidationStates() {
-        signUpViewModel.passwordUpperLetterState.observe(viewLifecycleOwner) {validationStateResult ->
-           when(validationStateResult) {
-               is ValidationStateResult.Error -> {
-                   binding.textViewUpperCase.setTextColor(configColor(R.color.red))
-               }
-               is ValidationStateResult.Success -> {
-                   binding.textViewUpperCase.setTextColor(configColor(R.color.green))
-               }
-           }
-        }
-        signUpViewModel.passwordLowerLetterState.observe(viewLifecycleOwner) {validationStateResult ->
-            when(validationStateResult) {
+        signUpViewModel.passwordUpperLetterState.observe(viewLifecycleOwner) { validationStateResult ->
+            when (validationStateResult) {
                 is ValidationStateResult.Error -> {
-                   binding.textViewLowerCase.setTextColor(configColor(R.color.red))
+                    binding.textViewUpperCase.setTextColor(configColor(R.color.red))
+                }
+                is ValidationStateResult.Success -> {
+                    binding.textViewUpperCase.setTextColor(configColor(R.color.green))
+                }
+            }
+        }
+        signUpViewModel.passwordLowerLetterState.observe(viewLifecycleOwner) { validationStateResult ->
+            when (validationStateResult) {
+                is ValidationStateResult.Error -> {
+                    binding.textViewLowerCase.setTextColor(configColor(R.color.red))
                 }
                 is ValidationStateResult.Success -> {
                     binding.textViewLowerCase.setTextColor(configColor(R.color.green))
@@ -185,9 +184,9 @@ class SignUpFragment : Fragment() {
         }
 
         signUpViewModel.specialCharacterState.observe(viewLifecycleOwner) { validationStateResult ->
-            when(validationStateResult) {
+            when (validationStateResult) {
                 is ValidationStateResult.Error -> {
-                  binding.textViewSpecialCharacter.setTextColor(configColor(R.color.red))
+                    binding.textViewSpecialCharacter.setTextColor(configColor(R.color.red))
                 }
                 is ValidationStateResult.Success -> {
                     binding.textViewSpecialCharacter.setTextColor(configColor(R.color.green))
@@ -196,7 +195,7 @@ class SignUpFragment : Fragment() {
         }
 
         signUpViewModel.numericCharactersState.observe(viewLifecycleOwner) { validationStateResult ->
-            when(validationStateResult) {
+            when (validationStateResult) {
                 is ValidationStateResult.Error -> {
                     binding.textViewNumericCharacter.setTextColor(configColor(R.color.red))
                 }
@@ -207,7 +206,7 @@ class SignUpFragment : Fragment() {
         }
 
         signUpViewModel.passwordLengthState.observe(viewLifecycleOwner) { validationStateResult ->
-            when(validationStateResult) {
+            when (validationStateResult) {
                 is ValidationStateResult.Error -> {
                     binding.textViewPasswordLength.setTextColor(configColor(R.color.red))
                 }
@@ -219,20 +218,13 @@ class SignUpFragment : Fragment() {
     }
 
     private fun observePasswordValidation() {
-//        signUpViewModel.passwordValidationState.observe(viewLifecycleOwner) { passwordValidationStateResult ->
-//            when (passwordValidationStateResult) {
-//                is PasswordValidationStateResult.ErrorsFound -> {}
-//                is PasswordValidationStateResult.Success -> {
-//                    val colorInt = ContextCompat.getColor(requireActivity(), R.color.green)
-//                    val csl = ColorStateList.valueOf(colorInt)
-//                    binding.textViewUpperCase.setTextColor(csl)
-//                    binding.textViewLowerCase.setTextColor(csl)
-//                    binding.textViewSpecialCharacter.setTextColor(csl)
-//                    binding.textViewNumericCharacter.setTextColor(csl)
-//                    binding.textViewPasswordLength.setTextColor(csl)
-//                }
-//            }
-//        }
+        signUpViewModel.passwordFieldIsEmptyState.observe(viewLifecycleOwner) {
+            binding.textViewUpperCase.setTextColor(configColor(R.color.gray_dark))
+            binding.textViewLowerCase.setTextColor(configColor(R.color.gray_dark))
+            binding.textViewSpecialCharacter.setTextColor(configColor(R.color.gray_dark))
+            binding.textViewNumericCharacter.setTextColor(configColor(R.color.gray_dark))
+            binding.textViewPasswordLength.setTextColor(configColor(R.color.gray_dark))
+        }
     }
 
     private fun setupEditText() {

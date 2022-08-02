@@ -12,6 +12,9 @@ private const val MIN_LENGTH_PASSWORD = 16
 class PasswordValidationUseCaseImpl : PasswordValidationUseCase {
 
     override fun validatePassword(password: String): PasswordValidationUseCaseResult {
+        if (password.isBlank())
+            return PasswordValidationUseCaseResult.PasswordFieldEmpty
+
         val errorList = mutableListOf<ErrorsValidationPassword>()
 
         errorList.apply {
@@ -30,10 +33,7 @@ class PasswordValidationUseCaseImpl : PasswordValidationUseCase {
             if (password.length < MIN_LENGTH_PASSWORD)
                 add(ErrorsValidationPassword.ErrorPasswordLengthNotMatch)
 
-            if (size > 0)
-                return PasswordValidationUseCaseResult.ErrorsFound(errorList)
+            return PasswordValidationUseCaseResult.ErrorsFound(errorList)
         }
-
-        return PasswordValidationUseCaseResult.Success
     }
 }

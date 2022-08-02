@@ -25,9 +25,10 @@ class SignUpViewModel(
     val formValidationState: LiveData<FormValidationSignUpStateResult>
         get() = _formValidationState
 
-    private val _passwordValidationState = MutableLiveData<PasswordValidationStateResult>()
-    val passwordValidationState: LiveData<PasswordValidationStateResult>
-        get() = _passwordValidationState
+    private val _passwordFieldIsEmptyState = MutableLiveData<Unit>()
+    val passwordFieldIsEmptyState: LiveData<Unit>
+        get() = _passwordFieldIsEmptyState
+
 
     private val _passwordUpperLetterState = MutableLiveData<ValidationStateResult>()
     val passwordUpperLetterState: LiveData<ValidationStateResult>
@@ -165,8 +166,8 @@ class SignUpViewModel(
                 }
             }
 
-            is PasswordValidationUseCaseResult.Success ->
-                _passwordValidationState.postValue(PasswordValidationStateResult.Success)
+            is PasswordValidationUseCaseResult.PasswordFieldEmpty ->
+                _passwordFieldIsEmptyState.postValue(Unit)
         }
     }
 }
