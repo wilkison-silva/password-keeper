@@ -88,7 +88,8 @@ val viewModelModule = module {
     viewModel<SignUpViewModel> {
         SignUpViewModel(
             get<SignUpUseCase>(),
-            get<FormValidationSignUpUseCase>()
+            get<FormValidationSignUpUseCase>(),
+            get<PasswordValidationUseCase>()
         )
     }
 }

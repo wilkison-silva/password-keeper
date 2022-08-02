@@ -39,4 +39,10 @@
     <string name="password_weak">Password weak</string>
     <string name="password_not_match">The passwords do not match</string>
     <string name="email_already_exist">Email already exists</string>
+    <string name="your_password_must_have">Your password must have:</string>
+    <string name="at_least_1_upper_case_letter">At least 1 upper case letter</string>
+    <string name="at_least_1_lower_case_letter">At least 1 lower case letter</string>
+    <string name="at_least_1_special_character_amp"><![CDATA[At least 1 special character: !@#$%^&+=-]]></string>
+    <string name="at_least_1_numeric_character">At least 1 numeric character</string>
+    <string name="at_least_16_characteres">At least 16 characteres</string>
 </resources>
