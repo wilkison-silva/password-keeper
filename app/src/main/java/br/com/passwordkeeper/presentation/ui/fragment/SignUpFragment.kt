@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.ImageButton
+import androidx.annotation.ColorRes
 import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
@@ -18,7 +19,7 @@ import br.com.passwordkeeper.domain.result.viewmodelstate.FormValidationSignUpSt
 import br.com.passwordkeeper.domain.result.viewmodelstate.ValidationStateResult
 import br.com.passwordkeeper.extensions.hideKeyboard
 import br.com.passwordkeeper.extensions.showMessage
-import br.com.passwordkeeper.presentation.ui.viewModel.SignUpViewModel
+import br.com.passwordkeeper.presentation.ui.viewmodel.SignUpViewModel
 import org.koin.android.ext.android.inject
 
 class SignUpFragment : Fragment() {
@@ -76,39 +77,24 @@ class SignUpFragment : Fragment() {
         signUpViewModel.formValidationState.observe(viewLifecycleOwner) { formValidationSignUpStateResult ->
             when (formValidationSignUpStateResult) {
                 is FormValidationSignUpStateResult.ErrorEmailIsBlank ->
-                    view?.let {
-                        showMessage(it, getString(R.string.email_field_is_empty))
-                    }
+                    view?.showMessage(getString(R.string.email_field_is_empty))
                 is FormValidationSignUpStateResult.ErrorEmailMalFormed ->
-                    view?.let {
-                        showMessage(it, getString(R.string.invalid_email))
-                    }
+                    view?.showMessage(getString(R.string.invalid_email))
                 is FormValidationSignUpStateResult.ErrorNameIsBlank ->
-                    view?.let {
-                        showMessage(it, getString(R.string.name_field_is_empty))
-                    }
+                    view?.showMessage(getString(R.string.name_field_is_empty))
                 is FormValidationSignUpStateResult.ErrorPasswordIsBlank ->
-                    view?.let {
-                        showMessage(it, getString(R.string.password_field_is_empty))
-                    }
+                    view?.showMessage(getString(R.string.password_field_is_empty))
                 is FormValidationSignUpStateResult.ErrorPasswordTooWeak ->
-                    view?.let {
-                        showMessage(it, getString(R.string.password_weak))
-                    }
+                    view?.showMessage(getString(R.string.password_weak))
                 is FormValidationSignUpStateResult.ErrorPasswordsDoNotMatch ->
-                    view?.let {
-                        showMessage(it, getString(R.string.password_not_match))
-                    }
+                    view?.showMessage(getString(R.string.password_not_match))
                 is FormValidationSignUpStateResult.Success -> {
                     val name = formValidationSignUpStateResult.name
                     val email = formValidationSignUpStateResult.email
                     val password = formValidationSignUpStateResult.password
                     signUpViewModel.updateSignUpState(name, email, password)
                 }
-                is FormValidationSignUpStateResult.EmptyState -> {
-
-                }
-
+                is FormValidationSignUpStateResult.EmptyState -> {}
             }
         }
     }
@@ -117,30 +103,21 @@ class SignUpFragment : Fragment() {
         signUpViewModel.createUserState.observe(viewLifecycleOwner) { createUserStateResult ->
             when (createUserStateResult) {
                 is CreateUserStateResult.ErrorEmailAlreadyExists ->
-                    view?.let {
-                        showMessage(it, getString(R.string.email_already_exist))
-                    }
+                    view?.showMessage(getString(R.string.email_already_exist))
                 is CreateUserStateResult.ErrorEmailMalformed ->
-                    view?.let {
-                        showMessage(it, getString(R.string.invalid_email))
-                    }
+                    view?.showMessage(getString(R.string.invalid_email))
                 is CreateUserStateResult.ErrorUnknown ->
-                    view?.let {
-                        showMessage(it, getString(R.string.error))
-                    }
+                    view?.showMessage(getString(R.string.error))
                 is CreateUserStateResult.ErrorWeakPassword ->
-                    view?.let {
-                        showMessage(it, getString(R.string.password_weak))
-                    }
+                    view?.showMessage(getString(R.string.password_weak))
+
                 is CreateUserStateResult.Success -> {
                     val directions =
                         SignUpFragmentDirections.actionSignUpFragmentToSignUpCongratsFragment2()
                     navController.navigate(directions)
                     signUpViewModel.updateStatesToEmptyState()
                 }
-                is CreateUserStateResult.EmptyState -> {
-
-                }
+                is CreateUserStateResult.EmptyState -> {}
             }
         }
     }
@@ -155,30 +132,29 @@ class SignUpFragment : Fragment() {
         }
     }
 
-    private fun configColor(color: Int): ColorStateList {
+    private fun getColorStateList(@ColorRes color: Int): ColorStateList {
         val colorInt = ContextCompat.getColor(requireActivity(), color)
-        val csl = ColorStateList.valueOf(colorInt)
-        return csl
+        return ColorStateList.valueOf(colorInt)
     }
 
     private fun observeValidationStates() {
         signUpViewModel.passwordUpperLetterState.observe(viewLifecycleOwner) { validationStateResult ->
             when (validationStateResult) {
                 is ValidationStateResult.Error -> {
-                    binding.textViewUpperCase.setTextColor(configColor(R.color.red))
+                    binding.textViewUpperCase.setTextColor(getColorStateList(R.color.red))
                 }
                 is ValidationStateResult.Success -> {
-                    binding.textViewUpperCase.setTextColor(configColor(R.color.green))
+                    binding.textViewUpperCase.setTextColor(getColorStateList(R.color.green))
                 }
             }
         }
         signUpViewModel.passwordLowerLetterState.observe(viewLifecycleOwner) { validationStateResult ->
             when (validationStateResult) {
                 is ValidationStateResult.Error -> {
-                    binding.textViewLowerCase.setTextColor(configColor(R.color.red))
+                    binding.textViewLowerCase.setTextColor(getColorStateList(R.color.red))
                 }
                 is ValidationStateResult.Success -> {
-                    binding.textViewLowerCase.setTextColor(configColor(R.color.green))
+                    binding.textViewLowerCase.setTextColor(getColorStateList(R.color.green))
                 }
             }
         }
@@ -186,10 +162,10 @@ class SignUpFragment : Fragment() {
         signUpViewModel.passwordSpecialCharacterState.observe(viewLifecycleOwner) { validationStateResult ->
             when (validationStateResult) {
                 is ValidationStateResult.Error -> {
-                    binding.textViewSpecialCharacter.setTextColor(configColor(R.color.red))
+                    binding.textViewSpecialCharacter.setTextColor(getColorStateList(R.color.red))
                 }
                 is ValidationStateResult.Success -> {
-                    binding.textViewSpecialCharacter.setTextColor(configColor(R.color.green))
+                    binding.textViewSpecialCharacter.setTextColor(getColorStateList(R.color.green))
                 }
             }
         }
@@ -197,10 +173,10 @@ class SignUpFragment : Fragment() {
         signUpViewModel.passwordNumericCharactersState.observe(viewLifecycleOwner) { validationStateResult ->
             when (validationStateResult) {
                 is ValidationStateResult.Error -> {
-                    binding.textViewNumericCharacter.setTextColor(configColor(R.color.red))
+                    binding.textViewNumericCharacter.setTextColor(getColorStateList(R.color.red))
                 }
                 is ValidationStateResult.Success -> {
-                    binding.textViewNumericCharacter.setTextColor(configColor(R.color.green))
+                    binding.textViewNumericCharacter.setTextColor(getColorStateList(R.color.green))
                 }
             }
         }
@@ -208,10 +184,10 @@ class SignUpFragment : Fragment() {
         signUpViewModel.passwordLengthState.observe(viewLifecycleOwner) { validationStateResult ->
             when (validationStateResult) {
                 is ValidationStateResult.Error -> {
-                    binding.textViewPasswordLength.setTextColor(configColor(R.color.red))
+                    binding.textViewPasswordLength.setTextColor(getColorStateList(R.color.red))
                 }
                 is ValidationStateResult.Success -> {
-                    binding.textViewPasswordLength.setTextColor(configColor(R.color.green))
+                    binding.textViewPasswordLength.setTextColor(getColorStateList(R.color.green))
                 }
             }
         }
@@ -219,11 +195,11 @@ class SignUpFragment : Fragment() {
 
     private fun observePasswordValidation() {
         signUpViewModel.passwordFieldIsEmptyState.observe(viewLifecycleOwner) {
-            binding.textViewUpperCase.setTextColor(configColor(R.color.gray_dark))
-            binding.textViewLowerCase.setTextColor(configColor(R.color.gray_dark))
-            binding.textViewSpecialCharacter.setTextColor(configColor(R.color.gray_dark))
-            binding.textViewNumericCharacter.setTextColor(configColor(R.color.gray_dark))
-            binding.textViewPasswordLength.setTextColor(configColor(R.color.gray_dark))
+            binding.textViewUpperCase.setTextColor(getColorStateList(R.color.gray_dark))
+            binding.textViewLowerCase.setTextColor(getColorStateList(R.color.gray_dark))
+            binding.textViewSpecialCharacter.setTextColor(getColorStateList(R.color.gray_dark))
+            binding.textViewNumericCharacter.setTextColor(getColorStateList(R.color.gray_dark))
+            binding.textViewPasswordLength.setTextColor(getColorStateList(R.color.gray_dark))
         }
     }
 

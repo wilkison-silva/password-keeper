@@ -1,4 +1,4 @@
-package br.com.passwordkeeper.presentation.ui.viewModel
+package br.com.passwordkeeper.presentation.ui.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
