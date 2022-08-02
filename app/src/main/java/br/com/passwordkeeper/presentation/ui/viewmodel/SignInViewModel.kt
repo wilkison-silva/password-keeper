@@ -1,4 +1,4 @@
-package br.com.passwordkeeper.presentation.ui.viewModel
+package br.com.passwordkeeper.presentation.ui.viewmodel
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -26,9 +26,7 @@ class SignInViewModel(
         get() = _formValidationState
 
     fun updateFormValidationState(email: String, password: String) {
-        val formValidationSignInUseCaseResult =
-            formValidationSignInUseCase.validateForm(email, password)
-        when (formValidationSignInUseCaseResult) {
+        when (formValidationSignInUseCase.validateForm(email, password)) {
             is FormValidationSignInUseCaseResult.ErrorEmailIsBlank ->
                 _formValidationState.postValue(FormValidationSignInStateResult.ErrorEmailIsBlank)
             is FormValidationSignInUseCaseResult.ErrorEmailMalFormed ->

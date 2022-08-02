@@ -25,13 +25,13 @@ class PasswordValidationUseCaseImpl : PasswordValidationUseCase {
                 add(ErrorsValidationPassword.ErrorOneLowerLetterNotFound)
 
             if (!password.contains(REGEX_SPECIAL_LETTER.toRegex()))
-                add(ErrorsValidationPassword.ErrorOneSpecialCharacterNotFound)
+                add(ErrorsValidationPassword.ErrorOneSpecialLetterNotFound)
 
             if (!password.contains(REGEX_NUMBER.toRegex()))
-                add(ErrorsValidationPassword.ErrorOneNumericCharacterNotFound)
+                add(ErrorsValidationPassword.ErrorOneNumericLetterNotFound)
 
             if (password.length < MIN_LENGTH_PASSWORD)
-                add(ErrorsValidationPassword.ErrorPasswordLengthNotMatch)
+                add(ErrorsValidationPassword.ErrorPasswordSizeNotMatch)
 
             return PasswordValidationUseCaseResult.ErrorsFound(errorList)
         }

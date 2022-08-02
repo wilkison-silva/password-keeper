@@ -10,11 +10,9 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import br.com.passwordkeeper.R
 import br.com.passwordkeeper.databinding.HomeFragmentBinding
-import br.com.passwordkeeper.domain.model.CategoryView
 import br.com.passwordkeeper.domain.model.UserView
 import br.com.passwordkeeper.domain.result.viewmodelstate.GetAdviceStateResult
-import br.com.passwordkeeper.presentation.ui.recyclerview.adapter.TypeAdapter
-import br.com.passwordkeeper.presentation.ui.viewModel.HomeViewModel
+import br.com.passwordkeeper.presentation.ui.viewmodel.HomeViewModel
 import org.koin.android.ext.android.inject
 
 class HomeFragment : Fragment() {
