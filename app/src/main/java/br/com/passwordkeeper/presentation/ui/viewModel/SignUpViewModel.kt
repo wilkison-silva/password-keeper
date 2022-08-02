@@ -5,6 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.com.passwordkeeper.domain.result.usecase.*
+import br.com.passwordkeeper.domain.result.usecase.ErrorsValidationPassword.*
+import br.com.passwordkeeper.domain.result.usecase.PasswordValidationUseCaseResult.*
 import br.com.passwordkeeper.domain.result.viewmodelstate.*
 import br.com.passwordkeeper.domain.usecase.FormValidationSignUpUseCase
 import br.com.passwordkeeper.domain.usecase.PasswordValidationUseCase
@@ -38,15 +40,15 @@ class SignUpViewModel(
     val passwordLowerLetterState: LiveData<ValidationStateResult>
         get() = _passwordLowerLetterState
 
-    private val _specialCharacterState = MutableLiveData<ValidationStateResult>()
-    val specialCharacterState: LiveData<ValidationStateResult>
-        get() = _specialCharacterState
+    private val _passwordSpecialCharacterState = MutableLiveData<ValidationStateResult>()
+    val passwordSpecialCharacterState: LiveData<ValidationStateResult>
+        get() = _passwordSpecialCharacterState
 
-    private val _numericCharacterState = MutableLiveData<ValidationStateResult>()
-    val numericCharactersState: LiveData<ValidationStateResult>
-        get() = _numericCharacterState
+    private val _passwordNumericCharacterState = MutableLiveData<ValidationStateResult>()
+    val passwordNumericCharactersState: LiveData<ValidationStateResult>
+        get() = _passwordNumericCharacterState
 
-    private val _passwordLengthState= MutableLiveData<ValidationStateResult>()
+    private val _passwordLengthState = MutableLiveData<ValidationStateResult>()
     val passwordLengthState: LiveData<ValidationStateResult>
         get() = _passwordLengthState
 
@@ -105,68 +107,41 @@ class SignUpViewModel(
         _formValidationState.postValue(FormValidationSignUpStateResult.EmptyState)
     }
 
+    private fun setPasswordState(
+        errorList: List<ErrorsValidationPassword>,
+        error: ErrorsValidationPassword,
+        state: MutableLiveData<ValidationStateResult>
+    ) {
+        errorList.contains(error).let {
+            if (it)
+                state.postValue(ValidationStateResult.Error)
+            else
+                state.postValue(ValidationStateResult.Success)
+        }
+    }
+
     fun updatePasswordValidation(password: String) {
-        val passwordValidationUseCaseResult = passwordValidationUseCase.validatePassword(password)
-        when (passwordValidationUseCaseResult) {
-            is PasswordValidationUseCaseResult.ErrorsFound -> {
-                var listError = passwordValidationUseCaseResult.errorList
-                var hasError = false
-                for (error in listError) {
-                    if (error is ErrorsValidationPassword.ErrorOneUpperLetterNotFound)
-                        hasError = true
-                }
-                if (hasError == true) {
-                    _passwordUpperLetterState.postValue(ValidationStateResult.Error)
-                } else {
-                    _passwordUpperLetterState.postValue(ValidationStateResult.Success)
-                }
-
-                hasError = false
-                for (error in listError) {
-                    if(error is ErrorsValidationPassword.ErrorOneLowerLetterNotFound)
-                        hasError = true
-                }
-                if(hasError == true) {
-                    _passwordLowerLetterState.postValue(ValidationStateResult.Error)
-                } else {
-                    _passwordLowerLetterState.postValue(ValidationStateResult.Success)
-                }
-
-                hasError = false
-                for (error in listError) {
-                    if(error is ErrorsValidationPassword.ErrorOneSpecialCharacterNotFound)
-                        hasError = true
-                }
-                if(hasError == true) {
-                    _specialCharacterState.postValue(ValidationStateResult.Error)
-                } else {
-                    _specialCharacterState.postValue(ValidationStateResult.Success)
-                }
-
-                hasError = false
-                for (error in listError) {
-                    if(error is ErrorsValidationPassword.ErrorOneNumericCharacterNotFound)
-                        hasError = true
-                }
-                if(hasError == true) {
-                    _numericCharacterState.postValue(ValidationStateResult.Error)
-                } else {
-                    _numericCharacterState.postValue(ValidationStateResult.Success)
-                }
-
-                hasError = false
-                for (error in listError) {
-                    if(error is ErrorsValidationPassword.ErrorPasswordLengthNotMatch)
-                        hasError = true
-                }
-                if(hasError == true) {
-                   _passwordLengthState.postValue(ValidationStateResult.Error)
-                } else {
-                    _passwordLengthState.postValue(ValidationStateResult.Success)
+        when (val passwordValidationUseCaseResult =
+            passwordValidationUseCase.validatePassword(password)) {
+            is ErrorsFound -> {
+                passwordValidationUseCaseResult.errorList.let {
+                    setPasswordState(it, ErrorOneUpperLetterNotFound, _passwordUpperLetterState)
+                    setPasswordState(it, ErrorOneLowerLetterNotFound, _passwordLowerLetterState)
+                    setPasswordState(
+                        it,
+                        ErrorOneSpecialCharacterNotFound,
+                        _passwordSpecialCharacterState
+                    )
+                    setPasswordState(
+                        it,
+                        ErrorOneNumericCharacterNotFound,
+                        _passwordNumericCharacterState
+                    )
+                    setPasswordState(it, ErrorPasswordLengthNotMatch, _passwordLengthState)
                 }
             }
 
-            is PasswordValidationUseCaseResult.PasswordFieldEmpty ->
+            is PasswordFieldEmpty ->
                 _passwordFieldIsEmptyState.postValue(Unit)
         }
     }

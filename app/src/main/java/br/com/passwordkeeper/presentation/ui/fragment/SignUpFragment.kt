@@ -183,7 +183,7 @@ class SignUpFragment : Fragment() {
             }
         }
 
-        signUpViewModel.specialCharacterState.observe(viewLifecycleOwner) { validationStateResult ->
+        signUpViewModel.passwordSpecialCharacterState.observe(viewLifecycleOwner) { validationStateResult ->
             when (validationStateResult) {
                 is ValidationStateResult.Error -> {
                     binding.textViewSpecialCharacter.setTextColor(configColor(R.color.red))
@@ -194,7 +194,7 @@ class SignUpFragment : Fragment() {
             }
         }
 
-        signUpViewModel.numericCharactersState.observe(viewLifecycleOwner) { validationStateResult ->
+        signUpViewModel.passwordNumericCharactersState.observe(viewLifecycleOwner) { validationStateResult ->
             when (validationStateResult) {
                 is ValidationStateResult.Error -> {
                     binding.textViewNumericCharacter.setTextColor(configColor(R.color.red))
