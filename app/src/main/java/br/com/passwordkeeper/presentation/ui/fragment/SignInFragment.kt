@@ -1,17 +1,24 @@
 package br.com.passwordkeeper.presentation.ui.fragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import br.com.passwordkeeper.R
+import br.com.passwordkeeper.data.repository.CardRepository
 import br.com.passwordkeeper.databinding.LoginFragmentBinding
+import br.com.passwordkeeper.domain.result.repository.GetFavoriteCardsRepositoryResult
+import br.com.passwordkeeper.domain.result.usecase.GetAllCardsUseCaseResult
 import br.com.passwordkeeper.domain.result.viewmodelstate.FormValidationSignInStateResult
 import br.com.passwordkeeper.domain.result.viewmodelstate.SignInStateResult
+import br.com.passwordkeeper.domain.usecase.CardUseCase
 import br.com.passwordkeeper.extensions.showMessage
 import br.com.passwordkeeper.presentation.ui.viewModel.SignInViewModel
+import kotlinx.coroutines.launch
 import org.koin.android.ext.android.inject
 
 class SignInFragment : Fragment() {

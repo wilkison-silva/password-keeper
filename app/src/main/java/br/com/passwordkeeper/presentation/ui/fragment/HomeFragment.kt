@@ -10,7 +10,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import br.com.passwordkeeper.R
 import br.com.passwordkeeper.databinding.HomeFragmentBinding
-import br.com.passwordkeeper.domain.model.CardType
+import br.com.passwordkeeper.domain.model.CategoryView
 import br.com.passwordkeeper.domain.model.UserView
 import br.com.passwordkeeper.domain.result.viewmodelstate.GetAdviceStateResult
 import br.com.passwordkeeper.presentation.ui.recyclerview.adapter.TypeAdapter
@@ -28,7 +28,7 @@ class HomeFragment : Fragment() {
     }
     private val homeViewModel: HomeViewModel by inject()
     private lateinit var binding: HomeFragmentBinding
-    private val typeAdapter = TypeAdapter()
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -47,17 +47,7 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.recyclerViewTypes.adapter = typeAdapter
-        typeAdapter.updateList(
-            listCardType = listOf(
-                CardType("streaming", 25, R.drawable.ic_stream_type),
-                CardType("social media", 8, R.drawable.ic_social_media),
-                CardType("banks", 3, R.drawable.ic_bank),
-                CardType("Education", 5, R.drawable.ic_education),
-                CardType("Work", 2, R.drawable.ic_work),
-                CardType("Card", 7, R.drawable.ic_card)
-            )
-        )
+
         updateAdviceState()
         observeAdviceState()
         setupAskForAdviceButton()

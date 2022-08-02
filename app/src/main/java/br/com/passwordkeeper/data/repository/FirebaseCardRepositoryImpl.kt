@@ -7,6 +7,7 @@ import br.com.passwordkeeper.domain.result.repository.*
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.ktx.toObject
 import kotlinx.coroutines.tasks.await
 
@@ -15,30 +16,19 @@ class FirebaseCardRepositoryImpl(
     private val fireStore: FirebaseFirestore,
 ) : CardRepository {
 
+    private var userDocumentReference: DocumentReference? = null
+
     override suspend fun getAllCards(email: String): GetAllCardsRepositoryResult {
         try {
-            val userDocumentReference = getUserDocumentReference(email)
             val querySnapshot = fireStore
                 .collection(COLLECTION_CARDS)
-                .whereEqualTo(FIELD_USER, userDocumentReference).get().await()
-            val cardDomainList: List<CardDomain> =
-                querySnapshot.documents.mapNotNull { documentSnapshot: DocumentSnapshot? ->
-                    documentSnapshot
-                        ?.toObject<CardFirestore>()
-                        ?.convertToCardData(documentSnapshot.id)
-                        ?.convertToCardDomain()
-                }
+                .whereEqualTo(FIELD_USER, getUserDocumentReference(email)).get().await()
+            val cardDomainList: List<CardDomain> = getCardDomainListFromQuerySnapshot(querySnapshot)
             return GetAllCardsRepositoryResult.Success(cardDomainList)
         } catch (exception: Exception) {
             exception.printStackTrace()
         }
         return GetAllCardsRepositoryResult.ErrorUnknown
-    }
-
-    private suspend fun getUserDocumentReference(email: String): DocumentReference {
-        val documentSnapshot =
-            fireStore.collection(COLLECTION_USERS).document(email).get().await()
-        return documentSnapshot.reference
     }
 
     override suspend fun getCardById(cardId: String): GetCardByIdRepositoryResult {
@@ -59,10 +49,9 @@ class FirebaseCardRepositoryImpl(
         emailUser: String,
     ): CreateCardRepositoryResult {
         try {
-            val userDocumentReference = getUserDocumentReference(emailUser)
             val cardDocumentReference = fireStore.collection(COLLECTION_CARDS).document()
             cardDocumentReference
-                .set(cardData.convertToCardFireStore(userDocumentReference))
+                .set(cardData.convertToCardFireStore(getUserDocumentReference(emailUser)))
                 .await()
             return CreateCardRepositoryResult.Success(cardDocumentReference.id)
         } catch (exception: Exception) {
@@ -77,10 +66,9 @@ class FirebaseCardRepositoryImpl(
     ): UpdateCardRepositoryResult {
         try {
             cardData.cardId?.let { cardId: String ->
-                val userDocumentReference = getUserDocumentReference(emailUser)
                 val cardDocumentReference = fireStore.collection(COLLECTION_CARDS).document(cardId)
                 cardDocumentReference
-                    .set(cardData.convertToCardFireStore(userDocumentReference))
+                    .set(cardData.convertToCardFireStore(getUserDocumentReference(emailUser)))
                     .await()
                 return UpdateCardRepositoryResult.Success(cardDocumentReference.id)
             }
@@ -98,6 +86,64 @@ class FirebaseCardRepositoryImpl(
             exception.printStackTrace()
         }
         return DeleteCardRepositoryResult.ErrorUnknown
+    }
+
+    override suspend fun getFavorites(email: String): GetFavoriteCardsRepositoryResult {
+        try {
+            val querySnapshot = fireStore
+                .collection(COLLECTION_CARDS)
+                .whereEqualTo(FIELD_USER, getUserDocumentReference(email))
+                .whereEqualTo(FIELD_FAVORITE, true)
+                .get().await()
+
+            val cardDomainList: List<CardDomain> = getCardDomainListFromQuerySnapshot(querySnapshot)
+            return GetFavoriteCardsRepositoryResult.Success(cardDomainList)
+        } catch (exception: Exception) {
+            exception.printStackTrace()
+        }
+        return GetFavoriteCardsRepositoryResult.ErrorUnknown
+    }
+
+    override suspend fun getCardsByCategory(
+        category: String,
+        email: String,
+    ): GetCardsByCategoryRepositoryResult {
+        try {
+            val querySnapshot = fireStore
+                .collection(COLLECTION_CARDS)
+                .whereEqualTo(FIELD_USER, getUserDocumentReference(email))
+                .whereEqualTo(FIELD_CATEGORY, category)
+                .get().await()
+
+            val cardDomainList: List<CardDomain> = getCardDomainListFromQuerySnapshot(querySnapshot)
+
+            return GetCardsByCategoryRepositoryResult.Success(cardDomainList)
+        } catch (exception: Exception) {
+            exception.printStackTrace()
+        }
+        return GetCardsByCategoryRepositoryResult.ErrorUnknown
+    }
+
+    private suspend fun getUserDocumentReference(email: String): DocumentReference {
+        userDocumentReference?.let {
+            return it
+        }
+
+        val documentSnapshot =
+            fireStore.collection(COLLECTION_USERS).document(email).get().await()
+        userDocumentReference = documentSnapshot.reference
+        return documentSnapshot.reference
+    }
+
+    private fun getCardDomainListFromQuerySnapshot(
+        querySnapshot: QuerySnapshot,
+    ): List<CardDomain> {
+        return querySnapshot.documents.mapNotNull { documentSnapshot: DocumentSnapshot? ->
+            documentSnapshot
+                ?.toObject<CardFirestore>()
+                ?.convertToCardData(documentSnapshot.id)
+                ?.convertToCardDomain()
+        }
     }
 
 }

@@ -1,0 +1,48 @@
+<resources>
+    <string name="app_name">Password Keeper</string>
+    <string name="hint_email">Email</string>
+    <string name="password">Senha</string>
+    <string name="sign_in">Login</string>
+    <string name="sign_up">Inscreva-se</string>
+    <string name="or">Ou</string>
+    <string name="password_keeper">Password Keeper</string>
+    <string name="subtitle">Uma maneira fácil de você lembrar =)</string>
+    <string name="image_description">Ícone de uma chave, representando ícone do app</string>
+    <string name="sign_in_with_google">Inscreva-se com o google</string>
+    <string name="sign_up_title">Criar conta</string>
+    <string name="sign_up_to_join">Crie uma conta para se juntar a nós</string>
+    <string name="just_a_few_steps">Apenas alguns passos</string>
+    <string name="create_an_account">Criar conta</string>
+    <string name="confirm_password">Confirmar senha</string>
+    <string name="name">Primeiro nome/apelido aqui</string>
+    <string name="types">Categorias</string>
+    <string name="favorite">Favoritos</string>
+    <string name="search">Pesquisar</string>
+    <string name="hello">Olá,</string>
+    <string name="advice_of_moment">Conselho do momento =)</string>
+    <string name="icone_de_pesquisa">Ícone de pesquisa</string>
+    <string name="text_type">Streaming</string>
+    <string name="new_note">Nova nota</string>
+    <string name="settings">Configurações</string>
+    <string name="image_description_card_view_type">Imagem representando uma categoria de senhas</string>
+    <string name="the_advice_above">O conselho acima tem %1$d palavras que podem mudar seu dia. Tente um novo!</string>
+    <string name="ask_for_advice">Novo conselho</string>
+    <string name="no_message_found">Desculpe, nenhuma mensagem encontrada!</string>
+    <string name="error">Desculpe, algo deu errado!</string>
+    <string name="message">&#160;&#160;&#160;ost things are not as bad as you think they are. Most things are not as bad as you think they are Most things are not as bad as you think they are</string>
+    <string name="loading">Espere um minuto, estamos buscando um novo pra você..</string>
+    <string name="email_or_password_wrong">Desculpe, credenciais inválidas!</string>
+    <string name="email_field_is_empty">Campo de email não pode ser vazio</string>
+    <string name="invalid_email">Email inválido</string>
+    <string name="password_field_is_empty">Campo de senha não pode ser vazio</string>
+    <string name="name_field_is_empty">Campo de nome não pode ser vazio</string>
+    <string name="password_weak">Senha fraca</string>
+    <string name="password_not_match">As senhas são diferentes</string>
+    <string name="email_already_exist">Este email já existe em nosso servidor</string>
+    <string name="streaming">Streaming</string>
+    <string name="social_media">Redes Sociais</string>
+    <string name="banks">Bancos</string>
+    <string name="education">Educação</string>
+    <string name="work">Trabalho</string>
+    <string name="cards">Cartões</string>
+</resources>

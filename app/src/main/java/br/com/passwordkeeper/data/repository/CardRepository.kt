@@ -1,6 +1,7 @@
 package br.com.passwordkeeper.data.repository
 
 import br.com.passwordkeeper.domain.model.CardData
+import br.com.passwordkeeper.domain.model.Categories
 import br.com.passwordkeeper.domain.result.repository.*
 
 interface CardRepository {
@@ -14,4 +15,12 @@ interface CardRepository {
     suspend fun updateCard(cardData: CardData, emailUser: String): UpdateCardRepositoryResult
 
     suspend fun deleteCard(cardId: String): DeleteCardRepositoryResult
+
+    suspend fun getFavorites(email: String): GetFavoriteCardsRepositoryResult
+
+    suspend fun getCardsByCategory(
+        category: String,
+        email: String,
+    ): GetCardsByCategoryRepositoryResult
+
 }

@@ -1,10 +1,13 @@
 package br.com.passwordkeeper.di
 
+
+import android.content.Context
 import br.com.passwordkeeper.BuildConfig
 import br.com.passwordkeeper.data.repository.*
 import br.com.passwordkeeper.data.source.web.AdviceWebClient
 import br.com.passwordkeeper.data.source.web.service.AdviceService
 import br.com.passwordkeeper.domain.usecase.*
+import br.com.passwordkeeper.presentation.ui.recyclerview.adapter.TypeAdapter
 import br.com.passwordkeeper.presentation.ui.viewModel.HomeViewModel
 import br.com.passwordkeeper.presentation.ui.viewModel.SignInViewModel
 import br.com.passwordkeeper.presentation.ui.viewModel.SignUpViewModel
@@ -92,4 +95,8 @@ val viewModelModule = module {
             get<PasswordValidationUseCase>()
         )
     }
+}
+
+val recyclerViewAdaptersModule = module {
+    factory<TypeAdapter> { TypeAdapter(get<Context>()) }
 }

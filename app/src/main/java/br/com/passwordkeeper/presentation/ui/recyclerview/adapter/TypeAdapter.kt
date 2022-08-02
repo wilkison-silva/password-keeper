@@ -1,24 +1,24 @@
 package br.com.passwordkeeper.presentation.ui.recyclerview.adapter
 
+import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import br.com.passwordkeeper.R
-import br.com.passwordkeeper.databinding.HomeFragmentBinding
 import br.com.passwordkeeper.databinding.ItemImageTypesBinding
-import br.com.passwordkeeper.domain.model.CardType
+import br.com.passwordkeeper.domain.model.CategoryView
 
 
-class TypeAdapter(cardTypeList: List<CardType> = listOf()) :
-    RecyclerView.Adapter<TypeAdapter.TypeViewHolder>() {
-    var onClickItem: (cardType: CardType) -> Unit = {}
+class TypeAdapter(
+    private val context: Context,
+    categoryViewList: List<CategoryView> = listOf(),
+    var onClickItem: (categoryView: CategoryView) -> Unit = {}
+) : RecyclerView.Adapter<TypeAdapter.TypeViewHolder>() {
 
-    private var cardTypeList = cardTypeList.toMutableList()
+
+    private var cardTypeList = categoryViewList.toMutableList()
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TypeViewHolder {
-
         val binding = ItemImageTypesBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
@@ -28,28 +28,28 @@ class TypeAdapter(cardTypeList: List<CardType> = listOf()) :
     }
 
     override fun onBindViewHolder(holder: TypeViewHolder, position: Int) {
-        val cardType: CardType = cardTypeList[position]
-        holder.bind(cardType)
+        val categoryView: CategoryView = cardTypeList[position]
+        holder.bind(categoryView)
     }
 
     override fun getItemCount(): Int {
         return cardTypeList.size
     }
 
-    fun updateList(listCardType: List<CardType>) {
+    fun updateList(listCategoryView: List<CategoryView>) {
         cardTypeList.clear()
-        cardTypeList.addAll(listCardType)
+        cardTypeList.addAll(listCategoryView)
         notifyDataSetChanged()
     }
 
     inner class TypeViewHolder(
-        private val binding: ItemImageTypesBinding
+        private val binding: ItemImageTypesBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(cardType: CardType) {
-            binding.textViewTextType.text = cardType.typeName
-            binding.textViewQuantity.text = cardType.quantity.toString()
-            binding.imageViewType.setImageResource(cardType.icon)
+        fun bind(categoryView: CategoryView) {
+            binding.textViewTextType.text = context.getString(categoryView.StringResourceId)
+            binding.textViewQuantity.text = categoryView.size.toString()
+            binding.imageViewType.setImageResource(categoryView.DrawableResourceId)
         }
     }
 }

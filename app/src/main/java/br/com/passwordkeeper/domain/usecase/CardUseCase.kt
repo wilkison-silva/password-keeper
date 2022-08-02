@@ -15,4 +15,9 @@ interface CardUseCase {
 
     suspend fun deleteCard(cardId: String): DeleteCardUseCaseResult
 
+    suspend fun getFavorites(email: String): GetFavoriteCardsUseCaseResult
+
+    suspend fun getCategoriesSize(email: String): GetCategoriesSizeUseCaseResult
+
+    suspend fun getCardsByCategory(category: String, email: String): GetCardsByCategoryUseCaseResult
 }
