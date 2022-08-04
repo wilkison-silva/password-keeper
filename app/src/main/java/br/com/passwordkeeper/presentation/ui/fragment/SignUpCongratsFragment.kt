@@ -1,15 +1,13 @@
 package br.com.passwordkeeper.presentation.ui.fragment
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import android.widget.ImageButton
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import br.com.passwordkeeper.R
 import br.com.passwordkeeper.databinding.SignUpCongratsFragmentBinding
 
-class SignUpCongratsFragment : Fragment() {
+class SignUpCongratsFragment : Fragment(R.layout.sign_up_congrats_fragment) {
 
     private val navController by lazy {
         findNavController()
@@ -17,23 +15,10 @@ class SignUpCongratsFragment : Fragment() {
 
     private lateinit var binding: SignUpCongratsFragmentBinding
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        val binding = SignUpCongratsFragmentBinding
-            .inflate(
-                inflater,
-                container,
-                false
-            )
-        this.binding = binding
-        return binding.root
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding = SignUpCongratsFragmentBinding.bind(view)
         setupProceedButton()
     }
 

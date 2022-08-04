@@ -2,9 +2,7 @@ package br.com.passwordkeeper.presentation.ui.fragment
 
 import android.content.res.ColorStateList
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.ImageButton
 import androidx.annotation.ColorRes
@@ -22,7 +20,7 @@ import br.com.passwordkeeper.extensions.showMessage
 import br.com.passwordkeeper.presentation.ui.viewmodel.SignUpViewModel
 import org.koin.android.ext.android.inject
 
-class SignUpFragment : Fragment() {
+class SignUpFragment : Fragment(R.layout.sign_up_fragment) {
     private val navController by lazy {
         findNavController()
     }
@@ -30,23 +28,9 @@ class SignUpFragment : Fragment() {
     private lateinit var binding: SignUpFragmentBinding
     private val signUpViewModel: SignUpViewModel by inject()
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?,
-    ): View? {
-        val binding = SignUpFragmentBinding
-            .inflate(
-                inflater,
-                container,
-                false
-            )
-        this.binding = binding
-        return binding.root
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding = SignUpFragmentBinding.bind(view)
         setupBackButton()
         setupCreateAccountButton()
         setupConfirmedPasswordEditText()

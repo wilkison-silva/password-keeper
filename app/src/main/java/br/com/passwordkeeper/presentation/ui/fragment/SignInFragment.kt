@@ -1,9 +1,7 @@
 package br.com.passwordkeeper.presentation.ui.fragment
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import br.com.passwordkeeper.R
@@ -14,31 +12,16 @@ import br.com.passwordkeeper.extensions.showMessage
 import br.com.passwordkeeper.presentation.ui.viewmodel.SignInViewModel
 import org.koin.android.ext.android.inject
 
-class SignInFragment : Fragment() {
+class SignInFragment : Fragment(R.layout.login_fragment) {
     private val navController by lazy {
         findNavController()
     }
     private lateinit var binding: LoginFragmentBinding
     private val signInViewModel: SignInViewModel by inject()
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?,
-    ): View? {
-        val binding = LoginFragmentBinding
-            .inflate(
-                inflater,
-                container,
-                false
-            )
-        this.binding = binding
-        return binding.root
-
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding = LoginFragmentBinding.bind(view)
         setupSignUpButton()
         setupSignInButton()
         observeSignIn()
