@@ -1,9 +1,7 @@
 package br.com.passwordkeeper.presentation.ui.fragment
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -15,7 +13,7 @@ import br.com.passwordkeeper.domain.result.viewmodelstate.GetAdviceStateResult
 import br.com.passwordkeeper.presentation.ui.viewmodel.HomeViewModel
 import org.koin.android.ext.android.inject
 
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment(R.layout.home_fragment) {
     private val navController by lazy {
         findNavController()
     }
@@ -27,25 +25,9 @@ class HomeFragment : Fragment() {
     private val homeViewModel: HomeViewModel by inject()
     private lateinit var binding: HomeFragmentBinding
 
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        val binding = HomeFragmentBinding
-            .inflate(
-                inflater,
-                container,
-                false
-            )
-        this.binding = binding
-        return binding.root
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        binding = HomeFragmentBinding.bind(view)
         updateAdviceState()
         observeAdviceState()
         setupAskForAdviceButton()
