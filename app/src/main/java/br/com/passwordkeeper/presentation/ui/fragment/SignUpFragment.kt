@@ -18,6 +18,7 @@ import br.com.passwordkeeper.domain.result.viewmodelstate.ValidationStateResult
 import br.com.passwordkeeper.extensions.hideKeyboard
 import br.com.passwordkeeper.extensions.showMessage
 import br.com.passwordkeeper.presentation.ui.viewmodel.SignUpViewModel
+import com.google.android.material.textfield.TextInputLayout
 import org.koin.android.ext.android.inject
 
 class SignUpFragment : Fragment(R.layout.sign_up_fragment) {
@@ -57,25 +58,76 @@ class SignUpFragment : Fragment(R.layout.sign_up_fragment) {
         }
     }
 
+    private fun textInputLayoutWithoutError(textInputLayout: TextInputLayout) {
+        textInputLayout.error = null
+    }
+
+    private fun textInputLayoutWithError(textInputLayout: TextInputLayout) {
+        textInputLayout.boxStrokeColor = ContextCompat
+            .getColor(requireActivity(),R.color.red)
+        val colorInt = ContextCompat.getColor(requireActivity(), R.color.red)
+        val csl = ColorStateList.valueOf(colorInt)
+        textInputLayout.hintTextColor = csl
+    }
+
     private fun observeFormValidation() {
         signUpViewModel.formValidationState.observe(viewLifecycleOwner) { formValidationSignUpStateResult ->
             when (formValidationSignUpStateResult) {
-                is FormValidationSignUpStateResult.ErrorEmailIsBlank ->
-                    view?.showMessage(getString(R.string.email_field_is_empty))
-                is FormValidationSignUpStateResult.ErrorEmailMalFormed ->
-                    view?.showMessage(getString(R.string.invalid_email))
-                is FormValidationSignUpStateResult.ErrorNameIsBlank ->
-                    view?.showMessage(getString(R.string.name_field_is_empty))
-                is FormValidationSignUpStateResult.ErrorPasswordIsBlank ->
-                    view?.showMessage(getString(R.string.password_field_is_empty))
-                is FormValidationSignUpStateResult.ErrorPasswordTooWeak ->
-                    view?.showMessage(getString(R.string.password_weak))
-                is FormValidationSignUpStateResult.ErrorPasswordsDoNotMatch ->
-                    view?.showMessage(getString(R.string.password_not_match))
+                is FormValidationSignUpStateResult.ErrorEmailIsBlank -> {
+                    binding.textInputSignUpEmail.error = context?.getString(R.string.email_is_blank)
+                    textInputLayoutWithError(binding.textInputSignUpEmail)
+                    textInputLayoutWithoutError(binding.textInputName)
+                    textInputLayoutWithoutError(binding.textInputSignUpPassword)
+                    textInputLayoutWithoutError(binding.textInputSignUpConfirmPassword)
+                }
+                is FormValidationSignUpStateResult.ErrorEmailMalFormed -> {
+                    binding.textInputSignUpEmail.error = context?.getString(R.string.invalid_email)
+                    textInputLayoutWithError(binding.textInputSignUpEmail)
+                    textInputLayoutWithoutError(binding.textInputName)
+                    textInputLayoutWithoutError(binding.textInputSignUpPassword)
+                    textInputLayoutWithoutError(binding.textInputSignUpConfirmPassword)
+                }
+
+                is FormValidationSignUpStateResult.ErrorNameIsBlank -> {
+                    binding.textInputName.error = context?.getString(R.string.name_field_is_empty)
+                    textInputLayoutWithError(binding.textInputName)
+                    textInputLayoutWithoutError(binding.textInputSignUpEmail)
+                    textInputLayoutWithoutError(binding.textInputSignUpPassword)
+                    textInputLayoutWithoutError(binding.textInputSignUpConfirmPassword)
+                }
+
+                is FormValidationSignUpStateResult.ErrorPasswordIsBlank -> {
+                    binding.textInputSignUpPassword.error = context?.getString(R.string.password_field_is_empty)
+                    textInputLayoutWithError(binding.textInputSignUpPassword)
+                    textInputLayoutWithoutError(binding.textInputSignUpEmail)
+                    textInputLayoutWithoutError(binding.textInputName)
+                    textInputLayoutWithoutError(binding.textInputSignUpConfirmPassword)
+                }
+
+                is FormValidationSignUpStateResult.ErrorPasswordTooWeak -> {
+                    binding.textInputSignUpPassword.error = context?.getString(R.string.password_weak)
+                    textInputLayoutWithError(binding.textInputSignUpPassword)
+                    textInputLayoutWithoutError(binding.textInputSignUpEmail)
+                    textInputLayoutWithoutError(binding.textInputName)
+                    textInputLayoutWithoutError(binding.textInputSignUpConfirmPassword)
+                }
+
+                is FormValidationSignUpStateResult.ErrorPasswordsDoNotMatch -> {
+                    binding.textInputSignUpConfirmPassword.error = context?.getString(R.string.password_not_match)
+                    textInputLayoutWithError(binding.textInputSignUpConfirmPassword)
+                    textInputLayoutWithoutError(binding.textInputSignUpEmail)
+                    textInputLayoutWithoutError(binding.textInputName)
+                    textInputLayoutWithoutError(binding.textInputSignUpPassword)
+                }
+
                 is FormValidationSignUpStateResult.Success -> {
                     val name = formValidationSignUpStateResult.name
+                    textInputLayoutWithoutError(binding.textInputName)
                     val email = formValidationSignUpStateResult.email
+                    textInputLayoutWithoutError(binding.textInputSignUpEmail)
                     val password = formValidationSignUpStateResult.password
+                    textInputLayoutWithoutError(binding.textInputSignUpPassword)
+                    textInputLayoutWithoutError(binding.textInputSignUpPassword)
                     signUpViewModel.updateSignUpState(name, email, password)
                 }
                 is FormValidationSignUpStateResult.EmptyState -> {}

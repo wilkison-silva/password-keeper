@@ -22,8 +22,16 @@ class FormValidationSignUpUseCaseImpl(
             return FormValidationSignUpUseCaseResult.ErrorEmailMalFormed
         if (password.isBlank())
             return FormValidationSignUpUseCaseResult.ErrorPasswordIsBlank
-        if (passwordValidationUseCase.validatePassword(password) !is PasswordValidationUseCaseResult.PasswordFieldEmpty)
-            return FormValidationSignUpUseCaseResult.ErrorPasswordTooWeak
+        when (val passwordValidationResult = passwordValidationUseCase.validatePassword(password)) {
+            is PasswordValidationUseCaseResult.ErrorsFound -> {
+                if (passwordValidationResult.errorList.isNotEmpty()) {
+                    return FormValidationSignUpUseCaseResult.ErrorPasswordTooWeak
+                }
+            }
+            is PasswordValidationUseCaseResult.PasswordFieldEmpty -> {
+                return FormValidationSignUpUseCaseResult.ErrorPasswordTooWeak
+            }
+        }
         if (password != confirmedPassword)
             return FormValidationSignUpUseCaseResult.ErrorPasswordsDoNotMatch
 
