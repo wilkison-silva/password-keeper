@@ -33,7 +33,14 @@
     <string name="loading">Espere um minuto, estamos buscando um novo pra você..</string>
     <string name="email_or_password_wrong">Desculpe, credenciais inválidas!</string>
     <string name="email_field_is_empty">Campo de email não pode ser vazio</string>
+    <string name="email_is_blank">Email está vazio</string>
     <string name="invalid_email">Email inválido</string>
+    <string name="your_password_must_have">Sua palavra chave deve conter:</string>
+    <string name="at_least_1_upper_case_letter">Pelo menos 1 letra maiúscula</string>
+    <string name="at_least_1_lower_case_letter">Pelo menos 1 letra minúscula</string>
+    <string name="at_least_1_special_character_amp"><![CDATA[Pelo menos 1 carácter especial: !@#$%^&+=-]]></string>
+    <string name="at_least_1_numeric_character">Pelo menos 1 carácter numérico</string>
+    <string name="at_least_16_characteres">Pelo menos 16 caracteres</string>
     <string name="password_field_is_empty">Campo de senha não pode ser vazio</string>
     <string name="name_field_is_empty">Campo de nome não pode ser vazio</string>
     <string name="password_weak">Senha fraca</string>
