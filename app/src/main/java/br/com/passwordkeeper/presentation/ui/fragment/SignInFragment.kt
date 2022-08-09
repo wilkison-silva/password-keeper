@@ -1,21 +1,19 @@
 package br.com.passwordkeeper.presentation.ui.fragment
 
-import android.content.res.ColorStateList
 import android.os.Bundle
 import android.view.View
-import androidx.core.content.ContextCompat
+import android.view.inputmethod.EditorInfo
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import br.com.passwordkeeper.R
 import br.com.passwordkeeper.databinding.LoginFragmentBinding
 import br.com.passwordkeeper.domain.result.viewmodelstate.FormValidationSignInStateResult
 import br.com.passwordkeeper.domain.result.viewmodelstate.SignInStateResult
+import br.com.passwordkeeper.extensions.hideKeyboard
 import br.com.passwordkeeper.extensions.showSnackBar
 import br.com.passwordkeeper.extensions.withError
 import br.com.passwordkeeper.extensions.withoutError
 import br.com.passwordkeeper.presentation.ui.viewmodel.SignInViewModel
-import com.google.android.material.textfield.TextInputLayout
-import org.koin.android.ext.android.get
 import org.koin.android.ext.android.inject
 
 class SignInFragment : Fragment(R.layout.login_fragment) {
@@ -30,8 +28,18 @@ class SignInFragment : Fragment(R.layout.login_fragment) {
         binding = LoginFragmentBinding.bind(view)
         setupSignUpButton()
         setupSignInButton()
+        setupPasswordEditText()
         observeSignIn()
         observeFormValidation()
+    }
+
+    private fun setupPasswordEditText() {
+        binding.inputPassword.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                binding.inputPassword.hideKeyboard()
+            }
+            true
+        }
     }
 
     private fun setupSignUpButton() {
