@@ -1,7 +1,9 @@
 package br.com.passwordkeeper.presentation.ui.fragment
 
+import android.content.res.ColorStateList
 import android.os.Bundle
 import android.view.View
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import br.com.passwordkeeper.R
@@ -10,6 +12,7 @@ import br.com.passwordkeeper.domain.result.viewmodelstate.FormValidationSignInSt
 import br.com.passwordkeeper.domain.result.viewmodelstate.SignInStateResult
 import br.com.passwordkeeper.extensions.showMessage
 import br.com.passwordkeeper.presentation.ui.viewmodel.SignInViewModel
+import com.google.android.material.textfield.TextInputLayout
 import org.koin.android.ext.android.inject
 
 class SignInFragment : Fragment(R.layout.login_fragment) {
@@ -44,19 +47,41 @@ class SignInFragment : Fragment(R.layout.login_fragment) {
         }
     }
 
+    private fun textInputLayoutWithoutError(textInputLayout: TextInputLayout) {
+        textInputLayout.error = null
+    }
+
+    private fun textInputLayoutWithError(textInputLayout: TextInputLayout) {
+        textInputLayout.boxStrokeColor = ContextCompat
+            .getColor(requireActivity(), R.color.red)
+        val colorInt = ContextCompat.getColor(requireActivity(), R.color.red)
+        val csl = ColorStateList.valueOf(colorInt)
+        textInputLayout.hintTextColor = csl
+    }
+
     private fun observeFormValidation() {
         signInViewModel.formValidationState.observe(viewLifecycleOwner) { formValidationSignInStateResult ->
             when (formValidationSignInStateResult) {
-                is FormValidationSignInStateResult.ErrorEmailIsBlank ->
-                    view?.showMessage(getString(R.string.email_field_is_empty))
-
-                is FormValidationSignInStateResult.ErrorEmailMalFormed ->
-                    view?.showMessage(getString(R.string.invalid_email))
-                is FormValidationSignInStateResult.ErrorPasswordIsBlank ->
-                    view?.showMessage(getString(R.string.password_field_is_empty))
+                is FormValidationSignInStateResult.ErrorEmailIsBlank -> {
+                    binding.tiEmail.error = context?.getString(R.string.email_field_is_empty)
+                    textInputLayoutWithError(binding.tiEmail)
+                    textInputLayoutWithoutError(binding.tiPassword)
+                }
+                is FormValidationSignInStateResult.ErrorEmailMalFormed -> {
+                    binding.tiEmail.error = context?.getString(R.string.invalid_email)
+                    textInputLayoutWithError(binding.tiEmail)
+                    textInputLayoutWithoutError(binding.tiPassword)
+                }
+                is FormValidationSignInStateResult.ErrorPasswordIsBlank -> {
+                    binding.tiPassword.error = context?.getString(R.string.password_field_is_empty)
+                    textInputLayoutWithError(binding.tiPassword)
+                    textInputLayoutWithoutError(binding.tiEmail)
+                }
                 is FormValidationSignInStateResult.Success -> {
                     val email = formValidationSignInStateResult.email
+                    textInputLayoutWithoutError(binding.tiEmail)
                     val password = formValidationSignInStateResult.password
+                    textInputLayoutWithoutError(binding.tiPassword)
                     signInViewModel.updateSignInState(email, password)
                 }
                 is FormValidationSignInStateResult.EmptyState -> {}
