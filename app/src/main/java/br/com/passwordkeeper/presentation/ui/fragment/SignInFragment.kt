@@ -10,9 +10,12 @@ import br.com.passwordkeeper.R
 import br.com.passwordkeeper.databinding.LoginFragmentBinding
 import br.com.passwordkeeper.domain.result.viewmodelstate.FormValidationSignInStateResult
 import br.com.passwordkeeper.domain.result.viewmodelstate.SignInStateResult
-import br.com.passwordkeeper.extensions.showMessage
+import br.com.passwordkeeper.extensions.showSnackBar
+import br.com.passwordkeeper.extensions.withError
+import br.com.passwordkeeper.extensions.withoutError
 import br.com.passwordkeeper.presentation.ui.viewmodel.SignInViewModel
 import com.google.android.material.textfield.TextInputLayout
+import org.koin.android.ext.android.get
 import org.koin.android.ext.android.inject
 
 class SignInFragment : Fragment(R.layout.login_fragment) {
@@ -47,41 +50,30 @@ class SignInFragment : Fragment(R.layout.login_fragment) {
         }
     }
 
-    private fun textInputLayoutWithoutError(textInputLayout: TextInputLayout) {
-        textInputLayout.error = null
-    }
-
-    private fun textInputLayoutWithError(textInputLayout: TextInputLayout) {
-        textInputLayout.boxStrokeColor = ContextCompat
-            .getColor(requireActivity(), R.color.red)
-        val colorInt = ContextCompat.getColor(requireActivity(), R.color.red)
-        val csl = ColorStateList.valueOf(colorInt)
-        textInputLayout.hintTextColor = csl
-    }
-
     private fun observeFormValidation() {
         signInViewModel.formValidationState.observe(viewLifecycleOwner) { formValidationSignInStateResult ->
             when (formValidationSignInStateResult) {
                 is FormValidationSignInStateResult.ErrorEmailIsBlank -> {
                     binding.tiEmail.error = context?.getString(R.string.email_field_is_empty)
-                    textInputLayoutWithError(binding.tiEmail)
-                    textInputLayoutWithoutError(binding.tiPassword)
+                    binding.tiEmail.withError(requireContext())
+                    binding.tiPassword.withoutError()
                 }
                 is FormValidationSignInStateResult.ErrorEmailMalFormed -> {
                     binding.tiEmail.error = context?.getString(R.string.invalid_email)
-                    textInputLayoutWithError(binding.tiEmail)
-                    textInputLayoutWithoutError(binding.tiPassword)
+                    binding.tiEmail.withError(requireContext())
+                    binding.tiPassword.withoutError()
                 }
                 is FormValidationSignInStateResult.ErrorPasswordIsBlank -> {
                     binding.tiPassword.error = context?.getString(R.string.password_field_is_empty)
-                    textInputLayoutWithError(binding.tiPassword)
-                    textInputLayoutWithoutError(binding.tiEmail)
+                    binding.tiPassword.withError(requireContext())
+                    binding.tiEmail.withoutError()
+
                 }
                 is FormValidationSignInStateResult.Success -> {
                     val email = formValidationSignInStateResult.email
-                    textInputLayoutWithoutError(binding.tiEmail)
+                    binding.tiEmail.withoutError()
                     val password = formValidationSignInStateResult.password
-                    textInputLayoutWithoutError(binding.tiPassword)
+                    binding.tiPassword.withoutError()
                     signInViewModel.updateSignInState(email, password)
                 }
                 is FormValidationSignInStateResult.EmptyState -> {}
@@ -100,10 +92,10 @@ class SignInFragment : Fragment(R.layout.login_fragment) {
                     signInViewModel.updateStatesToEmptyState()
                 }
                 is SignInStateResult.ErrorEmailOrPasswordWrong -> {
-                    view?.showMessage(getString(R.string.email_or_password_wrong))
+                    view?.showSnackBar(getString(R.string.email_or_password_wrong))
                 }
                 is SignInStateResult.ErrorUnknown -> {
-                    view?.showMessage(getString(R.string.error))
+                    view?.showSnackBar(getString(R.string.error))
                 }
                 is SignInStateResult.EmptyState -> {
 
