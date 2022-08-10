@@ -65,14 +65,14 @@ class SignUpFragment : Fragment(R.layout.sign_up_fragment) {
             when (formValidationSignUpStateResult) {
                 is FormValidationSignUpStateResult.ErrorEmailIsBlank -> {
                     binding.textInputSignUpEmail.error = context?.getString(R.string.email_is_blank)
-                    binding.textInputSignUpEmail.withError(requireContext())
+                    binding.textInputSignUpEmail.withError()
                     binding.textInputName.withoutError()
                     binding.textInputSignUpPassword.withoutError()
                     binding.textInputSignUpConfirmPassword.withoutError()
                 }
                 is FormValidationSignUpStateResult.ErrorEmailMalFormed -> {
                     binding.textInputSignUpEmail.error = context?.getString(R.string.invalid_email)
-                    binding.textInputSignUpEmail.withError(requireContext())
+                    binding.textInputSignUpEmail.withError()
                     binding.textInputName.withoutError()
                     binding.textInputSignUpPassword.withoutError()
                     binding.textInputSignUpConfirmPassword.withoutError()
@@ -80,7 +80,7 @@ class SignUpFragment : Fragment(R.layout.sign_up_fragment) {
 
                 is FormValidationSignUpStateResult.ErrorNameIsBlank -> {
                     binding.textInputName.error = context?.getString(R.string.name_field_is_empty)
-                    binding.textInputName.withError(requireContext())
+                    binding.textInputName.withError()
                     binding.textInputSignUpEmail.withoutError()
                     binding.textInputSignUpPassword.withoutError()
                     binding.textInputSignUpConfirmPassword.withoutError()
@@ -88,7 +88,7 @@ class SignUpFragment : Fragment(R.layout.sign_up_fragment) {
 
                 is FormValidationSignUpStateResult.ErrorPasswordIsBlank -> {
                     binding.textInputSignUpPassword.error = context?.getString(R.string.password_field_is_empty)
-                    binding.textInputSignUpPassword.withError(requireContext())
+                    binding.textInputSignUpPassword.withError()
                     binding.textInputName.withoutError()
                     binding.textInputSignUpEmail.withoutError()
                     binding.textInputSignUpConfirmPassword.withoutError()
@@ -97,7 +97,7 @@ class SignUpFragment : Fragment(R.layout.sign_up_fragment) {
 
                 is FormValidationSignUpStateResult.ErrorPasswordTooWeak -> {
                     binding.textInputSignUpPassword.error = context?.getString(R.string.password_weak)
-                    binding.textInputSignUpPassword.withError(requireContext())
+                    binding.textInputSignUpPassword.withError()
                     binding.textInputName.withoutError()
                     binding.textInputSignUpEmail.withoutError()
                     binding.textInputSignUpConfirmPassword.withoutError()
@@ -105,7 +105,7 @@ class SignUpFragment : Fragment(R.layout.sign_up_fragment) {
 
                 is FormValidationSignUpStateResult.ErrorPasswordsDoNotMatch -> {
                     binding.textInputSignUpConfirmPassword.error = context?.getString(R.string.password_not_match)
-                    binding.textInputSignUpConfirmPassword.withError(requireContext())
+                    binding.textInputSignUpConfirmPassword.withError()
                     binding.textInputName.withoutError()
                     binding.textInputSignUpEmail.withoutError()
                     binding.textInputSignUpPassword.withoutError()

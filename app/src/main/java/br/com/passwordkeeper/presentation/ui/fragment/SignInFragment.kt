@@ -63,17 +63,17 @@ class SignInFragment : Fragment(R.layout.login_fragment) {
             when (formValidationSignInStateResult) {
                 is FormValidationSignInStateResult.ErrorEmailIsBlank -> {
                     binding.tiEmail.error = context?.getString(R.string.email_field_is_empty)
-                    binding.tiEmail.withError(requireContext())
+                    binding.tiEmail.withError()
                     binding.tiPassword.withoutError()
                 }
                 is FormValidationSignInStateResult.ErrorEmailMalFormed -> {
                     binding.tiEmail.error = context?.getString(R.string.invalid_email)
-                    binding.tiEmail.withError(requireContext())
+                    binding.tiEmail.withError()
                     binding.tiPassword.withoutError()
                 }
                 is FormValidationSignInStateResult.ErrorPasswordIsBlank -> {
                     binding.tiPassword.error = context?.getString(R.string.password_field_is_empty)
-                    binding.tiPassword.withError(requireContext())
+                    binding.tiPassword.withError()
                     binding.tiEmail.withoutError()
 
                 }
