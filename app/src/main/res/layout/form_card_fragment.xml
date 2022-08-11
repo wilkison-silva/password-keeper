@@ -22,7 +22,8 @@
             android:backgroundTint="@color/purple"
             android:src="@drawable/ic_back"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            android:contentDescription="@string/image_about_the_card" />
 
         <TextView
             android:id="@+id/textViewTitle"
@@ -31,7 +32,7 @@
             android:layout_marginStart="40dp"
             android:layout_marginTop="20dp"
             android:fontFamily="@font/inter_bold"
-            android:text="Create a new card"
+            android:text="@string/create_a_new_card"
             android:textColor="@color/white"
             android:textSize="24sp"
             app:layout_constraintStart_toStartOf="parent"
@@ -41,7 +42,7 @@
             android:id="@+id/constraintLayoutWhiteBackground"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginTop="80dp"
+            android:layout_marginTop="40dp"
             android:layout_marginBottom="50dp"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
@@ -65,14 +66,14 @@
         </com.google.android.material.imageview.ShapeableImageView>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textInputName"
+            android:id="@+id/textInputLayoutDescription"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="55dp"
             android:layout_marginTop="30dp"
             android:layout_marginEnd="55dp"
-            android:hint="@string/name"
+            android:hint="@string/description"
             app:boxCornerRadiusBottomEnd="10dp"
             app:boxCornerRadiusBottomStart="10dp"
             app:boxCornerRadiusTopEnd="10dp"
@@ -81,23 +82,23 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/imageViewImageCard"
-            app:startIconDrawable="@drawable/ic_person">
+            app:startIconDrawable="@drawable/ic_description">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/inputName"
+                android:id="@+id/textInputEditTextName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textInputSignUpEmail"
+            android:id="@+id/textInputLayoutEmail"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="55dp"
             android:layout_marginEnd="55dp"
-            android:hint="@string/hint_email"
+            android:hint="@string/login_user_email"
             app:boxCornerRadiusBottomEnd="10dp"
             app:boxCornerRadiusBottomStart="10dp"
             app:boxCornerRadiusTopEnd="10dp"
@@ -105,18 +106,18 @@
             app:errorEnabled="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textInputName"
-            app:startIconDrawable="@drawable/ic_email">
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayoutDescription"
+            app:startIconDrawable="@drawable/ic_person">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/inputSignInEmail"
+                android:id="@+id/textInputEditTextEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textEmailAddress" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textInputSignUpPassword"
+            android:id="@+id/textInputLayoutPassword"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -131,25 +132,25 @@
             app:errorEnabled="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textInputSignUpEmail"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayoutEmail"
             app:passwordToggleEnabled="true"
             app:startIconDrawable="@drawable/ic_lock">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/inputSignUpPassword"
+                android:id="@+id/textInputEditTextPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/textInputSignUpConfirmPassword"
+            android:id="@+id/textInputLayoutCategory"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="55dp"
             android:layout_marginEnd="55dp"
-            android:hint="@string/confirm_password"
+            android:hint="@string/category"
             app:boxCornerRadiusBottomEnd="10dp"
             app:boxCornerRadiusBottomStart="10dp"
             app:boxCornerRadiusTopEnd="10dp"
@@ -158,12 +159,12 @@
             app:errorEnabled="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textInputSignUpPassword"
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayoutPassword"
             app:passwordToggleEnabled="true"
-            app:startIconDrawable="@drawable/ic_lock">
+            app:startIconDrawable="@drawable/ic_category">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/inputConfirmPassword"
+                android:id="@+id/textInputEditTextCategory"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:imeOptions="actionDone"
@@ -175,32 +176,34 @@
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:fontFamily="@font/inter_bold"
-            android:text="Want a favorite one?"
+            android:text="@string/want_a_favorite_one"
             android:textColor="@color/purple"
             android:textSize="14sp"
             android:layout_marginTop="5dp"
             android:layout_marginStart="55dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textInputSignUpConfirmPassword" />
+            app:layout_constraintTop_toBottomOf="@+id/textInputLayoutCategory" />
 
         <ImageView
+            android:id="@+id/imageViewIconHeart"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             tools:src="@drawable/ic_heart_empty"
             android:layout_marginStart="10dp"
             app:layout_constraintStart_toEndOf="@+id/textViewFavorite"
             app:layout_constraintTop_toTopOf="@+id/textViewFavorite"
-            app:layout_constraintBottom_toBottomOf="@+id/textViewFavorite"/>
+            app:layout_constraintBottom_toBottomOf="@+id/textViewFavorite"
+            android:contentDescription="@string/icon_heart" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/buttonSignUpCreateAccount"
+            android:id="@+id/buttonSave"
             android:layout_width="250dp"
             android:layout_height="50dp"
             android:layout_marginTop="25dp"
             android:layout_marginBottom="15dp"
             android:backgroundTint="@color/purple"
             android:fontFamily="@font/inter_bold"
-            android:text="Save card"
+            android:text="@string/save_card"
             android:textColor="@color/white"
             android:textSize="12sp"
             app:cornerRadius="30dp"

@@ -34,18 +34,12 @@ class HomeFragment : Fragment(R.layout.home_fragment) {
         observeAdviceState()
         setupAskForAdviceButton()
         bindUserInfo()
-        binding.bottomNavigation.setOnItemSelectedListener { menuItem: MenuItem ->
-            when(menuItem.itemId){
-                R.id.menu_icon_new_note -> {
-                    val directions =
-                        HomeFragmentDirections.actionHomeFragmentToFormCardFragment()
-                    navController.navigate(directions)
-                }
-                R.id.menu_icon_settings -> {
+        setupFloatActionButton()
+    }
 
-                }
-            }
-            true
+    private fun setupFloatActionButton(){
+        binding.floatActionButtonNewCard.setOnClickListener {
+            navController.navigate(HomeFragmentDirections.actionHomeFragmentToFormCardFragment())
         }
     }
 

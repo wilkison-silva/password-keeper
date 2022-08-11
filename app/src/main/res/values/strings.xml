@@ -54,4 +54,12 @@
     <string name="cards">Cards</string>
     <string name="please_wait">Please wait...</string>
     <string name="home">Home</string>
+    <string name="create_a_new_card">Create a new card</string>
+    <string name="image_about_the_card">Image about the card</string>
+    <string name="description">Description</string>
+    <string name="login_user_email">login/user/email</string>
+    <string name="category">Category</string>
+    <string name="want_a_favorite_one">Want a favorite one?</string>
+    <string name="icon_heart">Icon heart</string>
+    <string name="save_card">Save card</string>
 </resources>

@@ -54,4 +54,12 @@
     <string name="cards">Cartões</string>
     <string name="please_wait">Aguarde...</string>
     <string name="home">Home</string>
+    <string name="create_a_new_card">Crie um novo cartão</string>
+    <string name="image_about_the_card">Imagem sobre o cartão</string>
+    <string name="description">Descrição</string>
+    <string name="login_user_email">login/usuário/email</string>
+    <string name="category">Categoria</string>
+    <string name="want_a_favorite_one">Tornar um favorito?</string>
+    <string name="icon_heart">Ícone de um coração</string>
+    <string name="save_card">Salvar cartão</string>
 </resources>
