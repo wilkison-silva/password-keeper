@@ -1,6 +1,7 @@
 package br.com.passwordkeeper.presentation.ui.fragment
 
 import android.os.Bundle
+import android.view.MenuItem
 import android.view.View
 import android.widget.Button
 import androidx.fragment.app.Fragment
@@ -10,6 +11,7 @@ import br.com.passwordkeeper.R
 import br.com.passwordkeeper.databinding.HomeFragmentBinding
 import br.com.passwordkeeper.domain.model.UserView
 import br.com.passwordkeeper.domain.result.viewmodelstate.GetAdviceStateResult
+import br.com.passwordkeeper.extensions.showSnackBar
 import br.com.passwordkeeper.presentation.ui.viewmodel.HomeViewModel
 import org.koin.android.ext.android.inject
 
@@ -32,6 +34,17 @@ class HomeFragment : Fragment(R.layout.home_fragment) {
         observeAdviceState()
         setupAskForAdviceButton()
         bindUserInfo()
+        binding.bottomNavigation.setOnItemSelectedListener { menuItem: MenuItem ->
+            when(menuItem.itemId){
+                R.id.menu_icon_new_note -> {
+
+                }
+                R.id.menu_icon_settings -> {
+
+                }
+            }
+            true
+        }
     }
 
     private fun observeAdviceState() {
