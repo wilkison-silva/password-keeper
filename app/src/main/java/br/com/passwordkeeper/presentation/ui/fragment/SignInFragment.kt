@@ -2,6 +2,7 @@ package br.com.passwordkeeper.presentation.ui.fragment
 
 import android.os.Bundle
 import android.view.View
+import android.view.View.*
 import android.view.inputmethod.EditorInfo
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -56,6 +57,7 @@ class SignInFragment : Fragment(R.layout.login_fragment) {
             val password = binding.inputPassword.text.toString()
             signInViewModel.updateFormValidationState(email, password)
         }
+
     }
 
     private fun observeFormValidation() {
@@ -83,6 +85,7 @@ class SignInFragment : Fragment(R.layout.login_fragment) {
                     val password = formValidationSignInStateResult.password
                     binding.tiPassword.withoutError()
                     signInViewModel.updateSignInState(email, password)
+
                 }
                 is FormValidationSignInStateResult.EmptyState -> {}
             }
@@ -101,12 +104,20 @@ class SignInFragment : Fragment(R.layout.login_fragment) {
                 }
                 is SignInStateResult.ErrorEmailOrPasswordWrong -> {
                     view?.showSnackBar(getString(R.string.email_or_password_wrong))
+                    binding.mbSignIn.text = getString(R.string.sign_in)
+                    binding.progressBarSignIn.visibility = GONE
                 }
                 is SignInStateResult.ErrorUnknown -> {
                     view?.showSnackBar(getString(R.string.error))
+                    binding.mbSignIn.text = getString(R.string.sign_in)
+                    binding.progressBarSignIn.visibility = GONE
                 }
                 is SignInStateResult.EmptyState -> {
 
+                }
+                is SignInStateResult.Loading -> {
+                    binding.mbSignIn.text = getString(R.string.please_wait)
+                    binding.progressBarSignIn.visibility = VISIBLE
                 }
             }
         }

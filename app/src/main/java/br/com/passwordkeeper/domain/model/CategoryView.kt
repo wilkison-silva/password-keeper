@@ -7,5 +7,4 @@ data class CategoryView(
     @StringRes val StringResourceId: Int,
     val size: Int,
     @DrawableRes val DrawableResourceId: Int
-) {
-}
+)

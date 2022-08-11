@@ -46,7 +46,6 @@ class HomeFragment : Fragment(R.layout.home_fragment) {
                     binding.textViewMessage.text = adviceView.advice
                     binding.textViewTheAdviceAbove.text = getString(R.string.the_advice_above, adviceView.quantityWords)
                     binding.firstLetter.text = adviceView.firstLetter
-
                 }
                 is GetAdviceStateResult.SuccessWithoutMessage -> {
                     binding.textViewMessage.text = getString(R.string.no_message_found)

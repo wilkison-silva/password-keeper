@@ -20,7 +20,6 @@ import br.com.passwordkeeper.extensions.showSnackBar
 import br.com.passwordkeeper.extensions.withError
 import br.com.passwordkeeper.extensions.withoutError
 import br.com.passwordkeeper.presentation.ui.viewmodel.SignUpViewModel
-import com.google.android.material.textfield.TextInputLayout
 import org.koin.android.ext.android.inject
 
 class SignUpFragment : Fragment(R.layout.sign_up_fragment) {

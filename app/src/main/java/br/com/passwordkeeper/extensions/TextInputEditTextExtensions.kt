@@ -1,7 +1,6 @@
 package br.com.passwordkeeper.extensions
 
 import android.content.Context
-import android.view.View
 import android.view.inputmethod.InputMethodManager
 import com.google.android.material.textfield.TextInputEditText
 
