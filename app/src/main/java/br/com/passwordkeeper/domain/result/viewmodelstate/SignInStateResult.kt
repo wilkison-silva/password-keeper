@@ -7,4 +7,5 @@ sealed class SignInStateResult {
     object ErrorEmailOrPasswordWrong: SignInStateResult()
     object ErrorUnknown: SignInStateResult()
     object EmptyState: SignInStateResult()
+    object Loading: SignInStateResult()
 }

@@ -40,6 +40,7 @@ class SignInViewModel(
 
     fun updateSignInState(email: String, password: String) {
         viewModelScope.launch {
+            _signInState.postValue(SignInStateResult.Loading)
             when (val signInUseCaseResult =
                 signInUseCase.signIn(email, password)) {
                 is SignInUseCaseResult.Success -> {
