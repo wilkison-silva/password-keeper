@@ -186,9 +186,9 @@
 
         <ImageView
             android:id="@+id/imageViewIconHeart"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            tools:src="@drawable/ic_heart_empty"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/ic_heart_empty"
             android:layout_marginStart="10dp"
             app:layout_constraintStart_toEndOf="@+id/textViewFavorite"
             app:layout_constraintTop_toTopOf="@+id/textViewFavorite"
