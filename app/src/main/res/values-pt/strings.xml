@@ -62,4 +62,6 @@
     <string name="want_a_favorite_one">Tornar um favorito?</string>
     <string name="icon_heart">Ícone de um coração</string>
     <string name="save_card">Salvar cartão</string>
+    <string name="url">URL</string>
+    <string name="preview_image">Pré-visualizar</string>
 </resources>

@@ -62,4 +62,6 @@
     <string name="want_a_favorite_one">Want a favorite one?</string>
     <string name="icon_heart">Icon heart</string>
     <string name="save_card">Save card</string>
+    <string name="url">URL</string>
+    <string name="preview_image">Preview image</string>
 </resources>
