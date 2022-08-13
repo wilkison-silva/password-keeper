@@ -52,7 +52,7 @@
             app:layout_constraintTop_toBottomOf="@+id/textViewTitle" />
 
         <com.google.android.material.imageview.ShapeableImageView
-            android:id="@+id/imageViewImageCard"
+            android:id="@+id/imageViewCard"
             app:shapeAppearanceOverlay="@style/topRoundedImage"
             android:layout_width="0dp"
             android:layout_height="200dp"
@@ -81,7 +81,7 @@
             app:errorEnabled="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageViewImageCard"
+            app:layout_constraintTop_toBottomOf="@+id/imageViewCard"
             app:startIconDrawable="@drawable/ic_description">
 
             <com.google.android.material.textfield.TextInputEditText
