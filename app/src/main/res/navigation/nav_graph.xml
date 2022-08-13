@@ -18,12 +18,8 @@
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right"/>
         <action
-            android:id="@+id/action_loginFragment_to_homeFragment"
+            android:id="@+id/action_signInFragment_to_homeFragment"
             app:destination="@id/homeFragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"
             app:popUpTo="@id/signInFragment"
             app:popUpToInclusive="true" />
     </fragment>
@@ -51,18 +47,7 @@
         android:id="@+id/homeFragment"
         android:name="br.com.passwordkeeper.presentation.ui.fragment.HomeFragment"
         android:label="HomeFragment"
-        tools:layout="@layout/home_fragment">
-        <argument
-            android:name="userView"
-            app:argType="br.com.passwordkeeper.domain.model.UserView" />
-        <action
-            android:id="@+id/action_homeFragment_to_formCardFragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"
-            app:destination="@id/formCardFragment" />
-    </fragment>
+        tools:layout="@layout/home_fragment"/>
     <fragment
         android:id="@+id/formCardFragment"
         android:name="br.com.passwordkeeper.presentation.ui.fragment.FormCardFragment"

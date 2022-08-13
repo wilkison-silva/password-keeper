@@ -6,11 +6,15 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.com.passwordkeeper.domain.result.viewmodelstate.GetAdviceStateResult
 import br.com.passwordkeeper.domain.result.usecase.GetAdviceUseCaseResult
+import br.com.passwordkeeper.domain.result.usecase.GetCurrentUserUseCaseResult
+import br.com.passwordkeeper.domain.result.viewmodelstate.CurrentUserState
 import br.com.passwordkeeper.domain.usecase.AdviceUseCase
+import br.com.passwordkeeper.domain.usecase.SignInUseCase
 import kotlinx.coroutines.launch
 
 class HomeViewModel(
-    private val adviceUseCase: AdviceUseCase
+    private val adviceUseCase: AdviceUseCase,
+    private val signInUseCase: SignInUseCase,
 ) : ViewModel() {
 
     private val _adviceState = MutableLiveData<GetAdviceStateResult>()
@@ -32,6 +36,25 @@ class HomeViewModel(
                 }
             }
         }
-
     }
+
+    private val _currentUserState = MutableLiveData<CurrentUserState>()
+    val currentUserState: LiveData<CurrentUserState>
+        get() = _currentUserState
+
+    fun updateCurrentUser() {
+        viewModelScope.launch {
+            when (val signInUseCaseResult = signInUseCase.getCurrentUser()) {
+                is GetCurrentUserUseCaseResult.ErrorUnknown -> {
+                    _currentUserState
+                        .postValue(CurrentUserState.ErrorUnknown)
+                }
+                is GetCurrentUserUseCaseResult.Success -> {
+                    _currentUserState
+                        .postValue(CurrentUserState.Success(signInUseCaseResult.userView))
+                }
+            }
+        }
+    }
+
 }
