@@ -19,8 +19,10 @@ import br.com.passwordkeeper.extensions.hideKeyboard
 import br.com.passwordkeeper.extensions.showSnackBar
 import br.com.passwordkeeper.extensions.withError
 import br.com.passwordkeeper.extensions.withoutError
+import br.com.passwordkeeper.presentation.ui.viewmodel.MainViewModel
 import br.com.passwordkeeper.presentation.ui.viewmodel.SignUpViewModel
-import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SignUpFragment : Fragment(R.layout.sign_up_fragment) {
     private val navController by lazy {
@@ -28,11 +30,13 @@ class SignUpFragment : Fragment(R.layout.sign_up_fragment) {
     }
 
     private lateinit var binding: SignUpFragmentBinding
-    private val signUpViewModel: SignUpViewModel by inject()
+    private val signUpViewModel: SignUpViewModel by viewModel()
+    private val mainViewModel: MainViewModel by sharedViewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = SignUpFragmentBinding.bind(view)
+        mainViewModel.updateBottomNavigationVisibility(visibility = false)
         setupBackButton()
         setupCreateAccountButton()
         setupConfirmedPasswordEditText()

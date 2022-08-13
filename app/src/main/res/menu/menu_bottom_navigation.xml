@@ -1,15 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/menu_icon_home"
+        android:id="@+id/homeFragment"
         android:title="@string/home"
+        android:menuCategory="secondary"
         android:icon="@drawable/ic_home" />
     <item
-        android:id="@+id/menu_icon_new_note"
+        android:id="@+id/formCardFragment"
         android:title="@string/new_card"
-        android:icon="@drawable/ic_new_note" />
+        android:menuCategory="secondary"
+        android:icon="@drawable/ic_new_card" />
     <item
         android:id="@+id/menu_icon_settings"
         android:title="@string/settings"
+        android:menuCategory="secondary"
         android:icon="@drawable/ic_settings"/>
 </menu>
