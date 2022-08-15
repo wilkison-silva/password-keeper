@@ -181,7 +181,7 @@
             android:text="@string/want_a_favorite_one"
             android:textColor="@color/purple"
             android:textSize="14sp"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="25dp"
             android:layout_marginStart="55dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textInputLayoutCategory" />
