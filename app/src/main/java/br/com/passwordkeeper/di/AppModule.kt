@@ -7,7 +7,7 @@ import br.com.passwordkeeper.data.repository.*
 import br.com.passwordkeeper.data.source.web.AdviceWebClient
 import br.com.passwordkeeper.data.source.web.service.AdviceService
 import br.com.passwordkeeper.domain.usecase.*
-import br.com.passwordkeeper.presentation.ui.recyclerview.adapter.TypeAdapter
+import br.com.passwordkeeper.presentation.ui.recyclerview.adapter.CategoryAdapter
 import br.com.passwordkeeper.presentation.ui.viewmodel.HomeViewModel
 import br.com.passwordkeeper.presentation.ui.viewmodel.MainViewModel
 import br.com.passwordkeeper.presentation.ui.viewmodel.SignInViewModel
@@ -100,5 +100,5 @@ val viewModelModule = module {
 }
 
 val recyclerViewAdaptersModule = module {
-    factory<TypeAdapter> { TypeAdapter(get<Context>()) }
+    factory<CategoryAdapter> { CategoryAdapter(get<Context>()) }
 }
