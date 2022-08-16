@@ -1,22 +1,28 @@
 package br.com.passwordkeeper.presentation.ui.fragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.inputmethod.EditorInfo
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import br.com.passwordkeeper.R
 import br.com.passwordkeeper.databinding.LoginFragmentBinding
+import br.com.passwordkeeper.domain.result.usecase.GetAllCardsUseCaseResult
 import br.com.passwordkeeper.domain.result.viewmodelstate.FormValidationSignInStateResult
 import br.com.passwordkeeper.domain.result.viewmodelstate.SignInStateResult
+import br.com.passwordkeeper.domain.usecase.CardUseCase
 import br.com.passwordkeeper.extensions.hideKeyboard
 import br.com.passwordkeeper.extensions.showSnackBar
 import br.com.passwordkeeper.extensions.withError
 import br.com.passwordkeeper.extensions.withoutError
 import br.com.passwordkeeper.presentation.ui.viewmodel.MainViewModel
 import br.com.passwordkeeper.presentation.ui.viewmodel.SignInViewModel
+import kotlinx.coroutines.launch
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -27,6 +33,7 @@ class SignInFragment : Fragment(R.layout.login_fragment) {
     private lateinit var binding: LoginFragmentBinding
     private val signInViewModel: SignInViewModel by viewModel()
     private val mainViewModel: MainViewModel by sharedViewModel()
+    private val cardUseCase: CardUseCase by inject()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
