@@ -156,18 +156,20 @@
             app:boxCornerRadiusTopEnd="10dp"
             app:boxCornerRadiusTopStart="10dp"
             app:cornerRadius="30dp"
-            app:errorEnabled="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textInputLayoutPassword"
-            app:passwordToggleEnabled="true"
-            app:startIconDrawable="@drawable/ic_category">
+            app:startIconDrawable="@drawable/ic_category"
+            app:endIconDrawable="@drawable/ic_drop_arrow"
+            app:endIconMode="custom"
+            >
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/textInputEditTextCategory"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:imeOptions="actionDone"
+                android:enabled="false"
                 android:inputType="textPassword" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -179,7 +181,7 @@
             android:text="@string/want_a_favorite_one"
             android:textColor="@color/purple"
             android:textSize="14sp"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="25dp"
             android:layout_marginStart="55dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textInputLayoutCategory" />
