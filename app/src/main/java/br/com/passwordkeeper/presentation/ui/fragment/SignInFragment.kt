@@ -33,7 +33,6 @@ class SignInFragment : Fragment(R.layout.login_fragment) {
     private lateinit var binding: LoginFragmentBinding
     private val signInViewModel: SignInViewModel by viewModel()
     private val mainViewModel: MainViewModel by sharedViewModel()
-    private val cardUseCase: CardUseCase by inject()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
