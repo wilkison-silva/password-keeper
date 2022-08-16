@@ -10,6 +10,7 @@ import br.com.passwordkeeper.databinding.HomeFragmentBinding
 import br.com.passwordkeeper.domain.model.UserView
 import br.com.passwordkeeper.domain.result.viewmodelstate.CurrentUserState
 import br.com.passwordkeeper.domain.result.viewmodelstate.GetAdviceStateResult
+import br.com.passwordkeeper.domain.result.viewmodelstate.GetFavoriteCardsStateResult
 import br.com.passwordkeeper.presentation.ui.viewmodel.HomeViewModel
 import br.com.passwordkeeper.presentation.ui.viewmodel.MainViewModel
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
@@ -90,5 +91,19 @@ class HomeFragment : Fragment(R.layout.home_fragment) {
     private fun bindUserInfo(userView: UserView) {
         binding.textViewName.text = userView.name
         binding.textViewFirstLetterName.text = userView.firstCharacterName
+    }
+
+    private fun observeFavoriteCards() {
+        homeViewModel.favoriteCardsState.observe(viewLifecycleOwner) {
+            when(it) {
+                is GetFavoriteCardsStateResult.ErrorUnknown -> {
+                    binding.textViewMessage.text = getString(R.string.error)
+                }
+                is GetFavoriteCardsStateResult.Success -> {
+
+                }
+            }
+        }
+
     }
 }

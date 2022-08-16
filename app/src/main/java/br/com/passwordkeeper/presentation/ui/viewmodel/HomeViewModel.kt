@@ -7,14 +7,18 @@ import androidx.lifecycle.viewModelScope
 import br.com.passwordkeeper.domain.result.viewmodelstate.GetAdviceStateResult
 import br.com.passwordkeeper.domain.result.usecase.GetAdviceUseCaseResult
 import br.com.passwordkeeper.domain.result.usecase.GetCurrentUserUseCaseResult
+import br.com.passwordkeeper.domain.result.usecase.GetFavoriteCardsUseCaseResult
 import br.com.passwordkeeper.domain.result.viewmodelstate.CurrentUserState
+import br.com.passwordkeeper.domain.result.viewmodelstate.GetFavoriteCardsStateResult
 import br.com.passwordkeeper.domain.usecase.AdviceUseCase
+import br.com.passwordkeeper.domain.usecase.CardUseCase
 import br.com.passwordkeeper.domain.usecase.SignInUseCase
 import kotlinx.coroutines.launch
 
 class HomeViewModel(
     private val adviceUseCase: AdviceUseCase,
     private val signInUseCase: SignInUseCase,
+    private val cardUseCase: CardUseCase
 ) : ViewModel() {
 
     private val _adviceState = MutableLiveData<GetAdviceStateResult>()
@@ -52,6 +56,27 @@ class HomeViewModel(
                 is GetCurrentUserUseCaseResult.Success -> {
                     _currentUserState
                         .postValue(CurrentUserState.Success(signInUseCaseResult.userView))
+                }
+            }
+        }
+    }
+
+    private val _favoriteCardsState = MutableLiveData<GetFavoriteCardsStateResult>()
+    val favoriteCardsState: LiveData<GetFavoriteCardsStateResult>
+        get() = _favoriteCardsState
+
+    fun updateFavoriteCards(email: String) {
+        viewModelScope.launch {
+            when (val getFavoriteCardsStateResult = cardUseCase.getFavorites(email)) {
+                is GetFavoriteCardsUseCaseResult.ErrorUnknown -> {
+                    _favoriteCardsState.postValue(GetFavoriteCardsStateResult.ErrorUnknown)
+                }
+                is GetFavoriteCardsUseCaseResult.Success -> {
+                    _favoriteCardsState.postValue(
+                        GetFavoriteCardsStateResult.Success(
+                            getFavoriteCardsStateResult.cardViewList
+                        )
+                    )
                 }
             }
         }
