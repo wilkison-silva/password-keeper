@@ -6,5 +6,6 @@ data class CardView(
     val login: String,
     val password: String,
     val category: String,
-    val favorite: Boolean
+    val favorite: Boolean,
+    val date: String
 )

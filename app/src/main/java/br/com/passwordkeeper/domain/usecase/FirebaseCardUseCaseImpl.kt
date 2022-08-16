@@ -16,7 +16,7 @@ class FirebaseCardUseCaseImpl(
                 val cardViewList = cardDomainList.map { cardDomain: CardDomain ->
                     cardDomain.convertToCardView()
                 }
-                GetAllCardsUseCaseResult.SuccessWithCards(cardViewList)
+                GetAllCardsUseCaseResult.Success(cardViewList)
             }
             is GetAllCardsRepositoryResult.ErrorUnknown -> {
                 GetAllCardsUseCaseResult.ErrorUnknown
