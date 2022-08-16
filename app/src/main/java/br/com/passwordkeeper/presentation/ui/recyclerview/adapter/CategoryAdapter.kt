@@ -8,40 +8,39 @@ import br.com.passwordkeeper.databinding.ItemImageTypesBinding
 import br.com.passwordkeeper.domain.model.CategoryView
 
 
-class TypeAdapter(
+class CategoryAdapter(
     private val context: Context,
     categoryViewList: List<CategoryView> = listOf(),
     var onClickItem: (categoryView: CategoryView) -> Unit = {}
-) : RecyclerView.Adapter<TypeAdapter.TypeViewHolder>() {
+) : RecyclerView.Adapter<CategoryAdapter.ViewHolder>() {
 
+    private var categoryViewList = categoryViewList.toMutableList()
 
-    private var cardTypeList = categoryViewList.toMutableList()
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TypeViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = ItemImageTypesBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
             false
         )
-        return TypeViewHolder(binding)
+        return ViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: TypeViewHolder, position: Int) {
-        val categoryView: CategoryView = cardTypeList[position]
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val categoryView: CategoryView = categoryViewList[position]
         holder.bind(categoryView)
     }
 
     override fun getItemCount(): Int {
-        return cardTypeList.size
+        return categoryViewList.size
     }
 
     fun updateList(listCategoryView: List<CategoryView>) {
-        cardTypeList.clear()
-        cardTypeList.addAll(listCategoryView)
+        categoryViewList.clear()
+        categoryViewList.addAll(listCategoryView)
         notifyDataSetChanged()
     }
 
-    inner class TypeViewHolder(
+    inner class ViewHolder(
         private val binding: ItemImageTypesBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
 
