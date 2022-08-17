@@ -82,7 +82,13 @@ val useCaseModule = module {
 }
 
 val viewModelModule = module {
-    viewModel<HomeViewModel> { HomeViewModel(get<AdviceUseCase>(), get<SignInUseCase>()) }
+    viewModel<HomeViewModel> {
+        HomeViewModel(
+            get<AdviceUseCase>(),
+            get<SignInUseCase>(),
+            get<CardUseCase>()
+        )
+    }
     viewModel<SignInViewModel> {
         SignInViewModel(
             get<SignInUseCase>(),
