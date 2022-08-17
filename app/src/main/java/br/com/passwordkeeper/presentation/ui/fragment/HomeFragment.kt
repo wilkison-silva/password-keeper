@@ -2,6 +2,8 @@ package br.com.passwordkeeper.presentation.ui.fragment
 
 import android.os.Bundle
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -10,9 +12,12 @@ import br.com.passwordkeeper.databinding.HomeFragmentBinding
 import br.com.passwordkeeper.domain.model.UserView
 import br.com.passwordkeeper.domain.result.viewmodelstate.CurrentUserState
 import br.com.passwordkeeper.domain.result.viewmodelstate.GetAdviceStateResult
+import br.com.passwordkeeper.domain.result.viewmodelstate.GetCategoriesSizeStateResult
 import br.com.passwordkeeper.domain.result.viewmodelstate.GetFavoriteCardsStateResult
+import br.com.passwordkeeper.presentation.ui.recyclerview.adapter.CategoryAdapter
 import br.com.passwordkeeper.presentation.ui.viewmodel.HomeViewModel
 import br.com.passwordkeeper.presentation.ui.viewmodel.MainViewModel
+import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -23,17 +28,32 @@ class HomeFragment : Fragment(R.layout.home_fragment) {
 
     private val homeViewModel: HomeViewModel by viewModel()
     private val mainViewModel: MainViewModel by sharedViewModel()
+    private val categoryAdapter: CategoryAdapter by inject()
     private lateinit var binding: HomeFragmentBinding
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = HomeFragmentBinding.bind(view)
         mainViewModel.updateBottomNavigationVisibility(visibility = true)
-        updateCurrentUser()
+        subscribeObservers()
+        updateObservers()
+        setupComponents()
+    }
+
+    private fun subscribeObservers() {
         observeCurrentUserState()
-        updateAdviceState()
         observeAdviceState()
+        observeCategoriesSize()
+    }
+
+    private fun updateObservers() {
+        updateCurrentUser()
+        updateAdviceState()
+    }
+
+    private fun setupComponents() {
         setupAskForAdviceButton()
+        setupCategoriesRecyclerView()
     }
 
     private fun observeCurrentUserState() {
@@ -44,6 +64,7 @@ class HomeFragment : Fragment(R.layout.home_fragment) {
                 }
                 is CurrentUserState.Success -> {
                     bindUserInfo(currentUserState.userView)
+                    updateCategoriesSizeState(currentUserState.userView.email)
                 }
             }
         }
@@ -96,14 +117,40 @@ class HomeFragment : Fragment(R.layout.home_fragment) {
     private fun observeFavoriteCards() {
         homeViewModel.favoriteCardsState.observe(viewLifecycleOwner) {
             when(it) {
-                is GetFavoriteCardsStateResult.ErrorUnknown -> {
-                    binding.textViewMessage.text = getString(R.string.error)
-                }
+                is GetFavoriteCardsStateResult.ErrorUnknown -> {}
                 is GetFavoriteCardsStateResult.Success -> {
+                   val cardViewList = it.cardViewList
 
                 }
+                GetFavoriteCardsStateResult.NoElements -> TODO()
             }
         }
 
+    }
+
+    private fun observeCategoriesSize() {
+        homeViewModel.categoriesSizeState.observe(viewLifecycleOwner) {
+            when(it) {
+                is GetCategoriesSizeStateResult.ErrorUnknown -> {}
+                is GetCategoriesSizeStateResult.Success -> {
+                    val categoriesViewList = it.categoriesViewList
+                    categoryAdapter.updateList(categoriesViewList)
+                    binding.constraintLayoutCategoriesSuccess.visibility = VISIBLE
+                    binding.constraintLayoutNoCardsYet.visibility = GONE
+                }
+                is GetCategoriesSizeStateResult.NoElements -> {
+                    binding.constraintLayoutCategoriesSuccess.visibility = GONE
+                    binding.constraintLayoutNoCardsYet.visibility = VISIBLE
+                }
+            }
+        }
+    }
+
+    private fun updateCategoriesSizeState(email: String) {
+        homeViewModel.updateCategoriesSize(email)
+    }
+
+    private fun setupCategoriesRecyclerView() {
+        binding.recyclerViewTypes.adapter = categoryAdapter
     }
 }

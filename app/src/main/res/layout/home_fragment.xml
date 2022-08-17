@@ -311,7 +311,7 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/constraintLayoutTypes"
+                android:id="@+id/constraintLayoutCategoriesSuccess"
                 android:layout_width="0dp"
                 android:layout_height="220dp"
                 android:layout_marginTop="200dp"
@@ -328,7 +328,7 @@
                     android:layout_marginStart="25dp"
                     android:layout_marginTop="20dp"
                     android:fontFamily="@font/inter_bold"
-                    android:text="@string/types"
+                    android:text="@string/categories"
                     android:textColor="@color/purple"
                     android:textFontWeight="700"
                     android:textSize="20sp"

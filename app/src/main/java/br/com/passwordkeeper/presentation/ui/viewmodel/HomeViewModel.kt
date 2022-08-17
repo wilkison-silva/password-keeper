@@ -1,14 +1,18 @@
 package br.com.passwordkeeper.presentation.ui.viewmodel
 
+import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import br.com.passwordkeeper.domain.model.CategoryView
 import br.com.passwordkeeper.domain.result.viewmodelstate.GetAdviceStateResult
 import br.com.passwordkeeper.domain.result.usecase.GetAdviceUseCaseResult
+import br.com.passwordkeeper.domain.result.usecase.GetCategoriesSizeUseCaseResult
 import br.com.passwordkeeper.domain.result.usecase.GetCurrentUserUseCaseResult
 import br.com.passwordkeeper.domain.result.usecase.GetFavoriteCardsUseCaseResult
 import br.com.passwordkeeper.domain.result.viewmodelstate.CurrentUserState
+import br.com.passwordkeeper.domain.result.viewmodelstate.GetCategoriesSizeStateResult
 import br.com.passwordkeeper.domain.result.viewmodelstate.GetFavoriteCardsStateResult
 import br.com.passwordkeeper.domain.usecase.AdviceUseCase
 import br.com.passwordkeeper.domain.usecase.CardUseCase
@@ -67,19 +71,48 @@ class HomeViewModel(
 
     fun updateFavoriteCards(email: String) {
         viewModelScope.launch {
-            when (val getFavoriteCardsStateResult = cardUseCase.getFavorites(email)) {
+            when (val getFavoriteCardsUseCaseResult = cardUseCase.getFavorites(email)) {
                 is GetFavoriteCardsUseCaseResult.ErrorUnknown -> {
                     _favoriteCardsState.postValue(GetFavoriteCardsStateResult.ErrorUnknown)
                 }
                 is GetFavoriteCardsUseCaseResult.Success -> {
-                    _favoriteCardsState.postValue(
-                        GetFavoriteCardsStateResult.Success(
-                            getFavoriteCardsStateResult.cardViewList
+                    val cardViewList = getFavoriteCardsUseCaseResult.cardViewList
+                    if (cardViewList.isNotEmpty()) {
+                        _favoriteCardsState.postValue(
+                            GetFavoriteCardsStateResult.Success(
+                                getFavoriteCardsUseCaseResult.cardViewList
+                            )
                         )
-                    )
+                    } else
+                        _favoriteCardsState.postValue(GetFavoriteCardsStateResult.NoElements)
                 }
             }
         }
     }
 
+    private val _categoriesSizeState = MutableLiveData<GetCategoriesSizeStateResult>()
+    val categoriesSizeState: LiveData<GetCategoriesSizeStateResult>
+        get() = _categoriesSizeState
+
+    fun updateCategoriesSize(email: String) {
+        viewModelScope.launch {
+            when (val getCategoriesSizeUseCaseResult = cardUseCase.getCategoriesSize(email)) {
+                is GetCategoriesSizeUseCaseResult.ErrorUnknown -> {
+                    _categoriesSizeState.postValue(GetCategoriesSizeStateResult.ErrorUnknown)
+                }
+                is GetCategoriesSizeUseCaseResult.Success -> {
+                    val categoryViewList = getCategoriesSizeUseCaseResult.categoriesViewList
+                    if (categoryViewList.isNotEmpty()) {
+                        _categoriesSizeState.postValue(
+                            GetCategoriesSizeStateResult.Success(
+                                getCategoriesSizeUseCaseResult.categoriesViewList
+                            )
+                        )
+                    } else
+                        _categoriesSizeState.postValue(GetCategoriesSizeStateResult.NoElements)
+                }
+            }
+
+        }
+    }
 }

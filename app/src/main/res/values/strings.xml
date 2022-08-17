@@ -15,7 +15,7 @@
     <string name="create_an_account">Create an account</string>
     <string name="confirm_password">Confirm password</string>
     <string name="name">Your first name/nickname here</string>
-    <string name="types">Types</string>
+    <string name="categories">Categories</string>
     <string name="favorite">Favorite</string>
     <string name="search">Search</string>
     <string name="hello">Hello,</string>
@@ -64,4 +64,8 @@
     <string name="save_card">Save card</string>
     <string name="url">URL</string>
     <string name="preview_image">Preview image</string>
+    <string name="text_no_cards_yet">Looks like you haven’t created any card. Your cards will be displayed here</string>
+    <string name="text_no_favorite_yet">Keep tracking your favorite cards by clicking at</string>
+    <string name="no_cards_yet">No cards yet</string>
+    <string name="card_view_description">Spotify</string>
 </resources>
