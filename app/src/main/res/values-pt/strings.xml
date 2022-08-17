@@ -15,7 +15,7 @@
     <string name="create_an_account">Criar conta</string>
     <string name="confirm_password">Confirmar senha</string>
     <string name="name">Primeiro nome/apelido aqui</string>
-    <string name="types">Categorias</string>
+    <string name="categories">Categorias</string>
     <string name="favorite">Favoritos</string>
     <string name="search">Pesquisar</string>
     <string name="hello">Olá,</string>
@@ -64,4 +64,8 @@
     <string name="save_card">Salvar cartão</string>
     <string name="url">URL</string>
     <string name="preview_image">Pré-visualizar</string>
+    <string name="text_no_cards_yet">Parece que ainda não criou nenhum cartão. Os seus cartões serão exibidos aqui</string>
+    <string name="text_no_favorite_yet">Continue a seguir os seus cartões favoritos, clicando em</string>
+    <string name="no_cards_yet">Nenhum card ainda</string>
+    <string name="card_view_description">Spotify</string>
 </resources>
