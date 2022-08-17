@@ -15,6 +15,7 @@ import br.com.passwordkeeper.domain.result.viewmodelstate.GetAdviceStateResult
 import br.com.passwordkeeper.domain.result.viewmodelstate.GetCategoriesSizeStateResult
 import br.com.passwordkeeper.domain.result.viewmodelstate.GetFavoriteCardsStateResult
 import br.com.passwordkeeper.presentation.ui.recyclerview.adapter.CategoryAdapter
+import br.com.passwordkeeper.presentation.ui.recyclerview.adapter.FavoriteAdapter
 import br.com.passwordkeeper.presentation.ui.viewmodel.HomeViewModel
 import br.com.passwordkeeper.presentation.ui.viewmodel.MainViewModel
 import org.koin.android.ext.android.inject
@@ -29,6 +30,7 @@ class HomeFragment : Fragment(R.layout.home_fragment) {
     private val homeViewModel: HomeViewModel by viewModel()
     private val mainViewModel: MainViewModel by sharedViewModel()
     private val categoryAdapter: CategoryAdapter by inject()
+    private val favoriteAdapter: FavoriteAdapter by inject()
     private lateinit var binding: HomeFragmentBinding
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -44,6 +46,7 @@ class HomeFragment : Fragment(R.layout.home_fragment) {
         observeCurrentUserState()
         observeAdviceState()
         observeCategoriesSize()
+        observeFavoriteCards()
     }
 
     private fun updateObservers() {
@@ -54,6 +57,7 @@ class HomeFragment : Fragment(R.layout.home_fragment) {
     private fun setupComponents() {
         setupAskForAdviceButton()
         setupCategoriesRecyclerView()
+        setupFavoriteRecyclerView()
     }
 
     private fun observeCurrentUserState() {
@@ -65,6 +69,7 @@ class HomeFragment : Fragment(R.layout.home_fragment) {
                 is CurrentUserState.Success -> {
                     bindUserInfo(currentUserState.userView)
                     updateCategoriesSizeState(currentUserState.userView.email)
+                    updateFavorites(currentUserState.userView.email)
                 }
             }
         }
@@ -120,9 +125,14 @@ class HomeFragment : Fragment(R.layout.home_fragment) {
                 is GetFavoriteCardsStateResult.ErrorUnknown -> {}
                 is GetFavoriteCardsStateResult.Success -> {
                    val cardViewList = it.cardViewList
-
+                    favoriteAdapter.updateList(cardViewList)
+                    binding.constraintLayoutFavorite.visibility = VISIBLE
+                    binding.constraintLayoutNoFavoriteYet.visibility = GONE
                 }
-                GetFavoriteCardsStateResult.NoElements -> TODO()
+                GetFavoriteCardsStateResult.NoElements -> {
+                    binding.constraintLayoutFavorite.visibility = GONE
+                    binding.constraintLayoutNoFavoriteYet.visibility = VISIBLE
+                }
             }
         }
 
@@ -152,5 +162,13 @@ class HomeFragment : Fragment(R.layout.home_fragment) {
 
     private fun setupCategoriesRecyclerView() {
         binding.recyclerViewTypes.adapter = categoryAdapter
+    }
+
+   private fun updateFavorites(email: String) {
+       homeViewModel.updateFavoriteCards(email)
+   }
+
+    private fun setupFavoriteRecyclerView() {
+        binding.recyclerViewFavorite.adapter = favoriteAdapter
     }
 }

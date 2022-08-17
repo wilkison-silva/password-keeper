@@ -205,7 +205,7 @@
                 android:id="@+id/constraintLayoutFavorite"
                 android:layout_width="0dp"
                 android:layout_height="220dp"
-                android:visibility="visible"
+                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/constraintLayoutExternal">
@@ -225,7 +225,7 @@
                     app:layout_constraintTop_toTopOf="@id/constraintLayoutFavorite" />
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/image_recyclerview"
+                    android:id="@+id/recyclerViewFavorite"
                     android:layout_width="0dp"
                     android:layout_height="100dp"
                     android:layout_marginStart="20dp"
@@ -245,7 +245,7 @@
                 android:layout_width="0dp"
                 android:layout_height="220dp"
                 android:backgroundTint="@color/white"
-                android:visibility="gone"
+                android:visibility="visible"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@id/constraintLayoutExternal">
@@ -297,8 +297,8 @@
                             android:id="@+id/imageViewIconHeart"
                             android:layout_width="0dp"
                             android:layout_height="16dp"
-                            android:layout_marginTop="20dp"
                             android:contentDescription="@string/icon_heart"
+                            android:layout_marginTop="5dp"
                             android:src="@drawable/ic_heart_empty"
                             app:layout_constraintEnd_toEndOf="parent"
                             app:layout_constraintStart_toStartOf="parent"

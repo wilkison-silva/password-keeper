@@ -8,6 +8,7 @@ import br.com.passwordkeeper.data.source.web.AdviceWebClient
 import br.com.passwordkeeper.data.source.web.service.AdviceService
 import br.com.passwordkeeper.domain.usecase.*
 import br.com.passwordkeeper.presentation.ui.recyclerview.adapter.CategoryAdapter
+import br.com.passwordkeeper.presentation.ui.recyclerview.adapter.FavoriteAdapter
 import br.com.passwordkeeper.presentation.ui.viewmodel.HomeViewModel
 import br.com.passwordkeeper.presentation.ui.viewmodel.MainViewModel
 import br.com.passwordkeeper.presentation.ui.viewmodel.SignInViewModel
@@ -107,4 +108,5 @@ val viewModelModule = module {
 
 val recyclerViewAdaptersModule = module {
     factory<CategoryAdapter> { CategoryAdapter(get<Context>()) }
+    factory<FavoriteAdapter> { FavoriteAdapter(get<Context>()) }
 }
