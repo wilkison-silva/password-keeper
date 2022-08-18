@@ -46,6 +46,7 @@ class FavoriteAdapter(
         fun bind(cardView: CardView) {
             binding.textViewDescription.text = cardView.description
             binding.textViewTextType.text = cardView.category
+            binding.textViewDate.text = cardView.date
         }
     }
 }
