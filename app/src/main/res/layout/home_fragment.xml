@@ -270,7 +270,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="18dp"
                             android:fontFamily="@font/inter_bold"
-                            android:text="No favorite yet"
+                            android:text="@string/no_favorite_yet"
                             android:textAlignment="center"
                             android:textColor="@color/purple_700"
                             android:textFontWeight="700"
