@@ -4,14 +4,14 @@ import br.com.passwordkeeper.R
 
 data class CategoryDomain(
     val category: Categories,
-    val size: Int,
+    val quantity: Int,
 ) {
 
     fun convertToCategoryView(): CategoryView {
         return CategoryView(
-            StringResourceId = getNameForCategory(category),
-            size = size,
-            DrawableResourceId = getIconForCategory(category)
+            nameAsStringRes = getNameForCategory(category),
+            quantity = quantity,
+            imageAsDrawableRes = getIconForCategory(category)
         )
     }
 
