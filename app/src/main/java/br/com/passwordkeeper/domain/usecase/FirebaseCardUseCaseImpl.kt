@@ -154,7 +154,7 @@ class FirebaseCardUseCaseImpl(
                 categoriesViewList.add(
                     CategoryDomain(
                         category = category,
-                        size = size
+                        quantity = size
                     ).convertToCategoryView()
                 )
             }

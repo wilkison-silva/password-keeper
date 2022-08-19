@@ -45,9 +45,9 @@ class CategoryAdapter(
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(categoryView: CategoryView) {
-            binding.textViewTextType.text = context.getString(categoryView.StringResourceId)
-            binding.textViewQuantity.text = categoryView.size.toString()
-            binding.imageViewType.setImageResource(categoryView.DrawableResourceId)
+            binding.textViewTextType.text = context.getString(categoryView.nameAsStringRes)
+            binding.textViewQuantity.text = categoryView.quantity.toString()
+            binding.imageViewType.setImageResource(categoryView.imageAsDrawableRes)
         }
     }
 }

@@ -4,7 +4,7 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 
 data class CategoryView(
-    @StringRes val StringResourceId: Int,
-    val size: Int,
-    @DrawableRes val DrawableResourceId: Int
+    @StringRes val nameAsStringRes: Int,
+    val quantity: Int,
+    @DrawableRes val imageAsDrawableRes: Int
 )
