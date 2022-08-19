@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/scrowViewSignUp"
+    android:id="@+id/scrollViewSignUp"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/purple">
@@ -33,19 +33,21 @@
             android:text="@string/sign_up_title"
             android:textColor="@color/white"
             android:textSize="24sp"
-            app:layout_constraintEnd_toEndOf="parent"
+
+            app:layout_constraintEnd_toStartOf="@+id/imageViewSignUp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/imageButtonBack" />
 
         <ImageView
             android:id="@+id/imageViewSignUp"
             android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_marginEnd="50dp"
+            android:layout_height="0dp"
+            android:layout_marginEnd="40dp"
             android:contentDescription="@string/image_description"
             android:src="@drawable/ic_app"
+            app:layout_constraintBottom_toBottomOf="@+id/textViewSignUpSubtitle"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/textViewSignUpTitle" />
+            app:layout_constraintTop_toTopOf="@+id/textViewSignUpTitle" />
 
         <TextView
             android:id="@+id/textViewSignUpSubtitle"
@@ -57,20 +59,23 @@
             android:text="@string/sign_up_to_join"
             android:textColor="@color/white"
             android:textSize="16sp"
-            app:layout_constraintEnd_toEndOf="parent"
+
+            app:layout_constraintEnd_toStartOf="@+id/imageViewSignUp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textViewSignUpTitle" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintLayoutSignUp2"
+            android:id="@+id/constraintLayoutWhiteBox"
             android:layout_width="match_parent"
-            android:layout_height="600dp"
-            android:layout_marginTop="80dp"
+            android:layout_height="0dp"
             android:layout_marginStart="24dp"
+            android:layout_marginTop="40dp"
             android:layout_marginEnd="24dp"
             android:layout_marginBottom="50dp"
-            app:layout_constraintBottom_toBottomOf="parent"
             android:background="@drawable/background_rounded_sides"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textViewSignUpSubtitle" />
 
         <TextView
@@ -84,7 +89,7 @@
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/constraintLayoutSignUp2" />
+            app:layout_constraintTop_toTopOf="@id/constraintLayoutWhiteBox" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputName"
@@ -102,7 +107,7 @@
             app:errorEnabled="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/constraintLayoutSignUp2"
+            app:layout_constraintTop_toTopOf="@+id/constraintLayoutWhiteBox"
             app:startIconDrawable="@drawable/ic_person">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -196,12 +201,12 @@
             android:id="@+id/textViewPasswordMustHave"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
+            android:layout_marginStart="55dp"
+            android:layout_marginTop="5dp"
             android:fontFamily="@font/inter_bold"
             android:text="@string/your_password_must_have"
             android:textColor="@color/purple"
             android:textSize="14sp"
-            android:layout_marginTop="5dp"
-            android:layout_marginStart="55dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textInputSignUpConfirmPassword" />
 
@@ -209,12 +214,12 @@
             android:id="@+id/textViewUpperCase"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
+            android:layout_marginStart="55dp"
+            android:layout_marginTop="8dp"
             android:fontFamily="@font/inter_bold"
             android:text="@string/at_least_1_upper_case_letter"
             android:textColor="@color/gray_dark"
             android:textSize="12sp"
-            android:layout_marginTop="8dp"
-            android:layout_marginStart="55dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textViewPasswordMustHave" />
 
@@ -222,12 +227,12 @@
             android:id="@+id/textViewLowerCase"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
+            android:layout_marginStart="55dp"
+            android:layout_marginTop="6dp"
             android:fontFamily="@font/inter_bold"
             android:text="@string/at_least_1_lower_case_letter"
             android:textColor="@color/gray_dark"
             android:textSize="12sp"
-            android:layout_marginTop="6dp"
-            android:layout_marginStart="55dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textViewUpperCase" />
 
@@ -235,12 +240,12 @@
             android:id="@+id/textViewSpecialCharacter"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
+            android:layout_marginStart="55dp"
+            android:layout_marginTop="6dp"
             android:fontFamily="@font/inter_bold"
             android:text="@string/at_least_1_special_character_amp"
             android:textColor="@color/gray_dark"
             android:textSize="12sp"
-            android:layout_marginTop="6dp"
-            android:layout_marginStart="55dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textViewLowerCase" />
 
@@ -248,12 +253,12 @@
             android:id="@+id/textViewNumericCharacter"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
+            android:layout_marginStart="55dp"
+            android:layout_marginTop="6dp"
             android:fontFamily="@font/inter_bold"
             android:text="@string/at_least_1_numeric_character"
             android:textColor="@color/gray_dark"
             android:textSize="12sp"
-            android:layout_marginTop="6dp"
-            android:layout_marginStart="55dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textViewSpecialCharacter" />
 
@@ -261,12 +266,12 @@
             android:id="@+id/textViewPasswordLength"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
+            android:layout_marginStart="55dp"
+            android:layout_marginTop="6dp"
             android:fontFamily="@font/inter_bold"
             android:text="@string/at_least_16_characteres"
             android:textColor="@color/gray_dark"
             android:textSize="12sp"
-            android:layout_marginTop="6dp"
-            android:layout_marginStart="55dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textViewNumericCharacter" />
 
@@ -274,7 +279,7 @@
             android:id="@+id/buttonSignUpCreateAccount"
             android:layout_width="250dp"
             android:layout_height="50dp"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="10dp"
             android:layout_marginBottom="15dp"
             android:backgroundTint="@color/purple"
             android:fontFamily="@font/inter_bold"
@@ -282,9 +287,10 @@
             android:textColor="@color/white"
             android:textSize="12sp"
             app:cornerRadius="30dp"
-            app:layout_constraintBottom_toBottomOf="@+id/constraintLayoutSignUp2"
+            app:layout_constraintBottom_toBottomOf="@+id/constraintLayoutWhiteBox"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textViewPasswordLength" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
