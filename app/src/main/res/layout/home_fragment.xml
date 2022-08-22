@@ -140,30 +140,19 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/ViewMessage" />
 
-            <Button
-                android:id="@+id/buttonAskForAdvice"
-                android:layout_width="wrap_content"
-                android:layout_height="36dp"
-                android:layout_marginEnd="20dp"
-                android:background="@drawable/background_rounded_button"
-                android:text="@string/ask_for_advice"
-                android:textSize="11sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textViewTheAdviceAbove" />
-
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/textInputSearch"
                 style="@style/InputLayout"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="25dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="15dp"
                 android:background="@color/purple"
                 app:endIconMode="clear_text"
                 app:hintEnabled="false"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/buttonAskForAdvice">
+                app:layout_constraintTop_toBottomOf="@+id/textViewTheAdviceAbove">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/textInputSearchIcon"
