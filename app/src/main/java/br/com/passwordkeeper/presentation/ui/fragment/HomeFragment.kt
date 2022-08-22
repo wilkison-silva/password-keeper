@@ -55,7 +55,6 @@ class HomeFragment : Fragment(R.layout.home_fragment) {
     }
 
     private fun setupComponents() {
-        setupAskForAdviceButton()
         setupCategoriesRecyclerView()
         setupFavoriteRecyclerView()
     }
@@ -105,13 +104,6 @@ class HomeFragment : Fragment(R.layout.home_fragment) {
 
     private fun updateAdviceState() {
         homeViewModel.updateAdvice()
-    }
-
-    private fun setupAskForAdviceButton() {
-        val buttonAskForAdvice: Button = binding.buttonAskForAdvice
-        buttonAskForAdvice.setOnClickListener {
-            homeViewModel.updateAdvice()
-        }
     }
 
     private fun bindUserInfo(userView: UserView) {
