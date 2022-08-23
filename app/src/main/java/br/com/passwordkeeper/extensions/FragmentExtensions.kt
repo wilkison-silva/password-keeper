@@ -5,26 +5,25 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
-import br.com.passwordkeeper.R
-import com.google.android.material.button.MaterialButton
+import br.com.passwordkeeper.databinding.DialogDownloadImageBinding
 
 fun Fragment.downloadImageDialog(
     context: Context,
-    saveUrl: () -> Unit,
-    previewImage: () -> Unit = {},
+    onSaveURL: (url: String) -> Unit,
 ) {
+    val binding: DialogDownloadImageBinding = DialogDownloadImageBinding.inflate(layoutInflater)
+
     AlertDialog.Builder(context)
-        .setView(R.layout.dialog_download_image)
+        .setView(binding.root)
         .show().apply {
             window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-            val confirmButton = findViewById<MaterialButton>(R.id.buttonSaveUrl)
-            confirmButton?.setOnClickListener {
-                saveUrl()
-                dismiss()
+            binding.buttonPreviewImage.setOnClickListener {
+                val url = binding.textInputUrl.text.toString()
+                binding.dialogImage.tryLoadImage(url)
             }
-            val dismissButton = findViewById<MaterialButton>(R.id.buttonPreviewImage)
-            dismissButton?.setOnClickListener {
-                previewImage()
+            binding.buttonSaveUrl.setOnClickListener {
+                val url = binding.textInputUrl.text.toString()
+                onSaveURL(url)
                 dismiss()
             }
         }

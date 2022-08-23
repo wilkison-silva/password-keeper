@@ -1,6 +1,7 @@
 package br.com.passwordkeeper.presentation.ui.fragment
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -18,7 +19,7 @@ class FormCardFragment : Fragment(R.layout.form_card_fragment) {
         findNavController()
     }
 
-    private val homeViewModel: HomeViewModel by viewModel()
+
     private lateinit var binding: FormCardFragmentBinding
     private val mainViewModel: MainViewModel by sharedViewModel()
 
@@ -41,13 +42,11 @@ class FormCardFragment : Fragment(R.layout.form_card_fragment) {
 
     private fun showDialogDownloadImage() {
         binding.imageViewCard.setOnClickListener {
-            downloadImageDialog(requireContext(),
-            saveUrl = {
-                      homeViewModel.categoriesSizeState
-            },
-            previewImage = {
-
-            })
+            downloadImageDialog(
+                requireContext(),
+                onSaveURL = { url: String ->
+                    Log.i("Testando", "showDialogDownloadImage: $url")
+                })
             //DialogDownloadImageFragment().show(childFragmentManager, "Dialog")
 
         }
