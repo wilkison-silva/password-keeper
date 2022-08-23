@@ -84,4 +84,7 @@ dependencies {
     //Animation
     implementation "com.airbnb.android:lottie:3.4.0"
 
+    //Coil - Loader for images
+    implementation "io.coil-kt:coil:1.4.0"
+
 }

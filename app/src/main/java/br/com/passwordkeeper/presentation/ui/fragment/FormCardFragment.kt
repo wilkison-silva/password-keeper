@@ -6,8 +6,11 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import br.com.passwordkeeper.R
 import br.com.passwordkeeper.databinding.FormCardFragmentBinding
+import br.com.passwordkeeper.extensions.downloadImageDialog
+import br.com.passwordkeeper.presentation.ui.viewmodel.HomeViewModel
 import br.com.passwordkeeper.presentation.ui.viewmodel.MainViewModel
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class FormCardFragment : Fragment(R.layout.form_card_fragment) {
 
@@ -15,6 +18,7 @@ class FormCardFragment : Fragment(R.layout.form_card_fragment) {
         findNavController()
     }
 
+    private val homeViewModel: HomeViewModel by viewModel()
     private lateinit var binding: FormCardFragmentBinding
     private val mainViewModel: MainViewModel by sharedViewModel()
 
@@ -24,6 +28,28 @@ class FormCardFragment : Fragment(R.layout.form_card_fragment) {
         binding = FormCardFragmentBinding.bind(view)
         binding.imageButtonBack.setOnClickListener {
             navController.popBackStack()
+        }
+        //showBottomSheet()
+        showDialogDownloadImage()
+    }
+
+//    private fun showBottomSheet() {
+//        binding.textInputEditTextCategory.setOnClickListener {
+//
+//        }
+//    }
+
+    private fun showDialogDownloadImage() {
+        binding.imageViewCard.setOnClickListener {
+            downloadImageDialog(requireContext(),
+            saveUrl = {
+                      homeViewModel.categoriesSizeState
+            },
+            previewImage = {
+
+            })
+            //DialogDownloadImageFragment().show(childFragmentManager, "Dialog")
+
         }
     }
 }

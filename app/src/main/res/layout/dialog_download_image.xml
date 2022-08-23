@@ -16,18 +16,18 @@
         app:layout_constraintStart_toStartOf="@+id/constraintLayoutDialogDownloadImage"
         app:layout_constraintTop_toTopOf="@id/constraintLayoutDialogDownloadImage"
         app:shapeAppearanceOverlay="@style/topRoundedImage"
-        tools:src="@drawable/image_default">
+        android:src="@drawable/image_default">
 
     </com.google.android.material.imageview.ShapeableImageView>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/textInputLayoutUrl"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="55dp"
+        android:layout_marginStart="10dp"
         android:layout_marginTop="20dp"
-        android:layout_marginEnd="55dp"
+        android:layout_marginEnd="10dp"
         android:hint="@string/url"
         app:boxCornerRadiusBottomEnd="10dp"
         app:boxCornerRadiusBottomStart="10dp"
@@ -56,23 +56,29 @@
         android:textColor="@color/white"
         android:textSize="12sp"
         app:cornerRadius="30dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/textInputLayoutUrl"
+
+        app:layout_constraintStart_toStartOf="@id/textInputLayoutUrl"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayoutUrl" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/buttonSaveUrl"
         android:layout_width="250dp"
         android:layout_height="50dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp"
         android:backgroundTint="@color/white"
         android:fontFamily="@font/inter_bold"
         android:text="Save url"
+        app:strokeWidth="1dp"
+        app:strokeColor="@color/purple_700"
         android:textColor="@color/purple_700"
-        android:layout_marginTop="25dp"
         android:textSize="12sp"
         app:cornerRadius="30dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonPreviewImage" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/textInputLayoutUrl"
+        app:layout_constraintStart_toStartOf="@+id/textInputLayoutUrl"
+        app:layout_constraintTop_toBottomOf="@+id/buttonPreviewImage"
+        app:layout_constraintVertical_bias="0.038" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

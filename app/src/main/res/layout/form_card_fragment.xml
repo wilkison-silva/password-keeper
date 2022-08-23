@@ -56,7 +56,7 @@
             app:shapeAppearanceOverlay="@style/topRoundedImage"
             android:layout_width="0dp"
             android:layout_height="200dp"
-            tools:src="@drawable/image_default"
+            android:src="@drawable/image_default"
             android:scaleType="centerCrop"
             app:layout_constraintTop_toTopOf="@id/constraintLayoutWhiteBackground"
             app:layout_constraintStart_toStartOf="@+id/constraintLayoutWhiteBackground"
