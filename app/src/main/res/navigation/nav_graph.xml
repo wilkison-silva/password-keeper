@@ -47,12 +47,18 @@
         android:id="@+id/homeFragment"
         android:name="br.com.passwordkeeper.presentation.ui.fragment.HomeFragment"
         android:label="HomeFragment"
-        tools:layout="@layout/home_fragment"/>
+        tools:layout="@layout/home_fragment">
+        <action
+            android:id="@+id/action_homeFragment_to_formCardFragment"
+            app:destination="@id/formCardFragment" />
+    </fragment>
     <fragment
         android:id="@+id/formCardFragment"
         android:name="br.com.passwordkeeper.presentation.ui.fragment.FormCardFragment"
         android:label="FormCardFragment"
-        tools:layout="@layout/form_card_fragment"/>
+        tools:layout="@layout/form_card_fragment">
+    </fragment>
+
 
 
 </navigation>
