@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/constraintLayoutCategories"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/constraintLayoutCategories"
-    android:background="@drawable/background_rounded_tops">
+    android:background="@drawable/bottom_sheet_background">
 
     <TextView
         android:id="@+id/textViewCategory"
@@ -22,156 +23,143 @@
 
     <ImageView
         android:id="@+id/imageViewStreaming"
-        android:layout_width="65dp"
+        android:layout_width="wrap_content"
         android:layout_height="65dp"
-        android:layout_marginStart="40dp"
         android:layout_marginTop="30dp"
-        android:layout_marginEnd="250dp"
         android:src="@drawable/ic_stream_type"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/imageViewSocialMedia"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textViewCategory" />
 
     <TextView
         android:id="@+id/textViewStreaming"
-        android:layout_width="70dp"
+        android:layout_width="wrap_content"
         android:layout_height="20dp"
-        android:layout_marginStart="70dp"
         android:layout_marginTop="12dp"
-        android:layout_marginEnd="250dp"
         android:fontFamily="@font/inter"
         android:text="@string/streaming"
         android:textFontWeight="400"
         android:textSize="12sp"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/imageViewStreaming"
+        app:layout_constraintStart_toStartOf="@+id/imageViewStreaming"
         app:layout_constraintTop_toBottomOf="@+id/imageViewStreaming" />
 
     <ImageView
         android:id="@+id/imageViewSocialMedia"
-        android:layout_width="65dp"
+        android:layout_width="wrap_content"
         android:layout_height="65dp"
-        android:layout_marginStart="40dp"
+        android:layout_marginStart="39dp"
         android:layout_marginTop="30dp"
-        android:layout_marginEnd="140dp"
         android:src="@drawable/ic_social_media"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/imageViewStreaming"
+        app:layout_constraintEnd_toStartOf="@+id/imageViewBank"
+        app:layout_constraintStart_toEndOf="@+id/imageViewStreaming"
         app:layout_constraintTop_toBottomOf="@id/textViewCategory" />
 
     <TextView
         android:id="@+id/textViewSocialMedia"
-        android:layout_width="80dp"
+        android:layout_width="wrap_content"
         android:layout_height="20dp"
-        android:layout_marginStart="190dp"
         android:layout_marginTop="12dp"
-        android:layout_marginEnd="250dp"
         android:fontFamily="@font/inter"
         android:text="@string/social_media"
         android:textFontWeight="400"
         android:textSize="12sp"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/imageViewSocialMedia"
+        app:layout_constraintStart_toStartOf="@+id/imageViewSocialMedia"
         app:layout_constraintTop_toBottomOf="@+id/imageViewSocialMedia" />
 
     <ImageView
         android:id="@+id/imageViewBank"
-        android:layout_width="65dp"
+        android:layout_width="wrap_content"
         android:layout_height="65dp"
         android:layout_marginStart="40dp"
         android:layout_marginTop="30dp"
-        android:layout_marginEnd="40dp"
         android:src="@drawable/ic_bank"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/imageViewSocialMedia"
+        app:layout_constraintStart_toEndOf="@+id/imageViewSocialMedia"
         app:layout_constraintTop_toBottomOf="@id/textViewCategory" />
 
     <TextView
         android:id="@+id/textViewBank"
-        android:layout_width="70dp"
+        android:layout_width="0dp"
         android:layout_height="20dp"
-        android:layout_marginStart="310dp"
         android:layout_marginTop="12dp"
-        android:layout_marginEnd="250dp"
         android:fontFamily="@font/inter"
         android:text="@string/banks"
+        android:textAlignment="center"
         android:textFontWeight="400"
         android:textSize="12sp"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/imageViewBank"
+        app:layout_constraintStart_toStartOf="@+id/imageViewBank"
         app:layout_constraintTop_toBottomOf="@+id/imageViewBank" />
 
     <ImageView
         android:id="@+id/imageViewEducation"
-        android:layout_width="65dp"
+        android:layout_width="wrap_content"
         android:layout_height="65dp"
-        android:layout_marginStart="40dp"
         android:layout_marginTop="30dp"
-        android:layout_marginEnd="250dp"
         android:src="@drawable/ic_education"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/imageViewStreaming"
+        app:layout_constraintStart_toStartOf="@+id/imageViewStreaming"
         app:layout_constraintTop_toBottomOf="@id/textViewStreaming" />
 
     <TextView
         android:id="@+id/textViewEducation"
-        android:layout_width="70dp"
+        android:layout_width="wrap_content"
         android:layout_height="20dp"
-        android:layout_marginStart="70dp"
         android:layout_marginTop="12dp"
-        android:layout_marginEnd="250dp"
         android:fontFamily="@font/inter"
         android:text="@string/education"
         android:textFontWeight="400"
         android:textSize="12sp"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/imageViewEducation"
+        app:layout_constraintStart_toStartOf="@+id/imageViewEducation"
         app:layout_constraintTop_toBottomOf="@+id/imageViewEducation" />
 
     <ImageView
         android:id="@+id/imageViewWork"
-        android:layout_width="65dp"
+        android:layout_width="wrap_content"
         android:layout_height="65dp"
         android:layout_marginTop="30dp"
-        android:layout_marginEnd="140dp"
-        android:layout_marginStart="40dp"
         android:src="@drawable/ic_work"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/imageViewEducation"
+        app:layout_constraintEnd_toEndOf="@+id/imageViewSocialMedia"
+        app:layout_constraintStart_toStartOf="@+id/imageViewSocialMedia"
         app:layout_constraintTop_toBottomOf="@id/textViewSocialMedia" />
 
     <TextView
         android:id="@+id/textViewWork"
-        android:layout_width="70dp"
+        android:layout_width="wrap_content"
         android:layout_height="20dp"
-        android:layout_marginStart="210dp"
         android:layout_marginTop="12dp"
-        android:layout_marginEnd="250dp"
         android:fontFamily="@font/inter"
         android:text="@string/work"
         android:textFontWeight="400"
         android:textSize="12sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageViewEducation" />
+        app:layout_constraintEnd_toEndOf="@+id/imageViewWork"
+        app:layout_constraintStart_toStartOf="@+id/imageViewWork"
+        app:layout_constraintTop_toBottomOf="@+id/imageViewWork" />
 
     <ImageView
         android:id="@+id/imageViewCard"
-        android:layout_width="65dp"
+        android:layout_width="wrap_content"
         android:layout_height="65dp"
-        android:src="@drawable/ic_card"
-        android:layout_marginStart="40dp"
         android:layout_marginTop="30dp"
-        app:layout_constraintStart_toEndOf="@+id/imageViewWork"
+        android:src="@drawable/ic_card"
+        app:layout_constraintEnd_toEndOf="@+id/imageViewBank"
+        app:layout_constraintStart_toStartOf="@+id/imageViewBank"
         app:layout_constraintTop_toBottomOf="@+id/textViewBank" />
 
     <TextView
         android:id="@+id/textViewCard"
-        android:layout_width="70dp"
+        android:layout_width="wrap_content"
         android:layout_height="20dp"
-        android:layout_marginStart="310dp"
         android:layout_marginTop="12dp"
-        android:layout_marginEnd="250dp"
         android:fontFamily="@font/inter"
         android:text="@string/cards"
         android:textFontWeight="400"
         android:textSize="12sp"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/imageViewCard"
+        app:layout_constraintStart_toStartOf="@+id/imageViewCard"
         app:layout_constraintTop_toBottomOf="@+id/imageViewCard" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

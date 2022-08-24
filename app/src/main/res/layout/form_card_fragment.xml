@@ -170,7 +170,7 @@
                 android:layout_height="wrap_content"
                 android:imeOptions="actionDone"
                 android:enabled="false"
-                android:inputType="textPassword" />
+                android:inputType="text" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
