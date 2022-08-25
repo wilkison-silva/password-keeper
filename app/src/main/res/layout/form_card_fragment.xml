@@ -145,12 +145,11 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/textInputLayoutCategory"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="55dp"
             android:layout_marginEnd="55dp"
-            android:hint="@string/category"
             app:boxCornerRadiusBottomEnd="10dp"
             app:boxCornerRadiusBottomStart="10dp"
             app:boxCornerRadiusTopEnd="10dp"
@@ -160,17 +159,14 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textInputLayoutPassword"
             app:startIconDrawable="@drawable/ic_category"
-            app:endIconDrawable="@drawable/ic_drop_arrow"
-            app:endIconMode="custom"
             >
 
-            <com.google.android.material.textfield.TextInputEditText
+            <AutoCompleteTextView
                 android:id="@+id/textInputEditTextCategory"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:imeOptions="actionDone"
-                android:enabled="false"
-                android:inputType="text" />
+                android:text="@string/category"
+                android:inputType="none" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView

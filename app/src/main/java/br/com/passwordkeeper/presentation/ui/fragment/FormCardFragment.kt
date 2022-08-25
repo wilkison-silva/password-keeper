@@ -22,7 +22,6 @@ class FormCardFragment : Fragment(R.layout.form_card_fragment) {
         findNavController()
     }
 
-
     private lateinit var binding: FormCardFragmentBinding
     private val mainViewModel: MainViewModel by sharedViewModel()
 
@@ -38,7 +37,7 @@ class FormCardFragment : Fragment(R.layout.form_card_fragment) {
     }
 
     private fun showBottomSheet() {
-        binding.buttonSave.setOnClickListener {
+        binding.textInputEditTextCategory.setOnClickListener {
             BottomSheetCategory(
                 requireContext(),
                 onClickItem = { category: Categories ->
