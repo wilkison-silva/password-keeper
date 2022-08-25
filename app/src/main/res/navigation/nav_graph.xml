@@ -54,9 +54,9 @@
     </fragment>
     <fragment
         android:id="@+id/formCardFragment"
-        android:name="br.com.passwordkeeper.presentation.ui.fragment.FormCardFragment"
+        android:name="br.com.passwordkeeper.presentation.ui.fragment.CreateNewCardFragment"
         android:label="FormCardFragment"
-        tools:layout="@layout/form_card_fragment">
+        tools:layout="@layout/create_new_card_fragment">
     </fragment>
 
 
