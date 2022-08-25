@@ -1,5 +1,7 @@
 package br.com.passwordkeeper.presentation.ui.fragment
 
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -10,6 +12,7 @@ import br.com.passwordkeeper.databinding.CreateNewCardFragmentBinding
 import br.com.passwordkeeper.domain.model.Categories
 import br.com.passwordkeeper.domain.model.Categories.*
 import br.com.passwordkeeper.extensions.downloadImageDialog
+import br.com.passwordkeeper.extensions.tryLoadImage
 import br.com.passwordkeeper.presentation.ui.dialog.BottomSheetCategory
 import br.com.passwordkeeper.presentation.ui.viewmodel.MainViewModel
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
@@ -57,7 +60,7 @@ class CreateNewCardFragment : Fragment(R.layout.create_new_card_fragment) {
             downloadImageDialog(
                 requireContext(),
                 onSaveURL = { url: String ->
-                    Log.i("Testando", "showDialogDownloadImage: $url")
+                    binding.imageViewCard.tryLoadImage(url)
                 })
         }
     }
