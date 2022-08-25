@@ -19,6 +19,8 @@ import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class CreateNewCardFragment : Fragment(R.layout.create_new_card_fragment) {
 
+    var onClickFavorite: () -> Unit = {}
+
     private val navController by lazy {
         findNavController()
     }
@@ -35,6 +37,7 @@ class CreateNewCardFragment : Fragment(R.layout.create_new_card_fragment) {
         }
         showBottomSheet()
         showDialogDownloadImage()
+        setupColorIconHeart()
     }
 
     private fun showBottomSheet() {
@@ -64,4 +67,11 @@ class CreateNewCardFragment : Fragment(R.layout.create_new_card_fragment) {
                 })
         }
     }
+
+    private fun setupColorIconHeart() {
+        binding.imageViewIconHeart.setOnClickListener {
+            binding.imageViewIconHeart.setColorFilter(R.color.purple_700)
+        }
+    }
 }
+
