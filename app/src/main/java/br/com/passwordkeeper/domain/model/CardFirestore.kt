@@ -18,7 +18,7 @@ data class CardFirestore(
             login = login,
             password = password,
             category = category,
-            favorite = favorite,
+            isFavorite = favorite,
             date = date
         )
     }
