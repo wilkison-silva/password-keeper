@@ -85,7 +85,7 @@
             app:startIconDrawable="@drawable/ic_description">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/textInputEditTextName"
+                android:id="@+id/textInputEditTextDescription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPersonName" />

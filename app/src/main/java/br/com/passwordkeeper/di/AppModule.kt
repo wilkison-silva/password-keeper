@@ -9,10 +9,7 @@ import br.com.passwordkeeper.data.source.web.service.AdviceService
 import br.com.passwordkeeper.domain.usecase.*
 import br.com.passwordkeeper.presentation.ui.recyclerview.adapter.CategoryAdapter
 import br.com.passwordkeeper.presentation.ui.recyclerview.adapter.FavoriteAdapter
-import br.com.passwordkeeper.presentation.ui.viewmodel.HomeViewModel
-import br.com.passwordkeeper.presentation.ui.viewmodel.MainViewModel
-import br.com.passwordkeeper.presentation.ui.viewmodel.SignInViewModel
-import br.com.passwordkeeper.presentation.ui.viewmodel.SignUpViewModel
+import br.com.passwordkeeper.presentation.ui.viewmodel.*
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -107,6 +104,7 @@ val viewModelModule = module {
         )
     }
     viewModel<MainViewModel> { MainViewModel() }
+    viewModel<CreateNewCardViewModel>{ CreateNewCardViewModel(get<CardUseCase>()) }
 }
 
 val recyclerViewAdaptersModule = module {
