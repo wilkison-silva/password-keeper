@@ -14,12 +14,14 @@ import br.com.passwordkeeper.domain.model.Categories.*
 import br.com.passwordkeeper.extensions.downloadImageDialog
 import br.com.passwordkeeper.extensions.tryLoadImage
 import br.com.passwordkeeper.presentation.ui.dialog.BottomSheetCategory
+import br.com.passwordkeeper.presentation.ui.viewmodel.CreateNewCardViewModel
 import br.com.passwordkeeper.presentation.ui.viewmodel.MainViewModel
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class CreateNewCardFragment : Fragment(R.layout.create_new_card_fragment) {
 
-    var onClickFavorite: () -> Unit = {}
+    private val createNewCardViewModel: CreateNewCardViewModel by viewModel()
 
     private val navController by lazy {
         findNavController()
@@ -37,7 +39,10 @@ class CreateNewCardFragment : Fragment(R.layout.create_new_card_fragment) {
         }
         showBottomSheet()
         showDialogDownloadImage()
-        setupColorIconHeart()
+        setupImageIconHeart()
+        setupCreateSaveCardButton()
+        observeFavoriteState()
+
     }
 
     private fun showBottomSheet() {
@@ -68,10 +73,38 @@ class CreateNewCardFragment : Fragment(R.layout.create_new_card_fragment) {
         }
     }
 
-    private fun setupColorIconHeart() {
+    private fun setupImageIconHeart() {
         binding.imageViewIconHeart.setOnClickListener {
-            binding.imageViewIconHeart.setColorFilter(R.color.purple_700)
+            createNewCardViewModel.updateFavorite()
         }
+    }
+
+    private fun observeFavoriteState() {
+        createNewCardViewModel.favorite.observe(viewLifecycleOwner) {
+            when (it) {
+                true -> binding.imageViewIconHeart.setImageResource(R.drawable.ic_heart_full)
+                false -> binding.imageViewIconHeart.setImageResource(R.drawable.ic_heart_empty)
+            }
+        }
+    }
+
+    private fun setupCreateSaveCardButton() {
+        binding.buttonSave.setOnClickListener {
+            val description = binding.textInputEditTextDescription.text.toString()
+            val email = binding.textInputEditTextEmail.text.toString()
+            val password = binding.textInputEditTextPassword.text.toString()
+            val category = binding.textInputEditTextCategory.text.toString()
+            val isFavorite = createNewCardViewModel.favorite.value ?: false
+
+            createNewCardViewModel.createCardState(
+                description,
+                email,
+                password,
+                category,
+                isFavorite
+            )
+        }
+
     }
 }
 
