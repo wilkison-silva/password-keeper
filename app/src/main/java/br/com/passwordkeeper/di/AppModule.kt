@@ -68,6 +68,7 @@ val mappersModule = module {
     single<CardDomainMapper> { CardDomainMapper() }
     single<CategoryDomainMapper> { CategoryDomainMapper() }
     single<UserFirestoreMapper> { UserFirestoreMapper() }
+    single<UserDataMapper> { UserDataMapper() }
 }
 
 val repositoryModule = module {
@@ -75,7 +76,8 @@ val repositoryModule = module {
         FirebaseAuthRepositoryImpl(
             get<FirebaseAuth>(),
             get<FirebaseFirestore>(),
-            get<UserFirestoreMapper>()
+            get<UserFirestoreMapper>(),
+            get<UserDataMapper>()
         )
     }
     single<AdviceRepository> {

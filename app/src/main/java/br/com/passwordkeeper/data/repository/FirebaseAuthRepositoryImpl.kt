@@ -1,5 +1,6 @@
 package br.com.passwordkeeper.data.repository
 
+import br.com.passwordkeeper.domain.mapper.UserDataMapper
 import br.com.passwordkeeper.domain.mapper.UserFirestoreMapper
 import br.com.passwordkeeper.domain.model.UserData
 import br.com.passwordkeeper.domain.model.UserFirestore
@@ -15,7 +16,8 @@ import kotlinx.coroutines.tasks.await
 class FirebaseAuthRepositoryImpl(
     private val firebaseAuth: FirebaseAuth,
     private val fireStore: FirebaseFirestore,
-    private val userFirestoreMapper: UserFirestoreMapper
+    private val userFirestoreMapper: UserFirestoreMapper,
+    private val userDataMapper: UserDataMapper
 ) : AuthRepository {
 
     override suspend fun signIn(email: String, password: String): SignInRepositoryResult {
@@ -23,8 +25,10 @@ class FirebaseAuthRepositoryImpl(
             val response = firebaseAuth.signInWithEmailAndPassword(email, password).await()
             response.user?.email?.let { emailUser: String ->
                 val userData = getUserData(emailUser)
-                if (userData.email.isNotBlank())
-                    return SignInRepositoryResult.Success(userData.convertToUserDomain())
+                if (userData.email.isNotBlank()){
+                    val userDomain = userDataMapper.transform(userData)
+                    return SignInRepositoryResult.Success(userDomain)
+                }
             }
         } catch (exception: Exception) {
             return when (exception) {
@@ -76,7 +80,8 @@ class FirebaseAuthRepositoryImpl(
         firebaseAuth.currentUser?.email?.let { emailUser: String ->
             val userData = getUserData(emailUser)
             if (userData.email.isNotBlank()) {
-                return GetCurrentUserRepositoryResult.Success(userData.convertToUserDomain())
+                val userDomain = userDataMapper.transform(userData)
+                return GetCurrentUserRepositoryResult.Success(userDomain)
             }
             return GetCurrentUserRepositoryResult.ErrorNoUserRepositoryFound
         } ?: return GetCurrentUserRepositoryResult.ErrorNoUserRepositoryFound
