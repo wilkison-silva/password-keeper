@@ -23,15 +23,4 @@ data class CardData(
         )
     }
 
-    fun convertToCardDomain(): CardDomain {
-        return CardDomain(
-            cardId = cardId ?: "",
-            description = description,
-            login = login,
-            password = password,
-            category = category,
-            isFavorite = isFavorite,
-            date = date
-        )
-    }
 }

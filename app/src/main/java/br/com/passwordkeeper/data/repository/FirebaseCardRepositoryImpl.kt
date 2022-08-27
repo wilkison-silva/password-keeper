@@ -1,5 +1,6 @@
 package br.com.passwordkeeper.data.repository
 
+import br.com.passwordkeeper.domain.mapper.CardDataMapper
 import br.com.passwordkeeper.domain.mapper.CardFirestoreMapper
 import br.com.passwordkeeper.domain.model.CardData
 import br.com.passwordkeeper.domain.model.CardDomain
@@ -15,7 +16,8 @@ import kotlinx.coroutines.tasks.await
 
 class FirebaseCardRepositoryImpl(
     private val fireStore: FirebaseFirestore,
-    private val cardFirestoreMapper: CardFirestoreMapper
+    private val cardFirestoreMapper: CardFirestoreMapper,
+    private val cardDataMapper: CardDataMapper
 ) : CardRepository {
 
     private var userDocumentReference: DocumentReference? = null
@@ -41,8 +43,8 @@ class FirebaseCardRepositoryImpl(
             val cardData = cardFirestoreMapper.transform(cardFirestore).apply {
                 this.cardId = cardId
             }
-
-            return GetCardByIdRepositoryResult.Success(cardData.convertToCardDomain())
+            val cardDomain = cardDataMapper.transform(cardData)
+            return GetCardByIdRepositoryResult.Success(cardDomain)
 
         } catch (exception: Exception) {
             exception.printStackTrace()
@@ -149,7 +151,7 @@ class FirebaseCardRepositoryImpl(
             val cardData = cardFirestoreMapper.transform(cardFirestore).apply {
                 this.cardId = documentSnapshot.id
             }
-            cardData.convertToCardDomain()
+            cardDataMapper.transform(cardData)
         }
     }
 

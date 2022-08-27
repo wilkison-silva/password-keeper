@@ -8,6 +8,8 @@ import br.com.passwordkeeper.data.source.web.AdviceWebClient
 import br.com.passwordkeeper.data.source.web.service.AdviceService
 import br.com.passwordkeeper.domain.mapper.AdviceDataMapper
 import br.com.passwordkeeper.domain.mapper.AdviceDomainMapper
+import br.com.passwordkeeper.domain.mapper.CardDataMapper
+import br.com.passwordkeeper.domain.mapper.CardFirestoreMapper
 import br.com.passwordkeeper.domain.usecase.*
 import br.com.passwordkeeper.presentation.ui.recyclerview.adapter.CategoryAdapter
 import br.com.passwordkeeper.presentation.ui.recyclerview.adapter.FavoriteAdapter
@@ -64,6 +66,8 @@ val webClientModule = module {
 val mappersModule = module {
     single<AdviceDataMapper> { AdviceDataMapper() }
     single<AdviceDomainMapper> { AdviceDomainMapper() }
+    single<CardFirestoreMapper> { CardFirestoreMapper() }
+    single<CardDataMapper> { CardDataMapper() }
 }
 
 val repositoryModule = module {
@@ -76,7 +80,13 @@ val repositoryModule = module {
     single<AdviceRepository> {
         AdviceRepositoryImpl(get<AdviceWebClient>(), get<AdviceDataMapper>())
     }
-    single<CardRepository> { FirebaseCardRepositoryImpl(get<FirebaseFirestore>()) }
+    single<CardRepository> {
+        FirebaseCardRepositoryImpl(
+            get<FirebaseFirestore>(),
+            get<CardFirestoreMapper>(),
+            get<CardDataMapper>()
+        )
+    }
 }
 
 val useCaseModule = module {
@@ -113,7 +123,7 @@ val viewModelModule = module {
         )
     }
     viewModel<MainViewModel> { MainViewModel() }
-    viewModel<CreateNewCardViewModel>{ CreateNewCardViewModel(get<CardUseCase>()) }
+    viewModel<CreateNewCardViewModel> { CreateNewCardViewModel(get<CardUseCase>()) }
 }
 
 val recyclerViewAdaptersModule = module {
