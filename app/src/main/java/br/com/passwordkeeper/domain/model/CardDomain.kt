@@ -1,7 +1,7 @@
 package br.com.passwordkeeper.domain.model
 
 data class CardDomain(
-    val cardId: String? = null,
+    val cardId: String,
     val description: String,
     val login: String,
     val password: String,
@@ -11,7 +11,7 @@ data class CardDomain(
 ) {
     fun convertToCardView() : CardView {
         return CardView(
-            cardId = cardId ?: "",
+            cardId = cardId,
             description = description,
             login = login,
             password = password,
