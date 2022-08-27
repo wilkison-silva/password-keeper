@@ -1,5 +1,6 @@
 package br.com.passwordkeeper.data.repository
 
+import br.com.passwordkeeper.domain.mapper.UserFirestoreMapper
 import br.com.passwordkeeper.domain.model.UserData
 import br.com.passwordkeeper.domain.model.UserFirestore
 import br.com.passwordkeeper.domain.result.repository.CreateUserRepositoryResult
@@ -13,7 +14,8 @@ import kotlinx.coroutines.tasks.await
 
 class FirebaseAuthRepositoryImpl(
     private val firebaseAuth: FirebaseAuth,
-    private val fireStore: FirebaseFirestore
+    private val fireStore: FirebaseFirestore,
+    private val userFirestoreMapper: UserFirestoreMapper
 ) : AuthRepository {
 
     override suspend fun signIn(email: String, password: String): SignInRepositoryResult {
@@ -99,10 +101,9 @@ class FirebaseAuthRepositoryImpl(
             val userDocumentSnapshot = fireStore
                 .collection(COLLECTION_USERS)
                 .document(emailUser).get().await()
-            val userFirestore = userDocumentSnapshot?.toObject<UserFirestore>()
-            userFirestore?.let {
-                return it.convertToUserData()
-            }
+            val userFirestore = userDocumentSnapshot?.toObject<UserFirestore>() as UserFirestore
+            return userFirestoreMapper.transform(userFirestore)
+
         } catch (exception: Exception) {
             exception.printStackTrace()
         }
