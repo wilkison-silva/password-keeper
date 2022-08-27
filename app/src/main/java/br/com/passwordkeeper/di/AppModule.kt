@@ -66,6 +66,7 @@ val mappersModule = module {
     single<CardFirestoreMapper> { CardFirestoreMapper() }
     single<CardDataMapper> { CardDataMapper() }
     single<CardDomainMapper> { CardDomainMapper() }
+    single<CategoryDomainMapper> { CategoryDomainMapper() }
 }
 
 val repositoryModule = module {
@@ -96,7 +97,13 @@ val useCaseModule = module {
     single<FormValidationSignUpUseCase> {
         FormValidationSignUpUseCaseImpl(get<PasswordValidationUseCase>())
     }
-    single<CardUseCase> { FirebaseCardUseCaseImpl(get<CardRepository>(), get<CardDomainMapper>()) }
+    single<CardUseCase> {
+        FirebaseCardUseCaseImpl(
+            get<CardRepository>(),
+            get<CardDomainMapper>(),
+            get<CategoryDomainMapper>()
+        )
+    }
 }
 
 val viewModelModule = module {

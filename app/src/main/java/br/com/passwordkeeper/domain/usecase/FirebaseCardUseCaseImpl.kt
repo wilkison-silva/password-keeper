@@ -2,13 +2,15 @@ package br.com.passwordkeeper.domain.usecase
 
 import br.com.passwordkeeper.data.repository.CardRepository
 import br.com.passwordkeeper.domain.mapper.CardDomainMapper
+import br.com.passwordkeeper.domain.mapper.CategoryDomainMapper
 import br.com.passwordkeeper.domain.model.*
 import br.com.passwordkeeper.domain.result.repository.*
 import br.com.passwordkeeper.domain.result.usecase.*
 
 class FirebaseCardUseCaseImpl(
     private val cardRepository: CardRepository,
-    private val cardDomainMapper: CardDomainMapper
+    private val cardDomainMapper: CardDomainMapper,
+    private val categoryDomainMapper: CategoryDomainMapper
 ) : CardUseCase {
 
     override suspend fun getAllCards(email: String): GetAllCardsUseCaseResult {
@@ -148,12 +150,13 @@ class FirebaseCardUseCaseImpl(
     ) {
         categoriesList.filter { it == category }.size.let { size ->
             if (size > 0) {
-                categoriesViewList.add(
+                val categoryView = categoryDomainMapper.transform(
                     CategoryDomain(
                         category = category,
                         quantity = size
-                    ).convertToCategoryView()
+                    )
                 )
+                categoriesViewList.add(categoryView)
             }
         }
         categoriesList.removeAll { it == category }
