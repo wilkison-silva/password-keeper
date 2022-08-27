@@ -12,6 +12,7 @@ class AppApplication : Application() {
             modules(
                 listOf(
                     firebaseModule,
+                    mappersModule,
                     repositoryModule,
                     useCaseModule,
                     retrofitModule,

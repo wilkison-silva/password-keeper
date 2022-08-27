@@ -6,6 +6,8 @@ import br.com.passwordkeeper.BuildConfig
 import br.com.passwordkeeper.data.repository.*
 import br.com.passwordkeeper.data.source.web.AdviceWebClient
 import br.com.passwordkeeper.data.source.web.service.AdviceService
+import br.com.passwordkeeper.domain.mapper.AdviceDataMapper
+import br.com.passwordkeeper.domain.mapper.AdviceDomainMapper
 import br.com.passwordkeeper.domain.usecase.*
 import br.com.passwordkeeper.presentation.ui.recyclerview.adapter.CategoryAdapter
 import br.com.passwordkeeper.presentation.ui.recyclerview.adapter.FavoriteAdapter
@@ -59,6 +61,11 @@ val webClientModule = module {
     single<AdviceWebClient> { AdviceWebClient(get<AdviceService>()) }
 }
 
+val mappersModule = module {
+    single<AdviceDataMapper> { AdviceDataMapper() }
+    single<AdviceDomainMapper> { AdviceDomainMapper() }
+}
+
 val repositoryModule = module {
     single<AuthRepository> {
         FirebaseAuthRepositoryImpl(
@@ -66,14 +73,16 @@ val repositoryModule = module {
             get<FirebaseFirestore>()
         )
     }
-    single<AdviceRepository> { AdviceRepositoryImpl(get<AdviceWebClient>()) }
+    single<AdviceRepository> {
+        AdviceRepositoryImpl(get<AdviceWebClient>(), get<AdviceDataMapper>())
+    }
     single<CardRepository> { FirebaseCardRepositoryImpl(get<FirebaseFirestore>()) }
 }
 
 val useCaseModule = module {
     single<SignInUseCase> { SignInUseCaseImpl(get<AuthRepository>()) }
     single<SignUpUseCase> { SignUpUseCaseImpl(get<AuthRepository>()) }
-    single<AdviceUseCase> { AdviceUseCaseImpl(get<AdviceRepository>()) }
+    single<AdviceUseCase> { AdviceUseCaseImpl(get<AdviceRepository>(), get<AdviceDomainMapper>()) }
     single<PasswordValidationUseCase> { PasswordValidationUseCaseImpl() }
     single<FormValidationSignInUseCase> { FormValidationSignInUseCaseImpl() }
     single<FormValidationSignUpUseCase> {
