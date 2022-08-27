@@ -69,6 +69,7 @@ val mappersModule = module {
     single<CategoryDomainMapper> { CategoryDomainMapper() }
     single<UserFirestoreMapper> { UserFirestoreMapper() }
     single<UserDataMapper> { UserDataMapper() }
+    single<UserDomainMapper> { UserDomainMapper() }
 }
 
 val repositoryModule = module {
@@ -93,7 +94,7 @@ val repositoryModule = module {
 }
 
 val useCaseModule = module {
-    single<SignInUseCase> { SignInUseCaseImpl(get<AuthRepository>()) }
+    single<SignInUseCase> { SignInUseCaseImpl(get<AuthRepository>(), get<UserDomainMapper>()) }
     single<SignUpUseCase> { SignUpUseCaseImpl(get<AuthRepository>()) }
     single<AdviceUseCase> { AdviceUseCaseImpl(get<AdviceRepository>(), get<AdviceDomainMapper>()) }
     single<PasswordValidationUseCase> { PasswordValidationUseCaseImpl() }
