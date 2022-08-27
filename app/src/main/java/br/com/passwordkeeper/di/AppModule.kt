@@ -6,10 +6,7 @@ import br.com.passwordkeeper.BuildConfig
 import br.com.passwordkeeper.data.repository.*
 import br.com.passwordkeeper.data.source.web.AdviceWebClient
 import br.com.passwordkeeper.data.source.web.service.AdviceService
-import br.com.passwordkeeper.domain.mapper.AdviceDataMapper
-import br.com.passwordkeeper.domain.mapper.AdviceDomainMapper
-import br.com.passwordkeeper.domain.mapper.CardDataMapper
-import br.com.passwordkeeper.domain.mapper.CardFirestoreMapper
+import br.com.passwordkeeper.domain.mapper.*
 import br.com.passwordkeeper.domain.usecase.*
 import br.com.passwordkeeper.presentation.ui.recyclerview.adapter.CategoryAdapter
 import br.com.passwordkeeper.presentation.ui.recyclerview.adapter.FavoriteAdapter
@@ -68,6 +65,7 @@ val mappersModule = module {
     single<AdviceDomainMapper> { AdviceDomainMapper() }
     single<CardFirestoreMapper> { CardFirestoreMapper() }
     single<CardDataMapper> { CardDataMapper() }
+    single<CardDomainMapper> { CardDomainMapper() }
 }
 
 val repositoryModule = module {
@@ -98,7 +96,7 @@ val useCaseModule = module {
     single<FormValidationSignUpUseCase> {
         FormValidationSignUpUseCaseImpl(get<PasswordValidationUseCase>())
     }
-    single<CardUseCase> { FirebaseCardUseCaseImpl(get<CardRepository>()) }
+    single<CardUseCase> { FirebaseCardUseCaseImpl(get<CardRepository>(), get<CardDomainMapper>()) }
 }
 
 val viewModelModule = module {

@@ -1,21 +1,21 @@
 package br.com.passwordkeeper.domain.usecase
 
 import br.com.passwordkeeper.data.repository.CardRepository
+import br.com.passwordkeeper.domain.mapper.CardDomainMapper
 import br.com.passwordkeeper.domain.model.*
 import br.com.passwordkeeper.domain.result.repository.*
 import br.com.passwordkeeper.domain.result.usecase.*
 
 class FirebaseCardUseCaseImpl(
     private val cardRepository: CardRepository,
+    private val cardDomainMapper: CardDomainMapper
 ) : CardUseCase {
 
     override suspend fun getAllCards(email: String): GetAllCardsUseCaseResult {
         return when (val getAllCardsRepositoryResult = cardRepository.getAllCards(email)) {
             is GetAllCardsRepositoryResult.Success -> {
                 val cardDomainList = getAllCardsRepositoryResult.cardDomainList
-                val cardViewList = cardDomainList.map { cardDomain: CardDomain ->
-                    cardDomain.convertToCardView()
-                }
+                val cardViewList = cardDomainMapper.transform(cardDomainList)
                 GetAllCardsUseCaseResult.Success(cardViewList)
             }
             is GetAllCardsRepositoryResult.ErrorUnknown -> {
@@ -27,7 +27,8 @@ class FirebaseCardUseCaseImpl(
     override suspend fun getCardById(cardId: String): GetCardByIdUseCaseResult {
         return when (val getCardByIdRepositoryResult = cardRepository.getCardById(cardId)) {
             is GetCardByIdRepositoryResult.Success -> {
-                val cardView = getCardByIdRepositoryResult.cardDomain.convertToCardView()
+                val cardDomain = getCardByIdRepositoryResult.cardDomain
+                val cardView = cardDomainMapper.transform(cardDomain)
                 GetCardByIdUseCaseResult.Success(cardView)
             }
             is GetCardByIdRepositoryResult.ErrorUnknown -> {
@@ -83,9 +84,7 @@ class FirebaseCardUseCaseImpl(
         return when (val getFavoriteCardsRepositoryResult = cardRepository.getFavorites(email)) {
             is GetFavoriteCardsRepositoryResult.Success -> {
                 val cardDomainList = getFavoriteCardsRepositoryResult.cardDomainList
-                val cardViewList = cardDomainList.map { cardDomain: CardDomain ->
-                    cardDomain.convertToCardView()
-                }
+                val cardViewList = cardDomainMapper.transform(cardDomainList)
                 GetFavoriteCardsUseCaseResult.Success(cardViewList)
             }
             is GetFavoriteCardsRepositoryResult.ErrorUnknown -> {
@@ -133,9 +132,7 @@ class FirebaseCardUseCaseImpl(
             cardRepository.getCardsByCategory(category, email)) {
             is GetCardsByCategoryRepositoryResult.Success -> {
                 val cardDomainList = getCardsByCategoryRepositoryResult.cardDomainList
-                val cardViewList = cardDomainList.map { cardDomain: CardDomain ->
-                    cardDomain.convertToCardView()
-                }
+                val cardViewList = cardDomainMapper.transform(cardDomainList)
                 GetCardsByCategoryUseCaseResult.Success(cardViewList)
             }
             is GetCardsByCategoryRepositoryResult.ErrorUnknown -> {
