@@ -1,5 +1,7 @@
 package br.com.passwordkeeper.data.repository
 
+import br.com.passwordkeeper.domain.mapper.CardDataMapper
+import br.com.passwordkeeper.domain.mapper.CardFirestoreMapper
 import br.com.passwordkeeper.domain.model.CardData
 import br.com.passwordkeeper.domain.model.CardDomain
 import br.com.passwordkeeper.domain.model.CardFirestore
@@ -14,6 +16,8 @@ import kotlinx.coroutines.tasks.await
 
 class FirebaseCardRepositoryImpl(
     private val fireStore: FirebaseFirestore,
+    private val cardFirestoreMapper: CardFirestoreMapper,
+    private val cardDataMapper: CardDataMapper
 ) : CardRepository {
 
     private var userDocumentReference: DocumentReference? = null
@@ -35,9 +39,13 @@ class FirebaseCardRepositoryImpl(
         try {
             val documentSnapshot =
                 fireStore.collection(COLLECTION_CARDS).document(cardId).get().await()
-            documentSnapshot.toObject<CardFirestore>()?.convertToCardData(cardId)?.let { cardData ->
-                return GetCardByIdRepositoryResult.Success(cardData.convertToCardDomain())
+            val cardFirestore = documentSnapshot.toObject<CardFirestore>() as CardFirestore
+            val cardData = cardFirestoreMapper.transform(cardFirestore).apply {
+                this.cardId = cardId
             }
+            val cardDomain = cardDataMapper.transform(cardData)
+            return GetCardByIdRepositoryResult.Success(cardDomain)
+
         } catch (exception: Exception) {
             exception.printStackTrace()
         }
@@ -139,10 +147,11 @@ class FirebaseCardRepositoryImpl(
         querySnapshot: QuerySnapshot,
     ): List<CardDomain> {
         return querySnapshot.documents.mapNotNull { documentSnapshot: DocumentSnapshot? ->
-            documentSnapshot
-                ?.toObject<CardFirestore>()
-                ?.convertToCardData(documentSnapshot.id)
-                ?.convertToCardDomain()
+            val cardFirestore = documentSnapshot?.toObject<CardFirestore>() as CardFirestore
+            val cardData = cardFirestoreMapper.transform(cardFirestore).apply {
+                this.cardId = documentSnapshot.id
+            }
+            cardDataMapper.transform(cardData)
         }
     }
 

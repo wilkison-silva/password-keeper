@@ -3,7 +3,7 @@ package br.com.passwordkeeper.domain.model
 import com.google.firebase.firestore.DocumentReference
 
 data class CardData(
-    val cardId: String? = null,
+    var cardId: String? = null,
     val description: String,
     val login: String,
     val password: String,
@@ -23,15 +23,4 @@ data class CardData(
         )
     }
 
-    fun convertToCardDomain(): CardDomain {
-        return CardDomain(
-            cardId = cardId ?: "",
-            description = description,
-            login = login,
-            password = password,
-            category = category,
-            isFavorite = isFavorite,
-            date = date
-        )
-    }
 }

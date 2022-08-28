@@ -6,6 +6,7 @@ import br.com.passwordkeeper.BuildConfig
 import br.com.passwordkeeper.data.repository.*
 import br.com.passwordkeeper.data.source.web.AdviceWebClient
 import br.com.passwordkeeper.data.source.web.service.AdviceService
+import br.com.passwordkeeper.domain.mapper.*
 import br.com.passwordkeeper.domain.usecase.*
 import br.com.passwordkeeper.presentation.ui.recyclerview.adapter.CategoryAdapter
 import br.com.passwordkeeper.presentation.ui.recyclerview.adapter.FavoriteAdapter
@@ -59,27 +60,55 @@ val webClientModule = module {
     single<AdviceWebClient> { AdviceWebClient(get<AdviceService>()) }
 }
 
+val mappersModule = module {
+    single<AdviceDataMapper> { AdviceDataMapper() }
+    single<AdviceDomainMapper> { AdviceDomainMapper() }
+    single<CardFirestoreMapper> { CardFirestoreMapper() }
+    single<CardDataMapper> { CardDataMapper() }
+    single<CardDomainMapper> { CardDomainMapper() }
+    single<CategoryDomainMapper> { CategoryDomainMapper() }
+    single<UserFirestoreMapper> { UserFirestoreMapper() }
+    single<UserDataMapper> { UserDataMapper() }
+    single<UserDomainMapper> { UserDomainMapper() }
+}
+
 val repositoryModule = module {
     single<AuthRepository> {
         FirebaseAuthRepositoryImpl(
             get<FirebaseAuth>(),
-            get<FirebaseFirestore>()
+            get<FirebaseFirestore>(),
+            get<UserFirestoreMapper>(),
+            get<UserDataMapper>()
         )
     }
-    single<AdviceRepository> { AdviceRepositoryImpl(get<AdviceWebClient>()) }
-    single<CardRepository> { FirebaseCardRepositoryImpl(get<FirebaseFirestore>()) }
+    single<AdviceRepository> {
+        AdviceRepositoryImpl(get<AdviceWebClient>(), get<AdviceDataMapper>())
+    }
+    single<CardRepository> {
+        FirebaseCardRepositoryImpl(
+            get<FirebaseFirestore>(),
+            get<CardFirestoreMapper>(),
+            get<CardDataMapper>()
+        )
+    }
 }
 
 val useCaseModule = module {
-    single<SignInUseCase> { SignInUseCaseImpl(get<AuthRepository>()) }
+    single<SignInUseCase> { SignInUseCaseImpl(get<AuthRepository>(), get<UserDomainMapper>()) }
     single<SignUpUseCase> { SignUpUseCaseImpl(get<AuthRepository>()) }
-    single<AdviceUseCase> { AdviceUseCaseImpl(get<AdviceRepository>()) }
+    single<AdviceUseCase> { AdviceUseCaseImpl(get<AdviceRepository>(), get<AdviceDomainMapper>()) }
     single<PasswordValidationUseCase> { PasswordValidationUseCaseImpl() }
     single<FormValidationSignInUseCase> { FormValidationSignInUseCaseImpl() }
     single<FormValidationSignUpUseCase> {
         FormValidationSignUpUseCaseImpl(get<PasswordValidationUseCase>())
     }
-    single<CardUseCase> { FirebaseCardUseCaseImpl(get<CardRepository>()) }
+    single<CardUseCase> {
+        FirebaseCardUseCaseImpl(
+            get<CardRepository>(),
+            get<CardDomainMapper>(),
+            get<CategoryDomainMapper>()
+        )
+    }
 }
 
 val viewModelModule = module {
@@ -104,7 +133,7 @@ val viewModelModule = module {
         )
     }
     viewModel<MainViewModel> { MainViewModel() }
-    viewModel<CreateNewCardViewModel>{ CreateNewCardViewModel(get<CardUseCase>()) }
+    viewModel<CreateNewCardViewModel> { CreateNewCardViewModel(get<CardUseCase>()) }
 }
 
 val recyclerViewAdaptersModule = module {
