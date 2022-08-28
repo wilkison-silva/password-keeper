@@ -1,11 +1,12 @@
 package br.com.passwordkeeper.presentation.ui.viewmodel
 
-import android.content.Context
+import android.text.SpannableStringBuilder
+import androidx.core.text.bold
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import br.com.passwordkeeper.domain.model.CategoryView
+import br.com.passwordkeeper.domain.model.AdviceView
 import br.com.passwordkeeper.domain.result.viewmodelstate.GetAdviceStateResult
 import br.com.passwordkeeper.domain.result.usecase.GetAdviceUseCaseResult
 import br.com.passwordkeeper.domain.result.usecase.GetCategoriesSizeUseCaseResult
@@ -44,6 +45,12 @@ class HomeViewModel(
                 }
             }
         }
+    }
+
+    fun getAdviceWithFirstLetterBold(adviceView: AdviceView): SpannableStringBuilder {
+        return SpannableStringBuilder()
+            .bold { append(adviceView.firstLetter) }
+            .append(adviceView.advice.substring(1))
     }
 
     private val _currentUserState = MutableLiveData<CurrentUserState>()

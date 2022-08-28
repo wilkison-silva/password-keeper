@@ -25,11 +25,11 @@
     <string name="new_card">Novo Cartão</string>
     <string name="settings">Configurações</string>
     <string name="image_description_card_view_type">Imagem representando uma categoria de senhas</string>
-    <string name="the_advice_above">O conselho acima tem %1$d palavras que podem mudar seu dia. Tente um novo!</string>
+    <string name="the_advice_above">%1$d palavras que podem mudar seu dia. Tente um novo!</string>
     <string name="ask_for_advice">Novo conselho</string>
     <string name="no_message_found">Desculpe, nenhuma mensagem encontrada!</string>
     <string name="error">Desculpe, algo deu errado!</string>
-    <string name="message">&#160;&#160;&#160;ost things are not as bad as you think they are. Most things are not as bad as you think they are Most things are not as bad as you think they are</string>
+    <string name="message">ost things are not as bad as you think they are. Most things are not as bad as you think they are Most things are not as bad as you think they are</string>
     <string name="loading">Espere um minuto, estamos buscando um novo pra você..</string>
     <string name="email_or_password_wrong">Desculpe, credenciais inválidas!</string>
     <string name="email_field_is_empty">Campo de email não pode ser vazio</string>

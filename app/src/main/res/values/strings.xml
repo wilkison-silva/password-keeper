@@ -25,11 +25,11 @@
     <string name="new_card">New Card</string>
     <string name="settings">Settings</string>
     <string name="image_description_card_view_type">Imagem representando uma categoria de senhas</string>
-    <string name="the_advice_above">The advice above has %1$d words that can change your day. Try a new one!</string>
+    <string name="the_advice_above">%1$d words that can change your day. Try a new one!</string>
     <string name="ask_for_advice">Ask for advice</string>
     <string name="no_message_found">Sorry, no message found!</string>
     <string name="error">Sorry, an error happened!</string>
-    <string name="message">&#160;&#160;&#160;ost things are not as bad as you think they are. Most things are not as bad as you think they are Most things are not as bad as you think they are</string>
+    <string name="message">Most things are not as bad as you think they are. Most things are not as bad as you think they are Most things are not as bad as you think they are</string>
     <string name="loading">Wait a minute, we\'re getting a nice one for you</string>
     <string name="email_or_password_wrong">Sorry, email or password is wrong!</string>
     <string name="email_field_is_empty">Email field is empty</string>
