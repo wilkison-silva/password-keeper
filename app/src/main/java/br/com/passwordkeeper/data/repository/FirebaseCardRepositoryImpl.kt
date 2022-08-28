@@ -41,9 +41,7 @@ class FirebaseCardRepositoryImpl(
             val documentSnapshot =
                 fireStore.collection(COLLECTION_CARDS).document(cardId).get().await()
             val cardFirestore = documentSnapshot.toObject<CardFirestore>() as CardFirestore
-            val cardData = cardFirestoreMapper.transform(cardFirestore).apply {
-                this.cardId = cardId
-            }
+            val cardData = cardFirestoreMapper.transform(cardFirestore)
             val cardDomain = cardDataMapper.transform(cardData)
             return GetCardByIdRepositoryResult.Success(cardDomain)
 
@@ -65,6 +63,7 @@ class FirebaseCardRepositoryImpl(
         try {
             val cardDocumentReference = fireStore.collection(COLLECTION_CARDS).document()
             val cardFirestore = CardFirestore(
+                id = cardDocumentReference.id,
                 description = description,
                 login = login,
                 password = password,
@@ -172,9 +171,7 @@ class FirebaseCardRepositoryImpl(
     ): List<CardDomain> {
         return querySnapshot.documents.mapNotNull { documentSnapshot: DocumentSnapshot? ->
             val cardFirestore = documentSnapshot?.toObject<CardFirestore>() as CardFirestore
-            val cardData = cardFirestoreMapper.transform(cardFirestore).apply {
-                this.cardId = documentSnapshot.id
-            }
+            val cardData = cardFirestoreMapper.transform(cardFirestore)
             cardDataMapper.transform(cardData)
         }
     }
