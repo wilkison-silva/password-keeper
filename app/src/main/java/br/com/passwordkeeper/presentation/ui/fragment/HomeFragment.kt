@@ -83,14 +83,13 @@ class HomeFragment : Fragment(R.layout.home_fragment) {
             when (it) {
                 is GetAdviceStateResult.Loading -> {
                     binding.textViewMessage.text = getString(R.string.loading)
-                    binding.firstLetter.text = ""
                 }
                 is GetAdviceStateResult.Success -> {
                     val adviceView = it.adviceView
-                    binding.textViewMessage.text = adviceView.advice
+                    binding.textViewMessage.text =
+                        homeViewModel.getAdviceWithFirstLetterBold(adviceView)
                     binding.textViewTheAdviceAbove.text =
                         getString(R.string.the_advice_above, adviceView.quantityWords)
-                    binding.firstLetter.text = adviceView.firstLetter
                 }
                 is GetAdviceStateResult.SuccessWithoutMessage -> {
                     binding.textViewMessage.text = getString(R.string.no_message_found)
@@ -113,10 +112,10 @@ class HomeFragment : Fragment(R.layout.home_fragment) {
 
     private fun observeFavoriteCards() {
         homeViewModel.favoriteCardsState.observe(viewLifecycleOwner) {
-            when(it) {
+            when (it) {
                 is GetFavoriteCardsStateResult.ErrorUnknown -> {}
                 is GetFavoriteCardsStateResult.Success -> {
-                   val cardViewList = it.cardViewList
+                    val cardViewList = it.cardViewList
                     favoriteAdapter.updateList(cardViewList)
                     binding.constraintLayoutFavorite.visibility = VISIBLE
                     binding.constraintLayoutNoFavoriteYet.visibility = GONE
@@ -132,7 +131,7 @@ class HomeFragment : Fragment(R.layout.home_fragment) {
 
     private fun observeCategoriesSize() {
         homeViewModel.categoriesSizeState.observe(viewLifecycleOwner) {
-            when(it) {
+            when (it) {
                 is GetCategoriesSizeStateResult.ErrorUnknown -> {}
                 is GetCategoriesSizeStateResult.Success -> {
                     val categoriesViewList = it.categoriesViewList
@@ -156,9 +155,9 @@ class HomeFragment : Fragment(R.layout.home_fragment) {
         binding.recyclerViewTypes.adapter = categoryAdapter
     }
 
-   private fun updateFavorites(email: String) {
-       homeViewModel.updateFavoriteCards(email)
-   }
+    private fun updateFavorites(email: String) {
+        homeViewModel.updateFavoriteCards(email)
+    }
 
     private fun setupFavoriteRecyclerView() {
         binding.recyclerViewFavorite.adapter = favoriteAdapter
