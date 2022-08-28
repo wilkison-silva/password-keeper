@@ -7,6 +7,7 @@ class CardFirestoreMapper : BaseMapper<CardFirestore, CardData>() {
 
     override fun transform(model: CardFirestore): CardData {
         return CardData(
+            cardId = model.id,
             description = model.description,
             login = model.login,
             password = model.password,

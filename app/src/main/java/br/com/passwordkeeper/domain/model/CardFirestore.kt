@@ -3,6 +3,7 @@ package br.com.passwordkeeper.domain.model
 import com.google.firebase.firestore.DocumentReference
 
 data class CardFirestore(
+    val id: String = "",
     val description: String = "",
     val login: String = "",
     val password: String = "",

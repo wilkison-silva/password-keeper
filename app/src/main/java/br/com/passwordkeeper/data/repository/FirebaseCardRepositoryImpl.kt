@@ -12,6 +12,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.ktx.toObject
 import kotlinx.coroutines.tasks.await
+import kotlin.math.log
 
 
 class FirebaseCardRepositoryImpl(
@@ -40,9 +41,7 @@ class FirebaseCardRepositoryImpl(
             val documentSnapshot =
                 fireStore.collection(COLLECTION_CARDS).document(cardId).get().await()
             val cardFirestore = documentSnapshot.toObject<CardFirestore>() as CardFirestore
-            val cardData = cardFirestoreMapper.transform(cardFirestore).apply {
-                this.cardId = cardId
-            }
+            val cardData = cardFirestoreMapper.transform(cardFirestore)
             val cardDomain = cardDataMapper.transform(cardData)
             return GetCardByIdRepositoryResult.Success(cardDomain)
 
@@ -53,14 +52,27 @@ class FirebaseCardRepositoryImpl(
     }
 
     override suspend fun createCard(
-        cardData: CardData,
+        description: String,
+        login: String,
+        password: String,
+        category: String,
+        isFavorite: Boolean,
+        date: String,
         emailUser: String,
     ): CreateCardRepositoryResult {
         try {
             val cardDocumentReference = fireStore.collection(COLLECTION_CARDS).document()
-            cardDocumentReference
-                .set(cardData.convertToCardFireStore(getUserDocumentReference(emailUser)))
-                .await()
+            val cardFirestore = CardFirestore(
+                id = cardDocumentReference.id,
+                description = description,
+                login = login,
+                password = password,
+                category = category,
+                user = getUserDocumentReference(emailUser),
+                favorite = isFavorite,
+                date = date
+            )
+            cardDocumentReference.set(cardFirestore).await()
             return CreateCardRepositoryResult.Success(cardDocumentReference.id)
         } catch (exception: Exception) {
             exception.printStackTrace()
@@ -69,17 +81,28 @@ class FirebaseCardRepositoryImpl(
     }
 
     override suspend fun updateCard(
-        cardData: CardData,
-        emailUser: String,
+        cardId: String,
+        description: String,
+        login: String,
+        password: String,
+        category: String,
+        isFavorite: Boolean,
+        date: String,
+        emailUser: String
     ): UpdateCardRepositoryResult {
         try {
-            cardData.cardId?.let { cardId: String ->
-                val cardDocumentReference = fireStore.collection(COLLECTION_CARDS).document(cardId)
-                cardDocumentReference
-                    .set(cardData.convertToCardFireStore(getUserDocumentReference(emailUser)))
-                    .await()
-                return UpdateCardRepositoryResult.Success(cardDocumentReference.id)
-            }
+            val cardDocumentReference = fireStore.collection(COLLECTION_CARDS).document(cardId)
+            val cardFirestore = CardFirestore(
+                description = description,
+                login = login,
+                password = password,
+                category = category,
+                user = getUserDocumentReference(emailUser),
+                favorite = isFavorite,
+                date = date
+            )
+            cardDocumentReference.set(cardFirestore).await()
+            return UpdateCardRepositoryResult.Success(cardDocumentReference.id)
         } catch (exception: Exception) {
             exception.printStackTrace()
         }
@@ -148,9 +171,7 @@ class FirebaseCardRepositoryImpl(
     ): List<CardDomain> {
         return querySnapshot.documents.mapNotNull { documentSnapshot: DocumentSnapshot? ->
             val cardFirestore = documentSnapshot?.toObject<CardFirestore>() as CardFirestore
-            val cardData = cardFirestoreMapper.transform(cardFirestore).apply {
-                this.cardId = documentSnapshot.id
-            }
+            val cardData = cardFirestoreMapper.transform(cardFirestore)
             cardDataMapper.transform(cardData)
         }
     }
