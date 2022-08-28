@@ -45,8 +45,8 @@ class MainActivity : AppCompatActivity() {
         binding.bottomNavigation.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.homeFragment -> {
-                    navController.popBackStack(R.id.homeFragment, true)
-                    navController.navigate(R.id.homeFragment)
+                    navController.popBackStack(R.id.homeFragment, false)
+//                    navController.navigate(R.id.homeFragment)
                 }
                 R.id.formCardFragment -> {
                     navController.navigate(R.id.formCardFragment)
