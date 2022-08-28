@@ -39,12 +39,26 @@ class FirebaseCardUseCaseImpl(
         }
     }
 
+
     override suspend fun createCard(
-        cardDomain: CardDomain,
+        description: String,
+        login: String,
+        password: String,
+        category: String,
+        isFavorite: Boolean,
+        date: String,
         emailUser: String,
     ): CreateCardUseCaseResult {
-        return when (val createCardRepositoryResult =
-            cardRepository.createCard(cardDomain.convertToCardData(), emailUser)) {
+        val createCardRepositoryResult = cardRepository.createCard(
+            description = description,
+            login = login,
+            password = password,
+            category = category,
+            isFavorite = isFavorite,
+            date = date,
+            emailUser = emailUser
+        )
+        return when (createCardRepositoryResult) {
             is CreateCardRepositoryResult.Success -> {
                 val cardId = createCardRepositoryResult.cardId
                 CreateCardUseCaseResult.Success(cardId)
@@ -56,11 +70,27 @@ class FirebaseCardUseCaseImpl(
     }
 
     override suspend fun updateCard(
-        cardDomain: CardDomain,
-        emailUser: String,
+        cardId: String,
+        description: String,
+        login: String,
+        password: String,
+        category: String,
+        isFavorite: Boolean,
+        date: String,
+        emailUser: String
     ): UpdateCardUseCaseResult {
-        return when (val updateCardUseCaseResult =
-            cardRepository.updateCard(cardDomain.convertToCardData(), emailUser)) {
+        val updateCardUseCaseResult =
+            cardRepository.updateCard(
+                cardId = cardId,
+                description = description,
+                login = login,
+                password = password,
+                category = category,
+                isFavorite = isFavorite,
+                date = date,
+                emailUser = emailUser
+            )
+        return when (updateCardUseCaseResult) {
             is UpdateCardRepositoryResult.Success -> {
                 val cardId = updateCardUseCaseResult.cardId
                 UpdateCardUseCaseResult.Success(cardId)
