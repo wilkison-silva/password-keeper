@@ -109,6 +109,7 @@ val useCaseModule = module {
             get<CategoryDomainMapper>()
         )
     }
+    single<FormValidationCardUseCase> { FormValidationCardUseCaseImpl()}
 }
 
 val viewModelModule = module {
