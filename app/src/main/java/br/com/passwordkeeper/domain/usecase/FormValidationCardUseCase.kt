@@ -10,8 +10,7 @@ interface FormValidationCardUseCase {
         password: String,
         category: String,
         isFavorite: Boolean,
-        date: String,
-        emailUser: String
+        date: String
     ): FormValidationCardUseCaseResult
 
 }

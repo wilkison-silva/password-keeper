@@ -11,6 +11,8 @@ import br.com.passwordkeeper.R
 import br.com.passwordkeeper.databinding.CreateNewCardFragmentBinding
 import br.com.passwordkeeper.domain.model.Categories
 import br.com.passwordkeeper.domain.model.Categories.*
+import br.com.passwordkeeper.domain.result.viewmodelstate.CreateCardStateResult
+import br.com.passwordkeeper.domain.result.viewmodelstate.FormValidationCardStateResult
 import br.com.passwordkeeper.extensions.downloadImageDialog
 import br.com.passwordkeeper.extensions.tryLoadImage
 import br.com.passwordkeeper.presentation.ui.dialog.BottomSheetCategory
@@ -42,7 +44,9 @@ class CreateNewCardFragment : Fragment(R.layout.create_new_card_fragment) {
         setupImageIconHeart()
         setupCreateSaveCardButton()
         observeFavoriteState()
-
+        createNewCardViewModel.getCurrentEmailUser()
+        observeValidateCard()
+        observeCreateCard()
     }
 
     private fun showBottomSheet() {
@@ -96,15 +100,53 @@ class CreateNewCardFragment : Fragment(R.layout.create_new_card_fragment) {
             val category = binding.textInputEditTextCategory.text.toString()
             val isFavorite = createNewCardViewModel.favorite.value ?: false
 
-            createNewCardViewModel.createCardState(
+
+            createNewCardViewModel.validateForm(
                 description,
                 email,
                 password,
                 category,
-                isFavorite
+                isFavorite,
+                date = createNewCardViewModel.getCurrentDateTime()
             )
         }
 
+    }
+
+    private fun observeValidateCard() {
+        createNewCardViewModel.formValidationCard.observe(viewLifecycleOwner) {
+            when (it) {
+                FormValidationCardStateResult.CategoryNotSelected -> TODO()
+                FormValidationCardStateResult.DescriptionIsEmpty -> TODO()
+                FormValidationCardStateResult.Success -> {
+                    val description = binding.textInputEditTextDescription.text.toString()
+                    val email = binding.textInputEditTextEmail.text.toString()
+                    val password = binding.textInputEditTextPassword.text.toString()
+                    val category = binding.textInputEditTextCategory.text.toString()
+                    val isFavorite = createNewCardViewModel.favorite.value ?: false
+                    createNewCardViewModel.emailUser.value?.let { emailUser ->
+                        createNewCardViewModel.createCard(
+                            description,
+                            email,
+                            password,
+                            category,
+                            isFavorite,
+                            date = createNewCardViewModel.getCurrentDateTime(),
+                            emailUser = emailUser
+                        )
+                    }
+                }
+            }
+        }
+    }
+
+    private fun observeCreateCard() {
+        createNewCardViewModel.createCardState.observe(viewLifecycleOwner) {
+            when(it) {
+                is CreateCardStateResult.ErrorUnknown -> TODO()
+                is CreateCardStateResult.Success -> TODO()
+            }
+        }
     }
 }
 
