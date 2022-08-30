@@ -59,10 +59,12 @@
         tools:layout="@layout/create_new_card_fragment">
         <action
             android:id="@+id/action_formCardFragment_to_newNoteSuccessFragment"
-            app:destination="@id/newNoteSuccessFragment" />
+            app:destination="@id/newNoteSuccessFragment"
+            app:popUpTo="@id/homeFragment" />
         <action
             android:id="@+id/action_formCardFragment_to_newNoteErrorFragment"
-            app:destination="@id/newNoteErrorFragment" />
+            app:destination="@id/newNoteErrorFragment"
+            app:popUpTo="@id/homeFragment" />
     </fragment>
     <fragment
         android:id="@+id/newNoteSuccessFragment"
