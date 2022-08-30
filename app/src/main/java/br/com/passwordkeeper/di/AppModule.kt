@@ -109,7 +109,9 @@ val useCaseModule = module {
             get<CategoryDomainMapper>()
         )
     }
-    single<FormValidationCardUseCase> { FormValidationCardUseCaseImpl()}
+    single<FormValidationCardUseCase> { FormValidationCardUseCaseImpl(
+        get<Context>()
+    )}
 }
 
 val viewModelModule = module {
@@ -134,7 +136,13 @@ val viewModelModule = module {
         )
     }
     viewModel<MainViewModel> { MainViewModel() }
-    viewModel<CreateNewCardViewModel> { CreateNewCardViewModel(get<CardUseCase>()) }
+    viewModel<CreateNewCardViewModel> {
+        CreateNewCardViewModel(
+            get<CardUseCase>(),
+            get<FormValidationCardUseCase>(),
+            get<SignInUseCase>()
+        )
+    }
 }
 
 val recyclerViewAdaptersModule = module {

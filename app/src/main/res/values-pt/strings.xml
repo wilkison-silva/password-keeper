@@ -69,4 +69,10 @@
     <string name="no_cards_yet">Nenhum card ainda</string>
     <string name="card_view_description">Spotify</string>
     <string name="no_favorite_yet">Nenhum favorito ainda</string>
+    <string name="category_not_selected">Categoria não selecionada</string>
+    <string name="description_is_empty">Description está vazia</string>
+    <string name="sorry_something_went_wrong">Desculpe, mas algo correu mal =/</string>
+    <string name="please_try_again_later">Por favor, tente novamente mais tarde!!!</string>
+    <string name="data_stored_in_our_server">Dados armazenados no nosso servidor</string>
+    <string name="one_more_data">Mais um dado guardado apenas à sua espera quando precisar dele!!!</string>
 </resources>

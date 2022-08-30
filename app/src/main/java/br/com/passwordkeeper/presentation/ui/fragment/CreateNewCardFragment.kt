@@ -1,10 +1,11 @@
 package br.com.passwordkeeper.presentation.ui.fragment
 
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
+import android.content.res.ColorStateList
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import androidx.annotation.ColorRes
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import br.com.passwordkeeper.R
@@ -100,7 +101,6 @@ class CreateNewCardFragment : Fragment(R.layout.create_new_card_fragment) {
             val category = binding.textInputEditTextCategory.text.toString()
             val isFavorite = createNewCardViewModel.favorite.value ?: false
 
-
             createNewCardViewModel.validateForm(
                 description,
                 email,
@@ -110,14 +110,17 @@ class CreateNewCardFragment : Fragment(R.layout.create_new_card_fragment) {
                 date = createNewCardViewModel.getCurrentDateTime()
             )
         }
-
     }
 
     private fun observeValidateCard() {
         createNewCardViewModel.formValidationCard.observe(viewLifecycleOwner) {
             when (it) {
-                FormValidationCardStateResult.CategoryNotSelected -> TODO()
-                FormValidationCardStateResult.DescriptionIsEmpty -> TODO()
+                FormValidationCardStateResult.CategoryNotSelected -> {
+                    binding.textInputLayoutCategory.error = getString(R.string.category_not_selected)
+                }
+                FormValidationCardStateResult.DescriptionIsEmpty -> {
+                    binding.textInputLayoutDescription.error = getString(R.string.description_is_empty)
+                }
                 FormValidationCardStateResult.Success -> {
                     val description = binding.textInputEditTextDescription.text.toString()
                     val email = binding.textInputEditTextEmail.text.toString()
@@ -142,11 +145,18 @@ class CreateNewCardFragment : Fragment(R.layout.create_new_card_fragment) {
 
     private fun observeCreateCard() {
         createNewCardViewModel.createCardState.observe(viewLifecycleOwner) {
-            when(it) {
-                is CreateCardStateResult.ErrorUnknown -> TODO()
-                is CreateCardStateResult.Success -> TODO()
+            when (it) {
+                is CreateCardStateResult.ErrorUnknown -> {
+                    val directions =
+                        CreateNewCardFragmentDirections.actionFormCardFragmentToNewNoteErrorFragment()
+                    navController.navigate(directions)
+                }
+                is CreateCardStateResult.Success -> {
+                        val directions =
+                            CreateNewCardFragmentDirections.actionFormCardFragmentToNewNoteSuccessFragment()
+                        navController.navigate(directions)
+                }
             }
         }
     }
 }
-
