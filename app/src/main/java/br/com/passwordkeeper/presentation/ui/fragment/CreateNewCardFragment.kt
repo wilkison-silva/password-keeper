@@ -1,11 +1,7 @@
 package br.com.passwordkeeper.presentation.ui.fragment
 
-import android.content.res.ColorStateList
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import androidx.annotation.ColorRes
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import br.com.passwordkeeper.R
