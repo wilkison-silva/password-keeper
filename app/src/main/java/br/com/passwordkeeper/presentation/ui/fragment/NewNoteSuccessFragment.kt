@@ -6,6 +6,8 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import br.com.passwordkeeper.R
 import br.com.passwordkeeper.databinding.NewNoteSuccessBinding
+import br.com.passwordkeeper.presentation.ui.viewmodel.MainViewModel
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class NewNoteSuccessFragment : Fragment(R.layout.new_note_success) {
 
@@ -14,10 +16,12 @@ class NewNoteSuccessFragment : Fragment(R.layout.new_note_success) {
     }
 
     private lateinit var binding: NewNoteSuccessBinding
+    private val mainViewModel: MainViewModel by sharedViewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = NewNoteSuccessBinding.bind(view)
+        mainViewModel.updateBottomNavigationVisibility(visibility = false)
     }
 
 }

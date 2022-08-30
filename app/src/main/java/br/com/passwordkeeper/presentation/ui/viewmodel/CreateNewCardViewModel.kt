@@ -1,6 +1,5 @@
 package br.com.passwordkeeper.presentation.ui.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -9,6 +8,7 @@ import br.com.passwordkeeper.domain.result.usecase.CreateCardUseCaseResult
 import br.com.passwordkeeper.domain.result.usecase.FormValidationCardUseCaseResult
 import br.com.passwordkeeper.domain.result.usecase.GetCurrentUserUseCaseResult
 import br.com.passwordkeeper.domain.result.viewmodelstate.CreateCardStateResult
+import br.com.passwordkeeper.domain.result.viewmodelstate.CurrentUserState
 import br.com.passwordkeeper.domain.result.viewmodelstate.FormValidationCardStateResult
 import br.com.passwordkeeper.domain.usecase.CardUseCase
 import br.com.passwordkeeper.domain.usecase.FormValidationCardUseCase
@@ -27,9 +27,9 @@ class CreateNewCardViewModel(
     val favorite: LiveData<Boolean>
         get() = _favorite
 
-    private val _emailUser = MutableLiveData<String?>()
-    val emailUser: LiveData<String?>
-        get() = _emailUser
+    private val _currentUserState = MutableLiveData<CurrentUserState>()
+    val currentUserState: LiveData<CurrentUserState>
+        get() = _currentUserState
 
     private val _formValidationCard = MutableLiveData<FormValidationCardStateResult>()
     val formValidationCard: LiveData<FormValidationCardStateResult>
@@ -70,7 +70,15 @@ class CreateNewCardViewModel(
                 _formValidationCard.postValue(FormValidationCardStateResult.DescriptionIsEmpty)
             }
             FormValidationCardUseCaseResult.Success -> {
-                _formValidationCard.postValue(FormValidationCardStateResult.Success)
+                val formValidationSuccess = FormValidationCardStateResult.Success(
+                    description = description,
+                    login = login,
+                    password = password,
+                    category = category,
+                    isFavorite = isFavorite,
+                    date = date
+                )
+                _formValidationCard.postValue(formValidationSuccess)
             }
         }
     }
@@ -79,13 +87,13 @@ class CreateNewCardViewModel(
         viewModelScope.launch {
             when (val resultUser = signInUseCase.getCurrentUser()) {
                 is GetCurrentUserUseCaseResult.ErrorUnknown -> {
-                    _emailUser.postValue(null)
+                    _currentUserState.postValue(CurrentUserState.ErrorUnknown)
                 }
                 is GetCurrentUserUseCaseResult.Success -> {
-                    _emailUser.postValue(resultUser.userView.email)
+                    val userView = resultUser.userView
+                    _currentUserState.postValue(CurrentUserState.Success(userView))
                 }
             }
-
         }
     }
 
@@ -108,7 +116,7 @@ class CreateNewCardViewModel(
                 date = date,
                 emailUser = emailUser
             )
-            when(resultCreateCard) {
+            when (resultCreateCard) {
                 is CreateCardUseCaseResult.ErrorUnknown -> {
                     _createCardState.postValue(CreateCardStateResult.ErrorUnknown)
                 }
