@@ -1,9 +1,6 @@
 package br.com.passwordkeeper.presentation.ui.fragment
 
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -11,6 +8,9 @@ import br.com.passwordkeeper.R
 import br.com.passwordkeeper.databinding.CreateNewCardFragmentBinding
 import br.com.passwordkeeper.domain.model.Categories
 import br.com.passwordkeeper.domain.model.Categories.*
+import br.com.passwordkeeper.domain.result.viewmodelstate.CreateCardStateResult
+import br.com.passwordkeeper.domain.result.viewmodelstate.CurrentUserState
+import br.com.passwordkeeper.domain.result.viewmodelstate.FormValidationCardStateResult
 import br.com.passwordkeeper.extensions.downloadImageDialog
 import br.com.passwordkeeper.extensions.tryLoadImage
 import br.com.passwordkeeper.presentation.ui.dialog.BottomSheetCategory
@@ -27,50 +27,82 @@ class CreateNewCardFragment : Fragment(R.layout.create_new_card_fragment) {
         findNavController()
     }
 
+    private val userView by lazy {
+        val currentUserState = createNewCardViewModel.currentUserState.value as CurrentUserState.Success
+        currentUserState.userView
+    }
+
     private lateinit var binding: CreateNewCardFragmentBinding
     private val mainViewModel: MainViewModel by sharedViewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        mainViewModel.updateBottomNavigationVisibility(visibility = true)
+        mainViewModel.updateBottomNavigationVisibility(visibility = false)
         binding = CreateNewCardFragmentBinding.bind(view)
         binding.imageButtonBack.setOnClickListener {
             navController.popBackStack()
         }
-        showBottomSheet()
-        showDialogDownloadImage()
-        setupImageIconHeart()
-        setupCreateSaveCardButton()
-        observeFavoriteState()
-
+        updateCurrentUser()
+        observeCurrentUser()
     }
 
-    private fun showBottomSheet() {
-        binding.textInputEditTextCategory.setOnClickListener {
-            BottomSheetCategory(
-                requireContext(),
-                onClickItem = { category: Categories ->
-                    when (category) {
-                        STREAMING_TYPE -> binding.textInputEditTextCategory.setText(R.string.streaming)
-                        SOCIAL_MEDIA_TYPE -> binding.textInputEditTextCategory.setText(R.string.social_media)
-                        BANKS_TYPE -> binding.textInputEditTextCategory.setText(R.string.banks)
-                        EDUCATION_TYPE -> binding.textInputEditTextCategory.setText(R.string.education)
-                        WORK_TYPE -> binding.textInputEditTextCategory.setText(R.string.work)
-                        CARD_TYPE -> binding.textInputEditTextCategory.setText(R.string.cards)
-                    }
+    private fun updateCurrentUser() {
+        createNewCardViewModel.getCurrentEmailUser()
+    }
+
+    private fun observeCurrentUser() {
+        createNewCardViewModel.currentUserState.observe(viewLifecycleOwner) {
+            when (it) {
+                is CurrentUserState.ErrorUnknown -> {
+                    //Deve voltar para a tela de login
                 }
-            ).show()
+                is CurrentUserState.Success -> {
+                    setupCategoryTextEditInputText()
+                    setupImageViewCard()
+                    setupImageIconHeart()
+                    setupCreateSaveCardButton()
+                    observeFavoriteState()
+                    observeFormValidation()
+                    observeCreateCard()
+                }
+            }
         }
     }
 
-    private fun showDialogDownloadImage() {
-        binding.imageViewCard.setOnClickListener {
-            downloadImageDialog(
-                requireContext(),
-                onSaveURL = { url: String ->
-                    binding.imageViewCard.tryLoadImage(url)
-                })
+    private fun setupCategoryTextEditInputText() {
+        binding.textInputEditTextCategory.setOnClickListener {
+            showBottomSheetDialogCategory()
         }
+    }
+
+    private fun showBottomSheetDialogCategory() {
+        BottomSheetCategory(
+            requireContext(),
+            onClickItem = { category: Categories ->
+                when (category) {
+                    STREAMING_TYPE -> binding.textInputEditTextCategory.setText(R.string.streaming)
+                    SOCIAL_MEDIA_TYPE -> binding.textInputEditTextCategory.setText(R.string.social_media)
+                    BANKS_TYPE -> binding.textInputEditTextCategory.setText(R.string.banks)
+                    EDUCATION_TYPE -> binding.textInputEditTextCategory.setText(R.string.education)
+                    WORK_TYPE -> binding.textInputEditTextCategory.setText(R.string.work)
+                    CARD_TYPE -> binding.textInputEditTextCategory.setText(R.string.cards)
+                }
+            }
+        ).show()
+    }
+
+    private fun setupImageViewCard() {
+        binding.imageViewCard.setOnClickListener {
+            showDialogToDownloadImage()
+        }
+    }
+
+    private fun showDialogToDownloadImage() {
+        downloadImageDialog(
+            requireContext(),
+            onSaveURL = { url: String ->
+                binding.imageViewCard.tryLoadImage(url)
+            })
     }
 
     private fun setupImageIconHeart() {
@@ -91,20 +123,71 @@ class CreateNewCardFragment : Fragment(R.layout.create_new_card_fragment) {
     private fun setupCreateSaveCardButton() {
         binding.buttonSave.setOnClickListener {
             val description = binding.textInputEditTextDescription.text.toString()
-            val email = binding.textInputEditTextEmail.text.toString()
+            val login = binding.textInputEditTextEmail.text.toString()
             val password = binding.textInputEditTextPassword.text.toString()
             val category = binding.textInputEditTextCategory.text.toString()
             val isFavorite = createNewCardViewModel.favorite.value ?: false
 
-            createNewCardViewModel.createCardState(
-                description,
-                email,
-                password,
-                category,
-                isFavorite
+            createNewCardViewModel.validateForm(
+                description = description,
+                login = login,
+                password = password,
+                category = category,
+                isFavorite = isFavorite,
+                date = createNewCardViewModel.getCurrentDateTime()
             )
         }
+    }
 
+    private fun observeFormValidation() {
+        createNewCardViewModel.formValidationCard.observe(viewLifecycleOwner) {
+            when (it) {
+                is FormValidationCardStateResult.CategoryNotSelected -> {
+                    binding.textInputLayoutCategory.error =
+                        getString(R.string.category_not_selected)
+                }
+                is FormValidationCardStateResult.DescriptionIsEmpty -> {
+                    binding.textInputLayoutDescription.error =
+                        getString(R.string.description_is_empty)
+                }
+                is FormValidationCardStateResult.Success -> {
+                    val userView = userView
+                    createNewCardViewModel.createCard(
+                        description = it.description,
+                        login = it.login,
+                        password = it.password,
+                        category = it.category,
+                        isFavorite = it.isFavorite,
+                        date = it.date,
+                        emailUser = userView.email
+                    )
+                }
+            }
+        }
+    }
+
+    private fun observeCreateCard() {
+        createNewCardViewModel.createCardState.observe(viewLifecycleOwner) {
+            when (it) {
+                is CreateCardStateResult.ErrorUnknown -> {
+                    goToErrorNoteFragment()
+                }
+                is CreateCardStateResult.Success -> {
+                    goToSuccessNewNoteFragment()
+                }
+            }
+        }
+    }
+
+    private fun goToSuccessNewNoteFragment() {
+        val directions =
+            CreateNewCardFragmentDirections.actionFormCardFragmentToNewNoteSuccessFragment()
+        navController.navigate(directions)
+    }
+
+    private fun goToErrorNoteFragment() {
+        val directions =
+            CreateNewCardFragmentDirections.actionFormCardFragmentToNewNoteErrorFragment()
+        navController.navigate(directions)
     }
 }
-

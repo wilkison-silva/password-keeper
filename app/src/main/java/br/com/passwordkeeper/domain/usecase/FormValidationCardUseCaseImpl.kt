@@ -1,9 +1,11 @@
 package br.com.passwordkeeper.domain.usecase
 
+import android.content.Context
+import br.com.passwordkeeper.R
 import br.com.passwordkeeper.domain.model.Categories
 import br.com.passwordkeeper.domain.result.usecase.FormValidationCardUseCaseResult
 
-class FormValidationCardUseCaseImpl() : FormValidationCardUseCase {
+class FormValidationCardUseCaseImpl(private val context: Context) : FormValidationCardUseCase {
 
     override fun validateForm(
         description: String,
@@ -11,8 +13,7 @@ class FormValidationCardUseCaseImpl() : FormValidationCardUseCase {
         password: String,
         category: String,
         isFavorite: Boolean,
-        date: String,
-        emailUser: String
+        date: String
     ): FormValidationCardUseCaseResult {
         if (description.isBlank())
             return FormValidationCardUseCaseResult.DescriptionIsEmpty
@@ -22,12 +23,7 @@ class FormValidationCardUseCaseImpl() : FormValidationCardUseCase {
     }
 
     private fun validateCategory(category: String): Boolean {
-        return try {
-            Categories.valueOf(category)
-            true
-        } catch (e: Exception) {
-            false
-        }
+       return category != context.getString(R.string.category)
     }
 
 }

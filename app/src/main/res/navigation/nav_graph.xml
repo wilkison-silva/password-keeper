@@ -57,6 +57,23 @@
         android:name="br.com.passwordkeeper.presentation.ui.fragment.CreateNewCardFragment"
         android:label="FormCardFragment"
         tools:layout="@layout/create_new_card_fragment">
+        <action
+            android:id="@+id/action_formCardFragment_to_newNoteSuccessFragment"
+            app:destination="@id/newNoteSuccessFragment" />
+        <action
+            android:id="@+id/action_formCardFragment_to_newNoteErrorFragment"
+            app:destination="@id/newNoteErrorFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/newNoteSuccessFragment"
+        android:name="br.com.passwordkeeper.presentation.ui.fragment.NewNoteSuccessFragment"
+        android:label="NewNoteSuccessFragment"
+        tools:layout="@layout/new_note_success">
+    </fragment>
+    <fragment android:id="@+id/newNoteErrorFragment"
+        android:name="br.com.passwordkeeper.presentation.ui.fragment.NewNoteErrorFragment"
+        android:label="NewNoteErrorFragment"
+        tools:layout="@layout/new_note_error">
     </fragment>
 
 
