@@ -2,6 +2,8 @@ package br.com.passwordkeeper.presentation.ui.fragment
 
 import android.os.Bundle
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import br.com.passwordkeeper.R
@@ -174,6 +176,10 @@ class CreateNewCardFragment : Fragment(R.layout.create_new_card_fragment) {
                 }
                 is CreateCardStateResult.Success -> {
                     goToSuccessNewNoteFragment()
+                }
+                is CreateCardStateResult.Loading -> {
+                    binding.buttonSave.text = ""
+                    binding.progressBarSaving.visibility = VISIBLE
                 }
             }
         }

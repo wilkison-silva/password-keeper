@@ -193,6 +193,18 @@
             app:layout_constraintBottom_toBottomOf="@+id/textViewFavorite"
             android:contentDescription="@string/icon_heart" />
 
+        <ProgressBar
+            android:id="@+id/progressBarSaving"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="25dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="110dp"
+            android:visibility="gone"
+            android:elevation="5dp"
+            app:layout_constraintBottom_toBottomOf="@+id/buttonSave"
+            app:layout_constraintStart_toStartOf="@+id/buttonSave"
+            app:layout_constraintTop_toTopOf="@+id/buttonSave" />
+
         <com.google.android.material.button.MaterialButton
             android:id="@+id/buttonSave"
             android:layout_width="250dp"
