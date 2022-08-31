@@ -107,6 +107,7 @@ class CreateNewCardViewModel(
         emailUser: String
     ) {
         viewModelScope.launch {
+            _createCardState.postValue(CreateCardStateResult.Loading)
             val resultCreateCard = cardUseCase.createCard(
                 description = description,
                 login = login,
@@ -123,6 +124,7 @@ class CreateNewCardViewModel(
                 is CreateCardUseCaseResult.Success -> {
                     _createCardState.postValue(CreateCardStateResult.Success(resultCreateCard.cardId))
                 }
+
             }
         }
     }
