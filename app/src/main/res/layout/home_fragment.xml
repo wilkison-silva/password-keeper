@@ -305,6 +305,20 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="@string/view_all"
+                    android:textSize="14sp"
+                    android:layout_marginTop="20dp"
+                    android:textColor="@color/purple"
+                    android:layout_marginEnd="15dp"
+                    android:fontFamily="@font/inter"
+                    android:textFontWeight="400"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    />
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recyclerViewTypes"
                     android:layout_width="0dp"
