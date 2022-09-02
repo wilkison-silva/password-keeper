@@ -40,6 +40,7 @@ class HomeFragment : Fragment(R.layout.home_fragment) {
         subscribeObservers()
         updateObservers()
         setupComponents()
+        setupAllCategories("francis@teste.com.br")
     }
 
     private fun subscribeObservers() {
@@ -162,4 +163,13 @@ class HomeFragment : Fragment(R.layout.home_fragment) {
     private fun setupFavoriteRecyclerView() {
         binding.recyclerViewFavorite.adapter = favoriteAdapter
     }
+
+    private fun setupAllCategories(email: String) {
+        binding.TextViewViewAll.setOnClickListener{
+            val directions =
+                HomeFragmentDirections.actionHomeFragmentToAllCategoriesFragment(email)
+            navController.navigate(directions)
+        }
+    }
+
 }
