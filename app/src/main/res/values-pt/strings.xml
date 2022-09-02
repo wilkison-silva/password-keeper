@@ -75,4 +75,5 @@
     <string name="please_try_again_later">Por favor, tente novamente mais tarde!!!</string>
     <string name="data_stored_in_our_server">Dados armazenados no nosso servidor</string>
     <string name="one_more_data">Mais um dado guardado apenas à sua espera quando precisar dele!!!</string>
+    <string name="view_all">Ver todos</string>
 </resources>
