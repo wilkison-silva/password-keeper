@@ -53,7 +53,9 @@
             app:destination="@id/formCardFragment" />
         <action
             android:id="@+id/action_homeFragment_to_allCategoriesFragment"
-            app:destination="@id/allCategoriesFragment" />
+            app:destination="@id/allCategoriesFragment"
+            app:popUpTo="@id/homeFragment" />
+
     </fragment>
     <fragment
         android:id="@+id/formCardFragment"
@@ -77,6 +79,7 @@
         <argument
             android:name="email"
             app:argType="string" />
+
     </fragment>
     <fragment
         android:id="@+id/newNoteSuccessFragment"
