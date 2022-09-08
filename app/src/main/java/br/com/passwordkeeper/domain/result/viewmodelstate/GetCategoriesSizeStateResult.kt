@@ -7,4 +7,5 @@ sealed class GetCategoriesSizeStateResult {
         GetCategoriesSizeStateResult()
     object ErrorUnknown : GetCategoriesSizeStateResult()
     object NoElements: GetCategoriesSizeStateResult()
+    object Loading: GetCategoriesSizeStateResult()
 }

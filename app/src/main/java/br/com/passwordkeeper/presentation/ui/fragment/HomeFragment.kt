@@ -115,14 +115,21 @@ class HomeFragment : Fragment(R.layout.home_fragment) {
             when (it) {
                 is GetFavoriteCardsStateResult.ErrorUnknown -> {}
                 is GetFavoriteCardsStateResult.Success -> {
+                    binding.progressBar.visibility = GONE
                     val cardViewList = it.cardViewList
                     favoriteAdapter.updateList(cardViewList)
                     binding.constraintLayoutFavorite.visibility = VISIBLE
                     binding.constraintLayoutNoFavoriteYet.visibility = GONE
                 }
-                GetFavoriteCardsStateResult.NoElements -> {
+                is GetFavoriteCardsStateResult.NoElements -> {
+                    binding.progressBar.visibility = GONE
                     binding.constraintLayoutFavorite.visibility = GONE
                     binding.constraintLayoutNoFavoriteYet.visibility = VISIBLE
+                }
+                is GetFavoriteCardsStateResult.Loading -> {
+                    binding.progressBar.visibility = VISIBLE
+                    binding.constraintLayoutFavorite.visibility = GONE
+                    binding.constraintLayoutNoFavoriteYet.visibility = GONE
                 }
             }
         }
@@ -134,14 +141,21 @@ class HomeFragment : Fragment(R.layout.home_fragment) {
             when (it) {
                 is GetCategoriesSizeStateResult.ErrorUnknown -> {}
                 is GetCategoriesSizeStateResult.Success -> {
+                    binding.progressBar.visibility = GONE
                     val categoriesViewList = it.categoriesViewList
                     categoryAdapter.updateList(categoriesViewList)
                     binding.constraintLayoutCategoriesSuccess.visibility = VISIBLE
                     binding.constraintLayoutNoCardsYet.visibility = GONE
                 }
                 is GetCategoriesSizeStateResult.NoElements -> {
+                    binding.progressBar.visibility = GONE
                     binding.constraintLayoutCategoriesSuccess.visibility = GONE
                     binding.constraintLayoutNoCardsYet.visibility = VISIBLE
+                }
+                is GetCategoriesSizeStateResult.Loading -> {
+                    binding.progressBar.visibility = VISIBLE
+                    binding.constraintLayoutCategoriesSuccess.visibility = GONE
+                    binding.constraintLayoutNoCardsYet.visibility = GONE
                 }
             }
         }
