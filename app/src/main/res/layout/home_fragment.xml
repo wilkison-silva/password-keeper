@@ -174,17 +174,31 @@
                 app:layout_constraintVertical_bias="0.0" >
 
                 <ProgressBar
-                    android:id="@+id/progressBar"
+                    android:id="@+id/progressBarLeft"
                     style="?android:attr/progressBarStyleHorizontal"
                     android:indeterminate="true"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="9dp"
                     android:layout_marginEnd="9dp"
-                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/progressBarRight"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="@id/constraintLayoutExternal"
                      />
+
+                <ProgressBar
+                    android:id="@+id/progressBarRight"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:indeterminate="true"
+                    android:scaleX="-1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="9dp"
+                    android:layout_marginEnd="9dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@id/progressBarLeft"
+                    app:layout_constraintTop_toTopOf="@id/constraintLayoutExternal"
+                    />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
