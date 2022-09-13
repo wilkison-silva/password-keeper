@@ -4,7 +4,7 @@
     android:layout_height="100dp"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/allCategoriesItem"
+    android:id="@+id/listCardsItem"
     android:layout_marginStart="19dp"
     android:layout_marginTop="25dp"
     app:cardCornerRadius="5dp"

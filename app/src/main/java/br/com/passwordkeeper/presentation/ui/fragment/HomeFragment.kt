@@ -4,23 +4,22 @@ import android.os.Bundle
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
-import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import br.com.passwordkeeper.R
 import br.com.passwordkeeper.databinding.HomeFragmentBinding
 import br.com.passwordkeeper.domain.model.UserView
-import br.com.passwordkeeper.domain.result.viewmodelstate.CurrentUserState
-import br.com.passwordkeeper.domain.result.viewmodelstate.GetAdviceStateResult
-import br.com.passwordkeeper.domain.result.viewmodelstate.GetCategoriesSizeStateResult
-import br.com.passwordkeeper.domain.result.viewmodelstate.GetFavoriteCardsStateResult
+import br.com.passwordkeeper.domain.result.viewmodelstate.*
 import br.com.passwordkeeper.presentation.ui.recyclerview.adapter.CategoryAdapter
 import br.com.passwordkeeper.presentation.ui.recyclerview.adapter.FavoriteAdapter
+import br.com.passwordkeeper.presentation.ui.recyclerview.adapter.ListCardsAdapter
 import br.com.passwordkeeper.presentation.ui.viewmodel.HomeViewModel
 import br.com.passwordkeeper.presentation.ui.viewmodel.MainViewModel
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
+
+private const val EMAIL = "francis@teste.com.br"
 
 class HomeFragment : Fragment(R.layout.home_fragment) {
     private val navController by lazy {
@@ -40,7 +39,7 @@ class HomeFragment : Fragment(R.layout.home_fragment) {
         subscribeObservers()
         updateObservers()
         setupComponents()
-        setupAllCategories("francis@teste.com.br")
+        setupListCards(EMAIL)
     }
 
     private fun subscribeObservers() {
@@ -153,7 +152,7 @@ class HomeFragment : Fragment(R.layout.home_fragment) {
     }
 
     private fun setupCategoriesRecyclerView() {
-        binding.recyclerViewTypes.adapter = categoryAdapter
+        binding.recyclerViewCategories.adapter = categoryAdapter
     }
 
     private fun updateFavorites(email: String) {
@@ -164,11 +163,25 @@ class HomeFragment : Fragment(R.layout.home_fragment) {
         binding.recyclerViewFavorite.adapter = favoriteAdapter
     }
 
-    private fun setupAllCategories(email: String) {
-        binding.TextViewViewAll.setOnClickListener{
-            val directions =
-                HomeFragmentDirections.actionHomeFragmentToAllCategoriesFragment(email)
-            navController.navigate(directions)
+    private fun navigateToListCardsFragment(title: String) {
+        val directions =
+            HomeFragmentDirections.actionHomeFragmentToListCardsFragment(EMAIL, title)
+        navController.navigate(directions)
+    }
+
+    private fun setupListCards(email: String) {
+        binding.TextViewViewAll.setOnClickListener {
+            navigateToListCardsFragment("View all")
+        }
+        categoryAdapter.onClickItem = {
+            when (it.nameAsStringRes) {
+                R.string.streaming -> navigateToListCardsFragment(getString(R.string.streaming))
+                R.string.social_media -> navigateToListCardsFragment(getString(R.string.social_media))
+                R.string.banks -> navigateToListCardsFragment(getString(R.string.banks))
+                R.string.education -> navigateToListCardsFragment(getString(R.string.education))
+                R.string.work -> navigateToListCardsFragment(getString(R.string.work))
+                R.string.cards -> navigateToListCardsFragment(getString(R.string.cards))
+            }
         }
     }
 

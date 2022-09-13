@@ -2,13 +2,13 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/scrollViewAllCategories"
+    android:id="@+id/scrollViewListCards"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/purple">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintLayoutAllCategories"
+        android:id="@+id/constraintLayoutListCards"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -26,13 +26,13 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/textViewTitleAllCategories"
+            android:id="@+id/textViewTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:fontFamily="@font/inter_bold"
             android:textFontWeight="700"
-            android:text="All categories"
+            tools:text="@string/title_list_cards"
             android:textColor="@color/white"
             android:textSize="24sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -46,10 +46,10 @@
             android:background="@drawable/background_white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewTitleAllCategories">
+            app:layout_constraintTop_toBottomOf="@+id/textViewTitle">
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerViewAllCategories"
+                android:id="@+id/recyclerViewListCards"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
@@ -57,7 +57,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:listitem="@layout/item_image_all_categories" />
+                tools:listitem="@layout/item_list_cards" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

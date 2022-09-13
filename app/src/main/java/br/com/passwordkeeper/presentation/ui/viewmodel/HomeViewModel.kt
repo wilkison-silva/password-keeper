@@ -7,14 +7,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.com.passwordkeeper.domain.model.AdviceView
-import br.com.passwordkeeper.domain.result.viewmodelstate.GetAdviceStateResult
-import br.com.passwordkeeper.domain.result.usecase.GetAdviceUseCaseResult
-import br.com.passwordkeeper.domain.result.usecase.GetCategoriesSizeUseCaseResult
-import br.com.passwordkeeper.domain.result.usecase.GetCurrentUserUseCaseResult
-import br.com.passwordkeeper.domain.result.usecase.GetFavoriteCardsUseCaseResult
-import br.com.passwordkeeper.domain.result.viewmodelstate.CurrentUserState
-import br.com.passwordkeeper.domain.result.viewmodelstate.GetCategoriesSizeStateResult
-import br.com.passwordkeeper.domain.result.viewmodelstate.GetFavoriteCardsStateResult
+import br.com.passwordkeeper.domain.result.usecase.*
+import br.com.passwordkeeper.domain.result.viewmodelstate.*
 import br.com.passwordkeeper.domain.usecase.AdviceUseCase
 import br.com.passwordkeeper.domain.usecase.CardUseCase
 import br.com.passwordkeeper.domain.usecase.SignInUseCase
@@ -119,7 +113,7 @@ class HomeViewModel(
                         _categoriesSizeState.postValue(GetCategoriesSizeStateResult.NoElements)
                 }
             }
-
         }
     }
+
 }

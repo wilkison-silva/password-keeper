@@ -3,18 +3,18 @@ package br.com.passwordkeeper.presentation.ui.recyclerview.adapter
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import br.com.passwordkeeper.databinding.ItemImageAllCategoriesBinding
+import br.com.passwordkeeper.databinding.ItemListCardsBinding
 import br.com.passwordkeeper.domain.model.CardView
 
-class AllCategoriesAdapter(
+class ListCardsAdapter(
     cardViewList: List<CardView> = listOf(),
     var onClickItem: (cardView: CardView) -> Unit = {}
-) : RecyclerView.Adapter<AllCategoriesAdapter.ViewHolder>() {
+) : RecyclerView.Adapter<ListCardsAdapter.ViewHolder>() {
 
     private var cardViewList = cardViewList.toMutableList()
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AllCategoriesAdapter.ViewHolder {
-        val binding = ItemImageAllCategoriesBinding.inflate(
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListCardsAdapter.ViewHolder {
+        val binding = ItemListCardsBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
             false
@@ -22,7 +22,7 @@ class AllCategoriesAdapter(
         return ViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: AllCategoriesAdapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ListCardsAdapter.ViewHolder, position: Int) {
         val cardView: CardView = cardViewList[position]
         holder.bind(cardView)
     }
@@ -38,13 +38,15 @@ class AllCategoriesAdapter(
     }
 
     inner class ViewHolder(
-        private val binding: ItemImageAllCategoriesBinding,
+        private val binding: ItemListCardsBinding,
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(cardView: CardView) {
             binding.textViewAllCategoriesDescription.text = cardView.description
             binding.textViewAllCategoriesTextType.text = cardView.category
             binding.textViewAllCategoriesDate.text = cardView.date
+
         }
+
     }
 }
