@@ -1,27 +1,38 @@
 package br.com.passwordkeeper.presentation.ui.viewmodel
 
+import androidx.annotation.StringRes
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import br.com.passwordkeeper.R
 import br.com.passwordkeeper.domain.result.usecase.GetAllCardsUseCaseResult
 import br.com.passwordkeeper.domain.result.usecase.GetCardsByCategoryUseCaseResult
+import br.com.passwordkeeper.domain.result.usecase.GetCurrentUserUseCaseResult
+import br.com.passwordkeeper.domain.result.viewmodelstate.CurrentUserState
 import br.com.passwordkeeper.domain.result.viewmodelstate.GetAllCardsStateResult
 import br.com.passwordkeeper.domain.result.viewmodelstate.GetCardsByCategoryStateResult
 import br.com.passwordkeeper.domain.usecase.CardUseCase
+import br.com.passwordkeeper.domain.usecase.SignInUseCase
 import kotlinx.coroutines.launch
 
 class ListCardsViewModel(
-    private val cardUseCase: CardUseCase
+    private val cardUseCase: CardUseCase,
+    private val signInUseCase: SignInUseCase
 ) : ViewModel() {
 
     private val _allCards = MutableLiveData<GetAllCardsStateResult>()
     val allCards: LiveData<GetAllCardsStateResult>
         get() = _allCards
 
-    fun updateCards(email: String, title: String) {
+    fun updateCards(
+        email: String,
+        @StringRes titleRes: Int,
+        title: String
+    ) {
         viewModelScope.launch {
-            if (title == "View all") {
+
+            if (titleRes == R.string.title_all_categories) {
                 when (val getAllCardsUseCaseResult = cardUseCase.getAllCards(email)) {
                     is GetAllCardsUseCaseResult.ErrorUnknown -> {
                         _allCards.postValue(GetAllCardsStateResult.ErrorUnknown)
@@ -38,25 +49,23 @@ class ListCardsViewModel(
                     }
                 }
             }
-
         }
     }
 
-    private val _cardsByCategoryState = MutableLiveData<GetCardsByCategoryStateResult>()
-    val cardsByCategoryState: LiveData<GetCardsByCategoryStateResult>
-        get() = _cardsByCategoryState
+    private val _currentUserState = MutableLiveData<CurrentUserState>()
+    val currentUserState: LiveData<CurrentUserState>
+        get() = _currentUserState
 
-    fun updateCardsByCategory(category: String, email: String) {
+    fun updateCurrentUser() {
         viewModelScope.launch {
-            when(val getCardsByCategoryUseCaseResult = cardUseCase.getCardsByCategory(category, email)) {
-                is GetCardsByCategoryUseCaseResult.ErrorUnknown -> {
-                    _cardsByCategoryState.postValue(GetCardsByCategoryStateResult.ErrorUnknown)
+            when (val signInUseCaseResult = signInUseCase.getCurrentUser()) {
+                is GetCurrentUserUseCaseResult.ErrorUnknown -> {
+                    _currentUserState
+                        .postValue(CurrentUserState.ErrorUnknown)
                 }
-                is GetCardsByCategoryUseCaseResult.Success -> {
-                    _cardsByCategoryState.postValue(
-                        GetCardsByCategoryStateResult.Success(
-                        getCardsByCategoryUseCaseResult.cardViewList
-                    ))
+                is GetCurrentUserUseCaseResult.Success -> {
+                    _currentUserState
+                        .postValue(CurrentUserState.Success(signInUseCaseResult.userView))
                 }
             }
         }

@@ -148,7 +148,8 @@ val viewModelModule = module {
     }
     viewModel<ListCardsViewModel> {
         ListCardsViewModel(
-            get<CardUseCase>()
+            get<CardUseCase>(),
+            get<SignInUseCase>()
         )
     }
 }

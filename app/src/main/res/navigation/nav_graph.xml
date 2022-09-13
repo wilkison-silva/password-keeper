@@ -77,11 +77,8 @@
         android:label="ListCardsFragment"
         tools:layout="@layout/list_cards_fragment" >
         <argument
-            android:name="email"
-            app:argType="string" />
-        <argument
             android:name="title"
-            app:argType="string" />
+            app:argType="integer" />
     </fragment>
     <fragment
         android:id="@+id/newNoteSuccessFragment"

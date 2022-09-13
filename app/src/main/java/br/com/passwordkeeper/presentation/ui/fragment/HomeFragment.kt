@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
+import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import br.com.passwordkeeper.R
@@ -12,14 +13,12 @@ import br.com.passwordkeeper.domain.model.UserView
 import br.com.passwordkeeper.domain.result.viewmodelstate.*
 import br.com.passwordkeeper.presentation.ui.recyclerview.adapter.CategoryAdapter
 import br.com.passwordkeeper.presentation.ui.recyclerview.adapter.FavoriteAdapter
-import br.com.passwordkeeper.presentation.ui.recyclerview.adapter.ListCardsAdapter
 import br.com.passwordkeeper.presentation.ui.viewmodel.HomeViewModel
 import br.com.passwordkeeper.presentation.ui.viewmodel.MainViewModel
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-private const val EMAIL = "francis@teste.com.br"
 
 class HomeFragment : Fragment(R.layout.home_fragment) {
     private val navController by lazy {
@@ -36,22 +35,8 @@ class HomeFragment : Fragment(R.layout.home_fragment) {
         super.onViewCreated(view, savedInstanceState)
         binding = HomeFragmentBinding.bind(view)
         mainViewModel.updateBottomNavigationVisibility(visibility = true)
-        subscribeObservers()
-        updateObservers()
-        setupComponents()
-        setupListCards(EMAIL)
-    }
-
-    private fun subscribeObservers() {
         observeCurrentUserState()
-        observeAdviceState()
-        observeCategoriesSize()
-        observeFavoriteCards()
-    }
-
-    private fun updateObservers() {
         updateCurrentUser()
-        updateAdviceState()
     }
 
     private fun setupComponents() {
@@ -67,8 +52,14 @@ class HomeFragment : Fragment(R.layout.home_fragment) {
                 }
                 is CurrentUserState.Success -> {
                     bindUserInfo(currentUserState.userView)
+                    observeAdviceState()
+                    observeFavoriteCards()
+                    observeCategoriesSize()
+                    setupComponents()
+                    setupTextViewOnClick()
                     updateCategoriesSizeState(currentUserState.userView.email)
                     updateFavorites(currentUserState.userView.email)
+                    updateAdviceState()
                 }
             }
         }
@@ -153,6 +144,16 @@ class HomeFragment : Fragment(R.layout.home_fragment) {
 
     private fun setupCategoriesRecyclerView() {
         binding.recyclerViewCategories.adapter = categoryAdapter
+        categoryAdapter.onClickItem = {
+            when (it.nameAsStringRes) {
+                R.string.streaming -> navigateToListCardsFragment(R.string.streaming)
+                R.string.social_media -> navigateToListCardsFragment(R.string.social_media)
+                R.string.banks -> navigateToListCardsFragment(R.string.banks)
+                R.string.education -> navigateToListCardsFragment(R.string.education)
+                R.string.work -> navigateToListCardsFragment(R.string.work)
+                R.string.cards -> navigateToListCardsFragment(R.string.cards)
+            }
+        }
     }
 
     private fun updateFavorites(email: String) {
@@ -163,26 +164,16 @@ class HomeFragment : Fragment(R.layout.home_fragment) {
         binding.recyclerViewFavorite.adapter = favoriteAdapter
     }
 
-    private fun navigateToListCardsFragment(title: String) {
-        val directions =
-            HomeFragmentDirections.actionHomeFragmentToListCardsFragment(EMAIL, title)
-        navController.navigate(directions)
+    private fun setupTextViewOnClick() {
+        binding.TextViewViewAll.setOnClickListener {
+            navigateToListCardsFragment(R.string.title_all_categories)
+        }
     }
 
-    private fun setupListCards(email: String) {
-        binding.TextViewViewAll.setOnClickListener {
-            navigateToListCardsFragment("View all")
-        }
-        categoryAdapter.onClickItem = {
-            when (it.nameAsStringRes) {
-                R.string.streaming -> navigateToListCardsFragment(getString(R.string.streaming))
-                R.string.social_media -> navigateToListCardsFragment(getString(R.string.social_media))
-                R.string.banks -> navigateToListCardsFragment(getString(R.string.banks))
-                R.string.education -> navigateToListCardsFragment(getString(R.string.education))
-                R.string.work -> navigateToListCardsFragment(getString(R.string.work))
-                R.string.cards -> navigateToListCardsFragment(getString(R.string.cards))
-            }
-        }
+    private fun navigateToListCardsFragment(@StringRes title: Int) {
+        val directions =
+            HomeFragmentDirections.actionHomeFragmentToListCardsFragment(title)
+        navController.navigate(directions)
     }
 
 }
