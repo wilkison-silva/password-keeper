@@ -8,6 +8,7 @@ import br.com.passwordkeeper.data.source.web.AdviceWebClient
 import br.com.passwordkeeper.data.source.web.service.AdviceService
 import br.com.passwordkeeper.domain.mapper.*
 import br.com.passwordkeeper.domain.usecase.*
+import br.com.passwordkeeper.presentation.ui.recyclerview.adapter.ListCardsAdapter
 import br.com.passwordkeeper.presentation.ui.recyclerview.adapter.CategoryAdapter
 import br.com.passwordkeeper.presentation.ui.recyclerview.adapter.FavoriteAdapter
 import br.com.passwordkeeper.presentation.ui.viewmodel.*
@@ -109,9 +110,11 @@ val useCaseModule = module {
             get<CategoryDomainMapper>()
         )
     }
-    single<FormValidationCardUseCase> { FormValidationCardUseCaseImpl(
-        get<Context>()
-    )}
+    single<FormValidationCardUseCase> {
+        FormValidationCardUseCaseImpl(
+            get<Context>()
+        )
+    }
 }
 
 val viewModelModule = module {
@@ -143,9 +146,16 @@ val viewModelModule = module {
             get<SignInUseCase>()
         )
     }
+    viewModel<ListCardsViewModel> {
+        ListCardsViewModel(
+            get<CardUseCase>(),
+            get<SignInUseCase>()
+        )
+    }
 }
 
 val recyclerViewAdaptersModule = module {
-    single<CategoryAdapter> { CategoryAdapter(get<Context>()) }
-    single<FavoriteAdapter> { FavoriteAdapter() }
+    factory<CategoryAdapter> { CategoryAdapter(get<Context>()) }
+    factory<FavoriteAdapter> { FavoriteAdapter() }
+    factory<ListCardsAdapter> { ListCardsAdapter() }
 }

@@ -335,6 +335,7 @@
                     app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
+                    android:id="@+id/TextViewViewAll"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text="@string/view_all"
@@ -349,7 +350,7 @@
                     />
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerViewTypes"
+                    android:id="@+id/recyclerViewCategories"
                     android:layout_width="0dp"
                     android:layout_height="160dp"
                     android:layout_marginTop="8dp"
@@ -359,7 +360,7 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textViewTypes"
                     app:layout_constraintVertical_bias="0.0"
-                    tools:listitem="@layout/item_image_types" />
+                    tools:listitem="@layout/item_image_categories" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

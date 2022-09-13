@@ -2,7 +2,6 @@ package br.com.passwordkeeper.presentation.ui.fragment
 
 import android.os.Bundle
 import android.view.View
-import android.view.View.GONE
 import android.view.View.VISIBLE
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
