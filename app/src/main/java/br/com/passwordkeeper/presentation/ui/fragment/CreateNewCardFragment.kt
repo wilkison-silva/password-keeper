@@ -59,7 +59,6 @@ class CreateNewCardFragment : Fragment(R.layout.create_new_card_fragment) {
                 }
                 is CurrentUserState.Success -> {
                     setupCategoryTextEditInputText()
-                    setupImageViewCard()
                     setupImageIconHeart()
                     setupCreateSaveCardButton()
                     observeFavoriteState()
@@ -92,19 +91,6 @@ class CreateNewCardFragment : Fragment(R.layout.create_new_card_fragment) {
         ).show()
     }
 
-    private fun setupImageViewCard() {
-        binding.imageViewCard.setOnClickListener {
-            showDialogToDownloadImage()
-        }
-    }
-
-    private fun showDialogToDownloadImage() {
-        downloadImageDialog(
-            requireContext(),
-            onSaveURL = { url: String ->
-                binding.imageViewCard.tryLoadImage(url)
-            })
-    }
 
     private fun setupImageIconHeart() {
         binding.imageViewIconHeart.setOnClickListener {
