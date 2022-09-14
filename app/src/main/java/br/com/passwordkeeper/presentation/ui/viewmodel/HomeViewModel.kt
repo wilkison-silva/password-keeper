@@ -7,16 +7,18 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.com.passwordkeeper.domain.model.AdviceView
-import br.com.passwordkeeper.domain.result.usecase.*
-import br.com.passwordkeeper.domain.result.viewmodelstate.*
+import br.com.passwordkeeper.domain.result.usecase.GetAdviceUseCaseResult
+import br.com.passwordkeeper.domain.result.usecase.GetCategoriesSizeUseCaseResult
+import br.com.passwordkeeper.domain.result.usecase.GetFavoriteCardsUseCaseResult
+import br.com.passwordkeeper.domain.result.viewmodelstate.GetAdviceStateResult
+import br.com.passwordkeeper.domain.result.viewmodelstate.GetCategoriesSizeStateResult
+import br.com.passwordkeeper.domain.result.viewmodelstate.GetFavoriteCardsStateResult
 import br.com.passwordkeeper.domain.usecase.AdviceUseCase
 import br.com.passwordkeeper.domain.usecase.CardUseCase
-import br.com.passwordkeeper.domain.usecase.SignInUseCase
 import kotlinx.coroutines.launch
 
 class HomeViewModel(
     private val adviceUseCase: AdviceUseCase,
-    private val signInUseCase: SignInUseCase,
     private val cardUseCase: CardUseCase
 ) : ViewModel() {
 
@@ -49,25 +51,6 @@ class HomeViewModel(
         return SpannableStringBuilder()
             .bold { append(adviceView.firstLetter) }
             .append(adviceView.advice.substring(1))
-    }
-
-    private val _currentUserState = MutableLiveData<CurrentUserState>()
-    val currentUserState: LiveData<CurrentUserState>
-        get() = _currentUserState
-
-    fun updateCurrentUser() {
-        viewModelScope.launch {
-            when (val signInUseCaseResult = signInUseCase.getCurrentUser()) {
-                is GetCurrentUserUseCaseResult.ErrorUnknown -> {
-                    _currentUserState
-                        .postValue(CurrentUserState.ErrorUnknown)
-                }
-                is GetCurrentUserUseCaseResult.Success -> {
-                    _currentUserState
-                        .postValue(CurrentUserState.Success(signInUseCaseResult.userView))
-                }
-            }
-        }
     }
 
     private val _favoriteCardsState = MutableLiveData<GetFavoriteCardsStateResult>()

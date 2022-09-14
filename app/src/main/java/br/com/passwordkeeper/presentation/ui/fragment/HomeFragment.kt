@@ -10,7 +10,10 @@ import androidx.navigation.fragment.findNavController
 import br.com.passwordkeeper.R
 import br.com.passwordkeeper.databinding.HomeFragmentBinding
 import br.com.passwordkeeper.domain.model.UserView
-import br.com.passwordkeeper.domain.result.viewmodelstate.*
+import br.com.passwordkeeper.domain.result.viewmodelstate.CurrentUserState
+import br.com.passwordkeeper.domain.result.viewmodelstate.GetAdviceStateResult
+import br.com.passwordkeeper.domain.result.viewmodelstate.GetCategoriesSizeStateResult
+import br.com.passwordkeeper.domain.result.viewmodelstate.GetFavoriteCardsStateResult
 import br.com.passwordkeeper.presentation.ui.recyclerview.adapter.CategoryAdapter
 import br.com.passwordkeeper.presentation.ui.recyclerview.adapter.FavoriteAdapter
 import br.com.passwordkeeper.presentation.ui.viewmodel.HomeViewModel
@@ -45,7 +48,7 @@ class HomeFragment : Fragment(R.layout.home_fragment) {
     }
 
     private fun observeCurrentUserState() {
-        homeViewModel.currentUserState.observe(viewLifecycleOwner) { currentUserState ->
+        mainViewModel.currentUserState.observe(viewLifecycleOwner) { currentUserState ->
             when (currentUserState) {
                 is CurrentUserState.ErrorUnknown -> {
 
@@ -66,7 +69,7 @@ class HomeFragment : Fragment(R.layout.home_fragment) {
     }
 
     private fun updateCurrentUser() {
-        homeViewModel.updateCurrentUser()
+        mainViewModel.updateCurrentUser()
     }
 
     private fun observeAdviceState() {

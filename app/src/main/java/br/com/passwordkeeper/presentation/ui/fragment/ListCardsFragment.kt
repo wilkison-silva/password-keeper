@@ -34,7 +34,7 @@ class ListCardsFragment : Fragment(R.layout.list_cards_fragment) {
     }
 
     private val userView by lazy {
-        val currentUserState = listCardsViewModel.currentUserState.value as CurrentUserState.Success
+        val currentUserState = mainViewModel.currentUserState.value as CurrentUserState.Success
         currentUserState.userView
     }
 
@@ -49,7 +49,7 @@ class ListCardsFragment : Fragment(R.layout.list_cards_fragment) {
 
 
     private fun observeCurrentUserState() {
-        listCardsViewModel.currentUserState.observe(viewLifecycleOwner) { currentUserState ->
+        mainViewModel.currentUserState.observe(viewLifecycleOwner) { currentUserState ->
             when (currentUserState) {
                 is CurrentUserState.ErrorUnknown -> {
                     //DEVE VOLTAR PARA A TELA DE LOGIN
@@ -65,7 +65,7 @@ class ListCardsFragment : Fragment(R.layout.list_cards_fragment) {
     }
 
     private fun updateCurrentUser() {
-        listCardsViewModel.updateCurrentUser()
+        mainViewModel.updateCurrentUser()
     }
 
     private fun observeCards() {

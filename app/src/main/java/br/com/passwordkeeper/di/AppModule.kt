@@ -121,7 +121,6 @@ val viewModelModule = module {
     viewModel<HomeViewModel> {
         HomeViewModel(
             get<AdviceUseCase>(),
-            get<SignInUseCase>(),
             get<CardUseCase>()
         )
     }
@@ -138,7 +137,7 @@ val viewModelModule = module {
             get<PasswordValidationUseCase>()
         )
     }
-    viewModel<MainViewModel> { MainViewModel() }
+    viewModel<MainViewModel> { MainViewModel(get<SignInUseCase>()) }
     viewModel<CreateNewCardViewModel> {
         CreateNewCardViewModel(
             get<CardUseCase>(),
@@ -148,8 +147,7 @@ val viewModelModule = module {
     }
     viewModel<ListCardsViewModel> {
         ListCardsViewModel(
-            get<CardUseCase>(),
-            get<SignInUseCase>()
+            get<CardUseCase>()
         )
     }
 }
