@@ -31,7 +31,7 @@ class ListCardsViewModel(
         title: String
     ) {
         viewModelScope.launch {
-
+            _allCards.postValue(GetAllCardsStateResult.Loading)
             if (titleRes == R.string.title_all_categories) {
                 when (val getAllCardsUseCaseResult = cardUseCase.getAllCards(email)) {
                     is GetAllCardsUseCaseResult.ErrorUnknown -> {

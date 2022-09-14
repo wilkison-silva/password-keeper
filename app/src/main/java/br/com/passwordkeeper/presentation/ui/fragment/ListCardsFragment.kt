@@ -2,6 +2,8 @@ package br.com.passwordkeeper.presentation.ui.fragment
 
 import android.os.Bundle
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -40,7 +42,7 @@ class ListCardsFragment : Fragment(R.layout.list_cards_fragment) {
         super.onViewCreated(view, savedInstanceState)
         binding = ListCardsFragmentBinding.bind(view)
         mainViewModel.updateBottomNavigationVisibility(visibility = false)
-
+        setTitle()
         updateCurrentUser()
         observeCurrentUserState()
     }
@@ -57,7 +59,6 @@ class ListCardsFragment : Fragment(R.layout.list_cards_fragment) {
                     setupButtonBack()
                     updateCards()
                     observeCards()
-//                    observeCardsByCategory()
                 }
             }
         }
@@ -74,8 +75,15 @@ class ListCardsFragment : Fragment(R.layout.list_cards_fragment) {
 
                 }
                 is GetAllCardsStateResult.Success -> {
+                    binding.recyclerViewListCards.visibility = VISIBLE
+                    binding.progressBar.visibility = GONE
                     val cardViewList = it.cardViewList
                     listCardsAdapter.updateList(cardViewList)
+
+                }
+                is GetAllCardsStateResult.Loading -> {
+                    binding.recyclerViewListCards.visibility = GONE
+                    binding.progressBar.visibility = VISIBLE
                 }
             }
         }
@@ -89,13 +97,15 @@ class ListCardsFragment : Fragment(R.layout.list_cards_fragment) {
     }
 
     private fun updateCards() {
-        binding.textViewTitle.text = getString(title)
         listCardsViewModel.updateCards(
             email = userView.email,
             titleRes = title,
             title = getString(title)
         )
-        
+    }
+
+    private fun setTitle(){
+        binding.textViewTitle.text = getString(title)
     }
 
     private fun setupButtonBack() {
