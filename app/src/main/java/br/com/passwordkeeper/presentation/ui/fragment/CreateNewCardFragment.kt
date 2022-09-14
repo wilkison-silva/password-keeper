@@ -12,8 +12,6 @@ import br.com.passwordkeeper.domain.model.Categories.*
 import br.com.passwordkeeper.domain.result.viewmodelstate.CreateCardStateResult
 import br.com.passwordkeeper.domain.result.viewmodelstate.CurrentUserState
 import br.com.passwordkeeper.domain.result.viewmodelstate.FormValidationCardStateResult
-import br.com.passwordkeeper.extensions.downloadImageDialog
-import br.com.passwordkeeper.extensions.tryLoadImage
 import br.com.passwordkeeper.presentation.ui.dialog.BottomSheetCategory
 import br.com.passwordkeeper.presentation.ui.viewmodel.CreateNewCardViewModel
 import br.com.passwordkeeper.presentation.ui.viewmodel.MainViewModel
@@ -29,7 +27,7 @@ class CreateNewCardFragment : Fragment(R.layout.create_new_card_fragment) {
     }
 
     private val userView by lazy {
-        val currentUserState = createNewCardViewModel.currentUserState.value as CurrentUserState.Success
+        val currentUserState = mainViewModel.currentUserState.value as CurrentUserState.Success
         currentUserState.userView
     }
 
@@ -48,18 +46,17 @@ class CreateNewCardFragment : Fragment(R.layout.create_new_card_fragment) {
     }
 
     private fun updateCurrentUser() {
-        createNewCardViewModel.getCurrentEmailUser()
+        mainViewModel.currentUserState
     }
 
     private fun observeCurrentUser() {
-        createNewCardViewModel.currentUserState.observe(viewLifecycleOwner) {
+        mainViewModel.currentUserState.observe(viewLifecycleOwner) {
             when (it) {
                 is CurrentUserState.ErrorUnknown -> {
-                    //Deve voltar para a tela de login
+                    navController.navigate(CreateNewCardFragmentDirections.actionNavigateToLoginFragment())
                 }
                 is CurrentUserState.Success -> {
                     setupCategoryTextEditInputText()
-                    setupImageViewCard()
                     setupImageIconHeart()
                     setupCreateSaveCardButton()
                     observeFavoriteState()
@@ -92,19 +89,6 @@ class CreateNewCardFragment : Fragment(R.layout.create_new_card_fragment) {
         ).show()
     }
 
-    private fun setupImageViewCard() {
-        binding.imageViewCard.setOnClickListener {
-            showDialogToDownloadImage()
-        }
-    }
-
-    private fun showDialogToDownloadImage() {
-        downloadImageDialog(
-            requireContext(),
-            onSaveURL = { url: String ->
-                binding.imageViewCard.tryLoadImage(url)
-            })
-    }
 
     private fun setupImageIconHeart() {
         binding.imageViewIconHeart.setOnClickListener {

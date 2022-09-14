@@ -45,7 +45,7 @@ class ListCardsAdapter(
             binding.textViewAllCategoriesDescription.text = cardView.description
             binding.textViewAllCategoriesTextType.text = cardView.category
             binding.textViewAllCategoriesDate.text = cardView.date
-
+            binding.imageViewAllCategoriesIconHeart.setImageResource(cardView.iconHeart)
         }
 
     }

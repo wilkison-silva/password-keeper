@@ -7,16 +7,18 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.com.passwordkeeper.domain.model.AdviceView
-import br.com.passwordkeeper.domain.result.usecase.*
-import br.com.passwordkeeper.domain.result.viewmodelstate.*
+import br.com.passwordkeeper.domain.result.usecase.GetAdviceUseCaseResult
+import br.com.passwordkeeper.domain.result.usecase.GetCategoriesSizeUseCaseResult
+import br.com.passwordkeeper.domain.result.usecase.GetFavoriteCardsUseCaseResult
+import br.com.passwordkeeper.domain.result.viewmodelstate.GetAdviceStateResult
+import br.com.passwordkeeper.domain.result.viewmodelstate.GetCategoriesSizeStateResult
+import br.com.passwordkeeper.domain.result.viewmodelstate.GetFavoriteCardsStateResult
 import br.com.passwordkeeper.domain.usecase.AdviceUseCase
 import br.com.passwordkeeper.domain.usecase.CardUseCase
-import br.com.passwordkeeper.domain.usecase.SignInUseCase
 import kotlinx.coroutines.launch
 
 class HomeViewModel(
     private val adviceUseCase: AdviceUseCase,
-    private val signInUseCase: SignInUseCase,
     private val cardUseCase: CardUseCase
 ) : ViewModel() {
 
@@ -25,6 +27,10 @@ class HomeViewModel(
         get() = _adviceState
 
     fun updateAdvice() {
+        _adviceState.value ?: getAdvice()
+    }
+
+    private fun getAdvice() {
         viewModelScope.launch {
             _adviceState.postValue(GetAdviceStateResult.Loading)
             when (val getAdviceUseCaseResult = adviceUseCase.getAdvice()) {
@@ -47,33 +53,13 @@ class HomeViewModel(
             .append(adviceView.advice.substring(1))
     }
 
-    private val _currentUserState = MutableLiveData<CurrentUserState>()
-    val currentUserState: LiveData<CurrentUserState>
-        get() = _currentUserState
-
-    fun updateCurrentUser() {
-        viewModelScope.launch {
-            when (val signInUseCaseResult = signInUseCase.getCurrentUser()) {
-                is GetCurrentUserUseCaseResult.ErrorUnknown -> {
-                    _currentUserState
-                        .postValue(CurrentUserState.ErrorUnknown)
-                }
-                is GetCurrentUserUseCaseResult.Success -> {
-                    _currentUserState
-                        .postValue(CurrentUserState.Success(signInUseCaseResult.userView))
-                }
-            }
-        }
-    }
-
     private val _favoriteCardsState = MutableLiveData<GetFavoriteCardsStateResult>()
     val favoriteCardsState: LiveData<GetFavoriteCardsStateResult>
         get() = _favoriteCardsState
 
     fun updateFavoriteCards(email: String) {
         viewModelScope.launch {
-            if (_favoriteCardsState.value == null)
-                _favoriteCardsState.postValue(GetFavoriteCardsStateResult.Loading)
+            _favoriteCardsState.postValue(GetFavoriteCardsStateResult.Loading)
             when (val getFavoriteCardsUseCaseResult = cardUseCase.getFavorites(email)) {
                 is GetFavoriteCardsUseCaseResult.ErrorUnknown -> {
                     _favoriteCardsState.postValue(GetFavoriteCardsStateResult.ErrorUnknown)
@@ -99,8 +85,7 @@ class HomeViewModel(
 
     fun updateCategoriesSize(email: String) {
         viewModelScope.launch {
-            if (_categoriesSizeState.value == null)
-                _categoriesSizeState.postValue(GetCategoriesSizeStateResult.Loading)
+            _categoriesSizeState.postValue(GetCategoriesSizeStateResult.Loading)
             when (val getCategoriesSizeUseCaseResult = cardUseCase.getCategoriesSize(email)) {
                 is GetCategoriesSizeUseCaseResult.ErrorUnknown -> {
                     _categoriesSizeState.postValue(GetCategoriesSizeStateResult.ErrorUnknown)

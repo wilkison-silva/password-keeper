@@ -10,7 +10,10 @@ import androidx.navigation.fragment.findNavController
 import br.com.passwordkeeper.R
 import br.com.passwordkeeper.databinding.HomeFragmentBinding
 import br.com.passwordkeeper.domain.model.UserView
-import br.com.passwordkeeper.domain.result.viewmodelstate.*
+import br.com.passwordkeeper.domain.result.viewmodelstate.CurrentUserState
+import br.com.passwordkeeper.domain.result.viewmodelstate.GetAdviceStateResult
+import br.com.passwordkeeper.domain.result.viewmodelstate.GetCategoriesSizeStateResult
+import br.com.passwordkeeper.domain.result.viewmodelstate.GetFavoriteCardsStateResult
 import br.com.passwordkeeper.presentation.ui.recyclerview.adapter.CategoryAdapter
 import br.com.passwordkeeper.presentation.ui.recyclerview.adapter.FavoriteAdapter
 import br.com.passwordkeeper.presentation.ui.viewmodel.HomeViewModel
@@ -45,10 +48,10 @@ class HomeFragment : Fragment(R.layout.home_fragment) {
     }
 
     private fun observeCurrentUserState() {
-        homeViewModel.currentUserState.observe(viewLifecycleOwner) { currentUserState ->
+        mainViewModel.currentUserState.observe(viewLifecycleOwner) { currentUserState ->
             when (currentUserState) {
                 is CurrentUserState.ErrorUnknown -> {
-
+                    navController.navigate(HomeFragmentDirections.actionNavigateToLoginFragment())
                 }
                 is CurrentUserState.Success -> {
                     bindUserInfo(currentUserState.userView)
@@ -66,7 +69,7 @@ class HomeFragment : Fragment(R.layout.home_fragment) {
     }
 
     private fun updateCurrentUser() {
-        homeViewModel.updateCurrentUser()
+        mainViewModel.updateCurrentUser()
     }
 
     private fun observeAdviceState() {
@@ -104,7 +107,9 @@ class HomeFragment : Fragment(R.layout.home_fragment) {
     private fun observeFavoriteCards() {
         homeViewModel.favoriteCardsState.observe(viewLifecycleOwner) {
             when (it) {
-                is GetFavoriteCardsStateResult.ErrorUnknown -> {}
+                is GetFavoriteCardsStateResult.ErrorUnknown -> {
+
+                }
                 is GetFavoriteCardsStateResult.Success -> {
                     binding.progressBarLeft.visibility = GONE
                     binding.progressBarRight.visibility = GONE
@@ -122,8 +127,6 @@ class HomeFragment : Fragment(R.layout.home_fragment) {
                 is GetFavoriteCardsStateResult.Loading -> {
                     binding.progressBarLeft.visibility = VISIBLE
                     binding.progressBarRight.visibility = VISIBLE
-                    binding.constraintLayoutFavorite.visibility = GONE
-                    binding.constraintLayoutNoFavoriteYet.visibility = GONE
                 }
             }
         }
@@ -133,7 +136,9 @@ class HomeFragment : Fragment(R.layout.home_fragment) {
     private fun observeCategoriesSize() {
         homeViewModel.categoriesSizeState.observe(viewLifecycleOwner) {
             when (it) {
-                is GetCategoriesSizeStateResult.ErrorUnknown -> {}
+                is GetCategoriesSizeStateResult.ErrorUnknown -> {
+
+                }
                 is GetCategoriesSizeStateResult.Success -> {
                     binding.progressBarLeft.visibility = GONE
                     binding.progressBarRight.visibility = GONE
@@ -151,8 +156,6 @@ class HomeFragment : Fragment(R.layout.home_fragment) {
                 is GetCategoriesSizeStateResult.Loading -> {
                     binding.progressBarLeft.visibility = VISIBLE
                     binding.progressBarRight.visibility = VISIBLE
-                    binding.constraintLayoutCategoriesSuccess.visibility = GONE
-                    binding.constraintLayoutNoCardsYet.visibility = GONE
                 }
             }
         }
