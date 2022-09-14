@@ -52,7 +52,7 @@ class ListCardsFragment : Fragment(R.layout.list_cards_fragment) {
         mainViewModel.currentUserState.observe(viewLifecycleOwner) { currentUserState ->
             when (currentUserState) {
                 is CurrentUserState.ErrorUnknown -> {
-                    //DEVE VOLTAR PARA A TELA DE LOGIN
+                    navController.navigate(ListCardsFragmentDirections.actionNavigateToLoginFragment())
                 }
                 is CurrentUserState.Success -> {
                     setupListCardsRecyclerView()
@@ -104,7 +104,7 @@ class ListCardsFragment : Fragment(R.layout.list_cards_fragment) {
         )
     }
 
-    private fun setTitle(){
+    private fun setTitle() {
         binding.textViewTitle.text = getString(title)
     }
 

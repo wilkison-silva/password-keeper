@@ -51,7 +51,7 @@ class HomeFragment : Fragment(R.layout.home_fragment) {
         mainViewModel.currentUserState.observe(viewLifecycleOwner) { currentUserState ->
             when (currentUserState) {
                 is CurrentUserState.ErrorUnknown -> {
-
+                    navController.navigate(HomeFragmentDirections.actionNavigateToLoginFragment())
                 }
                 is CurrentUserState.Success -> {
                     bindUserInfo(currentUserState.userView)

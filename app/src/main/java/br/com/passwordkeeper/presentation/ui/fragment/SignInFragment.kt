@@ -12,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import br.com.passwordkeeper.R
 import br.com.passwordkeeper.databinding.LoginFragmentBinding
 import br.com.passwordkeeper.domain.result.usecase.GetAllCardsUseCaseResult
+import br.com.passwordkeeper.domain.result.viewmodelstate.CurrentUserState
 import br.com.passwordkeeper.domain.result.viewmodelstate.FormValidationSignInStateResult
 import br.com.passwordkeeper.domain.result.viewmodelstate.SignInStateResult
 import br.com.passwordkeeper.domain.usecase.CardUseCase
@@ -43,6 +44,23 @@ class SignInFragment : Fragment(R.layout.login_fragment) {
         setupPasswordEditText()
         observeSignIn()
         observeFormValidation()
+        observeCurrentUserState()
+    }
+
+    private fun observeCurrentUserState() {
+        mainViewModel.currentUserState.observe(viewLifecycleOwner) { currentUserState ->
+            when (currentUserState) {
+                is CurrentUserState.ErrorUnknown -> {
+
+                }
+                is CurrentUserState.Success -> {
+                    val directions =
+                        SignInFragmentDirections.actionSignInFragmentToHomeFragment()
+                    navController.navigate(directions)
+                    signInViewModel.updateStatesToEmptyState()
+                }
+            }
+        }
     }
 
     private fun setupPasswordEditText() {
