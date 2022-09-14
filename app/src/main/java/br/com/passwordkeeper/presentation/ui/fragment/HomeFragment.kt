@@ -104,7 +104,9 @@ class HomeFragment : Fragment(R.layout.home_fragment) {
     private fun observeFavoriteCards() {
         homeViewModel.favoriteCardsState.observe(viewLifecycleOwner) {
             when (it) {
-                is GetFavoriteCardsStateResult.ErrorUnknown -> {}
+                is GetFavoriteCardsStateResult.ErrorUnknown -> {
+
+                }
                 is GetFavoriteCardsStateResult.Success -> {
                     binding.progressBarLeft.visibility = GONE
                     binding.progressBarRight.visibility = GONE
@@ -122,8 +124,6 @@ class HomeFragment : Fragment(R.layout.home_fragment) {
                 is GetFavoriteCardsStateResult.Loading -> {
                     binding.progressBarLeft.visibility = VISIBLE
                     binding.progressBarRight.visibility = VISIBLE
-                    binding.constraintLayoutFavorite.visibility = GONE
-                    binding.constraintLayoutNoFavoriteYet.visibility = GONE
                 }
             }
         }
@@ -133,7 +133,9 @@ class HomeFragment : Fragment(R.layout.home_fragment) {
     private fun observeCategoriesSize() {
         homeViewModel.categoriesSizeState.observe(viewLifecycleOwner) {
             when (it) {
-                is GetCategoriesSizeStateResult.ErrorUnknown -> {}
+                is GetCategoriesSizeStateResult.ErrorUnknown -> {
+
+                }
                 is GetCategoriesSizeStateResult.Success -> {
                     binding.progressBarLeft.visibility = GONE
                     binding.progressBarRight.visibility = GONE
@@ -151,8 +153,6 @@ class HomeFragment : Fragment(R.layout.home_fragment) {
                 is GetCategoriesSizeStateResult.Loading -> {
                     binding.progressBarLeft.visibility = VISIBLE
                     binding.progressBarRight.visibility = VISIBLE
-                    binding.constraintLayoutCategoriesSuccess.visibility = GONE
-                    binding.constraintLayoutNoCardsYet.visibility = GONE
                 }
             }
         }

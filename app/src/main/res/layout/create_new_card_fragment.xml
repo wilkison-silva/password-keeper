@@ -32,7 +32,8 @@
             android:fontFamily="@font/inter_bold"
             android:text="@string/create_a_new_card"
             android:textColor="@color/white"
-            android:textSize="24sp"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="@+id/imageButtonBack"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/imageButtonBack" />

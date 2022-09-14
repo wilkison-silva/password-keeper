@@ -25,6 +25,10 @@ class HomeViewModel(
         get() = _adviceState
 
     fun updateAdvice() {
+        _adviceState.value ?: getAdvice()
+    }
+
+    private fun getAdvice() {
         viewModelScope.launch {
             _adviceState.postValue(GetAdviceStateResult.Loading)
             when (val getAdviceUseCaseResult = adviceUseCase.getAdvice()) {
@@ -72,8 +76,7 @@ class HomeViewModel(
 
     fun updateFavoriteCards(email: String) {
         viewModelScope.launch {
-            if (_favoriteCardsState.value == null)
-                _favoriteCardsState.postValue(GetFavoriteCardsStateResult.Loading)
+            _favoriteCardsState.postValue(GetFavoriteCardsStateResult.Loading)
             when (val getFavoriteCardsUseCaseResult = cardUseCase.getFavorites(email)) {
                 is GetFavoriteCardsUseCaseResult.ErrorUnknown -> {
                     _favoriteCardsState.postValue(GetFavoriteCardsStateResult.ErrorUnknown)
@@ -99,8 +102,7 @@ class HomeViewModel(
 
     fun updateCategoriesSize(email: String) {
         viewModelScope.launch {
-            if (_categoriesSizeState.value == null)
-                _categoriesSizeState.postValue(GetCategoriesSizeStateResult.Loading)
+            _categoriesSizeState.postValue(GetCategoriesSizeStateResult.Loading)
             when (val getCategoriesSizeUseCaseResult = cardUseCase.getCategoriesSize(email)) {
                 is GetCategoriesSizeUseCaseResult.ErrorUnknown -> {
                     _categoriesSizeState.postValue(GetCategoriesSizeStateResult.ErrorUnknown)
