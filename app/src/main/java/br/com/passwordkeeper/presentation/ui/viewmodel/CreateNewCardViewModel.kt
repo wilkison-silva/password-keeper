@@ -6,30 +6,22 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.com.passwordkeeper.domain.result.usecase.CreateCardUseCaseResult
 import br.com.passwordkeeper.domain.result.usecase.FormValidationCardUseCaseResult
-import br.com.passwordkeeper.domain.result.usecase.GetCurrentUserUseCaseResult
 import br.com.passwordkeeper.domain.result.viewmodelstate.CreateCardStateResult
-import br.com.passwordkeeper.domain.result.viewmodelstate.CurrentUserState
 import br.com.passwordkeeper.domain.result.viewmodelstate.FormValidationCardStateResult
 import br.com.passwordkeeper.domain.usecase.CardUseCase
 import br.com.passwordkeeper.domain.usecase.FormValidationCardUseCase
-import br.com.passwordkeeper.domain.usecase.SignInUseCase
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
 
 class CreateNewCardViewModel(
     private val cardUseCase: CardUseCase,
-    private val formValidationCardUseCase: FormValidationCardUseCase,
-    private val signInUseCase: SignInUseCase,
+    private val formValidationCardUseCase: FormValidationCardUseCase
 ) : ViewModel() {
 
     private val _favorite = MutableLiveData<Boolean>(false)
     val favorite: LiveData<Boolean>
         get() = _favorite
-
-    private val _currentUserState = MutableLiveData<CurrentUserState>()
-    val currentUserState: LiveData<CurrentUserState>
-        get() = _currentUserState
 
     private val _formValidationCard = MutableLiveData<FormValidationCardStateResult>()
     val formValidationCard: LiveData<FormValidationCardStateResult>
@@ -79,20 +71,6 @@ class CreateNewCardViewModel(
                     date = date
                 )
                 _formValidationCard.postValue(formValidationSuccess)
-            }
-        }
-    }
-
-    fun getCurrentEmailUser() {
-        viewModelScope.launch {
-            when (val resultUser = signInUseCase.getCurrentUser()) {
-                is GetCurrentUserUseCaseResult.ErrorUnknown -> {
-                    _currentUserState.postValue(CurrentUserState.ErrorUnknown)
-                }
-                is GetCurrentUserUseCaseResult.Success -> {
-                    val userView = resultUser.userView
-                    _currentUserState.postValue(CurrentUserState.Success(userView))
-                }
             }
         }
     }

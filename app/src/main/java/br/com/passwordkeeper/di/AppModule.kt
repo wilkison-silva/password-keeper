@@ -141,8 +141,7 @@ val viewModelModule = module {
     viewModel<CreateNewCardViewModel> {
         CreateNewCardViewModel(
             get<CardUseCase>(),
-            get<FormValidationCardUseCase>(),
-            get<SignInUseCase>()
+            get<FormValidationCardUseCase>()
         )
     }
     viewModel<ListCardsViewModel> {

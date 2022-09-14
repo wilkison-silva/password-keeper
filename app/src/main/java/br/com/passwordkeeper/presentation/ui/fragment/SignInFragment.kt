@@ -44,23 +44,6 @@ class SignInFragment : Fragment(R.layout.login_fragment) {
         setupPasswordEditText()
         observeSignIn()
         observeFormValidation()
-        observeCurrentUserState()
-    }
-
-    private fun observeCurrentUserState() {
-        mainViewModel.currentUserState.observe(viewLifecycleOwner) { currentUserState ->
-            when (currentUserState) {
-                is CurrentUserState.ErrorUnknown -> {
-
-                }
-                is CurrentUserState.Success -> {
-                    val directions =
-                        SignInFragmentDirections.actionSignInFragmentToHomeFragment()
-                    navController.navigate(directions)
-                    signInViewModel.updateStatesToEmptyState()
-                }
-            }
-        }
     }
 
     private fun setupPasswordEditText() {
