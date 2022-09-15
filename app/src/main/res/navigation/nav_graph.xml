@@ -12,7 +12,7 @@
         tools:layout="@layout/fragment_sign_in">
         <action
             android:id="@+id/action_fragmentSignIn_to_fragmentSignUp"
-            app:destination="@id/signUpFragment"
+            app:destination="@id/fragmentSignUp"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
@@ -25,13 +25,13 @@
     </fragment>
 
     <fragment
-        android:id="@+id/signUpFragment"
+        android:id="@+id/fragmentSignUp"
         android:name="br.com.passwordkeeper.presentation.ui.fragment.SignUpFragment"
-        android:label="SignUpFragment"
-        tools:layout="@layout/sign_up_fragment">
+        android:label="fragmentSignUp"
+        tools:layout="@layout/fragment_sign_up">
         <action
-            android:id="@+id/action_signUpFragment_to_signUpCongratsFragment2"
-            app:destination="@id/signUpCongratsFragment"
+            android:id="@+id/action_fragmentSignUp_to_fragmentSignUpCongrats"
+            app:destination="@id/FragmentSignUpCongrats"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
@@ -39,10 +39,10 @@
             app:popUpTo="@id/fragmentSignIn" />
     </fragment>
     <fragment
-        android:id="@+id/signUpCongratsFragment"
+        android:id="@+id/FragmentSignUpCongrats"
         android:name="br.com.passwordkeeper.presentation.ui.fragment.SignUpCongratsFragment"
-        android:label="SignUpCongratsFragment"
-        tools:layout="@layout/sign_up_congrats_fragment"/>
+        android:label="FragmentSignUpCongrats"
+        tools:layout="@layout/fragment_sign_up_congrats"/>
     <fragment
         android:id="@+id/homeFragment"
         android:name="br.com.passwordkeeper.presentation.ui.fragment.HomeFragment"

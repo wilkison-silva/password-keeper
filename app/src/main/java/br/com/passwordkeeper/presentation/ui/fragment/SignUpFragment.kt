@@ -11,7 +11,8 @@ import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import br.com.passwordkeeper.R
-import br.com.passwordkeeper.databinding.SignUpFragmentBinding
+import br.com.passwordkeeper.databinding.FragmentSignUpBinding
+
 import br.com.passwordkeeper.domain.result.viewmodelstate.CreateUserStateResult
 import br.com.passwordkeeper.domain.result.viewmodelstate.FormValidationSignUpStateResult
 import br.com.passwordkeeper.domain.result.viewmodelstate.ValidationStateResult
@@ -24,18 +25,18 @@ import br.com.passwordkeeper.presentation.ui.viewmodel.SignUpViewModel
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class SignUpFragment : Fragment(R.layout.sign_up_fragment) {
+class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
     private val navController by lazy {
         findNavController()
     }
 
-    private lateinit var binding: SignUpFragmentBinding
+    private lateinit var binding: FragmentSignUpBinding
     private val signUpViewModel: SignUpViewModel by viewModel()
     private val mainViewModel: MainViewModel by sharedViewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding = SignUpFragmentBinding.bind(view)
+        binding = FragmentSignUpBinding.bind(view)
         mainViewModel.updateBottomNavigationVisibility(visibility = false)
         setupBackButton()
         setupCreateAccountButton()
@@ -142,7 +143,7 @@ class SignUpFragment : Fragment(R.layout.sign_up_fragment) {
                     view?.showSnackBar(getString(R.string.password_weak))
                 is CreateUserStateResult.Success -> {
                     val directions =
-                        SignUpFragmentDirections.actionSignUpFragmentToSignUpCongratsFragment2()
+                        SignUpFragmentDirections.actionFragmentSignUpToFragmentSignUpCongrats()
                     navController.navigate(directions)
                     signUpViewModel.updateStatesToEmptyState()
                 }
