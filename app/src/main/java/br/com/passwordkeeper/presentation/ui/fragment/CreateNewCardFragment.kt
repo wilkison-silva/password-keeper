@@ -41,6 +41,7 @@ class CreateNewCardFragment : Fragment(R.layout.fragment_create_new_card) {
         binding.toolbar.imageButtonBack.setOnClickListener {
             navController.popBackStack()
         }
+        binding.toolbar.textViewTitle.text = getString(R.string.create_a_new_card)
         updateCurrentUser()
         observeCurrentUser()
     }
