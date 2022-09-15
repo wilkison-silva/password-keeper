@@ -161,10 +161,10 @@
                 style="?android:attr/progressBarStyle"
                 android:layout_width="25dp"
                 android:layout_height="50dp"
-                android:layout_marginStart="55dp"
                 android:elevation="5dp"
-                android:visibility="gone"
+                android:visibility="visible"
                 app:layout_constraintBottom_toBottomOf="@+id/buttonSave"
+                app:layout_constraintEnd_toEndOf="@+id/buttonSave"
                 app:layout_constraintStart_toStartOf="@+id/buttonSave"
                 app:layout_constraintTop_toTopOf="@+id/buttonSave" />
 
