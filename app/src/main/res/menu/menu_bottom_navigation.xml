@@ -6,7 +6,7 @@
         android:menuCategory="secondary"
         android:icon="@drawable/ic_home" />
     <item
-        android:id="@+id/formCardFragment"
+        android:id="@+id/fragmentCreateNewCard"
         android:title="@string/new_card"
         android:menuCategory="secondary"
         android:icon="@drawable/ic_new_card" />

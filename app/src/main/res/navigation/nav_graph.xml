@@ -49,24 +49,24 @@
         android:label="HomeFragment"
         tools:layout="@layout/home_fragment">
         <action
-            android:id="@+id/action_homeFragment_to_formCardFragment"
-            app:destination="@id/formCardFragment" />
+            android:id="@+id/action_homeFragment_to_createNewCardFragment"
+            app:destination="@id/fragmentCreateNewCard" />
         <action
             android:id="@+id/action_homeFragment_to_listCardsFragment"
             app:destination="@id/listCardsFragment" />
 
     </fragment>
     <fragment
-        android:id="@+id/formCardFragment"
-        android:name="br.com.passwordkeeper.presentation.ui.fragment.CreateNewCardFragment"
-        android:label="FormCardFragment"
-        tools:layout="@layout/create_new_card_fragment">
+        android:id="@+id/fragmentCreateNewCard"
+        android:name="br.com.passwordkeeper.presentation.ui.fragment.CreateNewNoteFragment"
+        android:label="fragmentCreateNewCard"
+        tools:layout="@layout/fragment_create_new_card">
         <action
-            android:id="@+id/action_formCardFragment_to_newNoteSuccessFragment"
+            android:id="@+id/action_fragmentCreateNewCard_to_fragmentNewCardSuccess"
             app:destination="@id/newNoteSuccessFragment"
             app:popUpTo="@id/homeFragment" />
         <action
-            android:id="@+id/action_formCardFragment_to_newNoteErrorFragment"
+            android:id="@+id/action_fragmentCreateNewCard_to_fragmentNewNoteError"
             app:destination="@id/newNoteErrorFragment"
             app:popUpTo="@id/homeFragment" />
     </fragment>
