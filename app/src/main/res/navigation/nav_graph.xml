@@ -3,24 +3,24 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/signInFragment">
+    app:startDestination="@id/fragmentSignIn">
 
     <fragment
-        android:id="@+id/signInFragment"
+        android:id="@+id/fragmentSignIn"
         android:name="br.com.passwordkeeper.presentation.ui.fragment.SignInFragment"
         android:label="LoginFragment"
-        tools:layout="@layout/login_fragment">
+        tools:layout="@layout/fragment_sign_in">
         <action
-            android:id="@+id/action_loginFragment_to_signUpFragment"
+            android:id="@+id/action_fragmentSignIn_to_fragmentSignUp"
             app:destination="@id/signUpFragment"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right"/>
         <action
-            android:id="@+id/action_signInFragment_to_homeFragment"
+            android:id="@+id/action_fragmentSignIn_to_fragmentHome"
             app:destination="@id/homeFragment"
-            app:popUpTo="@id/signInFragment"
+            app:popUpTo="@id/fragmentSignIn"
             app:popUpToInclusive="true" />
     </fragment>
 
@@ -36,7 +36,7 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right"
-            app:popUpTo="@id/signInFragment" />
+            app:popUpTo="@id/fragmentSignIn" />
     </fragment>
     <fragment
         android:id="@+id/signUpCongratsFragment"
@@ -91,7 +91,7 @@
         tools:layout="@layout/new_note_error" />
     <action
         android:id="@+id/action_navigate_to_login_fragment"
-        app:destination="@id/signInFragment"
+        app:destination="@id/fragmentSignIn"
         app:popUpTo="@id/nav_graph"
         app:popUpToInclusive="true"
         app:enterAnim="@anim/slide_in_right"
