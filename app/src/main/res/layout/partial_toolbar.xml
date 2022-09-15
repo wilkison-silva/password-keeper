@@ -9,7 +9,7 @@
     android:background="@color/purple">
 
     <ImageButton
-        android:id="@+id/imageButtonBackAllCategories"
+        android:id="@+id/imageButtonBack"
         android:layout_width="35dp"
         android:layout_height="35dp"
         android:layout_marginStart="15dp"

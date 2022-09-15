@@ -109,7 +109,7 @@ class ListCardsFragment : Fragment(R.layout.fragment_list_cards) {
     }
 
     private fun setupButtonBack() {
-        binding.toolbar.imageButtonBackAllCategories.setOnClickListener {
+        binding.toolbar.imageButtonBack.setOnClickListener {
             navController.popBackStack()
         }
     }

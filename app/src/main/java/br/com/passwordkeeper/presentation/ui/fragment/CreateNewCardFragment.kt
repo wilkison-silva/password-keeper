@@ -18,7 +18,7 @@ import br.com.passwordkeeper.presentation.ui.viewmodel.MainViewModel
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class CreateNewNoteFragment : Fragment(R.layout.fragment_create_new_card) {
+class CreateNewCardFragment : Fragment(R.layout.fragment_create_new_card) {
 
     private val createNewCardViewModel: CreateNewCardViewModel by viewModel()
 
@@ -38,7 +38,7 @@ class CreateNewNoteFragment : Fragment(R.layout.fragment_create_new_card) {
         super.onViewCreated(view, savedInstanceState)
         mainViewModel.updateBottomNavigationVisibility(visibility = false)
         binding = FragmentCreateNewCardBinding.bind(view)
-        binding.imageButtonBack.setOnClickListener {
+        binding.toolbar.imageButtonBack.setOnClickListener {
             navController.popBackStack()
         }
         updateCurrentUser()
@@ -53,7 +53,7 @@ class CreateNewNoteFragment : Fragment(R.layout.fragment_create_new_card) {
         mainViewModel.currentUserState.observe(viewLifecycleOwner) {
             when (it) {
                 is CurrentUserState.ErrorUnknown -> {
-                    navController.navigate(CreateNewNoteFragmentDirections.actionNavigateToLoginFragment())
+                    navController.navigate(CreateNewCardFragmentDirections.actionNavigateToLoginFragment())
                 }
                 is CurrentUserState.Success -> {
                     setupCategoryTextEditInputText()
@@ -170,13 +170,13 @@ class CreateNewNoteFragment : Fragment(R.layout.fragment_create_new_card) {
 
     private fun goToSuccessNewNoteFragment() {
         val directions =
-            CreateNewNoteFragmentDirections.actionFragmentCreateNewCardToFragmentNewCardSuccess()
+            CreateNewCardFragmentDirections.actionFragmentCreateNewCardToFragmentNewCardSuccess()
         navController.navigate(directions)
     }
 
     private fun goToErrorNoteFragment() {
         val directions =
-            CreateNewNoteFragmentDirections.actionFragmentCreateNewCardToFragmentNewNoteError()
+            CreateNewCardFragmentDirections.actionFragmentCreateNewCardToFragmentNewNoteError()
         navController.navigate(directions)
     }
 }

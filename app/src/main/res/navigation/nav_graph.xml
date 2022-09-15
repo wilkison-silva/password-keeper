@@ -58,16 +58,16 @@
     </fragment>
     <fragment
         android:id="@+id/fragmentCreateNewCard"
-        android:name="br.com.passwordkeeper.presentation.ui.fragment.CreateNewNoteFragment"
+        android:name="br.com.passwordkeeper.presentation.ui.fragment.CreateNewCardFragment"
         android:label="fragmentCreateNewCard"
         tools:layout="@layout/fragment_create_new_card">
         <action
             android:id="@+id/action_fragmentCreateNewCard_to_fragmentNewCardSuccess"
-            app:destination="@id/fragmentNewNoteSuccess"
+            app:destination="@id/fragmentNewCardSuccess"
             app:popUpTo="@id/fragmentHome" />
         <action
             android:id="@+id/action_fragmentCreateNewCard_to_fragmentNewNoteError"
-            app:destination="@id/fragmentNewNoteError"
+            app:destination="@id/fragmentNewCardError"
             app:popUpTo="@id/fragmentHome" />
     </fragment>
     <fragment
@@ -80,15 +80,15 @@
             app:argType="integer" />
     </fragment>
     <fragment
-        android:id="@+id/fragmentNewNoteSuccess"
-        android:name="br.com.passwordkeeper.presentation.ui.fragment.NewNoteSuccessFragment"
-        android:label="FragmentNewNoteSuccess"
-        tools:layout="@layout/fragment_new_note_success" />
+        android:id="@+id/fragmentNewCardSuccess"
+        android:name="br.com.passwordkeeper.presentation.ui.fragment.NewCardSuccessFragment"
+        android:label="FragmentNewCardSuccess"
+        tools:layout="@layout/fragment_new_card_success" />
     <fragment
-        android:id="@+id/fragmentNewNoteError"
-        android:name="br.com.passwordkeeper.presentation.ui.fragment.NewNoteErrorFragment"
-        android:label="NewNoteErrorFragment"
-        tools:layout="@layout/fragment_new_note_error" />
+        android:id="@+id/fragmentNewCardError"
+        android:name="br.com.passwordkeeper.presentation.ui.fragment.NewCardErrorFragment"
+        android:label="NewCardErrorFragment"
+        tools:layout="@layout/fragment_new_card_error" />
     <action
         android:id="@+id/action_navigate_to_login_fragment"
         app:destination="@id/fragmentSignIn"

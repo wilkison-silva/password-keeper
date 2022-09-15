@@ -12,42 +12,22 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <ImageButton
-            android:id="@+id/imageButtonBack"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="22dp"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:backgroundTint="@color/purple"
-            android:contentDescription="@string/image_about_the_card"
-            android:src="@drawable/ic_back"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/textViewTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/inter_bold"
-            android:text="@string/create_a_new_card"
-            android:textColor="@color/white"
-            android:textSize="20sp"
-            app:layout_constraintBottom_toBottomOf="@+id/imageButtonBack"
+        <include
+            android:id="@+id/toolbar"
+            app:layout_constraintStart_toEndOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/imageButtonBack" />
+            app:layout_constraintTop_toTopOf="parent"
+            layout="@layout/partial_toolbar" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/constraintLayoutWhiteBackground"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginTop="50dp"
             android:background="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textViewTitle">
+            app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/textInputLayoutDescription"
