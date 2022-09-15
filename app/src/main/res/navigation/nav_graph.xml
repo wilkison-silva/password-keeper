@@ -53,7 +53,7 @@
             app:destination="@id/fragmentCreateNewCard" />
         <action
             android:id="@+id/action_fragmentHome_to_fragmentListCards"
-            app:destination="@id/listCardsFragment" />
+            app:destination="@id/fragmentListCards" />
 
     </fragment>
     <fragment
@@ -71,10 +71,10 @@
             app:popUpTo="@id/fragmentHome" />
     </fragment>
     <fragment
-        android:id="@+id/listCardsFragment"
+        android:id="@+id/fragmentListCards"
         android:name="br.com.passwordkeeper.presentation.ui.fragment.ListCardsFragment"
-        android:label="ListCardsFragment"
-        tools:layout="@layout/list_cards_fragment" >
+        android:label="FragmentListCards"
+        tools:layout="@layout/fragment_list_cards" >
         <argument
             android:name="title"
             app:argType="integer" />
