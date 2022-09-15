@@ -19,7 +19,7 @@
             app:popExitAnim="@anim/slide_out_right"/>
         <action
             android:id="@+id/action_fragmentSignIn_to_fragmentHome"
-            app:destination="@id/homeFragment"
+            app:destination="@id/fragmentHome"
             app:popUpTo="@id/fragmentSignIn"
             app:popUpToInclusive="true" />
     </fragment>
@@ -44,15 +44,15 @@
         android:label="FragmentSignUpCongrats"
         tools:layout="@layout/fragment_sign_up_congrats"/>
     <fragment
-        android:id="@+id/homeFragment"
+        android:id="@+id/fragmentHome"
         android:name="br.com.passwordkeeper.presentation.ui.fragment.HomeFragment"
         android:label="HomeFragment"
-        tools:layout="@layout/home_fragment">
+        tools:layout="@layout/fragment_home">
         <action
-            android:id="@+id/action_homeFragment_to_createNewCardFragment"
+            android:id="@+id/action_fragmentHome_to_fragmentCreateNewCard"
             app:destination="@id/fragmentCreateNewCard" />
         <action
-            android:id="@+id/action_homeFragment_to_listCardsFragment"
+            android:id="@+id/action_fragmentHome_to_fragmentListCards"
             app:destination="@id/listCardsFragment" />
 
     </fragment>
@@ -64,11 +64,11 @@
         <action
             android:id="@+id/action_fragmentCreateNewCard_to_fragmentNewCardSuccess"
             app:destination="@id/newNoteSuccessFragment"
-            app:popUpTo="@id/homeFragment" />
+            app:popUpTo="@id/fragmentHome" />
         <action
             android:id="@+id/action_fragmentCreateNewCard_to_fragmentNewNoteError"
             app:destination="@id/newNoteErrorFragment"
-            app:popUpTo="@id/homeFragment" />
+            app:popUpTo="@id/fragmentHome" />
     </fragment>
     <fragment
         android:id="@+id/listCardsFragment"

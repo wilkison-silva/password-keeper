@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity() {
         }
         binding.bottomNavigation.setOnItemSelectedListener {
             when (it.itemId) {
-                R.id.homeFragment -> navController.popBackStack(R.id.homeFragment, false)
+                R.id.fragmentHome -> navController.popBackStack(R.id.fragmentHome, false)
                 R.id.fragmentCreateNewCard -> navController.navigate(R.id.fragmentCreateNewCard)
             }
             true
@@ -51,8 +51,8 @@ class MainActivity : AppCompatActivity() {
     private fun setupNavControllerListerner() {
         navController.addOnDestinationChangedListener { navController: NavController, navDestination: NavDestination, bundle: Bundle? ->
             when (navDestination.id) {
-                R.id.homeFragment -> {
-                    binding.bottomNavigation.menu.findItem(R.id.homeFragment).isChecked = true
+                R.id.fragmentHome -> {
+                    binding.bottomNavigation.menu.findItem(R.id.fragmentHome).isChecked = true
                 }
                 R.id.fragmentCreateNewCard -> {
                     binding.bottomNavigation.menu.findItem(R.id.fragmentCreateNewCard).isChecked =

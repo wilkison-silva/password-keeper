@@ -8,7 +8,7 @@ import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import br.com.passwordkeeper.R
-import br.com.passwordkeeper.databinding.HomeFragmentBinding
+import br.com.passwordkeeper.databinding.FragmentHomeBinding
 import br.com.passwordkeeper.domain.model.UserView
 import br.com.passwordkeeper.domain.result.viewmodelstate.CurrentUserState
 import br.com.passwordkeeper.domain.result.viewmodelstate.GetAdviceStateResult
@@ -23,7 +23,7 @@ import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
-class HomeFragment : Fragment(R.layout.home_fragment) {
+class HomeFragment : Fragment(R.layout.fragment_home) {
     private val navController by lazy {
         findNavController()
     }
@@ -32,11 +32,11 @@ class HomeFragment : Fragment(R.layout.home_fragment) {
     private val mainViewModel: MainViewModel by sharedViewModel()
     private val categoryAdapter: CategoryAdapter by inject()
     private val favoriteAdapter: FavoriteAdapter by inject()
-    private lateinit var binding: HomeFragmentBinding
+    private lateinit var binding: FragmentHomeBinding
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding = HomeFragmentBinding.bind(view)
+        binding = FragmentHomeBinding.bind(view)
         mainViewModel.updateBottomNavigationVisibility(visibility = true)
         observeCurrentUserState()
         updateCurrentUser()
@@ -195,7 +195,7 @@ class HomeFragment : Fragment(R.layout.home_fragment) {
 
     private fun navigateToListCardsFragment(@StringRes title: Int) {
         val directions =
-            HomeFragmentDirections.actionHomeFragmentToListCardsFragment(title)
+            HomeFragmentDirections.actionFragmentHomeToFragmentListCards(title)
         navController.navigate(directions)
     }
 
