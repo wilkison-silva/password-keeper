@@ -2,7 +2,6 @@ package br.com.passwordkeeper.data.repository
 
 import br.com.passwordkeeper.domain.mapper.CardDataMapper
 import br.com.passwordkeeper.domain.mapper.CardFirestoreMapper
-import br.com.passwordkeeper.domain.model.CardData
 import br.com.passwordkeeper.domain.model.CardDomain
 import br.com.passwordkeeper.domain.model.CardFirestore
 import br.com.passwordkeeper.domain.result.repository.*
@@ -12,7 +11,6 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QuerySnapshot
 import com.google.firebase.firestore.ktx.toObject
 import kotlinx.coroutines.tasks.await
-import kotlin.math.log
 
 
 class FirebaseCardRepositoryImpl(
