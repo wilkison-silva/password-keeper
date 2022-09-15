@@ -105,11 +105,11 @@ class ListCardsFragment : Fragment(R.layout.fragment_list_cards) {
     }
 
     private fun setTitle() {
-        binding.textViewTitle.text = getString(title)
+        binding.toolbar.textViewTitle.text = getString(title)
     }
 
     private fun setupButtonBack() {
-        binding.imageButtonBackAllCategories.setOnClickListener {
+        binding.toolbar.imageButtonBack.setOnClickListener {
             navController.popBackStack()
         }
     }

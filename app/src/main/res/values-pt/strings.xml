@@ -76,4 +76,12 @@
     <string name="data_stored_in_our_server">Dados armazenados no nosso servidor</string>
     <string name="one_more_data">Mais um dado guardado apenas à sua espera quando precisar dele!!!</string>
     <string name="view_all">Ver todos</string>
+    <string name="title_list_cards">Todas as categorias</string>
+    <string name="title_all_categories">Todas as categorias</string>
+    <string name="title_streaming">Streaming</string>
+    <string name="title_social_media">Redes Sociais</string>
+    <string name="title_banks">Bancos</string>
+    <string name="title_education">Educação</string>
+    <string name="title_work">Trabalho</string>
+    <string name="title_cards">Cartões</string>
 </resources>
