@@ -63,7 +63,7 @@
         tools:layout="@layout/fragment_create_new_card">
         <action
             android:id="@+id/action_fragmentCreateNewCard_to_fragmentNewCardSuccess"
-            app:destination="@id/newNoteSuccessFragment"
+            app:destination="@id/fragmentNewNoteSuccess"
             app:popUpTo="@id/fragmentHome" />
         <action
             android:id="@+id/action_fragmentCreateNewCard_to_fragmentNewNoteError"
@@ -80,10 +80,10 @@
             app:argType="integer" />
     </fragment>
     <fragment
-        android:id="@+id/newNoteSuccessFragment"
+        android:id="@+id/fragmentNewNoteSuccess"
         android:name="br.com.passwordkeeper.presentation.ui.fragment.NewNoteSuccessFragment"
-        android:label="NewNoteSuccessFragment"
-        tools:layout="@layout/new_note_success" />
+        android:label="FragmentNewNoteSuccess"
+        tools:layout="@layout/fragment_new_note_success" />
     <fragment
         android:id="@+id/fragmentNewNoteError"
         android:name="br.com.passwordkeeper.presentation.ui.fragment.NewNoteErrorFragment"
