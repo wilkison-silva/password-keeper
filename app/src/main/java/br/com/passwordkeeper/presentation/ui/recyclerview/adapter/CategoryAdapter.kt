@@ -49,10 +49,7 @@ class CategoryAdapter(
             binding.textViewTextType.text = context.getString(categoryView.nameAsStringRes)
             binding.textViewQuantity.text = categoryView.quantity.toString()
             binding.imageViewType.setImageResource(categoryView.imageAsDrawableRes)
-
-            Log.i("Teste", "Chegou aqui2")
             binding.constraintLayoutItemCategory.setOnClickListener{
-                Log.i("Teste", "Chegou aqui3")
                 onClickItem(categoryView)
             }
         }
