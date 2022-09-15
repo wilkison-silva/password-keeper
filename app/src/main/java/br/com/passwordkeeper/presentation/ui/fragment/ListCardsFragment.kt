@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import br.com.passwordkeeper.R
-import br.com.passwordkeeper.databinding.ListCardsFragmentBinding
+import br.com.passwordkeeper.databinding.FragmentListCardsBinding
 import br.com.passwordkeeper.domain.result.viewmodelstate.CurrentUserState
 import br.com.passwordkeeper.domain.result.viewmodelstate.GetAllCardsStateResult
 import br.com.passwordkeeper.presentation.ui.recyclerview.adapter.ListCardsAdapter
@@ -18,9 +18,9 @@ import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class ListCardsFragment : Fragment(R.layout.list_cards_fragment) {
+class ListCardsFragment : Fragment(R.layout.fragment_list_cards) {
 
-    private lateinit var binding: ListCardsFragmentBinding
+    private lateinit var binding: FragmentListCardsBinding
     private val listCardsViewModel: ListCardsViewModel by viewModel()
     private val listCardsAdapter: ListCardsAdapter by inject()
     private val mainViewModel: MainViewModel by sharedViewModel()
@@ -40,7 +40,7 @@ class ListCardsFragment : Fragment(R.layout.list_cards_fragment) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding = ListCardsFragmentBinding.bind(view)
+        binding = FragmentListCardsBinding.bind(view)
         mainViewModel.updateBottomNavigationVisibility(visibility = false)
         setTitle()
         updateCurrentUser()

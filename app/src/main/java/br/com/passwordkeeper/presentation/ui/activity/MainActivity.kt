@@ -1,7 +1,6 @@
 package br.com.passwordkeeper.presentation.ui.activity
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import androidx.appcompat.app.AppCompatActivity
@@ -9,8 +8,6 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.findNavController
-import androidx.navigation.ui.NavigationUI
-import androidx.navigation.ui.setupWithNavController
 import br.com.passwordkeeper.R
 import br.com.passwordkeeper.databinding.ActivityMainBinding
 import br.com.passwordkeeper.domain.result.viewmodelstate.BottomNavigationState
@@ -44,13 +41,8 @@ class MainActivity : AppCompatActivity() {
         }
         binding.bottomNavigation.setOnItemSelectedListener {
             when (it.itemId) {
-                R.id.homeFragment -> {
-                    navController.popBackStack(R.id.homeFragment, false)
-//                    navController.navigate(R.id.homeFragment)
-                }
-                R.id.formCardFragment -> {
-                    navController.navigate(R.id.formCardFragment)
-                }
+                R.id.fragmentHome -> navController.popBackStack(R.id.fragmentHome, false)
+                R.id.fragmentCreateNewCard -> navController.navigate(R.id.fragmentCreateNewCard)
             }
             true
         }
@@ -59,11 +51,12 @@ class MainActivity : AppCompatActivity() {
     private fun setupNavControllerListerner() {
         navController.addOnDestinationChangedListener { navController: NavController, navDestination: NavDestination, bundle: Bundle? ->
             when (navDestination.id) {
-                R.id.homeFragment -> {
-                    binding.bottomNavigation.menu.findItem(R.id.homeFragment).isChecked = true
+                R.id.fragmentHome -> {
+                    binding.bottomNavigation.menu.findItem(R.id.fragmentHome).isChecked = true
                 }
-                R.id.formCardFragment -> {
-                    binding.bottomNavigation.menu.findItem(R.id.formCardFragment).isChecked = true
+                R.id.fragmentCreateNewCard -> {
+                    binding.bottomNavigation.menu.findItem(R.id.fragmentCreateNewCard).isChecked =
+                        true
                 }
             }
         }

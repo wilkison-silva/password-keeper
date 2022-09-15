@@ -6,7 +6,7 @@ import android.view.View.VISIBLE
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import br.com.passwordkeeper.R
-import br.com.passwordkeeper.databinding.CreateNewCardFragmentBinding
+import br.com.passwordkeeper.databinding.FragmentCreateNewCardBinding
 import br.com.passwordkeeper.domain.model.Categories
 import br.com.passwordkeeper.domain.model.Categories.*
 import br.com.passwordkeeper.domain.result.viewmodelstate.CreateCardStateResult
@@ -18,7 +18,7 @@ import br.com.passwordkeeper.presentation.ui.viewmodel.MainViewModel
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class CreateNewCardFragment : Fragment(R.layout.create_new_card_fragment) {
+class CreateNewNoteFragment : Fragment(R.layout.fragment_create_new_card) {
 
     private val createNewCardViewModel: CreateNewCardViewModel by viewModel()
 
@@ -31,13 +31,13 @@ class CreateNewCardFragment : Fragment(R.layout.create_new_card_fragment) {
         currentUserState.userView
     }
 
-    private lateinit var binding: CreateNewCardFragmentBinding
+    private lateinit var binding: FragmentCreateNewCardBinding
     private val mainViewModel: MainViewModel by sharedViewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         mainViewModel.updateBottomNavigationVisibility(visibility = false)
-        binding = CreateNewCardFragmentBinding.bind(view)
+        binding = FragmentCreateNewCardBinding.bind(view)
         binding.imageButtonBack.setOnClickListener {
             navController.popBackStack()
         }
@@ -53,7 +53,7 @@ class CreateNewCardFragment : Fragment(R.layout.create_new_card_fragment) {
         mainViewModel.currentUserState.observe(viewLifecycleOwner) {
             when (it) {
                 is CurrentUserState.ErrorUnknown -> {
-                    navController.navigate(CreateNewCardFragmentDirections.actionNavigateToLoginFragment())
+                    navController.navigate(CreateNewNoteFragmentDirections.actionNavigateToLoginFragment())
                 }
                 is CurrentUserState.Success -> {
                     setupCategoryTextEditInputText()
@@ -170,13 +170,13 @@ class CreateNewCardFragment : Fragment(R.layout.create_new_card_fragment) {
 
     private fun goToSuccessNewNoteFragment() {
         val directions =
-            CreateNewCardFragmentDirections.actionFormCardFragmentToNewNoteSuccessFragment()
+            CreateNewNoteFragmentDirections.actionFragmentCreateNewCardToFragmentNewCardSuccess()
         navController.navigate(directions)
     }
 
     private fun goToErrorNoteFragment() {
         val directions =
-            CreateNewCardFragmentDirections.actionFormCardFragmentToNewNoteErrorFragment()
+            CreateNewNoteFragmentDirections.actionFragmentCreateNewCardToFragmentNewNoteError()
         navController.navigate(directions)
     }
 }

@@ -5,22 +5,23 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import br.com.passwordkeeper.R
-import br.com.passwordkeeper.databinding.SignUpCongratsFragmentBinding
+import br.com.passwordkeeper.databinding.FragmentSignUpCongratsBinding
+
 import br.com.passwordkeeper.presentation.ui.viewmodel.MainViewModel
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
-class SignUpCongratsFragment : Fragment(R.layout.sign_up_congrats_fragment) {
+class SignUpCongratsFragment : Fragment(R.layout.fragment_sign_up_congrats) {
 
     private val navController by lazy {
         findNavController()
     }
 
-    private lateinit var binding: SignUpCongratsFragmentBinding
+    private lateinit var binding: FragmentSignUpCongratsBinding
     private val mainViewModel: MainViewModel by sharedViewModel()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding = SignUpCongratsFragmentBinding.bind(view)
+        binding = FragmentSignUpCongratsBinding.bind(view)
         mainViewModel.updateBottomNavigationVisibility(visibility = false)
         setupProceedButton()
     }

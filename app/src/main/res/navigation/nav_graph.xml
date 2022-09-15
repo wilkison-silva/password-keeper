@@ -3,95 +3,95 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/signInFragment">
+    app:startDestination="@id/fragmentSignIn">
 
     <fragment
-        android:id="@+id/signInFragment"
+        android:id="@+id/fragmentSignIn"
         android:name="br.com.passwordkeeper.presentation.ui.fragment.SignInFragment"
         android:label="LoginFragment"
-        tools:layout="@layout/login_fragment">
+        tools:layout="@layout/fragment_sign_in">
         <action
-            android:id="@+id/action_loginFragment_to_signUpFragment"
-            app:destination="@id/signUpFragment"
+            android:id="@+id/action_fragmentSignIn_to_fragmentSignUp"
+            app:destination="@id/fragmentSignUp"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right"/>
         <action
-            android:id="@+id/action_signInFragment_to_homeFragment"
-            app:destination="@id/homeFragment"
-            app:popUpTo="@id/signInFragment"
+            android:id="@+id/action_fragmentSignIn_to_fragmentHome"
+            app:destination="@id/fragmentHome"
+            app:popUpTo="@id/fragmentSignIn"
             app:popUpToInclusive="true" />
     </fragment>
 
     <fragment
-        android:id="@+id/signUpFragment"
+        android:id="@+id/fragmentSignUp"
         android:name="br.com.passwordkeeper.presentation.ui.fragment.SignUpFragment"
-        android:label="SignUpFragment"
-        tools:layout="@layout/sign_up_fragment">
+        android:label="fragmentSignUp"
+        tools:layout="@layout/fragment_sign_up">
         <action
-            android:id="@+id/action_signUpFragment_to_signUpCongratsFragment2"
-            app:destination="@id/signUpCongratsFragment"
+            android:id="@+id/action_fragmentSignUp_to_fragmentSignUpCongrats"
+            app:destination="@id/FragmentSignUpCongrats"
             app:enterAnim="@anim/slide_in_right"
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right"
-            app:popUpTo="@id/signInFragment" />
+            app:popUpTo="@id/fragmentSignIn" />
     </fragment>
     <fragment
-        android:id="@+id/signUpCongratsFragment"
+        android:id="@+id/FragmentSignUpCongrats"
         android:name="br.com.passwordkeeper.presentation.ui.fragment.SignUpCongratsFragment"
-        android:label="SignUpCongratsFragment"
-        tools:layout="@layout/sign_up_congrats_fragment"/>
+        android:label="FragmentSignUpCongrats"
+        tools:layout="@layout/fragment_sign_up_congrats"/>
     <fragment
-        android:id="@+id/homeFragment"
+        android:id="@+id/fragmentHome"
         android:name="br.com.passwordkeeper.presentation.ui.fragment.HomeFragment"
         android:label="HomeFragment"
-        tools:layout="@layout/home_fragment">
+        tools:layout="@layout/fragment_home">
         <action
-            android:id="@+id/action_homeFragment_to_formCardFragment"
-            app:destination="@id/formCardFragment" />
+            android:id="@+id/action_fragmentHome_to_fragmentCreateNewCard"
+            app:destination="@id/fragmentCreateNewCard" />
         <action
-            android:id="@+id/action_homeFragment_to_listCardsFragment"
-            app:destination="@id/listCardsFragment" />
+            android:id="@+id/action_fragmentHome_to_fragmentListCards"
+            app:destination="@id/fragmentListCards" />
 
     </fragment>
     <fragment
-        android:id="@+id/formCardFragment"
-        android:name="br.com.passwordkeeper.presentation.ui.fragment.CreateNewCardFragment"
-        android:label="FormCardFragment"
-        tools:layout="@layout/create_new_card_fragment">
+        android:id="@+id/fragmentCreateNewCard"
+        android:name="br.com.passwordkeeper.presentation.ui.fragment.CreateNewNoteFragment"
+        android:label="fragmentCreateNewCard"
+        tools:layout="@layout/fragment_create_new_card">
         <action
-            android:id="@+id/action_formCardFragment_to_newNoteSuccessFragment"
-            app:destination="@id/newNoteSuccessFragment"
-            app:popUpTo="@id/homeFragment" />
+            android:id="@+id/action_fragmentCreateNewCard_to_fragmentNewCardSuccess"
+            app:destination="@id/fragmentNewNoteSuccess"
+            app:popUpTo="@id/fragmentHome" />
         <action
-            android:id="@+id/action_formCardFragment_to_newNoteErrorFragment"
-            app:destination="@id/newNoteErrorFragment"
-            app:popUpTo="@id/homeFragment" />
+            android:id="@+id/action_fragmentCreateNewCard_to_fragmentNewNoteError"
+            app:destination="@id/fragmentNewNoteError"
+            app:popUpTo="@id/fragmentHome" />
     </fragment>
     <fragment
-        android:id="@+id/listCardsFragment"
+        android:id="@+id/fragmentListCards"
         android:name="br.com.passwordkeeper.presentation.ui.fragment.ListCardsFragment"
-        android:label="ListCardsFragment"
-        tools:layout="@layout/list_cards_fragment" >
+        android:label="FragmentListCards"
+        tools:layout="@layout/fragment_list_cards" >
         <argument
             android:name="title"
             app:argType="integer" />
     </fragment>
     <fragment
-        android:id="@+id/newNoteSuccessFragment"
+        android:id="@+id/fragmentNewNoteSuccess"
         android:name="br.com.passwordkeeper.presentation.ui.fragment.NewNoteSuccessFragment"
-        android:label="NewNoteSuccessFragment"
-        tools:layout="@layout/new_note_success" />
+        android:label="FragmentNewNoteSuccess"
+        tools:layout="@layout/fragment_new_note_success" />
     <fragment
-        android:id="@+id/newNoteErrorFragment"
+        android:id="@+id/fragmentNewNoteError"
         android:name="br.com.passwordkeeper.presentation.ui.fragment.NewNoteErrorFragment"
         android:label="NewNoteErrorFragment"
-        tools:layout="@layout/new_note_error" />
+        tools:layout="@layout/fragment_new_note_error" />
     <action
         android:id="@+id/action_navigate_to_login_fragment"
-        app:destination="@id/signInFragment"
+        app:destination="@id/fragmentSignIn"
         app:popUpTo="@id/nav_graph"
         app:popUpToInclusive="true"
         app:enterAnim="@anim/slide_in_right"
