@@ -2,7 +2,6 @@ package br.com.passwordkeeper.domain.usecase
 
 import android.content.Context
 import br.com.passwordkeeper.R
-import br.com.passwordkeeper.domain.model.Categories
 import br.com.passwordkeeper.domain.result.usecase.FormValidationCardUseCaseResult
 
 class FormValidationCardUseCaseImpl(private val context: Context) : FormValidationCardUseCase {
