@@ -3,6 +3,7 @@ package br.com.passwordkeeper.domain.mapper
 import br.com.passwordkeeper.R
 import br.com.passwordkeeper.domain.model.CardDomain
 import br.com.passwordkeeper.domain.model.CardView
+import br.com.passwordkeeper.domain.model.Categories
 
 class CardDomainMapper : BaseMapper<CardDomain, CardView>() {
 
@@ -12,11 +13,23 @@ class CardDomainMapper : BaseMapper<CardDomain, CardView>() {
             description = model.description,
             login = model.login,
             password = model.password,
-            category = model.category,
+            category = getNameForCategory(model.category),
             favorite = model.isFavorite,
             iconHeart = getIconHeart(model.isFavorite),
             date = model.date
         )
+    }
+
+    private fun getNameForCategory(category: String): Int {
+        return when (category) {
+            Categories.STREAMING.name -> R.string.streaming
+            Categories.SOCIAL_MEDIA.name -> R.string.social_media
+            Categories.BANKS.name -> R.string.banks
+            Categories.EDUCATION.name -> R.string.education
+            Categories.WORK.name -> R.string.work
+            Categories.CARD.name -> R.string.cards
+            else -> R.string.unknown_category
+        }
     }
 
     private fun getIconHeart(isFavorite: Boolean): Int {

@@ -1,5 +1,6 @@
 package br.com.passwordkeeper.presentation.ui.recyclerview.adapter
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -7,6 +8,7 @@ import br.com.passwordkeeper.databinding.ItemListCardsBinding
 import br.com.passwordkeeper.domain.model.CardView
 
 class ListCardsAdapter(
+    private val context: Context,
     cardViewList: List<CardView> = listOf(),
     var onClickItem: (cardView: CardView) -> Unit = {}
 ) : RecyclerView.Adapter<ListCardsAdapter.ViewHolder>() {
@@ -43,7 +45,7 @@ class ListCardsAdapter(
 
         fun bind(cardView: CardView) {
             binding.textViewAllCategoriesDescription.text = cardView.description
-            binding.textViewAllCategoriesTextType.text = cardView.category
+            binding.textViewAllCategoriesTextType.text = context.getString(cardView.category)
             binding.textViewAllCategoriesDate.text = cardView.date
             binding.imageViewAllCategoriesIconHeart.setImageResource(cardView.iconHeart)
         }
