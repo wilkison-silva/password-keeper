@@ -4,8 +4,6 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:paddingTop="25dp"
-    android:paddingBottom="25dp"
     android:background="@color/purple">
 
     <ImageButton
