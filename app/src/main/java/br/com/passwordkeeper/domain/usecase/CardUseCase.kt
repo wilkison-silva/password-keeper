@@ -1,5 +1,6 @@
 package br.com.passwordkeeper.domain.usecase
 
+import br.com.passwordkeeper.domain.model.Categories
 import br.com.passwordkeeper.domain.result.usecase.*
 
 interface CardUseCase {
@@ -12,7 +13,7 @@ interface CardUseCase {
         description: String,
         login: String,
         password: String,
-        category: String,
+        category: Categories,
         isFavorite: Boolean,
         date: String,
         emailUser: String
@@ -23,7 +24,7 @@ interface CardUseCase {
         description: String,
         login: String,
         password: String,
-        category: String,
+        category: Categories,
         isFavorite: Boolean,
         date: String,
         emailUser: String

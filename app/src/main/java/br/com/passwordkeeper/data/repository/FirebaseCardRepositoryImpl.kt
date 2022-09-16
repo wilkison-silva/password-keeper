@@ -4,6 +4,7 @@ import br.com.passwordkeeper.domain.mapper.CardDataMapper
 import br.com.passwordkeeper.domain.mapper.CardFirestoreMapper
 import br.com.passwordkeeper.domain.model.CardDomain
 import br.com.passwordkeeper.domain.model.CardFirestore
+import br.com.passwordkeeper.domain.model.Categories
 import br.com.passwordkeeper.domain.result.repository.*
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.DocumentSnapshot
@@ -53,7 +54,7 @@ class FirebaseCardRepositoryImpl(
         description: String,
         login: String,
         password: String,
-        category: String,
+        category: Categories,
         isFavorite: Boolean,
         date: String,
         emailUser: String,
@@ -65,7 +66,7 @@ class FirebaseCardRepositoryImpl(
                 description = description,
                 login = login,
                 password = password,
-                category = category,
+                category = category.name,
                 user = getUserDocumentReference(emailUser),
                 favorite = isFavorite,
                 date = date
@@ -83,7 +84,7 @@ class FirebaseCardRepositoryImpl(
         description: String,
         login: String,
         password: String,
-        category: String,
+        category: Categories,
         isFavorite: Boolean,
         date: String,
         emailUser: String
@@ -94,7 +95,7 @@ class FirebaseCardRepositoryImpl(
                 description = description,
                 login = login,
                 password = password,
-                category = category,
+                category = category.name,
                 user = getUserDocumentReference(emailUser),
                 favorite = isFavorite,
                 date = date

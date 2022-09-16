@@ -9,6 +9,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import br.com.passwordkeeper.R
 import br.com.passwordkeeper.databinding.FragmentListCardsBinding
+import br.com.passwordkeeper.domain.model.Categories
 import br.com.passwordkeeper.domain.result.viewmodelstate.CurrentUserState
 import br.com.passwordkeeper.domain.result.viewmodelstate.GetAllCardsStateResult
 import br.com.passwordkeeper.presentation.ui.recyclerview.adapter.ListCardsAdapter
@@ -26,9 +27,11 @@ class ListCardsFragment : Fragment(R.layout.fragment_list_cards) {
     private val mainViewModel: MainViewModel by sharedViewModel()
     private val arguments by navArgs<ListCardsFragmentArgs>()
 
-    private val title: Int by lazy {
-        arguments.title
+    private val category by lazy {
+        arguments.category
     }
+
+
     private val navController by lazy {
         findNavController()
     }
@@ -99,13 +102,13 @@ class ListCardsFragment : Fragment(R.layout.fragment_list_cards) {
     private fun updateCards() {
         listCardsViewModel.updateCards(
             email = userView.email,
-            titleRes = title,
-            title = getString(title)
+            category = category
         )
     }
 
     private fun setTitle() {
-        binding.toolbar.textViewTitle.text = getString(title)
+        val stringRes = listCardsViewModel.getTitle(category)
+        binding.toolbar.textViewTitle.text = getString(stringRes)
     }
 
     private fun setupButtonBack() {

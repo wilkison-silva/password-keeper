@@ -1,5 +1,6 @@
 package br.com.passwordkeeper.data.repository
 
+import br.com.passwordkeeper.domain.model.Categories
 import br.com.passwordkeeper.domain.result.repository.*
 
 interface CardRepository {
@@ -12,7 +13,7 @@ interface CardRepository {
         description: String,
         login: String,
         password: String,
-        category: String,
+        category: Categories,
         isFavorite: Boolean,
         date: String,
         emailUser: String
@@ -23,7 +24,7 @@ interface CardRepository {
         description: String,
         login: String,
         password: String,
-        category: String,
+        category: Categories,
         isFavorite: Boolean,
         date: String,
         emailUser: String

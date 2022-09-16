@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import br.com.passwordkeeper.domain.model.Categories
 import br.com.passwordkeeper.domain.result.usecase.CreateCardUseCaseResult
 import br.com.passwordkeeper.domain.result.usecase.FormValidationCardUseCaseResult
 import br.com.passwordkeeper.domain.result.viewmodelstate.CreateCardStateResult
@@ -19,7 +20,7 @@ class CreateNewCardViewModel(
     private val formValidationCardUseCase: FormValidationCardUseCase
 ) : ViewModel() {
 
-    private val _favorite = MutableLiveData<Boolean>(false)
+    private val _favorite = MutableLiveData(false)
     val favorite: LiveData<Boolean>
         get() = _favorite
 
@@ -30,6 +31,10 @@ class CreateNewCardViewModel(
     private val _createCardState = MutableLiveData<CreateCardStateResult>()
     val createCardState: LiveData<CreateCardStateResult>
         get() = _createCardState
+
+    private val _categorySelected = MutableLiveData<Categories>()
+    val categorySelected: LiveData<Categories>
+        get() = _categorySelected
 
 
     fun getCurrentDateTime(): String {
@@ -79,31 +84,31 @@ class CreateNewCardViewModel(
         description: String,
         login: String,
         password: String,
-        category: String,
         isFavorite: Boolean,
         date: String,
         emailUser: String
     ) {
         viewModelScope.launch {
             _createCardState.postValue(CreateCardStateResult.Loading)
-            val resultCreateCard = cardUseCase.createCard(
-                description = description,
-                login = login,
-                password = password,
-                category = category,
-                isFavorite = isFavorite,
-                date = date,
-                emailUser = emailUser
-            )
-            when (resultCreateCard) {
-                is CreateCardUseCaseResult.ErrorUnknown -> {
-                    _createCardState.postValue(CreateCardStateResult.ErrorUnknown)
+            _categorySelected.value?.let { category ->
+                val resultCreateCard = cardUseCase.createCard(
+                    description = description,
+                    login = login,
+                    password = password,
+                    category = category,
+                    isFavorite = isFavorite,
+                    date = date,
+                    emailUser = emailUser
+                )
+                when (resultCreateCard) {
+                    is CreateCardUseCaseResult.ErrorUnknown -> {
+                        _createCardState.postValue(CreateCardStateResult.ErrorUnknown)
+                    }
+                    is CreateCardUseCaseResult.Success -> {
+                        _createCardState.postValue(CreateCardStateResult.Success(resultCreateCard.cardId))
+                    }
                 }
-                is CreateCardUseCaseResult.Success -> {
-                    _createCardState.postValue(CreateCardStateResult.Success(resultCreateCard.cardId))
-                }
-
-            }
+            } ?: _createCardState.postValue(CreateCardStateResult.ErrorUnknown)
         }
     }
 
@@ -111,5 +116,9 @@ class CreateNewCardViewModel(
         _favorite.value?.let {
             _favorite.postValue(!it)
         }
+    }
+
+    fun updateCategorySelected(category: Categories) {
+        _categorySelected.postValue(category)
     }
 }

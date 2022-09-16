@@ -153,6 +153,6 @@ val viewModelModule = module {
 
 val recyclerViewAdaptersModule = module {
     factory<CategoryAdapter> { CategoryAdapter(get<Context>()) }
-    factory<FavoriteAdapter> { FavoriteAdapter() }
-    factory<ListCardsAdapter> { ListCardsAdapter() }
+    factory<FavoriteAdapter> { FavoriteAdapter(get<Context>()) }
+    factory<ListCardsAdapter> { ListCardsAdapter(get<Context>()) }
 }
