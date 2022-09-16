@@ -17,7 +17,7 @@
     <string name="name">Primeiro nome/apelido aqui</string>
     <string name="categories">Categorias</string>
     <string name="favorite">Favoritos</string>
-    <string name="search">Pesquisar</string>
+    <string name="search">Pesquisar por descrição</string>
     <string name="hello">Olá,</string>
     <string name="advice_of_moment">Conselho do momento =)</string>
     <string name="icone_de_pesquisa">Ícone de pesquisa</string>
