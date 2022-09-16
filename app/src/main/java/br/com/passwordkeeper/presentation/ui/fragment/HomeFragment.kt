@@ -24,6 +24,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
 class HomeFragment : Fragment(R.layout.fragment_home) {
+
     private val navController by lazy {
         findNavController()
     }

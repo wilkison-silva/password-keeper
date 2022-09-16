@@ -131,11 +131,11 @@ class FirebaseCardUseCaseImpl(
                 val categoriesList: MutableList<Categories> =
                     getAllCardsRepositoryResult.cardDomainList.map { cardDomain ->
                         when (cardDomain.category) {
-                            STREAMING_TYPE -> Categories.STREAMING
-                            SOCIAL_MEDIA_TYPE -> Categories.SOCIAL_MEDIA
-                            BANKS_TYPE -> Categories.BANKS
-                            EDUCATION_TYPE -> Categories.EDUCATION
-                            WORK_TYPE -> Categories.WORK
+                            Categories.STREAMING.name -> Categories.STREAMING
+                            Categories.SOCIAL_MEDIA.name-> Categories.SOCIAL_MEDIA
+                            Categories.BANKS.name -> Categories.BANKS
+                            Categories.EDUCATION.name -> Categories.EDUCATION
+                            Categories.WORK.name -> Categories.WORK
                             else -> Categories.CARD
                         }
                     }.toMutableList()
