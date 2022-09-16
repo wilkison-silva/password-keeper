@@ -24,7 +24,7 @@
             android:id="@+id/textInputSearchIcon"
             style="@style/TextInputEditText"
             android:layout_width="match_parent"
-            android:textSize="12sp"
+            android:textSize="13sp"
             android:layout_height="wrap_content"
             android:hint="@string/search"
             android:imeOptions="actionSearch"/>
@@ -34,7 +34,7 @@
     <ImageButton
         android:id="@+id/imageViewSearchButton"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="24dp"
         android:layout_marginStart="8dp"
         android:background="@color/white"
         android:contentDescription="@string/icone_de_pesquisa"
