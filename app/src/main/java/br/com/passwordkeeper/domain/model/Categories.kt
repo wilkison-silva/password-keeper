@@ -6,5 +6,6 @@ enum class Categories {
     BANKS,
     EDUCATION,
     WORK,
-    CARD
+    CARD,
+    ALL
 }

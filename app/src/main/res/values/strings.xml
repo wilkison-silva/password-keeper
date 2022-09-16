@@ -84,4 +84,5 @@
     <string name="title_education">Education</string>
     <string name="title_work">Work</string>
     <string name="title_cards">Cards</string>
+    <string name="unknown_category">Unkown Category</string>
 </resources>

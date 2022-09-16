@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import br.com.passwordkeeper.R
 import br.com.passwordkeeper.databinding.FragmentHomeBinding
+import br.com.passwordkeeper.domain.model.Categories
 import br.com.passwordkeeper.domain.model.UserView
 import br.com.passwordkeeper.domain.result.viewmodelstate.CurrentUserState
 import br.com.passwordkeeper.domain.result.viewmodelstate.GetAdviceStateResult
@@ -168,15 +169,8 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
     private fun setupCategoriesRecyclerView() {
         binding.recyclerViewCategories.adapter = categoryAdapter
-        categoryAdapter.onClickItem = {
-            when (it.nameAsStringRes) {
-                R.string.streaming -> navigateToListCardsFragment(R.string.streaming)
-                R.string.social_media -> navigateToListCardsFragment(R.string.social_media)
-                R.string.banks -> navigateToListCardsFragment(R.string.banks)
-                R.string.education -> navigateToListCardsFragment(R.string.education)
-                R.string.work -> navigateToListCardsFragment(R.string.work)
-                R.string.cards -> navigateToListCardsFragment(R.string.cards)
-            }
+        categoryAdapter.onClickItem = { categoryView ->
+            navigateToListCardsFragment(categoryView.category)
         }
     }
 
@@ -190,13 +184,13 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
     private fun setupTextViewOnClick() {
         binding.TextViewViewAll.setOnClickListener {
-            navigateToListCardsFragment(R.string.title_all_categories)
+            navigateToListCardsFragment(Categories.ALL)
         }
     }
 
-    private fun navigateToListCardsFragment(@StringRes title: Int) {
+    private fun navigateToListCardsFragment(category: Categories) {
         val directions =
-            HomeFragmentDirections.actionFragmentHomeToFragmentListCards(title)
+            HomeFragmentDirections.actionFragmentHomeToFragmentListCards(category)
         navController.navigate(directions)
     }
 

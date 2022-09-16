@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.com.passwordkeeper.R
+import br.com.passwordkeeper.domain.model.Categories
 import br.com.passwordkeeper.domain.result.usecase.GetAllCardsUseCaseResult
 import br.com.passwordkeeper.domain.result.usecase.GetCardsByCategoryUseCaseResult
 import br.com.passwordkeeper.domain.result.viewmodelstate.GetAllCardsStateResult
@@ -22,12 +23,11 @@ class ListCardsViewModel(
 
     fun updateCards(
         email: String,
-        @StringRes titleRes: Int,
-        title: String
+        category: Categories
     ) {
         viewModelScope.launch {
             _allCards.postValue(GetAllCardsStateResult.Loading)
-            if (titleRes == R.string.title_all_categories) {
+            if (category == Categories.ALL) {
                 when (val getAllCardsUseCaseResult = cardUseCase.getAllCards(email)) {
                     is GetAllCardsUseCaseResult.ErrorUnknown -> {
                         _allCards.postValue(GetAllCardsStateResult.ErrorUnknown)
@@ -37,13 +37,26 @@ class ListCardsViewModel(
                     }
                 }
             } else {
-                when (val getAllCardsUseCaseResult = cardUseCase.getCardsByCategory(title, email)) {
+                when (val getAllCardsUseCaseResult =
+                    cardUseCase.getCardsByCategory(category.name, email)) {
                     is GetCardsByCategoryUseCaseResult.ErrorUnknown -> {}
                     is GetCardsByCategoryUseCaseResult.Success -> {
                         _allCards.postValue(GetAllCardsStateResult.Success(getAllCardsUseCaseResult.cardViewList))
                     }
                 }
             }
+        }
+    }
+
+    fun getTitle(category: Categories) : Int{
+        return when (category) {
+            Categories.STREAMING -> R.string.title_streaming
+            Categories.SOCIAL_MEDIA -> R.string.title_social_media
+            Categories.BANKS -> R.string.title_banks
+            Categories.EDUCATION -> R.string.title_education
+            Categories.WORK -> R.string.title_work
+            Categories.CARD -> R.string.title_cards
+            Categories.ALL -> R.string.title_all_categories
         }
     }
 }

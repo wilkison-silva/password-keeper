@@ -9,6 +9,7 @@ class CategoryDomainMapper : BaseMapper<CategoryDomain, CategoryView>() {
 
     override fun transform(model: CategoryDomain): CategoryView {
         return CategoryView(
+            category = model.category,
             nameAsStringRes = getNameForCategory(model.category),
             quantity = model.quantity,
             imageAsDrawableRes = getIconForCategory(model.category)
@@ -23,6 +24,7 @@ class CategoryDomainMapper : BaseMapper<CategoryDomain, CategoryView>() {
             Categories.EDUCATION -> R.string.education
             Categories.WORK -> R.string.work
             Categories.CARD -> R.string.cards
+            Categories.ALL -> R.string.unknown_category
         }
     }
 
@@ -34,6 +36,7 @@ class CategoryDomainMapper : BaseMapper<CategoryDomain, CategoryView>() {
             Categories.EDUCATION -> R.drawable.ic_education
             Categories.WORK -> R.drawable.ic_work
             Categories.CARD -> R.drawable.ic_card
+            Categories.ALL -> R.drawable.ic_404_not_found
         }
     }
 

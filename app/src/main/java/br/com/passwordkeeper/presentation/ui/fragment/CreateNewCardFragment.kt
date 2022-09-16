@@ -93,6 +93,7 @@ class CreateNewCardFragment : Fragment(R.layout.fragment_create_new_card) {
                 EDUCATION -> binding.textInputEditTextCategory.setText(R.string.education)
                 WORK -> binding.textInputEditTextCategory.setText(R.string.work)
                 CARD -> binding.textInputEditTextCategory.setText(R.string.cards)
+                ALL -> { }
             }
         }
     }

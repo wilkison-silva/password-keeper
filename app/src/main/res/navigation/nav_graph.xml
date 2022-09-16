@@ -76,8 +76,8 @@
         android:label="FragmentListCards"
         tools:layout="@layout/fragment_list_cards" >
         <argument
-            android:name="title"
-            app:argType="integer" />
+            android:name="category"
+            app:argType="br.com.passwordkeeper.domain.model.Categories" />
     </fragment>
     <fragment
         android:id="@+id/fragmentNewCardSuccess"
