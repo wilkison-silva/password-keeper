@@ -84,7 +84,7 @@ class FirebaseCardRepositoryImpl(
         description: String,
         login: String,
         password: String,
-        category: String,
+        category: Categories,
         isFavorite: Boolean,
         date: String,
         emailUser: String
@@ -95,7 +95,7 @@ class FirebaseCardRepositoryImpl(
                 description = description,
                 login = login,
                 password = password,
-                category = category,
+                category = category.name,
                 user = getUserDocumentReference(emailUser),
                 favorite = isFavorite,
                 date = date

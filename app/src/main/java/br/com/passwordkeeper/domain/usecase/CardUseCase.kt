@@ -24,7 +24,7 @@ interface CardUseCase {
         description: String,
         login: String,
         password: String,
-        category: String,
+        category: Categories,
         isFavorite: Boolean,
         date: String,
         emailUser: String
