@@ -61,6 +61,7 @@ class CreateNewCardFragment : Fragment(R.layout.fragment_create_new_card) {
                     setupImageIconHeart()
                     setupCreateSaveCardButton()
                     observeFavoriteState()
+                    observeCategorySelected()
                     observeFormValidation()
                     observeCreateCard()
                 }
@@ -78,17 +79,22 @@ class CreateNewCardFragment : Fragment(R.layout.fragment_create_new_card) {
         BottomSheetCategory(
             requireContext(),
             onClickItem = { category: Categories ->
-                when (category) {
-                    STREAMING -> binding.textInputEditTextCategory.setText(R.string.streaming)
-                    SOCIAL_MEDIA -> binding.textInputEditTextCategory.setText(R.string.social_media)
-                    BANKS -> binding.textInputEditTextCategory.setText(R.string.banks)
-                    EDUCATION -> binding.textInputEditTextCategory.setText(R.string.education)
-                    WORK -> binding.textInputEditTextCategory.setText(R.string.work)
-                    CARD -> binding.textInputEditTextCategory.setText(R.string.cards)
-                }
                 createNewCardViewModel.updateCategorySelected(category)
             }
         ).show()
+    }
+
+    private fun observeCategorySelected() {
+        createNewCardViewModel.categorySelected.observe(viewLifecycleOwner) { category ->
+            when (category) {
+                STREAMING -> binding.textInputEditTextCategory.setText(R.string.streaming)
+                SOCIAL_MEDIA -> binding.textInputEditTextCategory.setText(R.string.social_media)
+                BANKS -> binding.textInputEditTextCategory.setText(R.string.banks)
+                EDUCATION -> binding.textInputEditTextCategory.setText(R.string.education)
+                WORK -> binding.textInputEditTextCategory.setText(R.string.work)
+                CARD -> binding.textInputEditTextCategory.setText(R.string.cards)
+            }
+        }
     }
 
 

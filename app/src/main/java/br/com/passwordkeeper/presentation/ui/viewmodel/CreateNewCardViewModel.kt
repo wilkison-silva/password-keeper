@@ -107,7 +107,6 @@ class CreateNewCardViewModel(
                     is CreateCardUseCaseResult.Success -> {
                         _createCardState.postValue(CreateCardStateResult.Success(resultCreateCard.cardId))
                     }
-
                 }
             } ?: _createCardState.postValue(CreateCardStateResult.ErrorUnknown)
         }
