@@ -16,27 +16,27 @@ class BottomSheetCategory(
             super.onCreate(savedInstanceState)
         setContentView(binding.root)
         binding.imageViewStreaming.setOnClickListener{
-            onClickItem(Categories.STREAMING_TYPE)
+            onClickItem(Categories.STREAMING)
             dismiss()
         }
         binding.imageViewSocialMedia.setOnClickListener{
-            onClickItem(Categories.SOCIAL_MEDIA_TYPE)
+            onClickItem(Categories.SOCIAL_MEDIA)
             dismiss()
         }
         binding.imageViewBank.setOnClickListener{
-            onClickItem(Categories.BANKS_TYPE)
+            onClickItem(Categories.BANKS)
             dismiss()
         }
         binding.imageViewEducation.setOnClickListener{
-            onClickItem(Categories.EDUCATION_TYPE)
+            onClickItem(Categories.EDUCATION)
             dismiss()
         }
         binding.imageViewWork.setOnClickListener{
-            onClickItem(Categories.WORK_TYPE)
+            onClickItem(Categories.WORK)
             dismiss()
         }
         binding.imageViewCard.setOnClickListener{
-            onClickItem(Categories.CARD_TYPE)
+            onClickItem(Categories.CARD)
             dismiss()
         }
     }

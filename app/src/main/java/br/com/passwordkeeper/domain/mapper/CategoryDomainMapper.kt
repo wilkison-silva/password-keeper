@@ -17,23 +17,23 @@ class CategoryDomainMapper : BaseMapper<CategoryDomain, CategoryView>() {
 
     private fun getNameForCategory(category: Categories): Int {
         return when (category) {
-            Categories.STREAMING_TYPE -> R.string.streaming
-            Categories.SOCIAL_MEDIA_TYPE -> R.string.social_media
-            Categories.BANKS_TYPE -> R.string.banks
-            Categories.EDUCATION_TYPE -> R.string.education
-            Categories.WORK_TYPE -> R.string.work
-            Categories.CARD_TYPE -> R.string.cards
+            Categories.STREAMING -> R.string.streaming
+            Categories.SOCIAL_MEDIA -> R.string.social_media
+            Categories.BANKS -> R.string.banks
+            Categories.EDUCATION -> R.string.education
+            Categories.WORK -> R.string.work
+            Categories.CARD -> R.string.cards
         }
     }
 
     private fun getIconForCategory(category: Categories): Int {
         return when (category) {
-            Categories.STREAMING_TYPE -> R.drawable.ic_stream_type
-            Categories.SOCIAL_MEDIA_TYPE -> R.drawable.ic_social_media
-            Categories.BANKS_TYPE -> R.drawable.ic_bank
-            Categories.EDUCATION_TYPE -> R.drawable.ic_education
-            Categories.WORK_TYPE -> R.drawable.ic_work
-            Categories.CARD_TYPE -> R.drawable.ic_card
+            Categories.STREAMING -> R.drawable.ic_stream_type
+            Categories.SOCIAL_MEDIA -> R.drawable.ic_social_media
+            Categories.BANKS -> R.drawable.ic_bank
+            Categories.EDUCATION -> R.drawable.ic_education
+            Categories.WORK -> R.drawable.ic_work
+            Categories.CARD -> R.drawable.ic_card
         }
     }
 

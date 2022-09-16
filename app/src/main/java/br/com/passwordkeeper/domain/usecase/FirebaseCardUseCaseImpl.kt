@@ -44,7 +44,7 @@ class FirebaseCardUseCaseImpl(
         description: String,
         login: String,
         password: String,
-        category: String,
+        category: Categories,
         isFavorite: Boolean,
         date: String,
         emailUser: String,
@@ -131,22 +131,22 @@ class FirebaseCardUseCaseImpl(
                 val categoriesList: MutableList<Categories> =
                     getAllCardsRepositoryResult.cardDomainList.map { cardDomain ->
                         when (cardDomain.category) {
-                            STREAMING_TYPE -> Categories.STREAMING_TYPE
-                            SOCIAL_MEDIA_TYPE -> Categories.SOCIAL_MEDIA_TYPE
-                            BANKS_TYPE -> Categories.BANKS_TYPE
-                            EDUCATION_TYPE -> Categories.EDUCATION_TYPE
-                            WORK_TYPE -> Categories.WORK_TYPE
-                            else -> Categories.CARD_TYPE
+                            STREAMING_TYPE -> Categories.STREAMING
+                            SOCIAL_MEDIA_TYPE -> Categories.SOCIAL_MEDIA
+                            BANKS_TYPE -> Categories.BANKS
+                            EDUCATION_TYPE -> Categories.EDUCATION
+                            WORK_TYPE -> Categories.WORK
+                            else -> Categories.CARD
                         }
                     }.toMutableList()
                 val categoriesViewList = mutableListOf<CategoryView>()
 
-                addCategoryView(categoriesList, categoriesViewList, Categories.STREAMING_TYPE)
-                addCategoryView(categoriesList, categoriesViewList, Categories.SOCIAL_MEDIA_TYPE)
-                addCategoryView(categoriesList, categoriesViewList, Categories.BANKS_TYPE)
-                addCategoryView(categoriesList, categoriesViewList, Categories.EDUCATION_TYPE)
-                addCategoryView(categoriesList, categoriesViewList, Categories.WORK_TYPE)
-                addCategoryView(categoriesList, categoriesViewList, Categories.CARD_TYPE)
+                addCategoryView(categoriesList, categoriesViewList, Categories.STREAMING)
+                addCategoryView(categoriesList, categoriesViewList, Categories.SOCIAL_MEDIA)
+                addCategoryView(categoriesList, categoriesViewList, Categories.BANKS)
+                addCategoryView(categoriesList, categoriesViewList, Categories.EDUCATION)
+                addCategoryView(categoriesList, categoriesViewList, Categories.WORK)
+                addCategoryView(categoriesList, categoriesViewList, Categories.CARD)
 
                 return GetCategoriesSizeUseCaseResult.Success(categoriesViewList)
 

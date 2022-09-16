@@ -79,13 +79,14 @@ class CreateNewCardFragment : Fragment(R.layout.fragment_create_new_card) {
             requireContext(),
             onClickItem = { category: Categories ->
                 when (category) {
-                    STREAMING_TYPE -> binding.textInputEditTextCategory.setText(R.string.streaming)
-                    SOCIAL_MEDIA_TYPE -> binding.textInputEditTextCategory.setText(R.string.social_media)
-                    BANKS_TYPE -> binding.textInputEditTextCategory.setText(R.string.banks)
-                    EDUCATION_TYPE -> binding.textInputEditTextCategory.setText(R.string.education)
-                    WORK_TYPE -> binding.textInputEditTextCategory.setText(R.string.work)
-                    CARD_TYPE -> binding.textInputEditTextCategory.setText(R.string.cards)
+                    STREAMING -> binding.textInputEditTextCategory.setText(R.string.streaming)
+                    SOCIAL_MEDIA -> binding.textInputEditTextCategory.setText(R.string.social_media)
+                    BANKS -> binding.textInputEditTextCategory.setText(R.string.banks)
+                    EDUCATION -> binding.textInputEditTextCategory.setText(R.string.education)
+                    WORK -> binding.textInputEditTextCategory.setText(R.string.work)
+                    CARD -> binding.textInputEditTextCategory.setText(R.string.cards)
                 }
+                createNewCardViewModel.updateCategorySelected(category)
             }
         ).show()
     }
@@ -137,12 +138,10 @@ class CreateNewCardFragment : Fragment(R.layout.fragment_create_new_card) {
                         getString(R.string.description_is_empty)
                 }
                 is FormValidationCardStateResult.Success -> {
-                    val userView = userView
                     createNewCardViewModel.createCard(
                         description = it.description,
                         login = it.login,
                         password = it.password,
-                        category = it.category,
                         isFavorite = it.isFavorite,
                         date = it.date,
                         emailUser = userView.email
