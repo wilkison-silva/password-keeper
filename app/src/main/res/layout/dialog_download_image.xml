@@ -14,8 +14,7 @@
         app:layout_constraintEnd_toEndOf="@+id/constraintLayoutDialogDownloadImage"
         app:layout_constraintStart_toStartOf="@+id/constraintLayoutDialogDownloadImage"
         app:layout_constraintTop_toTopOf="@id/constraintLayoutDialogDownloadImage"
-        app:shapeAppearanceOverlay="@style/topRoundedImage"
-        android:src="@drawable/image_default">
+        app:shapeAppearanceOverlay="@style/topRoundedImage">
 
     </com.google.android.material.imageview.ShapeableImageView>
 
