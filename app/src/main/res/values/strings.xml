@@ -16,7 +16,7 @@
     <string name="confirm_password">Confirm password</string>
     <string name="name">Your first name/nickname here</string>
     <string name="categories">Categories</string>
-    <string name="favorite">Favorite</string>
+    <string name="favorite">Favorites</string>
     <string name="search">Search for description</string>
     <string name="hello">Hello,</string>
     <string name="advice_of_moment">Advice of moment =)</string>
@@ -85,4 +85,6 @@
     <string name="title_work">Work</string>
     <string name="title_cards">Cards</string>
     <string name="unknown_category">Unkown Category</string>
+    <string name="sort_by">Sort by:</string>
+    <string name="date">Date</string>
 </resources>

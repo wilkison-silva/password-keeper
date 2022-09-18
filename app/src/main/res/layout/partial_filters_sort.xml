@@ -12,7 +12,7 @@
         android:layout_marginStart="15dp"
         android:layout_marginTop="8dp"
         android:fontFamily="@font/inter_bold"
-        android:text="Sort by:"
+        android:text="@string/sort_by"
         android:textColor="@color/purple"
         android:textSize="14sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -45,25 +45,25 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:checked="true"
-                android:text="Description" />
+                android:text="@string/description" />
 
             <com.google.android.material.chip.Chip
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Date" />
+                android:text="@string/date" />
 
             <com.google.android.material.chip.Chip
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Category" />
+                android:text="@string/category" />
 
             <com.google.android.material.chip.Chip
                 style="@style/Widget.MaterialComponents.Chip.Choice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Favorites" />
+                android:text="@string/favorite" />
 
         </com.google.android.material.chip.ChipGroup>
 
