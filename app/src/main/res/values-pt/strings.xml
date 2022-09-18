@@ -84,4 +84,7 @@
     <string name="title_education">Educação</string>
     <string name="title_work">Trabalho</string>
     <string name="title_cards">Cartões</string>
+    <string name="unknown_category">Categoria desconhecida</string>
+    <string name="sort_by">Ordenar por:</string>
+    <string name="date">Data</string>
 </resources>

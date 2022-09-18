@@ -2,9 +2,7 @@ package br.com.passwordkeeper.presentation.ui.fragment
 
 import android.os.Bundle
 import android.view.View
-import android.view.View.GONE
-import android.view.View.VISIBLE
-import androidx.annotation.StringRes
+import android.view.View.*
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import br.com.passwordkeeper.R
@@ -78,7 +76,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         homeViewModel.adviceState.observe(viewLifecycleOwner) {
             when (it) {
                 is GetAdviceStateResult.Loading -> {
-                    binding.textViewMessage.text = getString(R.string.loading)
+                    showHeaderShimmer()
                 }
                 is GetAdviceStateResult.Success -> {
                     val adviceView = it.adviceView
@@ -86,15 +84,28 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                         homeViewModel.getAdviceWithFirstLetterBold(adviceView)
                     binding.textViewTheAdviceAbove.text =
                         getString(R.string.the_advice_above, adviceView.quantityWords)
+                    hideHeaderShimmer()
                 }
                 is GetAdviceStateResult.SuccessWithoutMessage -> {
                     binding.textViewMessage.text = getString(R.string.no_message_found)
+                    hideHeaderShimmer()
                 }
                 is GetAdviceStateResult.ErrorUnknown -> {
                     binding.textViewMessage.text = getString(R.string.error)
+                    hideHeaderShimmer()
                 }
             }
         }
+    }
+
+    private fun hideHeaderShimmer() {
+        binding.shimmerFrameLayout.visibility = GONE
+        binding.constraintLayoutContentHeader.visibility = VISIBLE
+    }
+
+    private fun showHeaderShimmer() {
+        binding.shimmerFrameLayout.visibility = VISIBLE
+        binding.constraintLayoutContentHeader.visibility = INVISIBLE
     }
 
     private fun updateAdviceState() {
