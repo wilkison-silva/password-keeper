@@ -4,6 +4,10 @@ import br.com.passwordkeeper.R
 import br.com.passwordkeeper.domain.model.CardDomain
 import br.com.passwordkeeper.domain.model.CardView
 import br.com.passwordkeeper.domain.model.Categories
+import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.util.*
 
 class CardDomainMapper : BaseMapper<CardDomain, CardView>() {
 
@@ -16,8 +20,13 @@ class CardDomainMapper : BaseMapper<CardDomain, CardView>() {
             category = getNameForCategory(model.category),
             favorite = model.isFavorite,
             iconHeart = getIconHeart(model.isFavorite),
-            date = model.date
+            dateAsString = model.date,
+            date = getDateFromString(model.date)
         )
+    }
+
+    private fun getDateFromString(dateAsString: String) : LocalDate {
+        return LocalDate.parse(dateAsString, DateTimeFormatter.ofPattern("dd/MM/yyyy"))
     }
 
     private fun getNameForCategory(category: String): Int {

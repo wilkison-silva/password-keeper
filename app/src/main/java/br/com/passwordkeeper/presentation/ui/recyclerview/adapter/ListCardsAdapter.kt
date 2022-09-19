@@ -46,7 +46,7 @@ class ListCardsAdapter(
         fun bind(cardView: CardView) {
             binding.textViewAllCategoriesDescription.text = cardView.description
             binding.textViewAllCategoriesTextType.text = context.getString(cardView.category)
-            binding.textViewAllCategoriesDate.text = cardView.date
+            binding.textViewAllCategoriesDate.text = cardView.dateAsString
             binding.imageViewAllCategoriesIconHeart.setImageResource(cardView.iconHeart)
         }
 

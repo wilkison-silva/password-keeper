@@ -67,6 +67,8 @@ class HomeViewModel(
                 is GetFavoriteCardsUseCaseResult.Success -> {
                     val cardViewList = getFavoriteCardsUseCaseResult.cardViewList
                     if (cardViewList.isNotEmpty()) {
+                        //SALVAR A LISTA em uma variável
+                        //ORDENAR a LISTA pelo campo date
                         _favoriteCardsState.postValue(
                             GetFavoriteCardsStateResult.Success(
                                 getFavoriteCardsUseCaseResult.cardViewList
