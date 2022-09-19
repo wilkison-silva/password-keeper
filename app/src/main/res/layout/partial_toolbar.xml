@@ -1,22 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
     android:background="@color/purple">
+
+    <View
+        android:id="@+id/view_circle"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="20dp"
+        android:background="@drawable/rounded_textview"
+        android:backgroundTint="@color/purple_200"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
         android:id="@+id/imageButtonBack"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
-        android:layout_marginStart="15dp"
+        android:layout_width="0dp"
+        android:layout_height="15dp"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:backgroundTint="@color/purple"
         android:contentDescription="@string/image_about_the_card"
-        android:src="@drawable/ic_back"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:src="@drawable/ic_bottom_back"
+        app:layout_constraintBottom_toBottomOf="@+id/view_circle"
+        app:layout_constraintEnd_toEndOf="@+id/view_circle"
+        app:layout_constraintTop_toTopOf="@+id/view_circle" />
 
     <TextView
         android:id="@+id/textViewTitle"
@@ -26,9 +36,33 @@
         android:textColor="@color/white"
         android:textFontWeight="700"
         android:textSize="24sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/view_circle2"
+        app:layout_constraintStart_toEndOf="@+id/view_circle"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="@string/title_list_cards" />
+
+    <View
+        android:id="@+id/view_circle2"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_marginEnd="20dp"
+        android:visibility="invisible"
+        android:background="@drawable/rounded_textview"
+        android:backgroundTint="@color/purple_200"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/imageButton"
+        android:layout_width="0dp"
+        android:layout_height="15dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:backgroundTint="@color/purple"
+        android:visibility="invisible"
+        android:contentDescription="@string/image_about_the_card"
+        android:src="@drawable/ic_bottom_back"
+        app:layout_constraintBottom_toBottomOf="@+id/view_circle2"
+        app:layout_constraintEnd_toEndOf="@+id/view_circle2"
+        app:layout_constraintTop_toTopOf="@+id/view_circle2" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
