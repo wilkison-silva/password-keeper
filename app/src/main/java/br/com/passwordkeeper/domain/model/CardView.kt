@@ -2,6 +2,7 @@ package br.com.passwordkeeper.domain.model
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
+import java.time.LocalDate
 
 data class CardView(
     val cardId: String,
@@ -11,5 +12,6 @@ data class CardView(
     @StringRes val category: Int,
     val favorite: Boolean,
     @DrawableRes val iconHeart: Int,
-    val date: String
+    val dateAsString: String,
+    val date: LocalDate
 )
