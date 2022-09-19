@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.com.passwordkeeper.domain.model.AdviceView
+import br.com.passwordkeeper.domain.model.CardView
 import br.com.passwordkeeper.domain.result.usecase.GetAdviceUseCaseResult
 import br.com.passwordkeeper.domain.result.usecase.GetCategoriesSizeUseCaseResult
 import br.com.passwordkeeper.domain.result.usecase.GetFavoriteCardsUseCaseResult
@@ -15,11 +16,13 @@ import br.com.passwordkeeper.domain.result.viewmodelstate.GetCategoriesSizeState
 import br.com.passwordkeeper.domain.result.viewmodelstate.GetFavoriteCardsStateResult
 import br.com.passwordkeeper.domain.usecase.AdviceUseCase
 import br.com.passwordkeeper.domain.usecase.CardUseCase
+import br.com.passwordkeeper.presentation.ui.recyclerview.adapter.FavoriteAdapter
+import br.com.passwordkeeper.presentation.ui.recyclerview.adapter.ListCardsAdapter
 import kotlinx.coroutines.launch
 
 class HomeViewModel(
     private val adviceUseCase: AdviceUseCase,
-    private val cardUseCase: CardUseCase
+    private val cardUseCase: CardUseCase,
 ) : ViewModel() {
 
     private val _adviceState = MutableLiveData<GetAdviceStateResult>()
@@ -67,11 +70,13 @@ class HomeViewModel(
                 is GetFavoriteCardsUseCaseResult.Success -> {
                     val cardViewList = getFavoriteCardsUseCaseResult.cardViewList
                     if (cardViewList.isNotEmpty()) {
-                        //SALVAR A LISTA em uma variável
-                        //ORDENAR a LISTA pelo campo date
+                        val favoriteCardsList = getFavoriteCardsUseCaseResult.cardViewList
+                        val sortedList = favoriteCardsList.sortedByDescending {
+                            it.date
+                        }
                         _favoriteCardsState.postValue(
                             GetFavoriteCardsStateResult.Success(
-                                getFavoriteCardsUseCaseResult.cardViewList
+                               sortedList
                             )
                         )
                     } else
