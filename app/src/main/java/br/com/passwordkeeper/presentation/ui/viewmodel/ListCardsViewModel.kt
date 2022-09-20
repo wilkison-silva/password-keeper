@@ -1,12 +1,13 @@
 package br.com.passwordkeeper.presentation.ui.viewmodel
 
-import androidx.annotation.StringRes
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.com.passwordkeeper.R
+import br.com.passwordkeeper.domain.model.CardView
 import br.com.passwordkeeper.domain.model.Categories
+import br.com.passwordkeeper.domain.model.FiltersListCard
 import br.com.passwordkeeper.domain.result.usecase.GetAllCardsUseCaseResult
 import br.com.passwordkeeper.domain.result.usecase.GetCardsByCategoryUseCaseResult
 import br.com.passwordkeeper.domain.result.viewmodelstate.GetAllCardsStateResult
@@ -14,16 +15,41 @@ import br.com.passwordkeeper.domain.usecase.CardUseCase
 import kotlinx.coroutines.launch
 
 class ListCardsViewModel(
-    private val cardUseCase: CardUseCase
+    private val cardUseCase: CardUseCase,
 ) : ViewModel() {
 
     private val _allCards = MutableLiveData<GetAllCardsStateResult>()
     val allCards: LiveData<GetAllCardsStateResult>
         get() = _allCards
 
+    private fun sortByDescription(listCardsView: List<CardView>) : List<CardView> {
+        return listCardsView.sortedBy {
+            it.description
+        }
+    }
+
+    private fun sortByDate(listCardsView: List<CardView>) : List<CardView> {
+        return listCardsView.sortedByDescending {
+            it.date
+        }
+    }
+
+    private fun sortByCategory(listCardsView: List<CardView>) : List<CardView> {
+        return listCardsView.sortedBy {
+            it.category
+        }
+    }
+
+    private fun sortByFavorites(listCardsView: List<CardView>) : List<CardView> {
+        return listCardsView.sortedBy {
+            it.favorite
+        }
+    }
+
     fun updateCards(
         email: String,
-        category: Categories
+        category: Categories,
+        filter: FiltersListCard
     ) {
         viewModelScope.launch {
             _allCards.postValue(GetAllCardsStateResult.Loading)
@@ -33,7 +59,26 @@ class ListCardsViewModel(
                         _allCards.postValue(GetAllCardsStateResult.ErrorUnknown)
                     }
                     is GetAllCardsUseCaseResult.Success -> {
-                        _allCards.postValue(GetAllCardsStateResult.Success(getAllCardsUseCaseResult.cardViewList))
+                        if (filter == FiltersListCard.DESCRIPTION) {
+                            val listCard = getAllCardsUseCaseResult.cardViewList
+                            val sortedList = sortByDescription(listCard)
+                            _allCards.postValue(GetAllCardsStateResult.Success(sortedList))
+                        }
+                        if (filter == FiltersListCard.DATE) {
+                            val listCard = getAllCardsUseCaseResult.cardViewList
+                            val sortedList = sortByDate(listCard)
+                            _allCards.postValue(GetAllCardsStateResult.Success(sortedList))
+                        }
+                        if (filter == FiltersListCard.CATEGORY) {
+                            val listCard = getAllCardsUseCaseResult.cardViewList
+                            val sortedList = sortByCategory(listCard)
+                            _allCards.postValue(GetAllCardsStateResult.Success(sortedList))
+                        }
+                        if (filter == FiltersListCard.FAVORITES) {
+                            val listCard = getAllCardsUseCaseResult.cardViewList
+                            val sortedList = sortByFavorites(listCard)
+                            _allCards.postValue(GetAllCardsStateResult.Success(sortedList))
+                        }
                     }
                 }
             } else {
@@ -41,7 +86,26 @@ class ListCardsViewModel(
                     cardUseCase.getCardsByCategory(category.name, email)) {
                     is GetCardsByCategoryUseCaseResult.ErrorUnknown -> {}
                     is GetCardsByCategoryUseCaseResult.Success -> {
-                        _allCards.postValue(GetAllCardsStateResult.Success(getAllCardsUseCaseResult.cardViewList))
+                        if (filter == FiltersListCard.DESCRIPTION) {
+                            val listCard = getAllCardsUseCaseResult.cardViewList
+                            val sortedList = sortByDescription(listCard)
+                            _allCards.postValue(GetAllCardsStateResult.Success(sortedList))
+                        }
+                        if (filter == FiltersListCard.DATE) {
+                            val listCard = getAllCardsUseCaseResult.cardViewList
+                            val sortedList = sortByDate(listCard)
+                            _allCards.postValue(GetAllCardsStateResult.Success(sortedList))
+                        }
+                        if (filter == FiltersListCard.CATEGORY) {
+                            val listCard = getAllCardsUseCaseResult.cardViewList
+                            val sortedList = sortByCategory(listCard)
+                            _allCards.postValue(GetAllCardsStateResult.Success(sortedList))
+                        }
+                        if (filter == FiltersListCard.FAVORITES) {
+                            val listCard = getAllCardsUseCaseResult.cardViewList
+                            val sortedList = sortByCategory(listCard)
+                            _allCards.postValue(GetAllCardsStateResult.Success(sortedList))
+                        }
                     }
                 }
             }
