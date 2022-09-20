@@ -12,39 +12,17 @@ import br.com.passwordkeeper.domain.result.usecase.GetAllCardsUseCaseResult
 import br.com.passwordkeeper.domain.result.usecase.GetCardsByCategoryUseCaseResult
 import br.com.passwordkeeper.domain.result.viewmodelstate.GetAllCardsStateResult
 import br.com.passwordkeeper.domain.usecase.CardUseCase
+import br.com.passwordkeeper.domain.usecase.SortCardViewListUseCase
 import kotlinx.coroutines.launch
 
 class ListCardsViewModel(
     private val cardUseCase: CardUseCase,
+    private val sortCardViewListUseCase: SortCardViewListUseCase
 ) : ViewModel() {
 
     private val _allCards = MutableLiveData<GetAllCardsStateResult>()
     val allCards: LiveData<GetAllCardsStateResult>
         get() = _allCards
-
-    private fun sortByDescription(listCardsView: List<CardView>) : List<CardView> {
-        return listCardsView.sortedBy {
-            it.description
-        }
-    }
-
-    private fun sortByDate(listCardsView: List<CardView>) : List<CardView> {
-        return listCardsView.sortedByDescending {
-            it.date
-        }
-    }
-
-    private fun sortByCategory(listCardsView: List<CardView>) : List<CardView> {
-        return listCardsView.sortedBy {
-            it.category
-        }
-    }
-
-    private fun sortByFavorites(listCardsView: List<CardView>) : List<CardView> {
-        return listCardsView.sortedBy {
-            it.favorite
-        }
-    }
 
     fun updateCards(
         email: String,
@@ -61,22 +39,22 @@ class ListCardsViewModel(
                     is GetAllCardsUseCaseResult.Success -> {
                         if (filter == FiltersListCard.DESCRIPTION) {
                             val listCard = getAllCardsUseCaseResult.cardViewList
-                            val sortedList = sortByDescription(listCard)
+                            val sortedList = sortCardViewListUseCase.sortByDescription(listCard)
                             _allCards.postValue(GetAllCardsStateResult.Success(sortedList))
                         }
                         if (filter == FiltersListCard.DATE) {
                             val listCard = getAllCardsUseCaseResult.cardViewList
-                            val sortedList = sortByDate(listCard)
+                            val sortedList = sortCardViewListUseCase.sortByDate(listCard)
                             _allCards.postValue(GetAllCardsStateResult.Success(sortedList))
                         }
                         if (filter == FiltersListCard.CATEGORY) {
                             val listCard = getAllCardsUseCaseResult.cardViewList
-                            val sortedList = sortByCategory(listCard)
+                            val sortedList = sortCardViewListUseCase.sortByCategory(listCard)
                             _allCards.postValue(GetAllCardsStateResult.Success(sortedList))
                         }
                         if (filter == FiltersListCard.FAVORITES) {
                             val listCard = getAllCardsUseCaseResult.cardViewList
-                            val sortedList = sortByFavorites(listCard)
+                            val sortedList = sortCardViewListUseCase.sortByFavorites(listCard)
                             _allCards.postValue(GetAllCardsStateResult.Success(sortedList))
                         }
                     }
@@ -88,22 +66,22 @@ class ListCardsViewModel(
                     is GetCardsByCategoryUseCaseResult.Success -> {
                         if (filter == FiltersListCard.DESCRIPTION) {
                             val listCard = getAllCardsUseCaseResult.cardViewList
-                            val sortedList = sortByDescription(listCard)
+                            val sortedList = sortCardViewListUseCase.sortByDescription(listCard)
                             _allCards.postValue(GetAllCardsStateResult.Success(sortedList))
                         }
                         if (filter == FiltersListCard.DATE) {
                             val listCard = getAllCardsUseCaseResult.cardViewList
-                            val sortedList = sortByDate(listCard)
+                            val sortedList = sortCardViewListUseCase.sortByDate(listCard)
                             _allCards.postValue(GetAllCardsStateResult.Success(sortedList))
                         }
                         if (filter == FiltersListCard.CATEGORY) {
                             val listCard = getAllCardsUseCaseResult.cardViewList
-                            val sortedList = sortByCategory(listCard)
+                            val sortedList = sortCardViewListUseCase.sortByCategory(listCard)
                             _allCards.postValue(GetAllCardsStateResult.Success(sortedList))
                         }
                         if (filter == FiltersListCard.FAVORITES) {
                             val listCard = getAllCardsUseCaseResult.cardViewList
-                            val sortedList = sortByCategory(listCard)
+                            val sortedList = sortCardViewListUseCase.sortByFavorites(listCard)
                             _allCards.postValue(GetAllCardsStateResult.Success(sortedList))
                         }
                     }

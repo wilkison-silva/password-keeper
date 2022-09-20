@@ -142,7 +142,7 @@ class ListCardsFragment : Fragment(R.layout.fragment_list_cards) {
     }
 
     private fun setupButtonFavorites() {
-        binding.filterSortBar.filterCategory.setOnClickListener {
+        binding.filterSortBar.filterFavorites.setOnClickListener {
             updateCards(filter = FiltersListCard.FAVORITES)
         }
     }
