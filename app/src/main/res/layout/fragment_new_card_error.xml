@@ -22,7 +22,6 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="20dp"
-        android:fontFamily="@font/inter"
         android:text="@string/sorry_something_went_wrong"
         android:textAlignment="center"
         android:textColor="@color/purple_700"
