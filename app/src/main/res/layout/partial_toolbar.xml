@@ -35,6 +35,7 @@
         android:textColor="@color/white"
         android:textFontWeight="700"
         android:textSize="24sp"
+        android:fontFamily="@font/inter_bold"
         app:layout_constraintEnd_toStartOf="@+id/view_circle2"
         app:layout_constraintStart_toEndOf="@+id/view_circle"
         app:layout_constraintTop_toTopOf="parent"
