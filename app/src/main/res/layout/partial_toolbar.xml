@@ -32,7 +32,6 @@
         android:id="@+id/textViewTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/inter_bold"
         android:textColor="@color/white"
         android:textFontWeight="700"
         android:textSize="24sp"
