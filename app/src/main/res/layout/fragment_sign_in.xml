@@ -51,7 +51,7 @@
         android:layout_width="match_parent"
         android:layout_height="460dp"
         android:background="@drawable/background_rounded_tops"
-        app:layout_constraintBottom_toBottomOf="parent" >
+        app:layout_constraintBottom_toBottomOf="parent">
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -98,16 +98,14 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tiEmail"
-        app:startIconDrawable="@drawable/ic_lock"
-        >
+        app:startIconDrawable="@drawable/ic_lock">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/inputPassword"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:imeOptions="actionDone"
-            android:inputType="textPassword"
-             />
+            android:inputType="textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <ProgressBar
@@ -116,8 +114,8 @@
         android:layout_width="25dp"
         android:layout_height="50dp"
         android:layout_marginStart="40dp"
-        android:visibility="gone"
         android:elevation="5dp"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@+id/mbSignIn"
         app:layout_constraintStart_toStartOf="@+id/mbSignIn"
         app:layout_constraintTop_toTopOf="@+id/mbSignIn" />
@@ -140,8 +138,8 @@
         android:id="@+id/materialButtonSignUp"
         android:layout_width="250dp"
         android:layout_height="50dp"
-        android:backgroundTint="@color/white"
         android:layout_marginTop="10dp"
+        android:backgroundTint="@color/white"
         android:fontFamily="@font/inter_bold"
         android:text="@string/sign_up"
         android:textColor="@color/purple"
@@ -156,8 +154,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="36dp"
-        android:text="@string/or"
         android:fontFamily="@font/inter_bold"
+        android:text="@string/or"
         android:textColor="@color/purple"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -193,9 +191,9 @@
         android:layout_height="50dp"
         android:layout_marginTop="35dp"
         android:backgroundTint="@color/white"
+        android:fontFamily="@font/inter_bold"
         android:text="@string/sign_in_with_google"
         android:textColor="@color/purple"
-        android:fontFamily="@font/inter_bold"
         android:textSize="12sp"
         app:cornerRadius="30dp"
         app:icon="@drawable/ic_google"
