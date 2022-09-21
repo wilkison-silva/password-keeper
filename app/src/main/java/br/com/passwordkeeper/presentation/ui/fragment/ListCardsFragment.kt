@@ -10,6 +10,7 @@ import androidx.navigation.fragment.navArgs
 import br.com.passwordkeeper.R
 import br.com.passwordkeeper.databinding.FragmentListCardsBinding
 import br.com.passwordkeeper.domain.model.Categories
+import br.com.passwordkeeper.domain.model.FiltersListCard
 import br.com.passwordkeeper.domain.result.viewmodelstate.CurrentUserState
 import br.com.passwordkeeper.domain.result.viewmodelstate.GetAllCardsStateResult
 import br.com.passwordkeeper.presentation.ui.recyclerview.adapter.ListCardsAdapter
@@ -18,6 +19,7 @@ import br.com.passwordkeeper.presentation.ui.viewmodel.MainViewModel
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import java.util.*
 
 class ListCardsFragment : Fragment(R.layout.fragment_list_cards) {
 
@@ -30,7 +32,6 @@ class ListCardsFragment : Fragment(R.layout.fragment_list_cards) {
     private val category by lazy {
         arguments.category
     }
-
 
     private val navController by lazy {
         findNavController()
@@ -60,8 +61,12 @@ class ListCardsFragment : Fragment(R.layout.fragment_list_cards) {
                 is CurrentUserState.Success -> {
                     setupListCardsRecyclerView()
                     setupButtonBack()
-                    updateCards()
+                    updateCards(filter = FiltersListCard.DESCRIPTION)
                     observeCards()
+                    setupButtonDescription()
+                    setupButtonDate()
+                    setupButtonCategory()
+                    setupButtonFavorites()
                 }
             }
         }
@@ -99,10 +104,11 @@ class ListCardsFragment : Fragment(R.layout.fragment_list_cards) {
         }
     }
 
-    private fun updateCards() {
+    private fun updateCards(filter: FiltersListCard) {
         listCardsViewModel.updateCards(
             email = userView.email,
-            category = category
+            category = category,
+            filter = filter,
         )
     }
 
@@ -117,4 +123,27 @@ class ListCardsFragment : Fragment(R.layout.fragment_list_cards) {
         }
     }
 
+    private fun setupButtonDescription() {
+        binding.filterSortBar.filterDescription.setOnClickListener {
+         updateCards(filter = FiltersListCard.DESCRIPTION)
+        }
+    }
+
+    private fun setupButtonDate() {
+        binding.filterSortBar.filterDate.setOnClickListener {
+            updateCards(filter = FiltersListCard.DATE)
+        }
+    }
+
+    private fun setupButtonCategory() {
+        binding.filterSortBar.filterCategory.setOnClickListener {
+            updateCards(filter = FiltersListCard.CATEGORY)
+        }
+    }
+
+    private fun setupButtonFavorites() {
+        binding.filterSortBar.filterFavorites.setOnClickListener {
+            updateCards(filter = FiltersListCard.FAVORITES)
+        }
+    }
 }

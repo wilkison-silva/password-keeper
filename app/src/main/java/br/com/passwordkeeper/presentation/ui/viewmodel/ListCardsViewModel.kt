@@ -1,29 +1,56 @@
 package br.com.passwordkeeper.presentation.ui.viewmodel
 
-import androidx.annotation.StringRes
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.com.passwordkeeper.R
+import br.com.passwordkeeper.domain.model.CardView
 import br.com.passwordkeeper.domain.model.Categories
+import br.com.passwordkeeper.domain.model.FiltersListCard
 import br.com.passwordkeeper.domain.result.usecase.GetAllCardsUseCaseResult
 import br.com.passwordkeeper.domain.result.usecase.GetCardsByCategoryUseCaseResult
 import br.com.passwordkeeper.domain.result.viewmodelstate.GetAllCardsStateResult
 import br.com.passwordkeeper.domain.usecase.CardUseCase
+import br.com.passwordkeeper.domain.usecase.SortCardViewListUseCase
 import kotlinx.coroutines.launch
 
 class ListCardsViewModel(
-    private val cardUseCase: CardUseCase
+    private val cardUseCase: CardUseCase,
+    private val sortCardViewListUseCase: SortCardViewListUseCase
 ) : ViewModel() {
 
     private val _allCards = MutableLiveData<GetAllCardsStateResult>()
     val allCards: LiveData<GetAllCardsStateResult>
         get() = _allCards
 
+    private fun getSortedCardViewList(
+        filter: FiltersListCard,
+        cardViewList: List<CardView>
+    ): List<CardView> {
+        return when (filter) {
+            FiltersListCard.DESCRIPTION -> sortCardViewListUseCase.sortByDescription(cardViewList)
+            FiltersListCard.DATE -> sortCardViewListUseCase.sortByDate(cardViewList)
+            FiltersListCard.CATEGORY -> sortCardViewListUseCase.sortByCategory(cardViewList)
+            FiltersListCard.FAVORITES -> sortCardViewListUseCase.sortByFavorites(cardViewList)
+        }
+    }
+
+    private fun updateSortedCards(
+        cardViewList: List<CardView>,
+        filter: FiltersListCard
+    ) {
+        val sortedList = getSortedCardViewList(
+            filter = filter,
+            cardViewList = cardViewList
+        )
+        _allCards.postValue(GetAllCardsStateResult.Success(sortedList))
+    }
+
     fun updateCards(
         email: String,
-        category: Categories
+        category: Categories,
+        filter: FiltersListCard
     ) {
         viewModelScope.launch {
             _allCards.postValue(GetAllCardsStateResult.Loading)
@@ -33,22 +60,30 @@ class ListCardsViewModel(
                         _allCards.postValue(GetAllCardsStateResult.ErrorUnknown)
                     }
                     is GetAllCardsUseCaseResult.Success -> {
-                        _allCards.postValue(GetAllCardsStateResult.Success(getAllCardsUseCaseResult.cardViewList))
+                        updateSortedCards(
+                            cardViewList = getAllCardsUseCaseResult.cardViewList,
+                            filter = filter
+                        )
                     }
                 }
             } else {
-                when (val getAllCardsUseCaseResult =
+                when (val getCardsByCategoryUseCaseResult =
                     cardUseCase.getCardsByCategory(category.name, email)) {
-                    is GetCardsByCategoryUseCaseResult.ErrorUnknown -> {}
+                    is GetCardsByCategoryUseCaseResult.ErrorUnknown -> {
+                        _allCards.postValue(GetAllCardsStateResult.ErrorUnknown)
+                    }
                     is GetCardsByCategoryUseCaseResult.Success -> {
-                        _allCards.postValue(GetAllCardsStateResult.Success(getAllCardsUseCaseResult.cardViewList))
+                        updateSortedCards(
+                            cardViewList = getCardsByCategoryUseCaseResult.cardViewList,
+                            filter = filter
+                        )
                     }
                 }
             }
         }
     }
 
-    fun getTitle(category: Categories) : Int{
+    fun getTitle(category: Categories): Int {
         return when (category) {
             Categories.STREAMING -> R.string.title_streaming
             Categories.SOCIAL_MEDIA -> R.string.title_social_media

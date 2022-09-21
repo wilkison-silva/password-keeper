@@ -115,6 +115,7 @@ val useCaseModule = module {
             get<Context>()
         )
     }
+    single<SortCardViewListUseCase> { SortCardViewListUseCaseImpl(get<Context>()) }
 }
 
 val viewModelModule = module {
@@ -146,7 +147,8 @@ val viewModelModule = module {
     }
     viewModel<ListCardsViewModel> {
         ListCardsViewModel(
-            get<CardUseCase>()
+            get<CardUseCase>(),
+            get<SortCardViewListUseCase>()
         )
     }
 }
