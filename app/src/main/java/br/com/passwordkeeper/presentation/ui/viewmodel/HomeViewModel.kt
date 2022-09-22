@@ -7,7 +7,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.com.passwordkeeper.domain.model.AdviceView
-import br.com.passwordkeeper.domain.model.CardView
 import br.com.passwordkeeper.domain.result.usecase.GetAdviceUseCaseResult
 import br.com.passwordkeeper.domain.result.usecase.GetCategoriesSizeUseCaseResult
 import br.com.passwordkeeper.domain.result.usecase.GetFavoriteCardsUseCaseResult
@@ -16,13 +15,13 @@ import br.com.passwordkeeper.domain.result.viewmodelstate.GetCategoriesSizeState
 import br.com.passwordkeeper.domain.result.viewmodelstate.GetFavoriteCardsStateResult
 import br.com.passwordkeeper.domain.usecase.AdviceUseCase
 import br.com.passwordkeeper.domain.usecase.CardUseCase
-import br.com.passwordkeeper.presentation.ui.recyclerview.adapter.FavoriteAdapter
-import br.com.passwordkeeper.presentation.ui.recyclerview.adapter.ListCardsAdapter
+import br.com.passwordkeeper.domain.usecase.SortCardViewListUseCase
 import kotlinx.coroutines.launch
 
 class HomeViewModel(
     private val adviceUseCase: AdviceUseCase,
     private val cardUseCase: CardUseCase,
+    private val sortCardViewListUseCase: SortCardViewListUseCase
 ) : ViewModel() {
 
     private val _adviceState = MutableLiveData<GetAdviceStateResult>()
@@ -70,8 +69,8 @@ class HomeViewModel(
                 is GetFavoriteCardsUseCaseResult.Success -> {
                     val cardViewList = getFavoriteCardsUseCaseResult.cardViewList
                     if (cardViewList.isNotEmpty()) {
-                        val favoriteCardsList = getFavoriteCardsUseCaseResult.cardViewList
-                        val sortedList = favoriteCardsList.sortedByDescending {
+                        val favoriteCardList = sortCardViewListUseCase.sortByFavorites(cardViewList)
+                        val sortedList = favoriteCardList.sortedByDescending {
                             it.date
                         }
                         _favoriteCardsState.postValue(
