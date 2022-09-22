@@ -32,10 +32,10 @@
         android:id="@+id/textViewTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:fontFamily="@font/inter_bold"
         android:textColor="@color/white"
         android:textFontWeight="700"
         android:textSize="24sp"
-        android:fontFamily="@font/inter_bold"
         app:layout_constraintEnd_toStartOf="@+id/view_circle2"
         app:layout_constraintStart_toEndOf="@+id/view_circle"
         app:layout_constraintTop_toTopOf="parent"
@@ -46,9 +46,9 @@
         android:layout_width="35dp"
         android:layout_height="35dp"
         android:layout_marginEnd="20dp"
-        android:visibility="invisible"
         android:background="@drawable/rounded_textview"
         android:backgroundTint="@color/purple_bottom_back"
+        android:visibility="invisible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -58,9 +58,9 @@
         android:layout_height="15dp"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:backgroundTint="@color/purple"
-        android:visibility="invisible"
         android:contentDescription="@string/image_about_the_card"
         android:src="@drawable/ic_bottom_back"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="@+id/view_circle2"
         app:layout_constraintEnd_toEndOf="@+id/view_circle2"
         app:layout_constraintTop_toTopOf="@+id/view_circle2" />
