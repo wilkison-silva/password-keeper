@@ -24,10 +24,11 @@
             android:id="@+id/textInputSearchIcon"
             style="@style/TextInputEditText"
             android:layout_width="match_parent"
-            android:textSize="13sp"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/inter_regular"
             android:hint="@string/search"
-            android:imeOptions="actionSearch"/>
+            android:imeOptions="actionSearch"
+            android:textSize="13sp" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
