@@ -69,10 +69,7 @@ class HomeViewModel(
                 is GetFavoriteCardsUseCaseResult.Success -> {
                     val cardViewList = getFavoriteCardsUseCaseResult.cardViewList
                     if (cardViewList.isNotEmpty()) {
-                        sortCardViewListUseCase.sortByDate(cardViewList)
-                        val sortedList = cardViewList.sortedByDescending {
-                            it.date
-                        }
+                        val sortedList = sortCardViewListUseCase.sortByDate(cardViewList)
                         _favoriteCardsState.postValue(
                             GetFavoriteCardsStateResult.Success(
                                sortedList
