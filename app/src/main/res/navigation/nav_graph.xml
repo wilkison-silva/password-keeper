@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/fragmentSignIn"
-        android:name="br.com.passwordkeeper.presentation.ui.fragment.SignInFragment"
+        android:name="br.com.passwordkeeper.presentation.features.sign_in.SignInFragment"
         android:label="LoginFragment"
         tools:layout="@layout/fragment_sign_in">
         <action
@@ -26,7 +26,7 @@
 
     <fragment
         android:id="@+id/fragmentSignUp"
-        android:name="br.com.passwordkeeper.presentation.ui.fragment.SignUpFragment"
+        android:name="br.com.passwordkeeper.presentation.features.sign_up.SignUpFragment"
         android:label="fragmentSignUp"
         tools:layout="@layout/fragment_sign_up">
         <action
@@ -40,12 +40,12 @@
     </fragment>
     <fragment
         android:id="@+id/FragmentSignUpCongrats"
-        android:name="br.com.passwordkeeper.presentation.ui.fragment.SignUpCongratsFragment"
+        android:name="br.com.passwordkeeper.presentation.features.sign_up_congrats.SignUpCongratsFragment"
         android:label="FragmentSignUpCongrats"
         tools:layout="@layout/fragment_sign_up_congrats"/>
     <fragment
         android:id="@+id/fragmentHome"
-        android:name="br.com.passwordkeeper.presentation.ui.fragment.HomeFragment"
+        android:name="br.com.passwordkeeper.presentation.features.home.HomeFragment"
         android:label="HomeFragment"
         tools:layout="@layout/fragment_home">
         <action
@@ -58,7 +58,7 @@
     </fragment>
     <fragment
         android:id="@+id/fragmentCreateNewCard"
-        android:name="br.com.passwordkeeper.presentation.ui.fragment.CreateNewCardFragment"
+        android:name="br.com.passwordkeeper.presentation.features.create_card.CreateNewCardFragment"
         android:label="fragmentCreateNewCard"
         tools:layout="@layout/fragment_create_new_card">
         <action
@@ -72,21 +72,21 @@
     </fragment>
     <fragment
         android:id="@+id/fragmentListCards"
-        android:name="br.com.passwordkeeper.presentation.ui.fragment.ListCardsFragment"
+        android:name="br.com.passwordkeeper.presentation.features.list_cards.ListCardsFragment"
         android:label="FragmentListCards"
         tools:layout="@layout/fragment_list_cards" >
         <argument
             android:name="category"
-            app:argType="br.com.passwordkeeper.domain.model.Categories" />
+            app:argType="br.com.passwordkeeper.commons.Categories" />
     </fragment>
     <fragment
         android:id="@+id/fragmentNewCardSuccess"
-        android:name="br.com.passwordkeeper.presentation.ui.fragment.NewCardSuccessFragment"
+        android:name="br.com.passwordkeeper.presentation.features.create_card.NewCardSuccessFragment"
         android:label="FragmentNewCardSuccess"
         tools:layout="@layout/fragment_new_card_success" />
     <fragment
         android:id="@+id/fragmentNewCardError"
-        android:name="br.com.passwordkeeper.presentation.ui.fragment.NewCardErrorFragment"
+        android:name="br.com.passwordkeeper.presentation.features.create_card.NewCardErrorFragment"
         android:label="NewCardErrorFragment"
         tools:layout="@layout/fragment_new_card_error" />
     <action

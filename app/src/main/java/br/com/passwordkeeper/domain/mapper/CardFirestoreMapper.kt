@@ -1,7 +1,7 @@
 package br.com.passwordkeeper.domain.mapper
 
-import br.com.passwordkeeper.domain.model.CardData
-import br.com.passwordkeeper.domain.model.CardFirestore
+import br.com.passwordkeeper.data.model.CardData
+import br.com.passwordkeeper.data.model.CardFirestore
 
 class CardFirestoreMapper : BaseMapper<CardFirestore, CardData>() {
 

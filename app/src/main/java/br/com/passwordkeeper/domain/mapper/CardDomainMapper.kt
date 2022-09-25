@@ -2,12 +2,10 @@ package br.com.passwordkeeper.domain.mapper
 
 import br.com.passwordkeeper.R
 import br.com.passwordkeeper.domain.model.CardDomain
-import br.com.passwordkeeper.domain.model.CardView
-import br.com.passwordkeeper.domain.model.Categories
-import java.text.SimpleDateFormat
+import br.com.passwordkeeper.presentation.model.CardView
+import br.com.passwordkeeper.commons.Categories
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
-import java.util.*
 
 class CardDomainMapper : BaseMapper<CardDomain, CardView>() {
 

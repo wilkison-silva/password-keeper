@@ -1,6 +1,6 @@
 package br.com.passwordkeeper.domain.mapper
 
-import br.com.passwordkeeper.domain.model.CardData
+import br.com.passwordkeeper.data.model.CardData
 import br.com.passwordkeeper.domain.model.CardDomain
 
 class CardDataMapper : BaseMapper<CardData, CardDomain>() {

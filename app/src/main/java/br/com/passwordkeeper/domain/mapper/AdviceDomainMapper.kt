@@ -1,7 +1,7 @@
 package br.com.passwordkeeper.domain.mapper
 
 import br.com.passwordkeeper.domain.model.AdviceDomain
-import br.com.passwordkeeper.domain.model.AdviceView
+import br.com.passwordkeeper.presentation.model.AdviceView
 import br.com.passwordkeeper.extensions.countWords
 import br.com.passwordkeeper.extensions.getFirstLetter
 
