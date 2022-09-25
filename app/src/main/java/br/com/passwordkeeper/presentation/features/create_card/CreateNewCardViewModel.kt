@@ -9,15 +9,15 @@ import br.com.passwordkeeper.domain.result.usecase.CreateCardUseCaseResult
 import br.com.passwordkeeper.domain.result.usecase.FormValidationCardUseCaseResult
 import br.com.passwordkeeper.domain.result.viewmodelstate.CreateCardStateResult
 import br.com.passwordkeeper.domain.result.viewmodelstate.FormValidationCardStateResult
-import br.com.passwordkeeper.domain.usecase.CardUseCase
-import br.com.passwordkeeper.domain.usecase.FormValidationCardUseCase
+import br.com.passwordkeeper.domain.usecases.CardUseCase
+import br.com.passwordkeeper.domain.usecases.form_validation_create_card.FormValidationCreateCardUseCase
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
 
 class CreateNewCardViewModel(
     private val cardUseCase: CardUseCase,
-    private val formValidationCardUseCase: FormValidationCardUseCase
+    private val formValidationCreateCardUseCase: FormValidationCreateCardUseCase
 ) : ViewModel() {
 
     private val _favorite = MutableLiveData(false)
@@ -51,7 +51,7 @@ class CreateNewCardViewModel(
         isFavorite: Boolean,
         date: String
     ) {
-        val resultFormValidation = formValidationCardUseCase.validateForm(
+        val resultFormValidation = formValidationCreateCardUseCase(
             description,
             login,
             password,

@@ -7,7 +7,7 @@ import androidx.lifecycle.viewModelScope
 import br.com.passwordkeeper.domain.result.usecase.GetCurrentUserUseCaseResult
 import br.com.passwordkeeper.domain.result.viewmodelstate.BottomNavigationState
 import br.com.passwordkeeper.domain.result.viewmodelstate.CurrentUserState
-import br.com.passwordkeeper.domain.usecase.SignInUseCase
+import br.com.passwordkeeper.domain.usecases.SignInUseCase
 import kotlinx.coroutines.launch
 
 class MainViewModel(

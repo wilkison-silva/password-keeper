@@ -8,8 +8,8 @@ import br.com.passwordkeeper.domain.result.usecase.FormValidationSignInUseCaseRe
 import br.com.passwordkeeper.domain.result.usecase.SignInUseCaseResult
 import br.com.passwordkeeper.domain.result.viewmodelstate.FormValidationSignInStateResult
 import br.com.passwordkeeper.domain.result.viewmodelstate.SignInStateResult
-import br.com.passwordkeeper.domain.usecase.FormValidationSignInUseCase
-import br.com.passwordkeeper.domain.usecase.SignInUseCase
+import br.com.passwordkeeper.domain.usecases.form_validation_sign_in.FormValidationSignInUseCase
+import br.com.passwordkeeper.domain.usecases.SignInUseCase
 import kotlinx.coroutines.launch
 
 class SignInViewModel(
@@ -26,7 +26,7 @@ class SignInViewModel(
         get() = _formValidationState
 
     fun updateFormValidationState(email: String, password: String) {
-        when (formValidationSignInUseCase.validateForm(email, password)) {
+        when (formValidationSignInUseCase(email, password)) {
             is FormValidationSignInUseCaseResult.ErrorEmailIsBlank ->
                 _formValidationState.postValue(FormValidationSignInStateResult.ErrorEmailIsBlank)
             is FormValidationSignInUseCaseResult.ErrorEmailMalFormed ->

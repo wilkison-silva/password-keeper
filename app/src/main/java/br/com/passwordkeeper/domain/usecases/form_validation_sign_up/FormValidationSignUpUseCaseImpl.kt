@@ -1,14 +1,15 @@
-package br.com.passwordkeeper.domain.usecase
+package br.com.passwordkeeper.domain.usecases.form_validation_sign_up
 
 import br.com.passwordkeeper.domain.result.usecase.FormValidationSignUpUseCaseResult
 import br.com.passwordkeeper.domain.result.usecase.PasswordValidationUseCaseResult
+import br.com.passwordkeeper.domain.usecases.password_validation.PasswordValidationUseCase
 import br.com.passwordkeeper.extensions.isValidEmail
 
 class FormValidationSignUpUseCaseImpl(
     private val passwordValidationUseCase: PasswordValidationUseCase,
 ) : FormValidationSignUpUseCase {
 
-    override fun validateForm(
+    override fun invoke(
         name: String,
         email: String,
         password: String,
@@ -22,7 +23,7 @@ class FormValidationSignUpUseCaseImpl(
             return FormValidationSignUpUseCaseResult.ErrorEmailMalFormed
         if (password.isBlank())
             return FormValidationSignUpUseCaseResult.ErrorPasswordIsBlank
-        when (val passwordValidationResult = passwordValidationUseCase.validatePassword(password)) {
+        when (val passwordValidationResult = passwordValidationUseCase(password)) {
             is PasswordValidationUseCaseResult.ErrorsFound -> {
                 if (passwordValidationResult.errorList.isNotEmpty()) {
                     return FormValidationSignUpUseCaseResult.ErrorPasswordTooWeak

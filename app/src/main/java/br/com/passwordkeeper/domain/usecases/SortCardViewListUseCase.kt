@@ -1,4 +1,4 @@
-package br.com.passwordkeeper.domain.usecase
+package br.com.passwordkeeper.domain.usecases
 
 import br.com.passwordkeeper.presentation.model.CardView
 

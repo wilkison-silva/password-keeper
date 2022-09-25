@@ -13,13 +13,13 @@ import br.com.passwordkeeper.domain.result.usecase.GetFavoriteCardsUseCaseResult
 import br.com.passwordkeeper.domain.result.viewmodelstate.GetAdviceStateResult
 import br.com.passwordkeeper.domain.result.viewmodelstate.GetCategoriesSizeStateResult
 import br.com.passwordkeeper.domain.result.viewmodelstate.GetFavoriteCardsStateResult
-import br.com.passwordkeeper.domain.usecase.AdviceUseCase
-import br.com.passwordkeeper.domain.usecase.CardUseCase
-import br.com.passwordkeeper.domain.usecase.SortCardViewListUseCase
+import br.com.passwordkeeper.domain.usecases.get_advice.GetAdviceUseCase
+import br.com.passwordkeeper.domain.usecases.CardUseCase
+import br.com.passwordkeeper.domain.usecases.SortCardViewListUseCase
 import kotlinx.coroutines.launch
 
 class HomeViewModel(
-    private val adviceUseCase: AdviceUseCase,
+    private val getAdviceUseCase: GetAdviceUseCase,
     private val cardUseCase: CardUseCase,
     private val sortCardViewListUseCase: SortCardViewListUseCase
 ) : ViewModel() {
@@ -35,7 +35,7 @@ class HomeViewModel(
     private fun getAdvice() {
         viewModelScope.launch {
             _adviceState.postValue(GetAdviceStateResult.Loading)
-            when (val getAdviceUseCaseResult = adviceUseCase.getAdvice()) {
+            when (val getAdviceUseCaseResult = getAdviceUseCase()) {
                 is GetAdviceUseCaseResult.Success -> {
                     _adviceState.postValue(GetAdviceStateResult.Success(getAdviceUseCaseResult.adviceView))
                 }

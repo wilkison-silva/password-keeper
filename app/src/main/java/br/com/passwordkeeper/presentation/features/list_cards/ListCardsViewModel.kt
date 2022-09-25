@@ -11,8 +11,8 @@ import br.com.passwordkeeper.commons.FiltersListCard
 import br.com.passwordkeeper.domain.result.usecase.GetAllCardsUseCaseResult
 import br.com.passwordkeeper.domain.result.usecase.GetCardsByCategoryUseCaseResult
 import br.com.passwordkeeper.domain.result.viewmodelstate.GetAllCardsStateResult
-import br.com.passwordkeeper.domain.usecase.CardUseCase
-import br.com.passwordkeeper.domain.usecase.SortCardViewListUseCase
+import br.com.passwordkeeper.domain.usecases.CardUseCase
+import br.com.passwordkeeper.domain.usecases.SortCardViewListUseCase
 import kotlinx.coroutines.launch
 
 class ListCardsViewModel(

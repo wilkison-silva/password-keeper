@@ -1,4 +1,4 @@
-package br.com.passwordkeeper.domain.usecase
+package br.com.passwordkeeper.domain.usecases.password_validation
 
 import br.com.passwordkeeper.domain.result.usecase.ErrorsValidationPassword
 import br.com.passwordkeeper.domain.result.usecase.PasswordValidationUseCaseResult
@@ -11,7 +11,7 @@ private const val MIN_LENGTH_PASSWORD = 16
 
 class PasswordValidationUseCaseImpl : PasswordValidationUseCase {
 
-    override fun validatePassword(password: String): PasswordValidationUseCaseResult {
+    override operator fun invoke(password: String): PasswordValidationUseCaseResult {
         if (password.isBlank())
             return PasswordValidationUseCaseResult.PasswordFieldEmpty
 

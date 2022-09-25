@@ -1,12 +1,12 @@
-package br.com.passwordkeeper.domain.usecase
+package br.com.passwordkeeper.domain.usecases.form_validation_create_card
 
 import android.content.Context
 import br.com.passwordkeeper.R
 import br.com.passwordkeeper.domain.result.usecase.FormValidationCardUseCaseResult
 
-class FormValidationCardUseCaseImpl(private val context: Context) : FormValidationCardUseCase {
+class FormValidationCreateCardUseCaseImpl(private val context: Context) : FormValidationCreateCardUseCase {
 
-    override fun validateForm(
+    override operator fun invoke(
         description: String,
         login: String,
         password: String,

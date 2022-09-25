@@ -10,7 +10,17 @@ import br.com.passwordkeeper.domain.mapper.*
 import br.com.passwordkeeper.domain.repository.AdviceRepository
 import br.com.passwordkeeper.domain.repository.AuthRepository
 import br.com.passwordkeeper.domain.repository.CardRepository
-import br.com.passwordkeeper.domain.usecase.*
+import br.com.passwordkeeper.domain.usecases.*
+import br.com.passwordkeeper.domain.usecases.form_validation_create_card.FormValidationCreateCardUseCase
+import br.com.passwordkeeper.domain.usecases.form_validation_create_card.FormValidationCreateCardUseCaseImpl
+import br.com.passwordkeeper.domain.usecases.form_validation_sign_in.FormValidationSignInUseCase
+import br.com.passwordkeeper.domain.usecases.form_validation_sign_in.FormValidationSignInUseCaseImpl
+import br.com.passwordkeeper.domain.usecases.form_validation_sign_up.FormValidationSignUpUseCase
+import br.com.passwordkeeper.domain.usecases.form_validation_sign_up.FormValidationSignUpUseCaseImpl
+import br.com.passwordkeeper.domain.usecases.get_advice.GetAdviceUseCase
+import br.com.passwordkeeper.domain.usecases.get_advice.GetAdviceUseCaseImpl
+import br.com.passwordkeeper.domain.usecases.password_validation.PasswordValidationUseCase
+import br.com.passwordkeeper.domain.usecases.password_validation.PasswordValidationUseCaseImpl
 import br.com.passwordkeeper.presentation.features.MainViewModel
 import br.com.passwordkeeper.presentation.features.create_card.CreateNewCardViewModel
 import br.com.passwordkeeper.presentation.features.home.HomeViewModel
@@ -105,7 +115,7 @@ val repositoryModule = module {
 val useCaseModule = module {
     single<SignInUseCase> { SignInUseCaseImpl(get<AuthRepository>(), get<UserDomainMapper>()) }
     single<SignUpUseCase> { SignUpUseCaseImpl(get<AuthRepository>()) }
-    single<AdviceUseCase> { AdviceUseCaseImpl(get<AdviceRepository>(), get<AdviceDomainMapper>()) }
+    single<GetAdviceUseCase> { GetAdviceUseCaseImpl(get<AdviceRepository>(), get<AdviceDomainMapper>()) }
     single<PasswordValidationUseCase> { PasswordValidationUseCaseImpl() }
     single<FormValidationSignInUseCase> { FormValidationSignInUseCaseImpl() }
     single<FormValidationSignUpUseCase> {
@@ -118,8 +128,8 @@ val useCaseModule = module {
             get<CategoryDomainMapper>()
         )
     }
-    single<FormValidationCardUseCase> {
-        FormValidationCardUseCaseImpl(
+    single<FormValidationCreateCardUseCase> {
+        FormValidationCreateCardUseCaseImpl(
             get<Context>()
         )
     }
@@ -129,7 +139,7 @@ val useCaseModule = module {
 val viewModelModule = module {
     viewModel<HomeViewModel> {
         HomeViewModel(
-            get<AdviceUseCase>(),
+            get<GetAdviceUseCase>(),
             get<CardUseCase>(),
             get<SortCardViewListUseCase>()
         )
@@ -151,7 +161,7 @@ val viewModelModule = module {
     viewModel<CreateNewCardViewModel> {
         CreateNewCardViewModel(
             get<CardUseCase>(),
-            get<FormValidationCardUseCase>()
+            get<FormValidationCreateCardUseCase>()
         )
     }
     viewModel<ListCardsViewModel> {

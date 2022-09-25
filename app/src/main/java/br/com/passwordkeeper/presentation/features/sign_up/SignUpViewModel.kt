@@ -8,9 +8,9 @@ import br.com.passwordkeeper.domain.result.usecase.*
 import br.com.passwordkeeper.domain.result.usecase.ErrorsValidationPassword.*
 import br.com.passwordkeeper.domain.result.viewmodelstate.*
 import br.com.passwordkeeper.domain.result.viewmodelstate.FormValidationSignUpStateResult.*
-import br.com.passwordkeeper.domain.usecase.FormValidationSignUpUseCase
-import br.com.passwordkeeper.domain.usecase.PasswordValidationUseCase
-import br.com.passwordkeeper.domain.usecase.SignUpUseCase
+import br.com.passwordkeeper.domain.usecases.form_validation_sign_up.FormValidationSignUpUseCase
+import br.com.passwordkeeper.domain.usecases.password_validation.PasswordValidationUseCase
+import br.com.passwordkeeper.domain.usecases.SignUpUseCase
 import kotlinx.coroutines.launch
 
 class SignUpViewModel(
@@ -58,7 +58,7 @@ class SignUpViewModel(
         password: String,
         confirmedPassword: String,
     ) {
-        when (formValidationSignUpUseCase.validateForm(name, email, password, confirmedPassword)) {
+        when (formValidationSignUpUseCase(name, email, password, confirmedPassword)) {
             is FormValidationSignUpUseCaseResult.ErrorEmailIsBlank ->
                 _formValidationState.postValue(ErrorEmailIsBlank)
             is FormValidationSignUpUseCaseResult.ErrorEmailMalFormed ->
@@ -114,7 +114,7 @@ class SignUpViewModel(
 
     fun updatePasswordValidation(password: String) {
         when (val passwordValidationUseCaseResult =
-            passwordValidationUseCase.validatePassword(password)) {
+            passwordValidationUseCase(password)) {
             is PasswordValidationUseCaseResult.ErrorsFound -> {
                 passwordValidationUseCaseResult.errorList.let {
                     setPasswordState(it, ErrorOneUpperLetterNotFound, _passwordUpperLetterState)

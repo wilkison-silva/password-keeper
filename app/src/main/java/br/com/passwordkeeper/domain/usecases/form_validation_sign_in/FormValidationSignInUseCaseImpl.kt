@@ -1,14 +1,11 @@
-package br.com.passwordkeeper.domain.usecase
+package br.com.passwordkeeper.domain.usecases.form_validation_sign_in
 
 import br.com.passwordkeeper.domain.result.usecase.FormValidationSignInUseCaseResult
 import br.com.passwordkeeper.extensions.isValidEmail
 
 class FormValidationSignInUseCaseImpl : FormValidationSignInUseCase {
 
-    override fun validateForm(
-        email: String,
-        password: String
-    ): FormValidationSignInUseCaseResult {
+    override fun invoke(email: String, password: String): FormValidationSignInUseCaseResult {
         if (email.isBlank())
             return FormValidationSignInUseCaseResult.ErrorEmailIsBlank
         if (!email.isValidEmail())

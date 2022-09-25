@@ -1,10 +1,10 @@
-package br.com.passwordkeeper.domain.usecase
+package br.com.passwordkeeper.domain.usecases.form_validation_create_card
 
 import br.com.passwordkeeper.domain.result.usecase.FormValidationCardUseCaseResult
 
-interface FormValidationCardUseCase {
+interface FormValidationCreateCardUseCase {
 
-    fun validateForm(
+    operator fun invoke(
         description: String,
         login: String,
         password: String,
