@@ -50,20 +50,23 @@ class ListCardsFragment : Fragment(R.layout.fragment_list_cards) {
 
 
     private fun observeCurrentUserState() {
-        mainViewModel.currentUserState.observe(viewLifecycleOwner) { currentUserState ->
-            when (currentUserState) {
-                is CurrentUserState.ErrorUnknown -> {
-                    navController.navigate(ListCardsFragmentDirections.actionNavigateToLoginFragment())
-                }
-                is CurrentUserState.Success -> {
-                    setupListCardsRecyclerView()
-                    setupButtonBack()
-                    updateCards(filter = FiltersListCard.DESCRIPTION)
-                    observeCards()
-                    setupButtonDescription()
-                    setupButtonDate()
-                    setupButtonCategory()
-                    setupButtonFavorites()
+        lifecycleScope.launchWhenStarted {
+            mainViewModel.currentUserState.collect { currentUserState ->
+                when (currentUserState) {
+                    is CurrentUserState.ErrorUnknown -> {
+                        navController.navigate(ListCardsFragmentDirections.actionNavigateToLoginFragment())
+                    }
+                    is CurrentUserState.Success -> {
+                        setupListCardsRecyclerView()
+                        setupButtonBack()
+                        updateCards(filter = FiltersListCard.DESCRIPTION)
+                        observeCards()
+                        setupButtonDescription()
+                        setupButtonDate()
+                        setupButtonCategory()
+                        setupButtonFavorites()
+                    }
+                    is CurrentUserState.EmptyState -> { }
                 }
             }
         }

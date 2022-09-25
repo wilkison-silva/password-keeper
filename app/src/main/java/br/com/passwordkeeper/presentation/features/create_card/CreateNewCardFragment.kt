@@ -46,23 +46,26 @@ class CreateNewCardFragment : Fragment(R.layout.fragment_create_new_card) {
     }
 
     private fun updateCurrentUser() {
-        mainViewModel.currentUserState
+        mainViewModel.updateCurrentUser()
     }
 
     private fun observeCurrentUser() {
-        mainViewModel.currentUserState.observe(viewLifecycleOwner) {
-            when (it) {
-                is CurrentUserState.ErrorUnknown -> {
-                    navController.navigate(CreateNewCardFragmentDirections.actionNavigateToLoginFragment())
-                }
-                is CurrentUserState.Success -> {
-                    setupCategoryTextEditInputText()
-                    setupImageIconHeart()
-                    setupCreateSaveCardButton()
-                    observeFavoriteState()
-                    observeCategorySelected()
-                    observeFormValidation()
-                    observeCreateCard()
+        lifecycleScope.launchWhenStarted {
+            mainViewModel.currentUserState.collect {
+                when (it) {
+                    is CurrentUserState.ErrorUnknown -> {
+                        navController.navigate(CreateNewCardFragmentDirections.actionNavigateToLoginFragment())
+                    }
+                    is CurrentUserState.Success -> {
+                        setupCategoryTextEditInputText()
+                        setupImageIconHeart()
+                        setupCreateSaveCardButton()
+                        observeFavoriteState()
+                        observeCategorySelected()
+                        observeFormValidation()
+                        observeCreateCard()
+                    }
+                    is CurrentUserState.EmptyState -> { }
                 }
             }
         }

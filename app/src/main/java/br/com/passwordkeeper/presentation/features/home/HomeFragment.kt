@@ -46,20 +46,23 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     }
 
     private fun observeCurrentUserState() {
-        mainViewModel.currentUserState.observe(viewLifecycleOwner) { currentUserState ->
-            when (currentUserState) {
-                is CurrentUserState.ErrorUnknown -> {
-                    navController.navigate(HomeFragmentDirections.actionNavigateToLoginFragment())
-                }
-                is CurrentUserState.Success -> {
-                    bindUserInfo(currentUserState.userView)
-                    observeAdviceState()
-                    observeFavoriteCards()
-                    observeCategoriesSize()
-                    setupComponents()
-                    setupTextViewOnClick()
-                    updateCategoriesSizeState(currentUserState.userView.email)
-                    updateFavorites(currentUserState.userView.email)
+        lifecycleScope.launchWhenStarted {
+            mainViewModel.currentUserState.collect { currentUserState ->
+                when (currentUserState) {
+                    is CurrentUserState.ErrorUnknown -> {
+                        navController.navigate(HomeFragmentDirections.actionNavigateToLoginFragment())
+                    }
+                    is CurrentUserState.Success -> {
+                        bindUserInfo(currentUserState.userView)
+                        observeAdviceState()
+                        observeFavoriteCards()
+                        observeCategoriesSize()
+                        setupComponents()
+                        setupTextViewOnClick()
+                        updateCategoriesSizeState(currentUserState.userView.email)
+                        updateFavorites(currentUserState.userView.email)
+                    }
+                    is CurrentUserState.EmptyState -> { }
                 }
             }
         }
