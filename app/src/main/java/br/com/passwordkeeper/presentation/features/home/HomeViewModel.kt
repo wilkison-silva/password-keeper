@@ -14,13 +14,15 @@ import br.com.passwordkeeper.domain.result.viewmodelstate.GetAdviceStateResult
 import br.com.passwordkeeper.domain.result.viewmodelstate.GetCategoriesSizeStateResult
 import br.com.passwordkeeper.domain.result.viewmodelstate.GetFavoriteCardsStateResult
 import br.com.passwordkeeper.domain.usecases.get_advice.GetAdviceUseCase
-import br.com.passwordkeeper.domain.usecases.CardUseCase
-import br.com.passwordkeeper.domain.usecases.SortCardViewListUseCase
+import br.com.passwordkeeper.domain.usecases.sort_cardview_list.SortCardViewListUseCase
+import br.com.passwordkeeper.domain.usecases.get_favorites_cards.GetFavoriteCardsUseCase
+import br.com.passwordkeeper.domain.usecases.get_items_count_by_categories.GetItemsCountByCategoriesUseCase
 import kotlinx.coroutines.launch
 
 class HomeViewModel(
     private val getAdviceUseCase: GetAdviceUseCase,
-    private val cardUseCase: CardUseCase,
+    private val getFavoriteCardsUseCase: GetFavoriteCardsUseCase,
+    private val getItemsCountByCategoriesUseCase: GetItemsCountByCategoriesUseCase,
     private val sortCardViewListUseCase: SortCardViewListUseCase
 ) : ViewModel() {
 
@@ -62,7 +64,7 @@ class HomeViewModel(
     fun updateFavoriteCards(email: String) {
         viewModelScope.launch {
             _favoriteCardsState.postValue(GetFavoriteCardsStateResult.Loading)
-            when (val getFavoriteCardsUseCaseResult = cardUseCase.getFavorites(email)) {
+            when (val getFavoriteCardsUseCaseResult = getFavoriteCardsUseCase(email)) {
                 is GetFavoriteCardsUseCaseResult.ErrorUnknown -> {
                     _favoriteCardsState.postValue(GetFavoriteCardsStateResult.ErrorUnknown)
                 }
@@ -89,7 +91,7 @@ class HomeViewModel(
     fun updateCategoriesSize(email: String) {
         viewModelScope.launch {
             _categoriesSizeState.postValue(GetCategoriesSizeStateResult.Loading)
-            when (val getCategoriesSizeUseCaseResult = cardUseCase.getCategoriesSize(email)) {
+            when (val getCategoriesSizeUseCaseResult = getItemsCountByCategoriesUseCase(email)) {
                 is GetCategoriesSizeUseCaseResult.ErrorUnknown -> {
                     _categoriesSizeState.postValue(GetCategoriesSizeStateResult.ErrorUnknown)
                 }

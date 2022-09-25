@@ -11,12 +11,14 @@ import br.com.passwordkeeper.commons.FiltersListCard
 import br.com.passwordkeeper.domain.result.usecase.GetAllCardsUseCaseResult
 import br.com.passwordkeeper.domain.result.usecase.GetCardsByCategoryUseCaseResult
 import br.com.passwordkeeper.domain.result.viewmodelstate.GetAllCardsStateResult
-import br.com.passwordkeeper.domain.usecases.CardUseCase
-import br.com.passwordkeeper.domain.usecases.SortCardViewListUseCase
+import br.com.passwordkeeper.domain.usecases.sort_cardview_list.SortCardViewListUseCase
+import br.com.passwordkeeper.domain.usecases.get_all_cards.GetAllCardsUseCase
+import br.com.passwordkeeper.domain.usecases.get_cards_by_category.GetCardsByCategoryUseCase
 import kotlinx.coroutines.launch
 
 class ListCardsViewModel(
-    private val cardUseCase: CardUseCase,
+    private val getAllCardsUseCase: GetAllCardsUseCase,
+    private val getCardsByCategoryUseCase: GetCardsByCategoryUseCase,
     private val sortCardViewListUseCase: SortCardViewListUseCase
 ) : ViewModel() {
 
@@ -55,7 +57,7 @@ class ListCardsViewModel(
         viewModelScope.launch {
             _allCards.postValue(GetAllCardsStateResult.Loading)
             if (category == Categories.ALL) {
-                when (val getAllCardsUseCaseResult = cardUseCase.getAllCards(email)) {
+                when (val getAllCardsUseCaseResult = getAllCardsUseCase(email)) {
                     is GetAllCardsUseCaseResult.ErrorUnknown -> {
                         _allCards.postValue(GetAllCardsStateResult.ErrorUnknown)
                     }
@@ -68,7 +70,7 @@ class ListCardsViewModel(
                 }
             } else {
                 when (val getCardsByCategoryUseCaseResult =
-                    cardUseCase.getCardsByCategory(category.name, email)) {
+                    getCardsByCategoryUseCase(category.name, email)) {
                     is GetCardsByCategoryUseCaseResult.ErrorUnknown -> {
                         _allCards.postValue(GetAllCardsStateResult.ErrorUnknown)
                     }

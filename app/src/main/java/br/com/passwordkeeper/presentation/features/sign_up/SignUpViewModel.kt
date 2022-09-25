@@ -4,17 +4,22 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import br.com.passwordkeeper.domain.result.usecase.*
+import br.com.passwordkeeper.domain.result.usecase.CreateUserUseCaseResult
+import br.com.passwordkeeper.domain.result.usecase.ErrorsValidationPassword
 import br.com.passwordkeeper.domain.result.usecase.ErrorsValidationPassword.*
-import br.com.passwordkeeper.domain.result.viewmodelstate.*
+import br.com.passwordkeeper.domain.result.usecase.FormValidationSignUpUseCaseResult
+import br.com.passwordkeeper.domain.result.usecase.PasswordValidationUseCaseResult
+import br.com.passwordkeeper.domain.result.viewmodelstate.CreateUserStateResult
+import br.com.passwordkeeper.domain.result.viewmodelstate.FormValidationSignUpStateResult
 import br.com.passwordkeeper.domain.result.viewmodelstate.FormValidationSignUpStateResult.*
+import br.com.passwordkeeper.domain.result.viewmodelstate.ValidationStateResult
+import br.com.passwordkeeper.domain.usecases.create_user.CreateUserUseCase
 import br.com.passwordkeeper.domain.usecases.form_validation_sign_up.FormValidationSignUpUseCase
 import br.com.passwordkeeper.domain.usecases.password_validation.PasswordValidationUseCase
-import br.com.passwordkeeper.domain.usecases.SignUpUseCase
 import kotlinx.coroutines.launch
 
 class SignUpViewModel(
-    private val signUpUseCase: SignUpUseCase,
+    private val createUserUseCase: CreateUserUseCase,
     private val formValidationSignUpUseCase: FormValidationSignUpUseCase,
     private val passwordValidationUseCase: PasswordValidationUseCase,
 ) : ViewModel() {
@@ -79,7 +84,7 @@ class SignUpViewModel(
 
     fun updateSignUpState(name: String, email: String, password: String) {
         viewModelScope.launch {
-            when (signUpUseCase.createUser(name, email, password)) {
+            when (createUserUseCase(name, email, password)) {
                 CreateUserUseCaseResult.ErrorEmailAlreadyExists ->
                     _createUserState.postValue(CreateUserStateResult.ErrorEmailAlreadyExists)
                 CreateUserUseCaseResult.ErrorEmailMalformed ->

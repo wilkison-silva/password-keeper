@@ -9,7 +9,7 @@ import br.com.passwordkeeper.domain.result.usecase.SignInUseCaseResult
 import br.com.passwordkeeper.domain.result.viewmodelstate.FormValidationSignInStateResult
 import br.com.passwordkeeper.domain.result.viewmodelstate.SignInStateResult
 import br.com.passwordkeeper.domain.usecases.form_validation_sign_in.FormValidationSignInUseCase
-import br.com.passwordkeeper.domain.usecases.SignInUseCase
+import br.com.passwordkeeper.domain.usecases.sign_in.SignInUseCase
 import kotlinx.coroutines.launch
 
 class SignInViewModel(
@@ -42,7 +42,7 @@ class SignInViewModel(
         viewModelScope.launch {
             _signInState.postValue(SignInStateResult.Loading)
             when (val signInUseCaseResult =
-                signInUseCase.signIn(email, password)) {
+                signInUseCase(email, password)) {
                 is SignInUseCaseResult.Success -> {
                     _signInState.postValue(SignInStateResult.Success(signInUseCaseResult.userView))
                 }

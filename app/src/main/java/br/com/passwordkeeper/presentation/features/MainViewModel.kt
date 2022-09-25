@@ -7,11 +7,11 @@ import androidx.lifecycle.viewModelScope
 import br.com.passwordkeeper.domain.result.usecase.GetCurrentUserUseCaseResult
 import br.com.passwordkeeper.domain.result.viewmodelstate.BottomNavigationState
 import br.com.passwordkeeper.domain.result.viewmodelstate.CurrentUserState
-import br.com.passwordkeeper.domain.usecases.SignInUseCase
+import br.com.passwordkeeper.domain.usecases.get_current_user.GetCurrentUserUseCase
 import kotlinx.coroutines.launch
 
 class MainViewModel(
-    private val signInUseCase: SignInUseCase
+    private val getCurrentUserUseCase: GetCurrentUserUseCase
 ) : ViewModel() {
 
     private val _bottomNavigationState = MutableLiveData<BottomNavigationState>()
@@ -33,7 +33,7 @@ class MainViewModel(
 
     fun updateCurrentUser() {
         viewModelScope.launch {
-            when (val signInUseCaseResult = signInUseCase.getCurrentUser()) {
+            when (val signInUseCaseResult = getCurrentUserUseCase()) {
                 is GetCurrentUserUseCaseResult.ErrorUnknown -> {
                     _currentUserState
                         .postValue(CurrentUserState.ErrorUnknown)

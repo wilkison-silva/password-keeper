@@ -1,14 +1,14 @@
-package br.com.passwordkeeper.domain.usecases
+package br.com.passwordkeeper.domain.usecases.create_user
 
 import br.com.passwordkeeper.domain.repository.AuthRepository
 import br.com.passwordkeeper.domain.result.repository.CreateUserRepositoryResult
 import br.com.passwordkeeper.domain.result.usecase.CreateUserUseCaseResult
 
-class SignUpUseCaseImpl(
+class CreateUserUseCaseImpl(
     private val authRepository: AuthRepository
-) : SignUpUseCase {
+) : CreateUserUseCase {
 
-    override suspend fun createUser(
+    override suspend operator fun invoke(
         name: String,
         email: String,
         password: String

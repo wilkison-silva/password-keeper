@@ -9,14 +9,14 @@ import br.com.passwordkeeper.domain.result.usecase.CreateCardUseCaseResult
 import br.com.passwordkeeper.domain.result.usecase.FormValidationCardUseCaseResult
 import br.com.passwordkeeper.domain.result.viewmodelstate.CreateCardStateResult
 import br.com.passwordkeeper.domain.result.viewmodelstate.FormValidationCardStateResult
-import br.com.passwordkeeper.domain.usecases.CardUseCase
+import br.com.passwordkeeper.domain.usecases.create_card.CreateCardUseCase
 import br.com.passwordkeeper.domain.usecases.form_validation_create_card.FormValidationCreateCardUseCase
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
 
 class CreateNewCardViewModel(
-    private val cardUseCase: CardUseCase,
+    private val createCardUseCase: CreateCardUseCase,
     private val formValidationCreateCardUseCase: FormValidationCreateCardUseCase
 ) : ViewModel() {
 
@@ -91,7 +91,7 @@ class CreateNewCardViewModel(
         viewModelScope.launch {
             _createCardState.postValue(CreateCardStateResult.Loading)
             _categorySelected.value?.let { category ->
-                val resultCreateCard = cardUseCase.createCard(
+                val resultCreateCard = createCardUseCase(
                     description = description,
                     login = login,
                     password = password,

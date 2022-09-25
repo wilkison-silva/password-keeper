@@ -1,4 +1,4 @@
-package br.com.passwordkeeper.domain.usecases
+package br.com.passwordkeeper.domain.usecases.sort_cardview_list
 
 import br.com.passwordkeeper.presentation.model.CardView
 

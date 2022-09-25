@@ -10,7 +10,12 @@ import br.com.passwordkeeper.domain.mapper.*
 import br.com.passwordkeeper.domain.repository.AdviceRepository
 import br.com.passwordkeeper.domain.repository.AuthRepository
 import br.com.passwordkeeper.domain.repository.CardRepository
-import br.com.passwordkeeper.domain.usecases.*
+import br.com.passwordkeeper.domain.usecases.create_card.CreateCardUseCase
+import br.com.passwordkeeper.domain.usecases.create_card.CreateCardUseCaseImpl
+import br.com.passwordkeeper.domain.usecases.create_user.CreateUserUseCase
+import br.com.passwordkeeper.domain.usecases.create_user.CreateUserUseCaseImpl
+import br.com.passwordkeeper.domain.usecases.delete_card.DeleteCardUseCase
+import br.com.passwordkeeper.domain.usecases.delete_card.DeleteCardUseCaseImpl
 import br.com.passwordkeeper.domain.usecases.form_validation_create_card.FormValidationCreateCardUseCase
 import br.com.passwordkeeper.domain.usecases.form_validation_create_card.FormValidationCreateCardUseCaseImpl
 import br.com.passwordkeeper.domain.usecases.form_validation_sign_in.FormValidationSignInUseCase
@@ -19,8 +24,28 @@ import br.com.passwordkeeper.domain.usecases.form_validation_sign_up.FormValidat
 import br.com.passwordkeeper.domain.usecases.form_validation_sign_up.FormValidationSignUpUseCaseImpl
 import br.com.passwordkeeper.domain.usecases.get_advice.GetAdviceUseCase
 import br.com.passwordkeeper.domain.usecases.get_advice.GetAdviceUseCaseImpl
+import br.com.passwordkeeper.domain.usecases.get_all_cards.GetAllCardsUseCase
+import br.com.passwordkeeper.domain.usecases.get_all_cards.GetAllCardsUseCaseImpl
+import br.com.passwordkeeper.domain.usecases.get_card_by_id.GetCardByIdUseCase
+import br.com.passwordkeeper.domain.usecases.get_card_by_id.GetCardByIdUseCaseImpl
+import br.com.passwordkeeper.domain.usecases.get_cards_by_category.GetCardsByCategoryUseCase
+import br.com.passwordkeeper.domain.usecases.get_cards_by_category.GetCardsByCategoryUseCaseImpl
+import br.com.passwordkeeper.domain.usecases.get_current_user.GetCurrentUserUseCase
+import br.com.passwordkeeper.domain.usecases.get_current_user.GetCurrentUserUseCaseImpl
+import br.com.passwordkeeper.domain.usecases.get_favorites_cards.GetFavoriteCardsUseCase
+import br.com.passwordkeeper.domain.usecases.get_favorites_cards.GetFavoriteCardsUseCaseImpl
+import br.com.passwordkeeper.domain.usecases.get_items_count_by_categories.GetItemsCountByCategoriesUseCase
+import br.com.passwordkeeper.domain.usecases.get_items_count_by_categories.GetItemsCountByCategoriesUseCaseImpl
 import br.com.passwordkeeper.domain.usecases.password_validation.PasswordValidationUseCase
 import br.com.passwordkeeper.domain.usecases.password_validation.PasswordValidationUseCaseImpl
+import br.com.passwordkeeper.domain.usecases.sign_in.SignInUseCase
+import br.com.passwordkeeper.domain.usecases.sign_in.SignInUseCaseImpl
+import br.com.passwordkeeper.domain.usecases.sign_out.SignOutUseCase
+import br.com.passwordkeeper.domain.usecases.sign_out.SignOutUseCaseImpl
+import br.com.passwordkeeper.domain.usecases.sort_cardview_list.SortCardViewListUseCase
+import br.com.passwordkeeper.domain.usecases.sort_cardview_list.SortCardViewListUseCaseImpl
+import br.com.passwordkeeper.domain.usecases.update_card.UpdateCardUseCase
+import br.com.passwordkeeper.domain.usecases.update_card.UpdateCardUseCaseImpl
 import br.com.passwordkeeper.presentation.features.MainViewModel
 import br.com.passwordkeeper.presentation.features.create_card.CreateNewCardViewModel
 import br.com.passwordkeeper.presentation.features.home.HomeViewModel
@@ -114,24 +139,70 @@ val repositoryModule = module {
 
 val useCaseModule = module {
     single<SignInUseCase> { SignInUseCaseImpl(get<AuthRepository>(), get<UserDomainMapper>()) }
-    single<SignUpUseCase> { SignUpUseCaseImpl(get<AuthRepository>()) }
     single<GetAdviceUseCase> { GetAdviceUseCaseImpl(get<AdviceRepository>(), get<AdviceDomainMapper>()) }
     single<PasswordValidationUseCase> { PasswordValidationUseCaseImpl() }
     single<FormValidationSignInUseCase> { FormValidationSignInUseCaseImpl() }
     single<FormValidationSignUpUseCase> {
         FormValidationSignUpUseCaseImpl(get<PasswordValidationUseCase>())
     }
-    single<CardUseCase> {
-        FirebaseCardUseCaseImpl(
+    single<GetCardByIdUseCase> {
+        GetCardByIdUseCaseImpl(
             get<CardRepository>(),
-            get<CardDomainMapper>(),
+            get<CardDomainMapper>()
+        )
+    }
+    single<GetAllCardsUseCase> {
+        GetAllCardsUseCaseImpl(
+            get<CardRepository>(),
+            get<CardDomainMapper>()
+        )
+    }
+    single<CreateCardUseCase> {
+        CreateCardUseCaseImpl(
+            get<CardRepository>()
+        )
+    }
+    single<UpdateCardUseCase> {
+        UpdateCardUseCaseImpl(
+            get<CardRepository>()
+        )
+    }
+    single<DeleteCardUseCase> {
+        DeleteCardUseCaseImpl(
+            get<CardRepository>()
+        )
+    }
+    single<GetFavoriteCardsUseCase> {
+        GetFavoriteCardsUseCaseImpl(
+            get<CardRepository>(),
+            get<CardDomainMapper>()
+        )
+    }
+    single<GetItemsCountByCategoriesUseCase> {
+        GetItemsCountByCategoriesUseCaseImpl(
+            get<CardRepository>(),
             get<CategoryDomainMapper>()
+        )
+    }
+    single<GetCardsByCategoryUseCase> {
+        GetCardsByCategoryUseCaseImpl(
+            get<CardRepository>(),
+            get<CardDomainMapper>()
         )
     }
     single<FormValidationCreateCardUseCase> {
         FormValidationCreateCardUseCaseImpl(
             get<Context>()
         )
+    }
+    single<CreateUserUseCase> {
+        CreateUserUseCaseImpl(get<AuthRepository>())
+    }
+    single<SignOutUseCase> {
+        SignOutUseCaseImpl(get<AuthRepository>())
+    }
+    single<GetCurrentUserUseCase> {
+        GetCurrentUserUseCaseImpl(get<AuthRepository>(),get<UserDomainMapper>())
     }
     single<SortCardViewListUseCase> { SortCardViewListUseCaseImpl(get<Context>()) }
 }
@@ -140,7 +211,8 @@ val viewModelModule = module {
     viewModel<HomeViewModel> {
         HomeViewModel(
             get<GetAdviceUseCase>(),
-            get<CardUseCase>(),
+            get<GetFavoriteCardsUseCase>(),
+            get<GetItemsCountByCategoriesUseCase>(),
             get<SortCardViewListUseCase>()
         )
     }
@@ -152,21 +224,24 @@ val viewModelModule = module {
     }
     viewModel<SignUpViewModel> {
         SignUpViewModel(
-            get<SignUpUseCase>(),
+            get<CreateUserUseCase>(),
             get<FormValidationSignUpUseCase>(),
             get<PasswordValidationUseCase>()
         )
     }
-    viewModel<MainViewModel> { MainViewModel(get<SignInUseCase>()) }
+    viewModel<MainViewModel> {
+        MainViewModel(get<GetCurrentUserUseCase>())
+    }
     viewModel<CreateNewCardViewModel> {
         CreateNewCardViewModel(
-            get<CardUseCase>(),
+            get<CreateCardUseCase>(),
             get<FormValidationCreateCardUseCase>()
         )
     }
     viewModel<ListCardsViewModel> {
         ListCardsViewModel(
-            get<CardUseCase>(),
+            get<GetAllCardsUseCase>(),
+            get<GetCardsByCategoryUseCase>(),
             get<SortCardViewListUseCase>()
         )
     }
