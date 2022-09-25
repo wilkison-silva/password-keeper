@@ -5,6 +5,7 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
 import androidx.navigation.findNavController
@@ -61,13 +62,16 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun observeBottomNavigationState() {
-        mainViewModel.bottomNavigationState.observe(this) {
-            when (it) {
-                is BottomNavigationState.Hide -> {
-                    binding.bottomNavigation.visibility = GONE
-                }
-                is BottomNavigationState.Show -> {
-                    binding.bottomNavigation.visibility = VISIBLE
+        lifecycleScope.launchWhenStarted {
+            mainViewModel.bottomNavigationState.collect {
+                when (it) {
+                    is BottomNavigationState.Hide -> {
+                        binding.bottomNavigation.visibility = GONE
+                    }
+                    is BottomNavigationState.Show -> {
+                        binding.bottomNavigation.visibility = VISIBLE
+                    }
+                    is BottomNavigationState.EmptyState -> { }
                 }
             }
         }
