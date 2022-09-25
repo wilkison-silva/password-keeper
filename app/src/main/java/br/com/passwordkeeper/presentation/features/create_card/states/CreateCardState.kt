@@ -4,4 +4,5 @@ sealed class CreateCardState {
     data class Success(val cardId: String) : CreateCardState()
     object ErrorUnknown: CreateCardState()
     object Loading: CreateCardState()
+    object EmptyState: CreateCardState()
 }
