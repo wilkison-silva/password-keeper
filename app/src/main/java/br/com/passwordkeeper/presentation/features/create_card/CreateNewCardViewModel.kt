@@ -1,7 +1,5 @@
 package br.com.passwordkeeper.presentation.features.create_card
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.com.passwordkeeper.commons.Categories
@@ -11,6 +9,8 @@ import br.com.passwordkeeper.domain.usecases.create_card.CreateCardUseCase
 import br.com.passwordkeeper.domain.usecases.form_validation_create_card.FormValidationCreateCardUseCase
 import br.com.passwordkeeper.presentation.features.create_card.states.CreateCardState
 import br.com.passwordkeeper.presentation.features.create_card.states.FormValidationCardState
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
@@ -20,21 +20,18 @@ class CreateNewCardViewModel(
     private val formValidationCreateCardUseCase: FormValidationCreateCardUseCase
 ) : ViewModel() {
 
-    private val _favorite = MutableLiveData(false)
-    val favorite: LiveData<Boolean>
-        get() = _favorite
+    private val _favoriteState = MutableStateFlow(false)
+    val favoriteState = _favoriteState.asStateFlow()
 
-    private val _formValidationCard = MutableLiveData<FormValidationCardState>()
-    val formValidationCard: LiveData<FormValidationCardState>
-        get() = _formValidationCard
+    private val _formValidationState =
+        MutableStateFlow<FormValidationCardState>(FormValidationCardState.EmptyState)
+    val formValidationState = _formValidationState.asStateFlow()
 
-    private val _createCardState = MutableLiveData<CreateCardState>()
-    val createCardState: LiveData<CreateCardState>
-        get() = _createCardState
+    private val _createCardState = MutableStateFlow<CreateCardState>(CreateCardState.EmptyState)
+    val createCardState = _createCardState.asStateFlow()
 
-    private val _categorySelected = MutableLiveData<Categories>()
-    val categorySelected: LiveData<Categories>
-        get() = _categorySelected
+    private val _categorySelectedState = MutableStateFlow(Categories.NONE)
+    val categorySelectedState = _categorySelectedState.asStateFlow()
 
 
     fun getCurrentDateTime(): String {
@@ -61,10 +58,10 @@ class CreateNewCardViewModel(
         )
         when (resultFormValidation) {
             FormValidationCreateCardUseCaseResult.CategoryNotSelected -> {
-                _formValidationCard.postValue(FormValidationCardState.CategoryNotSelected)
+                _formValidationState.value = FormValidationCardState.CategoryNotSelected
             }
             FormValidationCreateCardUseCaseResult.DescriptionIsEmpty -> {
-                _formValidationCard.postValue(FormValidationCardState.DescriptionIsEmpty)
+                _formValidationState.value = FormValidationCardState.DescriptionIsEmpty
             }
             FormValidationCreateCardUseCaseResult.Success -> {
                 val formValidationSuccess = FormValidationCardState.Success(
@@ -75,7 +72,7 @@ class CreateNewCardViewModel(
                     isFavorite = isFavorite,
                     date = date
                 )
-                _formValidationCard.postValue(formValidationSuccess)
+                _formValidationState.value = formValidationSuccess
             }
         }
     }
@@ -89,36 +86,32 @@ class CreateNewCardViewModel(
         emailUser: String
     ) {
         viewModelScope.launch {
-            _createCardState.postValue(CreateCardState.Loading)
-            _categorySelected.value?.let { category ->
-                val resultCreateCard = createCardUseCase(
-                    description = description,
-                    login = login,
-                    password = password,
-                    category = category,
-                    isFavorite = isFavorite,
-                    date = date,
-                    emailUser = emailUser
-                )
-                when (resultCreateCard) {
-                    is CreateCardUseCaseResult.ErrorUnknown -> {
-                        _createCardState.postValue(CreateCardState.ErrorUnknown)
-                    }
-                    is CreateCardUseCaseResult.Success -> {
-                        _createCardState.postValue(CreateCardState.Success(resultCreateCard.cardId))
-                    }
+            _createCardState.value = CreateCardState.Loading
+            val resultCreateCard = createCardUseCase(
+                description = description,
+                login = login,
+                password = password,
+                category = _categorySelectedState.value,
+                isFavorite = isFavorite,
+                date = date,
+                emailUser = emailUser
+            )
+            when (resultCreateCard) {
+                is CreateCardUseCaseResult.ErrorUnknown -> {
+                    _createCardState.value = CreateCardState.ErrorUnknown
                 }
-            } ?: _createCardState.postValue(CreateCardState.ErrorUnknown)
+                is CreateCardUseCaseResult.Success -> {
+                    _createCardState.value = CreateCardState.Success(resultCreateCard.cardId)
+                }
+            }
         }
     }
 
     fun updateFavorite() {
-        _favorite.value?.let {
-            _favorite.postValue(!it)
-        }
+        _favoriteState.value = !_favoriteState.value
     }
 
     fun updateCategorySelected(category: Categories) {
-        _categorySelected.postValue(category)
+        _categorySelectedState.value = category
     }
 }

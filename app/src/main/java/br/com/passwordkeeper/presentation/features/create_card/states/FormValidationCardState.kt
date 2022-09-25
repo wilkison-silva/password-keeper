@@ -11,4 +11,5 @@ sealed class FormValidationCardState {
     ) : FormValidationCardState()
     object DescriptionIsEmpty: FormValidationCardState()
     object CategoryNotSelected: FormValidationCardState()
+    object EmptyState: FormValidationCardState()
 }

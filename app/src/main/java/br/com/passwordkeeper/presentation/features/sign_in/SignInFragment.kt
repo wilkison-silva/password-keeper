@@ -6,6 +6,7 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.view.inputmethod.EditorInfo
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import br.com.passwordkeeper.R
 import br.com.passwordkeeper.databinding.FragmentSignInBinding
@@ -65,62 +66,66 @@ class SignInFragment : Fragment(R.layout.fragment_sign_in) {
     }
 
     private fun observeFormValidation() {
-        signInViewModel.formValidationState.observe(viewLifecycleOwner) { formValidationSignInStateResult ->
-            when (formValidationSignInStateResult) {
-                is FormValidationSignInState.ErrorEmailIsBlank -> {
-                    binding.tiEmail.error = context?.getString(R.string.email_field_is_empty)
-                    binding.tiEmail.withError()
-                    binding.tiPassword.withoutError()
-                }
-                is FormValidationSignInState.ErrorEmailMalFormed -> {
-                    binding.tiEmail.error = context?.getString(R.string.invalid_email)
-                    binding.tiEmail.withError()
-                    binding.tiPassword.withoutError()
-                }
-                is FormValidationSignInState.ErrorPasswordIsBlank -> {
-                    binding.tiPassword.error = context?.getString(R.string.password_field_is_empty)
-                    binding.tiPassword.withError()
-                    binding.tiEmail.withoutError()
+        lifecycleScope.launchWhenStarted {
+            signInViewModel.formValidationState.collect { formValidationSignInStateResult ->
+                when (formValidationSignInStateResult) {
+                    is FormValidationSignInState.ErrorEmailIsBlank -> {
+                        binding.tiEmail.error = context?.getString(R.string.email_field_is_empty)
+                        binding.tiEmail.withError()
+                        binding.tiPassword.withoutError()
+                    }
+                    is FormValidationSignInState.ErrorEmailMalFormed -> {
+                        binding.tiEmail.error = context?.getString(R.string.invalid_email)
+                        binding.tiEmail.withError()
+                        binding.tiPassword.withoutError()
+                    }
+                    is FormValidationSignInState.ErrorPasswordIsBlank -> {
+                        binding.tiPassword.error = context?.getString(R.string.password_field_is_empty)
+                        binding.tiPassword.withError()
+                        binding.tiEmail.withoutError()
 
-                }
-                is FormValidationSignInState.Success -> {
-                    val email = formValidationSignInStateResult.email
-                    binding.tiEmail.withoutError()
-                    val password = formValidationSignInStateResult.password
-                    binding.tiPassword.withoutError()
-                    signInViewModel.updateSignInState(email, password)
+                    }
+                    is FormValidationSignInState.Success -> {
+                        val email = formValidationSignInStateResult.email
+                        binding.tiEmail.withoutError()
+                        val password = formValidationSignInStateResult.password
+                        binding.tiPassword.withoutError()
+                        signInViewModel.updateSignInState(email, password)
 
+                    }
+                    is FormValidationSignInState.EmptyState -> {}
                 }
-                is FormValidationSignInState.EmptyState -> {}
             }
         }
     }
 
     private fun observeSignIn() {
-        signInViewModel.signInState.observe(viewLifecycleOwner) { signInStateResult ->
-            when (signInStateResult) {
-                is SignInState.Success -> {
-                    val directions =
-                        SignInFragmentDirections.actionFragmentSignInToFragmentHome()
-                    navController.navigate(directions)
-                    signInViewModel.updateStatesToEmptyState()
-                }
-                is SignInState.ErrorEmailOrPasswordWrong -> {
-                    view?.showSnackBar(getString(R.string.email_or_password_wrong))
-                    binding.mbSignIn.text = getString(R.string.sign_in)
-                    binding.progressBarSignIn.visibility = GONE
-                }
-                is SignInState.ErrorUnknown -> {
-                    view?.showSnackBar(getString(R.string.error))
-                    binding.mbSignIn.text = getString(R.string.sign_in)
-                    binding.progressBarSignIn.visibility = GONE
-                }
-                is SignInState.EmptyState -> {
+        lifecycleScope.launchWhenStarted {
+            signInViewModel.signInState.collect { signInStateResult ->
+                when (signInStateResult) {
+                    is SignInState.Success -> {
+                        val directions =
+                            SignInFragmentDirections.actionFragmentSignInToFragmentHome()
+                        navController.navigate(directions)
+                        signInViewModel.updateStatesToEmptyState()
+                    }
+                    is SignInState.ErrorEmailOrPasswordWrong -> {
+                        view?.showSnackBar(getString(R.string.email_or_password_wrong))
+                        binding.mbSignIn.text = getString(R.string.sign_in)
+                        binding.progressBarSignIn.visibility = GONE
+                    }
+                    is SignInState.ErrorUnknown -> {
+                        view?.showSnackBar(getString(R.string.error))
+                        binding.mbSignIn.text = getString(R.string.sign_in)
+                        binding.progressBarSignIn.visibility = GONE
+                    }
+                    is SignInState.EmptyState -> {
 
-                }
-                is SignInState.Loading -> {
-                    binding.mbSignIn.text = getString(R.string.please_wait)
-                    binding.progressBarSignIn.visibility = VISIBLE
+                    }
+                    is SignInState.Loading -> {
+                        binding.mbSignIn.text = getString(R.string.please_wait)
+                        binding.progressBarSignIn.visibility = VISIBLE
+                    }
                 }
             }
         }

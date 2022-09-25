@@ -7,5 +7,6 @@ enum class Categories {
     EDUCATION,
     WORK,
     CARD,
-    ALL
+    ALL,
+    NONE
 }

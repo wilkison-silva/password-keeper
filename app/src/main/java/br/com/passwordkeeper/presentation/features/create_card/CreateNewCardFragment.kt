@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import android.view.View.VISIBLE
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import br.com.passwordkeeper.R
 import br.com.passwordkeeper.databinding.FragmentCreateNewCardBinding
@@ -83,15 +84,17 @@ class CreateNewCardFragment : Fragment(R.layout.fragment_create_new_card) {
     }
 
     private fun observeCategorySelected() {
-        createNewCardViewModel.categorySelected.observe(viewLifecycleOwner) { category ->
-            when (category) {
-                STREAMING -> binding.textInputEditTextCategory.setText(R.string.streaming)
-                SOCIAL_MEDIA -> binding.textInputEditTextCategory.setText(R.string.social_media)
-                BANKS -> binding.textInputEditTextCategory.setText(R.string.banks)
-                EDUCATION -> binding.textInputEditTextCategory.setText(R.string.education)
-                WORK -> binding.textInputEditTextCategory.setText(R.string.work)
-                CARD -> binding.textInputEditTextCategory.setText(R.string.cards)
-                ALL -> { }
+        lifecycleScope.launchWhenStarted {
+            createNewCardViewModel.categorySelectedState.collect { category ->
+                when (category) {
+                    STREAMING -> binding.textInputEditTextCategory.setText(R.string.streaming)
+                    SOCIAL_MEDIA -> binding.textInputEditTextCategory.setText(R.string.social_media)
+                    BANKS -> binding.textInputEditTextCategory.setText(R.string.banks)
+                    EDUCATION -> binding.textInputEditTextCategory.setText(R.string.education)
+                    WORK -> binding.textInputEditTextCategory.setText(R.string.work)
+                    CARD -> binding.textInputEditTextCategory.setText(R.string.cards)
+                    ALL, NONE -> {}
+                }
             }
         }
     }
@@ -104,10 +107,12 @@ class CreateNewCardFragment : Fragment(R.layout.fragment_create_new_card) {
     }
 
     private fun observeFavoriteState() {
-        createNewCardViewModel.favorite.observe(viewLifecycleOwner) {
-            when (it) {
-                true -> binding.imageViewIconHeart.setImageResource(R.drawable.ic_heart_full)
-                false -> binding.imageViewIconHeart.setImageResource(R.drawable.ic_heart_empty)
+        lifecycleScope.launchWhenStarted {
+            createNewCardViewModel.favoriteState.collect {
+                when (it) {
+                    true -> binding.imageViewIconHeart.setImageResource(R.drawable.ic_heart_full)
+                    false -> binding.imageViewIconHeart.setImageResource(R.drawable.ic_heart_empty)
+                }
             }
         }
     }
@@ -118,7 +123,7 @@ class CreateNewCardFragment : Fragment(R.layout.fragment_create_new_card) {
             val login = binding.textInputEditTextEmail.text.toString()
             val password = binding.textInputEditTextPassword.text.toString()
             val category = binding.textInputEditTextCategory.text.toString()
-            val isFavorite = createNewCardViewModel.favorite.value ?: false
+            val isFavorite = createNewCardViewModel.favoriteState.value ?: false
 
             createNewCardViewModel.validateForm(
                 description = description,
@@ -132,42 +137,50 @@ class CreateNewCardFragment : Fragment(R.layout.fragment_create_new_card) {
     }
 
     private fun observeFormValidation() {
-        createNewCardViewModel.formValidationCard.observe(viewLifecycleOwner) {
-            when (it) {
-                is FormValidationCardState.CategoryNotSelected -> {
-                    binding.textInputLayoutCategory.error =
-                        getString(R.string.category_not_selected)
-                }
-                is FormValidationCardState.DescriptionIsEmpty -> {
-                    binding.textInputLayoutDescription.error =
-                        getString(R.string.description_is_empty)
-                }
-                is FormValidationCardState.Success -> {
-                    createNewCardViewModel.createCard(
-                        description = it.description,
-                        login = it.login,
-                        password = it.password,
-                        isFavorite = it.isFavorite,
-                        date = it.date,
-                        emailUser = userView.email
-                    )
+        lifecycleScope.launchWhenStarted {
+            createNewCardViewModel.formValidationState.collect {
+                when (it) {
+                    is FormValidationCardState.CategoryNotSelected -> {
+                        binding.textInputLayoutCategory.error =
+                            getString(R.string.category_not_selected)
+                    }
+                    is FormValidationCardState.DescriptionIsEmpty -> {
+                        binding.textInputLayoutDescription.error =
+                            getString(R.string.description_is_empty)
+                    }
+                    is FormValidationCardState.Success -> {
+                        createNewCardViewModel.createCard(
+                            description = it.description,
+                            login = it.login,
+                            password = it.password,
+                            isFavorite = it.isFavorite,
+                            date = it.date,
+                            emailUser = userView.email
+                        )
+                    }
+                    is FormValidationCardState.EmptyState -> {
+
+                    }
                 }
             }
         }
     }
 
     private fun observeCreateCard() {
-        createNewCardViewModel.createCardState.observe(viewLifecycleOwner) {
-            when (it) {
-                is CreateCardState.ErrorUnknown -> {
-                    goToErrorNoteFragment()
-                }
-                is CreateCardState.Success -> {
-                    goToSuccessNewNoteFragment()
-                }
-                is CreateCardState.Loading -> {
-                    binding.buttonSave.text = ""
-                    binding.progressBarSaving.visibility = VISIBLE
+        lifecycleScope.launchWhenStarted {
+            createNewCardViewModel.createCardState.collect {
+                when (it) {
+                    is CreateCardState.ErrorUnknown -> {
+                        goToErrorNoteFragment()
+                    }
+                    is CreateCardState.Success -> {
+                        goToSuccessNewNoteFragment()
+                    }
+                    is CreateCardState.Loading -> {
+                        binding.buttonSave.text = ""
+                        binding.progressBarSaving.visibility = VISIBLE
+                    }
+                    is CreateCardState.EmptyState -> {}
                 }
             }
         }

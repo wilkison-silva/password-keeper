@@ -4,16 +4,17 @@ import android.os.Bundle
 import android.view.View
 import android.view.View.*
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import br.com.passwordkeeper.R
-import br.com.passwordkeeper.databinding.FragmentHomeBinding
 import br.com.passwordkeeper.commons.Categories
-import br.com.passwordkeeper.presentation.model.UserView
+import br.com.passwordkeeper.databinding.FragmentHomeBinding
 import br.com.passwordkeeper.presentation.features.CurrentUserState
 import br.com.passwordkeeper.presentation.features.MainViewModel
 import br.com.passwordkeeper.presentation.features.home.states.GetAdviceState
 import br.com.passwordkeeper.presentation.features.home.states.GetCategoriesSizeState
 import br.com.passwordkeeper.presentation.features.home.states.GetFavoriteCardsState
+import br.com.passwordkeeper.presentation.model.UserView
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -59,7 +60,6 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                     setupTextViewOnClick()
                     updateCategoriesSizeState(currentUserState.userView.email)
                     updateFavorites(currentUserState.userView.email)
-                    updateAdviceState()
                 }
             }
         }
@@ -70,26 +70,28 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     }
 
     private fun observeAdviceState() {
-        homeViewModel.adviceState.observe(viewLifecycleOwner) {
-            when (it) {
-                is GetAdviceState.Loading -> {
-                    showHeaderShimmer()
-                }
-                is GetAdviceState.Success -> {
-                    val adviceView = it.adviceView
-                    binding.textViewMessage.text =
-                        homeViewModel.getAdviceWithFirstLetterBold(adviceView)
-                    binding.textViewTheAdviceAbove.text =
-                        getString(R.string.the_advice_above, adviceView.quantityWords)
-                    hideHeaderShimmer()
-                }
-                is GetAdviceState.SuccessWithoutMessage -> {
-                    binding.textViewMessage.text = getString(R.string.no_message_found)
-                    hideHeaderShimmer()
-                }
-                is GetAdviceState.ErrorUnknown -> {
-                    binding.textViewMessage.text = getString(R.string.error)
-                    hideHeaderShimmer()
+        lifecycleScope.launchWhenStarted {
+            homeViewModel.adviceState.collect {
+                when (it) {
+                    is GetAdviceState.Loading -> {
+                        showHeaderShimmer()
+                    }
+                    is GetAdviceState.Success -> {
+                        val adviceView = it.adviceView
+                        binding.textViewMessage.text =
+                            homeViewModel.getAdviceWithFirstLetterBold(adviceView)
+                        binding.textViewTheAdviceAbove.text =
+                            getString(R.string.the_advice_above, adviceView.quantityWords)
+                        hideHeaderShimmer()
+                    }
+                    is GetAdviceState.SuccessWithoutMessage -> {
+                        binding.textViewMessage.text = getString(R.string.no_message_found)
+                        hideHeaderShimmer()
+                    }
+                    is GetAdviceState.ErrorUnknown -> {
+                        binding.textViewMessage.text = getString(R.string.error)
+                        hideHeaderShimmer()
+                    }
                 }
             }
         }
@@ -105,38 +107,36 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
         binding.constraintLayoutContentHeader.visibility = INVISIBLE
     }
 
-    private fun updateAdviceState() {
-        homeViewModel.updateAdvice()
-    }
-
     private fun bindUserInfo(userView: UserView) {
         binding.textViewName.text = userView.name
         binding.textViewFirstLetterName.text = userView.firstCharacterName
     }
 
     private fun observeFavoriteCards() {
-        homeViewModel.favoriteCardsState.observe(viewLifecycleOwner) {
-            when (it) {
-                is GetFavoriteCardsState.ErrorUnknown -> {
+        lifecycleScope.launchWhenStarted {
+            homeViewModel.favoriteCardsState.collect {
+                when (it) {
+                    is GetFavoriteCardsState.ErrorUnknown -> {
 
-                }
-                is GetFavoriteCardsState.Success -> {
-                    binding.progressBarLeft.visibility = GONE
-                    binding.progressBarRight.visibility = GONE
-                    val cardViewList = it.cardViewList
-                    favoriteAdapter.updateList(cardViewList)
-                    binding.constraintLayoutFavorite.visibility = VISIBLE
-                    binding.constraintLayoutNoFavoriteYet.visibility = GONE
-                }
-                is GetFavoriteCardsState.NoElements -> {
-                    binding.progressBarLeft.visibility = GONE
-                    binding.progressBarRight.visibility = GONE
-                    binding.constraintLayoutFavorite.visibility = GONE
-                    binding.constraintLayoutNoFavoriteYet.visibility = VISIBLE
-                }
-                is GetFavoriteCardsState.Loading -> {
-                    binding.progressBarLeft.visibility = VISIBLE
-                    binding.progressBarRight.visibility = VISIBLE
+                    }
+                    is GetFavoriteCardsState.Success -> {
+                        binding.progressBarLeft.visibility = GONE
+                        binding.progressBarRight.visibility = GONE
+                        val cardViewList = it.cardViewList
+                        favoriteAdapter.updateList(cardViewList)
+                        binding.constraintLayoutFavorite.visibility = VISIBLE
+                        binding.constraintLayoutNoFavoriteYet.visibility = GONE
+                    }
+                    is GetFavoriteCardsState.NoElements -> {
+                        binding.progressBarLeft.visibility = GONE
+                        binding.progressBarRight.visibility = GONE
+                        binding.constraintLayoutFavorite.visibility = GONE
+                        binding.constraintLayoutNoFavoriteYet.visibility = VISIBLE
+                    }
+                    is GetFavoriteCardsState.Loading -> {
+                        binding.progressBarLeft.visibility = VISIBLE
+                        binding.progressBarRight.visibility = VISIBLE
+                    }
                 }
             }
         }
@@ -144,28 +144,30 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     }
 
     private fun observeCategoriesSize() {
-        homeViewModel.categoriesSizeState.observe(viewLifecycleOwner) {
-            when (it) {
-                is GetCategoriesSizeState.ErrorUnknown -> {
+        lifecycleScope.launchWhenStarted {
+            homeViewModel.categoriesSizeState.collect {
+                when (it) {
+                    is GetCategoriesSizeState.ErrorUnknown -> {
 
-                }
-                is GetCategoriesSizeState.Success -> {
-                    binding.progressBarLeft.visibility = GONE
-                    binding.progressBarRight.visibility = GONE
-                    val categoriesViewList = it.categoriesViewList
-                    categoryAdapter.updateList(categoriesViewList)
-                    binding.constraintLayoutCategoriesSuccess.visibility = VISIBLE
-                    binding.constraintLayoutNoCardsYet.visibility = GONE
-                }
-                is GetCategoriesSizeState.NoElements -> {
-                    binding.progressBarLeft.visibility = GONE
-                    binding.progressBarRight.visibility = GONE
-                    binding.constraintLayoutCategoriesSuccess.visibility = GONE
-                    binding.constraintLayoutNoCardsYet.visibility = VISIBLE
-                }
-                is GetCategoriesSizeState.Loading -> {
-                    binding.progressBarLeft.visibility = VISIBLE
-                    binding.progressBarRight.visibility = VISIBLE
+                    }
+                    is GetCategoriesSizeState.Success -> {
+                        binding.progressBarLeft.visibility = GONE
+                        binding.progressBarRight.visibility = GONE
+                        val categoriesViewList = it.categoriesViewList
+                        categoryAdapter.updateList(categoriesViewList)
+                        binding.constraintLayoutCategoriesSuccess.visibility = VISIBLE
+                        binding.constraintLayoutNoCardsYet.visibility = GONE
+                    }
+                    is GetCategoriesSizeState.NoElements -> {
+                        binding.progressBarLeft.visibility = GONE
+                        binding.progressBarRight.visibility = GONE
+                        binding.constraintLayoutCategoriesSuccess.visibility = GONE
+                        binding.constraintLayoutNoCardsYet.visibility = VISIBLE
+                    }
+                    is GetCategoriesSizeState.Loading -> {
+                        binding.progressBarLeft.visibility = VISIBLE
+                        binding.progressBarRight.visibility = VISIBLE
+                    }
                 }
             }
         }

@@ -5,6 +5,7 @@ import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import br.com.passwordkeeper.R
@@ -12,7 +13,7 @@ import br.com.passwordkeeper.databinding.FragmentListCardsBinding
 import br.com.passwordkeeper.commons.FiltersListCard
 import br.com.passwordkeeper.presentation.features.CurrentUserState
 import br.com.passwordkeeper.presentation.features.MainViewModel
-import br.com.passwordkeeper.presentation.features.list_cards.states.GetAllCardsState
+import br.com.passwordkeeper.presentation.features.list_cards.states.GetCardsState
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -73,21 +74,24 @@ class ListCardsFragment : Fragment(R.layout.fragment_list_cards) {
     }
 
     private fun observeCards() {
-        listCardsViewModel.allCards.observe(viewLifecycleOwner) {
-            when (it) {
-                is GetAllCardsState.ErrorUnknown -> {
+        lifecycleScope.launchWhenStarted {
+            listCardsViewModel.cardsListState.collect {
+                when (it) {
+                    is GetCardsState.ErrorUnknown -> {
 
-                }
-                is GetAllCardsState.Success -> {
-                    binding.recyclerViewListCards.visibility = VISIBLE
-                    binding.progressBar.visibility = GONE
-                    val cardViewList = it.cardViewList
-                    listCardsAdapter.updateList(cardViewList)
+                    }
+                    is GetCardsState.Success -> {
+                        binding.recyclerViewListCards.visibility = VISIBLE
+                        binding.progressBar.visibility = GONE
+                        val cardViewList = it.cardViewList
+                        listCardsAdapter.updateList(cardViewList)
 
-                }
-                is GetAllCardsState.Loading -> {
-                    binding.recyclerViewListCards.visibility = GONE
-                    binding.progressBar.visibility = VISIBLE
+                    }
+                    is GetCardsState.Loading -> {
+                        binding.recyclerViewListCards.visibility = GONE
+                        binding.progressBar.visibility = VISIBLE
+                    }
+                    is GetCardsState.EmptyState -> {}
                 }
             }
         }
