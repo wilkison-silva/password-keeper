@@ -2,8 +2,7 @@ package br.com.passwordkeeper.domain.usecases.get_favorites_cards
 
 import br.com.passwordkeeper.domain.mapper.CardDomainMapper
 import br.com.passwordkeeper.domain.repository.CardRepository
-import br.com.passwordkeeper.domain.result.repository.GetFavoriteCardsRepositoryResult
-import br.com.passwordkeeper.domain.result.usecase.GetFavoriteCardsUseCaseResult
+import br.com.passwordkeeper.domain.repository.GetFavoriteCardsRepositoryResult
 
 class GetFavoriteCardsUseCaseImpl(
     private val cardRepository: CardRepository,

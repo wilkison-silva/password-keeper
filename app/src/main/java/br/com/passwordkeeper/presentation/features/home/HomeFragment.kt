@@ -9,11 +9,11 @@ import br.com.passwordkeeper.R
 import br.com.passwordkeeper.databinding.FragmentHomeBinding
 import br.com.passwordkeeper.commons.Categories
 import br.com.passwordkeeper.presentation.model.UserView
-import br.com.passwordkeeper.domain.result.viewmodelstate.CurrentUserState
-import br.com.passwordkeeper.domain.result.viewmodelstate.GetAdviceStateResult
-import br.com.passwordkeeper.domain.result.viewmodelstate.GetCategoriesSizeStateResult
-import br.com.passwordkeeper.domain.result.viewmodelstate.GetFavoriteCardsStateResult
+import br.com.passwordkeeper.presentation.features.CurrentUserState
 import br.com.passwordkeeper.presentation.features.MainViewModel
+import br.com.passwordkeeper.presentation.features.home.states.GetAdviceState
+import br.com.passwordkeeper.presentation.features.home.states.GetCategoriesSizeState
+import br.com.passwordkeeper.presentation.features.home.states.GetFavoriteCardsState
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -72,10 +72,10 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     private fun observeAdviceState() {
         homeViewModel.adviceState.observe(viewLifecycleOwner) {
             when (it) {
-                is GetAdviceStateResult.Loading -> {
+                is GetAdviceState.Loading -> {
                     showHeaderShimmer()
                 }
-                is GetAdviceStateResult.Success -> {
+                is GetAdviceState.Success -> {
                     val adviceView = it.adviceView
                     binding.textViewMessage.text =
                         homeViewModel.getAdviceWithFirstLetterBold(adviceView)
@@ -83,11 +83,11 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                         getString(R.string.the_advice_above, adviceView.quantityWords)
                     hideHeaderShimmer()
                 }
-                is GetAdviceStateResult.SuccessWithoutMessage -> {
+                is GetAdviceState.SuccessWithoutMessage -> {
                     binding.textViewMessage.text = getString(R.string.no_message_found)
                     hideHeaderShimmer()
                 }
-                is GetAdviceStateResult.ErrorUnknown -> {
+                is GetAdviceState.ErrorUnknown -> {
                     binding.textViewMessage.text = getString(R.string.error)
                     hideHeaderShimmer()
                 }
@@ -117,10 +117,10 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     private fun observeFavoriteCards() {
         homeViewModel.favoriteCardsState.observe(viewLifecycleOwner) {
             when (it) {
-                is GetFavoriteCardsStateResult.ErrorUnknown -> {
+                is GetFavoriteCardsState.ErrorUnknown -> {
 
                 }
-                is GetFavoriteCardsStateResult.Success -> {
+                is GetFavoriteCardsState.Success -> {
                     binding.progressBarLeft.visibility = GONE
                     binding.progressBarRight.visibility = GONE
                     val cardViewList = it.cardViewList
@@ -128,13 +128,13 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                     binding.constraintLayoutFavorite.visibility = VISIBLE
                     binding.constraintLayoutNoFavoriteYet.visibility = GONE
                 }
-                is GetFavoriteCardsStateResult.NoElements -> {
+                is GetFavoriteCardsState.NoElements -> {
                     binding.progressBarLeft.visibility = GONE
                     binding.progressBarRight.visibility = GONE
                     binding.constraintLayoutFavorite.visibility = GONE
                     binding.constraintLayoutNoFavoriteYet.visibility = VISIBLE
                 }
-                is GetFavoriteCardsStateResult.Loading -> {
+                is GetFavoriteCardsState.Loading -> {
                     binding.progressBarLeft.visibility = VISIBLE
                     binding.progressBarRight.visibility = VISIBLE
                 }
@@ -146,10 +146,10 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
     private fun observeCategoriesSize() {
         homeViewModel.categoriesSizeState.observe(viewLifecycleOwner) {
             when (it) {
-                is GetCategoriesSizeStateResult.ErrorUnknown -> {
+                is GetCategoriesSizeState.ErrorUnknown -> {
 
                 }
-                is GetCategoriesSizeStateResult.Success -> {
+                is GetCategoriesSizeState.Success -> {
                     binding.progressBarLeft.visibility = GONE
                     binding.progressBarRight.visibility = GONE
                     val categoriesViewList = it.categoriesViewList
@@ -157,13 +157,13 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
                     binding.constraintLayoutCategoriesSuccess.visibility = VISIBLE
                     binding.constraintLayoutNoCardsYet.visibility = GONE
                 }
-                is GetCategoriesSizeStateResult.NoElements -> {
+                is GetCategoriesSizeState.NoElements -> {
                     binding.progressBarLeft.visibility = GONE
                     binding.progressBarRight.visibility = GONE
                     binding.constraintLayoutCategoriesSuccess.visibility = GONE
                     binding.constraintLayoutNoCardsYet.visibility = VISIBLE
                 }
-                is GetCategoriesSizeStateResult.Loading -> {
+                is GetCategoriesSizeState.Loading -> {
                     binding.progressBarLeft.visibility = VISIBLE
                     binding.progressBarRight.visibility = VISIBLE
                 }

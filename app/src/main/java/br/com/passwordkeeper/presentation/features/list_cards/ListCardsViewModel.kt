@@ -8,12 +8,12 @@ import br.com.passwordkeeper.R
 import br.com.passwordkeeper.presentation.model.CardView
 import br.com.passwordkeeper.commons.Categories
 import br.com.passwordkeeper.commons.FiltersListCard
-import br.com.passwordkeeper.domain.result.usecase.GetAllCardsUseCaseResult
-import br.com.passwordkeeper.domain.result.usecase.GetCardsByCategoryUseCaseResult
-import br.com.passwordkeeper.domain.result.viewmodelstate.GetAllCardsStateResult
+import br.com.passwordkeeper.domain.usecases.get_all_cards.GetAllCardsUseCaseResult
+import br.com.passwordkeeper.domain.usecases.get_cards_by_category.GetCardsByCategoryUseCaseResult
 import br.com.passwordkeeper.domain.usecases.sort_cardview_list.SortCardViewListUseCase
 import br.com.passwordkeeper.domain.usecases.get_all_cards.GetAllCardsUseCase
 import br.com.passwordkeeper.domain.usecases.get_cards_by_category.GetCardsByCategoryUseCase
+import br.com.passwordkeeper.presentation.features.list_cards.states.GetAllCardsState
 import kotlinx.coroutines.launch
 
 class ListCardsViewModel(
@@ -22,8 +22,8 @@ class ListCardsViewModel(
     private val sortCardViewListUseCase: SortCardViewListUseCase
 ) : ViewModel() {
 
-    private val _allCards = MutableLiveData<GetAllCardsStateResult>()
-    val allCards: LiveData<GetAllCardsStateResult>
+    private val _allCards = MutableLiveData<GetAllCardsState>()
+    val allCards: LiveData<GetAllCardsState>
         get() = _allCards
 
     private fun getSortedCardViewList(
@@ -46,7 +46,7 @@ class ListCardsViewModel(
             filter = filter,
             cardViewList = cardViewList
         )
-        _allCards.postValue(GetAllCardsStateResult.Success(sortedList))
+        _allCards.postValue(GetAllCardsState.Success(sortedList))
     }
 
     fun updateCards(
@@ -55,11 +55,11 @@ class ListCardsViewModel(
         filter: FiltersListCard
     ) {
         viewModelScope.launch {
-            _allCards.postValue(GetAllCardsStateResult.Loading)
+            _allCards.postValue(GetAllCardsState.Loading)
             if (category == Categories.ALL) {
                 when (val getAllCardsUseCaseResult = getAllCardsUseCase(email)) {
                     is GetAllCardsUseCaseResult.ErrorUnknown -> {
-                        _allCards.postValue(GetAllCardsStateResult.ErrorUnknown)
+                        _allCards.postValue(GetAllCardsState.ErrorUnknown)
                     }
                     is GetAllCardsUseCaseResult.Success -> {
                         updateSortedCards(
@@ -72,7 +72,7 @@ class ListCardsViewModel(
                 when (val getCardsByCategoryUseCaseResult =
                     getCardsByCategoryUseCase(category.name, email)) {
                     is GetCardsByCategoryUseCaseResult.ErrorUnknown -> {
-                        _allCards.postValue(GetAllCardsStateResult.ErrorUnknown)
+                        _allCards.postValue(GetAllCardsState.ErrorUnknown)
                     }
                     is GetCardsByCategoryUseCaseResult.Success -> {
                         updateSortedCards(

@@ -5,12 +5,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.com.passwordkeeper.commons.Categories
-import br.com.passwordkeeper.domain.result.usecase.CreateCardUseCaseResult
-import br.com.passwordkeeper.domain.result.usecase.FormValidationCardUseCaseResult
-import br.com.passwordkeeper.domain.result.viewmodelstate.CreateCardStateResult
-import br.com.passwordkeeper.domain.result.viewmodelstate.FormValidationCardStateResult
+import br.com.passwordkeeper.domain.usecases.create_card.CreateCardUseCaseResult
+import br.com.passwordkeeper.domain.usecases.form_validation_create_card.FormValidationCreateCardUseCaseResult
 import br.com.passwordkeeper.domain.usecases.create_card.CreateCardUseCase
 import br.com.passwordkeeper.domain.usecases.form_validation_create_card.FormValidationCreateCardUseCase
+import br.com.passwordkeeper.presentation.features.create_card.states.CreateCardState
+import br.com.passwordkeeper.presentation.features.create_card.states.FormValidationCardState
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
@@ -24,12 +24,12 @@ class CreateNewCardViewModel(
     val favorite: LiveData<Boolean>
         get() = _favorite
 
-    private val _formValidationCard = MutableLiveData<FormValidationCardStateResult>()
-    val formValidationCard: LiveData<FormValidationCardStateResult>
+    private val _formValidationCard = MutableLiveData<FormValidationCardState>()
+    val formValidationCard: LiveData<FormValidationCardState>
         get() = _formValidationCard
 
-    private val _createCardState = MutableLiveData<CreateCardStateResult>()
-    val createCardState: LiveData<CreateCardStateResult>
+    private val _createCardState = MutableLiveData<CreateCardState>()
+    val createCardState: LiveData<CreateCardState>
         get() = _createCardState
 
     private val _categorySelected = MutableLiveData<Categories>()
@@ -60,14 +60,14 @@ class CreateNewCardViewModel(
             date
         )
         when (resultFormValidation) {
-            FormValidationCardUseCaseResult.CategoryNotSelected -> {
-                _formValidationCard.postValue(FormValidationCardStateResult.CategoryNotSelected)
+            FormValidationCreateCardUseCaseResult.CategoryNotSelected -> {
+                _formValidationCard.postValue(FormValidationCardState.CategoryNotSelected)
             }
-            FormValidationCardUseCaseResult.DescriptionIsEmpty -> {
-                _formValidationCard.postValue(FormValidationCardStateResult.DescriptionIsEmpty)
+            FormValidationCreateCardUseCaseResult.DescriptionIsEmpty -> {
+                _formValidationCard.postValue(FormValidationCardState.DescriptionIsEmpty)
             }
-            FormValidationCardUseCaseResult.Success -> {
-                val formValidationSuccess = FormValidationCardStateResult.Success(
+            FormValidationCreateCardUseCaseResult.Success -> {
+                val formValidationSuccess = FormValidationCardState.Success(
                     description = description,
                     login = login,
                     password = password,
@@ -89,7 +89,7 @@ class CreateNewCardViewModel(
         emailUser: String
     ) {
         viewModelScope.launch {
-            _createCardState.postValue(CreateCardStateResult.Loading)
+            _createCardState.postValue(CreateCardState.Loading)
             _categorySelected.value?.let { category ->
                 val resultCreateCard = createCardUseCase(
                     description = description,
@@ -102,13 +102,13 @@ class CreateNewCardViewModel(
                 )
                 when (resultCreateCard) {
                     is CreateCardUseCaseResult.ErrorUnknown -> {
-                        _createCardState.postValue(CreateCardStateResult.ErrorUnknown)
+                        _createCardState.postValue(CreateCardState.ErrorUnknown)
                     }
                     is CreateCardUseCaseResult.Success -> {
-                        _createCardState.postValue(CreateCardStateResult.Success(resultCreateCard.cardId))
+                        _createCardState.postValue(CreateCardState.Success(resultCreateCard.cardId))
                     }
                 }
-            } ?: _createCardState.postValue(CreateCardStateResult.ErrorUnknown)
+            } ?: _createCardState.postValue(CreateCardState.ErrorUnknown)
         }
     }
 

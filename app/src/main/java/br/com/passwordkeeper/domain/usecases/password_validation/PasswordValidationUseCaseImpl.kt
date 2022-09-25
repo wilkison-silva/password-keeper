@@ -1,8 +1,5 @@
 package br.com.passwordkeeper.domain.usecases.password_validation
 
-import br.com.passwordkeeper.domain.result.usecase.ErrorsValidationPassword
-import br.com.passwordkeeper.domain.result.usecase.PasswordValidationUseCaseResult
-
 private const val REGEX_UPPER_CASE = ".*[A-Z]"
 private const val REGEX_LOWER_CASE = ".*[a-z]"
 private const val REGEX_SPECIAL_LETTER = ".*[!@#$%^&+=-]"

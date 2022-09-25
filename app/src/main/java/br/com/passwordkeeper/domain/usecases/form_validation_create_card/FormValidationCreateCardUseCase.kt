@@ -1,7 +1,5 @@
 package br.com.passwordkeeper.domain.usecases.form_validation_create_card
 
-import br.com.passwordkeeper.domain.result.usecase.FormValidationCardUseCaseResult
-
 interface FormValidationCreateCardUseCase {
 
     operator fun invoke(
@@ -11,6 +9,6 @@ interface FormValidationCreateCardUseCase {
         category: String,
         isFavorite: Boolean,
         date: String
-    ): FormValidationCardUseCaseResult
+    ): FormValidationCreateCardUseCaseResult
 
 }

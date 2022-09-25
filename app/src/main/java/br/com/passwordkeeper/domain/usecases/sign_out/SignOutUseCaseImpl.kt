@@ -1,8 +1,7 @@
 package br.com.passwordkeeper.domain.usecases.sign_out
 
 import br.com.passwordkeeper.domain.repository.AuthRepository
-import br.com.passwordkeeper.domain.result.repository.SignOutRepositoryResult
-import br.com.passwordkeeper.domain.result.usecase.SignOutUseCaseResult
+import br.com.passwordkeeper.domain.repository.SignOutRepositoryResult
 
 class SignOutUseCaseImpl(
     private val authRepository: AuthRepository

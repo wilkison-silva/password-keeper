@@ -1,7 +1,6 @@
 package br.com.passwordkeeper.domain.usecases.form_validation_sign_up
 
-import br.com.passwordkeeper.domain.result.usecase.FormValidationSignUpUseCaseResult
-import br.com.passwordkeeper.domain.result.usecase.PasswordValidationUseCaseResult
+import br.com.passwordkeeper.domain.usecases.password_validation.PasswordValidationUseCaseResult
 import br.com.passwordkeeper.domain.usecases.password_validation.PasswordValidationUseCase
 import br.com.passwordkeeper.extensions.isValidEmail
 

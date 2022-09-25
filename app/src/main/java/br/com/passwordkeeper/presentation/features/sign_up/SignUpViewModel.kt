@@ -4,18 +4,18 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import br.com.passwordkeeper.domain.result.usecase.CreateUserUseCaseResult
-import br.com.passwordkeeper.domain.result.usecase.ErrorsValidationPassword
-import br.com.passwordkeeper.domain.result.usecase.ErrorsValidationPassword.*
-import br.com.passwordkeeper.domain.result.usecase.FormValidationSignUpUseCaseResult
-import br.com.passwordkeeper.domain.result.usecase.PasswordValidationUseCaseResult
-import br.com.passwordkeeper.domain.result.viewmodelstate.CreateUserStateResult
-import br.com.passwordkeeper.domain.result.viewmodelstate.FormValidationSignUpStateResult
-import br.com.passwordkeeper.domain.result.viewmodelstate.FormValidationSignUpStateResult.*
-import br.com.passwordkeeper.domain.result.viewmodelstate.ValidationStateResult
+import br.com.passwordkeeper.domain.usecases.create_user.CreateUserUseCaseResult
+import br.com.passwordkeeper.domain.usecases.password_validation.ErrorsValidationPassword
+import br.com.passwordkeeper.domain.usecases.password_validation.ErrorsValidationPassword.*
+import br.com.passwordkeeper.domain.usecases.form_validation_sign_up.FormValidationSignUpUseCaseResult
+import br.com.passwordkeeper.domain.usecases.password_validation.PasswordValidationUseCaseResult
+import br.com.passwordkeeper.presentation.features.sign_up.states.FormValidationSignUpState.*
 import br.com.passwordkeeper.domain.usecases.create_user.CreateUserUseCase
 import br.com.passwordkeeper.domain.usecases.form_validation_sign_up.FormValidationSignUpUseCase
 import br.com.passwordkeeper.domain.usecases.password_validation.PasswordValidationUseCase
+import br.com.passwordkeeper.presentation.features.sign_up.states.CreateUserState
+import br.com.passwordkeeper.presentation.features.sign_up.states.FormValidationSignUpState
+import br.com.passwordkeeper.presentation.features.sign_up.states.ValidationState
 import kotlinx.coroutines.launch
 
 class SignUpViewModel(
@@ -24,12 +24,12 @@ class SignUpViewModel(
     private val passwordValidationUseCase: PasswordValidationUseCase,
 ) : ViewModel() {
 
-    private val _createUserState = MutableLiveData<CreateUserStateResult>()
-    val createUserState: LiveData<CreateUserStateResult>
+    private val _createUserState = MutableLiveData<CreateUserState>()
+    val createUserState: LiveData<CreateUserState>
         get() = _createUserState
 
-    private val _formValidationState = MutableLiveData<FormValidationSignUpStateResult>()
-    val formValidationState: LiveData<FormValidationSignUpStateResult>
+    private val _formValidationState = MutableLiveData<FormValidationSignUpState>()
+    val formValidationState: LiveData<FormValidationSignUpState>
         get() = _formValidationState
 
     private val _passwordFieldIsEmptyState = MutableLiveData<Unit>()
@@ -37,24 +37,24 @@ class SignUpViewModel(
         get() = _passwordFieldIsEmptyState
 
 
-    private val _passwordUpperLetterState = MutableLiveData<ValidationStateResult>()
-    val passwordUpperLetterState: LiveData<ValidationStateResult>
+    private val _passwordUpperLetterState = MutableLiveData<ValidationState>()
+    val passwordUpperLetterState: LiveData<ValidationState>
         get() = _passwordUpperLetterState
 
-    private val _passwordLowerLetterState = MutableLiveData<ValidationStateResult>()
-    val passwordLowerLetterState: LiveData<ValidationStateResult>
+    private val _passwordLowerLetterState = MutableLiveData<ValidationState>()
+    val passwordLowerLetterState: LiveData<ValidationState>
         get() = _passwordLowerLetterState
 
-    private val _passwordSpecialLetterState = MutableLiveData<ValidationStateResult>()
-    val passwordSpecialCharacterState: LiveData<ValidationStateResult>
+    private val _passwordSpecialLetterState = MutableLiveData<ValidationState>()
+    val passwordSpecialCharacterState: LiveData<ValidationState>
         get() = _passwordSpecialLetterState
 
-    private val _passwordNumericLetterState = MutableLiveData<ValidationStateResult>()
-    val passwordNumericCharactersState: LiveData<ValidationStateResult>
+    private val _passwordNumericLetterState = MutableLiveData<ValidationState>()
+    val passwordNumericCharactersState: LiveData<ValidationState>
         get() = _passwordNumericLetterState
 
-    private val _passwordLengthState = MutableLiveData<ValidationStateResult>()
-    val passwordLengthState: LiveData<ValidationStateResult>
+    private val _passwordLengthState = MutableLiveData<ValidationState>()
+    val passwordLengthState: LiveData<ValidationState>
         get() = _passwordLengthState
 
     fun updateFormValidationState(
@@ -86,34 +86,34 @@ class SignUpViewModel(
         viewModelScope.launch {
             when (createUserUseCase(name, email, password)) {
                 CreateUserUseCaseResult.ErrorEmailAlreadyExists ->
-                    _createUserState.postValue(CreateUserStateResult.ErrorEmailAlreadyExists)
+                    _createUserState.postValue(CreateUserState.ErrorEmailAlreadyExists)
                 CreateUserUseCaseResult.ErrorEmailMalformed ->
-                    _createUserState.postValue(CreateUserStateResult.ErrorEmailMalformed)
+                    _createUserState.postValue(CreateUserState.ErrorEmailMalformed)
                 CreateUserUseCaseResult.ErrorUnknown ->
-                    _createUserState.postValue(CreateUserStateResult.ErrorUnknown)
+                    _createUserState.postValue(CreateUserState.ErrorUnknown)
                 CreateUserUseCaseResult.ErrorWeakPassword ->
-                    _createUserState.postValue(CreateUserStateResult.ErrorWeakPassword)
+                    _createUserState.postValue(CreateUserState.ErrorWeakPassword)
                 CreateUserUseCaseResult.Success ->
-                    _createUserState.postValue(CreateUserStateResult.Success)
+                    _createUserState.postValue(CreateUserState.Success)
             }
         }
     }
 
     fun updateStatesToEmptyState() {
-        _createUserState.postValue(CreateUserStateResult.EmptyState)
+        _createUserState.postValue(CreateUserState.EmptyState)
         _formValidationState.postValue(EmptyState)
     }
 
     private fun setPasswordState(
         errorList: List<ErrorsValidationPassword>,
         error: ErrorsValidationPassword,
-        state: MutableLiveData<ValidationStateResult>,
+        state: MutableLiveData<ValidationState>,
     ) {
         errorList.contains(error).let {
             if (it)
-                state.postValue(ValidationStateResult.Error)
+                state.postValue(ValidationState.Error)
             else
-                state.postValue(ValidationStateResult.Success)
+                state.postValue(ValidationState.Success)
         }
     }
 

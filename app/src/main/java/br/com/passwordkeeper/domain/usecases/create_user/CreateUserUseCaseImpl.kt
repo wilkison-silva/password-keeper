@@ -1,8 +1,7 @@
 package br.com.passwordkeeper.domain.usecases.create_user
 
 import br.com.passwordkeeper.domain.repository.AuthRepository
-import br.com.passwordkeeper.domain.result.repository.CreateUserRepositoryResult
-import br.com.passwordkeeper.domain.result.usecase.CreateUserUseCaseResult
+import br.com.passwordkeeper.domain.repository.CreateUserRepositoryResult
 
 class CreateUserUseCaseImpl(
     private val authRepository: AuthRepository

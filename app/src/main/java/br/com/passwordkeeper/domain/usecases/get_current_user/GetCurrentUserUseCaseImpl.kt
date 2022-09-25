@@ -2,8 +2,7 @@ package br.com.passwordkeeper.domain.usecases.get_current_user
 
 import br.com.passwordkeeper.domain.mapper.UserDomainMapper
 import br.com.passwordkeeper.domain.repository.AuthRepository
-import br.com.passwordkeeper.domain.result.repository.GetCurrentUserRepositoryResult
-import br.com.passwordkeeper.domain.result.usecase.GetCurrentUserUseCaseResult
+import br.com.passwordkeeper.domain.repository.GetCurrentUserRepositoryResult
 
 class GetCurrentUserUseCaseImpl(
     private val authRepository: AuthRepository,

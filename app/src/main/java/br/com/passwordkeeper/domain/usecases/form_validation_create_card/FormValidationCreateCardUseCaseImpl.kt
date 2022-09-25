@@ -2,7 +2,6 @@ package br.com.passwordkeeper.domain.usecases.form_validation_create_card
 
 import android.content.Context
 import br.com.passwordkeeper.R
-import br.com.passwordkeeper.domain.result.usecase.FormValidationCardUseCaseResult
 
 class FormValidationCreateCardUseCaseImpl(private val context: Context) : FormValidationCreateCardUseCase {
 
@@ -13,12 +12,12 @@ class FormValidationCreateCardUseCaseImpl(private val context: Context) : FormVa
         category: String,
         isFavorite: Boolean,
         date: String
-    ): FormValidationCardUseCaseResult {
+    ): FormValidationCreateCardUseCaseResult {
         if (description.isBlank())
-            return FormValidationCardUseCaseResult.DescriptionIsEmpty
+            return FormValidationCreateCardUseCaseResult.DescriptionIsEmpty
         if (!validateCategory(category))
-            return FormValidationCardUseCaseResult.CategoryNotSelected
-        return FormValidationCardUseCaseResult.Success
+            return FormValidationCreateCardUseCaseResult.CategoryNotSelected
+        return FormValidationCreateCardUseCaseResult.Success
     }
 
     private fun validateCategory(category: String): Boolean {

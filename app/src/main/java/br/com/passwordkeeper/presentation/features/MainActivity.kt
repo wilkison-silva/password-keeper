@@ -10,7 +10,6 @@ import androidx.navigation.NavDestination
 import androidx.navigation.findNavController
 import br.com.passwordkeeper.R
 import br.com.passwordkeeper.databinding.ActivityMainBinding
-import br.com.passwordkeeper.domain.result.viewmodelstate.BottomNavigationState
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity() {

@@ -2,8 +2,7 @@ package br.com.passwordkeeper.domain.usecases.sign_in
 
 import br.com.passwordkeeper.domain.mapper.UserDomainMapper
 import br.com.passwordkeeper.domain.repository.AuthRepository
-import br.com.passwordkeeper.domain.result.repository.SignInRepositoryResult
-import br.com.passwordkeeper.domain.result.usecase.SignInUseCaseResult
+import br.com.passwordkeeper.domain.repository.SignInRepositoryResult
 
 class SignInUseCaseImpl(
     private val authRepository: AuthRepository,

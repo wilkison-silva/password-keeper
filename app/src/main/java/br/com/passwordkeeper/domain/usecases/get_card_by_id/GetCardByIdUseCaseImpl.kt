@@ -2,8 +2,7 @@ package br.com.passwordkeeper.domain.usecases.get_card_by_id
 
 import br.com.passwordkeeper.domain.mapper.CardDomainMapper
 import br.com.passwordkeeper.domain.repository.CardRepository
-import br.com.passwordkeeper.domain.result.repository.GetCardByIdRepositoryResult
-import br.com.passwordkeeper.domain.result.usecase.GetCardByIdUseCaseResult
+import br.com.passwordkeeper.domain.repository.GetCardByIdRepositoryResult
 
 class GetCardByIdUseCaseImpl(
     private val cardRepository: CardRepository,

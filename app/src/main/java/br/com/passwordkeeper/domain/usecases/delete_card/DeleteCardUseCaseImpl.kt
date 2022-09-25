@@ -1,8 +1,7 @@
 package br.com.passwordkeeper.domain.usecases.delete_card
 
 import br.com.passwordkeeper.domain.repository.CardRepository
-import br.com.passwordkeeper.domain.result.repository.DeleteCardRepositoryResult
-import br.com.passwordkeeper.domain.result.usecase.DeleteCardUseCaseResult
+import br.com.passwordkeeper.domain.repository.DeleteCardRepositoryResult
 
 class DeleteCardUseCaseImpl(
     private val cardRepository: CardRepository,

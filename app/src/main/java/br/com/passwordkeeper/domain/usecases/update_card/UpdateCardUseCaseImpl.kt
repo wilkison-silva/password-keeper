@@ -2,8 +2,7 @@ package br.com.passwordkeeper.domain.usecases.update_card
 
 import br.com.passwordkeeper.commons.Categories
 import br.com.passwordkeeper.domain.repository.CardRepository
-import br.com.passwordkeeper.domain.result.repository.UpdateCardRepositoryResult
-import br.com.passwordkeeper.domain.result.usecase.UpdateCardUseCaseResult
+import br.com.passwordkeeper.domain.repository.UpdateCardRepositoryResult
 
 class UpdateCardUseCaseImpl(
     private val cardRepository: CardRepository

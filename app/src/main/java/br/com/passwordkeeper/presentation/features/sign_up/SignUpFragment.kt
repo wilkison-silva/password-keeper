@@ -13,14 +13,14 @@ import androidx.navigation.fragment.findNavController
 import br.com.passwordkeeper.R
 import br.com.passwordkeeper.databinding.FragmentSignUpBinding
 
-import br.com.passwordkeeper.domain.result.viewmodelstate.CreateUserStateResult
-import br.com.passwordkeeper.domain.result.viewmodelstate.FormValidationSignUpStateResult
-import br.com.passwordkeeper.domain.result.viewmodelstate.ValidationStateResult
 import br.com.passwordkeeper.extensions.hideKeyboard
 import br.com.passwordkeeper.extensions.showSnackBar
 import br.com.passwordkeeper.extensions.withError
 import br.com.passwordkeeper.extensions.withoutError
 import br.com.passwordkeeper.presentation.features.MainViewModel
+import br.com.passwordkeeper.presentation.features.sign_up.states.CreateUserState
+import br.com.passwordkeeper.presentation.features.sign_up.states.FormValidationSignUpState
+import br.com.passwordkeeper.presentation.features.sign_up.states.ValidationState
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -66,14 +66,14 @@ class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
     private fun observeFormValidation() {
         signUpViewModel.formValidationState.observe(viewLifecycleOwner) { formValidationSignUpStateResult ->
             when (formValidationSignUpStateResult) {
-                is FormValidationSignUpStateResult.ErrorEmailIsBlank -> {
+                is FormValidationSignUpState.ErrorEmailIsBlank -> {
                     binding.textInputSignUpEmail.error = context?.getString(R.string.email_is_blank)
                     binding.textInputSignUpEmail.withError()
                     binding.textInputName.withoutError()
                     binding.textInputSignUpPassword.withoutError()
                     binding.textInputSignUpConfirmPassword.withoutError()
                 }
-                is FormValidationSignUpStateResult.ErrorEmailMalFormed -> {
+                is FormValidationSignUpState.ErrorEmailMalFormed -> {
                     binding.textInputSignUpEmail.error = context?.getString(R.string.invalid_email)
                     binding.textInputSignUpEmail.withError()
                     binding.textInputName.withoutError()
@@ -81,7 +81,7 @@ class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
                     binding.textInputSignUpConfirmPassword.withoutError()
                 }
 
-                is FormValidationSignUpStateResult.ErrorNameIsBlank -> {
+                is FormValidationSignUpState.ErrorNameIsBlank -> {
                     binding.textInputName.error = context?.getString(R.string.name_field_is_empty)
                     binding.textInputName.withError()
                     binding.textInputSignUpEmail.withoutError()
@@ -89,7 +89,7 @@ class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
                     binding.textInputSignUpConfirmPassword.withoutError()
                 }
 
-                is FormValidationSignUpStateResult.ErrorPasswordIsBlank -> {
+                is FormValidationSignUpState.ErrorPasswordIsBlank -> {
                     binding.textInputSignUpPassword.error = context?.getString(R.string.password_field_is_empty)
                     binding.textInputSignUpPassword.withError()
                     binding.textInputName.withoutError()
@@ -98,7 +98,7 @@ class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
 
                 }
 
-                is FormValidationSignUpStateResult.ErrorPasswordTooWeak -> {
+                is FormValidationSignUpState.ErrorPasswordTooWeak -> {
                     binding.textInputSignUpPassword.error = context?.getString(R.string.password_weak)
                     binding.textInputSignUpPassword.withError()
                     binding.textInputName.withoutError()
@@ -106,7 +106,7 @@ class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
                     binding.textInputSignUpConfirmPassword.withoutError()
                 }
 
-                is FormValidationSignUpStateResult.ErrorPasswordsDoNotMatch -> {
+                is FormValidationSignUpState.ErrorPasswordsDoNotMatch -> {
                     binding.textInputSignUpConfirmPassword.error = context?.getString(R.string.password_not_match)
                     binding.textInputSignUpConfirmPassword.withError()
                     binding.textInputName.withoutError()
@@ -114,7 +114,7 @@ class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
                     binding.textInputSignUpPassword.withoutError()
                 }
 
-                is FormValidationSignUpStateResult.Success -> {
+                is FormValidationSignUpState.Success -> {
                     val name = formValidationSignUpStateResult.name
                     binding.textInputName.withoutError()
                     val email = formValidationSignUpStateResult.email
@@ -124,7 +124,7 @@ class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
                     binding.textInputSignUpConfirmPassword.withoutError()
                     signUpViewModel.updateSignUpState(name, email, password)
                 }
-                is FormValidationSignUpStateResult.EmptyState -> {}
+                is FormValidationSignUpState.EmptyState -> {}
             }
         }
     }
@@ -132,21 +132,21 @@ class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
     private fun observeSignUp() {
         signUpViewModel.createUserState.observe(viewLifecycleOwner) { createUserStateResult ->
             when (createUserStateResult) {
-                is CreateUserStateResult.ErrorEmailAlreadyExists ->
+                is CreateUserState.ErrorEmailAlreadyExists ->
                     view?.showSnackBar(getString(R.string.email_already_exist))
-                is CreateUserStateResult.ErrorEmailMalformed ->
+                is CreateUserState.ErrorEmailMalformed ->
                     view?.showSnackBar(getString(R.string.invalid_email))
-                is CreateUserStateResult.ErrorUnknown ->
+                is CreateUserState.ErrorUnknown ->
                     view?.showSnackBar(getString(R.string.error))
-                is CreateUserStateResult.ErrorWeakPassword ->
+                is CreateUserState.ErrorWeakPassword ->
                     view?.showSnackBar(getString(R.string.password_weak))
-                is CreateUserStateResult.Success -> {
+                is CreateUserState.Success -> {
                     val directions =
                         SignUpFragmentDirections.actionFragmentSignUpToFragmentSignUpCongrats()
                     navController.navigate(directions)
                     signUpViewModel.updateStatesToEmptyState()
                 }
-                is CreateUserStateResult.EmptyState -> {}
+                is CreateUserState.EmptyState -> {}
             }
         }
     }
@@ -169,20 +169,20 @@ class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
     private fun observeValidationStates() {
         signUpViewModel.passwordUpperLetterState.observe(viewLifecycleOwner) { validationStateResult ->
             when (validationStateResult) {
-                is ValidationStateResult.Error -> {
+                is ValidationState.Error -> {
                     binding.textViewUpperCase.setTextColor(getColorStateList(R.color.red))
                 }
-                is ValidationStateResult.Success -> {
+                is ValidationState.Success -> {
                     binding.textViewUpperCase.setTextColor(getColorStateList(R.color.green))
                 }
             }
         }
         signUpViewModel.passwordLowerLetterState.observe(viewLifecycleOwner) { validationStateResult ->
             when (validationStateResult) {
-                is ValidationStateResult.Error -> {
+                is ValidationState.Error -> {
                     binding.textViewLowerCase.setTextColor(getColorStateList(R.color.red))
                 }
-                is ValidationStateResult.Success -> {
+                is ValidationState.Success -> {
                     binding.textViewLowerCase.setTextColor(getColorStateList(R.color.green))
                 }
             }
@@ -190,10 +190,10 @@ class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
 
         signUpViewModel.passwordSpecialCharacterState.observe(viewLifecycleOwner) { validationStateResult ->
             when (validationStateResult) {
-                is ValidationStateResult.Error -> {
+                is ValidationState.Error -> {
                     binding.textViewSpecialCharacter.setTextColor(getColorStateList(R.color.red))
                 }
-                is ValidationStateResult.Success -> {
+                is ValidationState.Success -> {
                     binding.textViewSpecialCharacter.setTextColor(getColorStateList(R.color.green))
                 }
             }
@@ -201,10 +201,10 @@ class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
 
         signUpViewModel.passwordNumericCharactersState.observe(viewLifecycleOwner) { validationStateResult ->
             when (validationStateResult) {
-                is ValidationStateResult.Error -> {
+                is ValidationState.Error -> {
                     binding.textViewNumericCharacter.setTextColor(getColorStateList(R.color.red))
                 }
-                is ValidationStateResult.Success -> {
+                is ValidationState.Success -> {
                     binding.textViewNumericCharacter.setTextColor(getColorStateList(R.color.green))
                 }
             }
@@ -212,10 +212,10 @@ class SignUpFragment : Fragment(R.layout.fragment_sign_up) {
 
         signUpViewModel.passwordLengthState.observe(viewLifecycleOwner) { validationStateResult ->
             when (validationStateResult) {
-                is ValidationStateResult.Error -> {
+                is ValidationState.Error -> {
                     binding.textViewPasswordLength.setTextColor(getColorStateList(R.color.red))
                 }
-                is ValidationStateResult.Success -> {
+                is ValidationState.Success -> {
                     binding.textViewPasswordLength.setTextColor(getColorStateList(R.color.green))
                 }
             }

@@ -1,7 +1,6 @@
 package br.com.passwordkeeper.domain.usecases.update_card
 
 import br.com.passwordkeeper.commons.Categories
-import br.com.passwordkeeper.domain.result.usecase.UpdateCardUseCaseResult
 
 interface UpdateCardUseCase {
 

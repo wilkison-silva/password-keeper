@@ -2,8 +2,7 @@ package br.com.passwordkeeper.domain.usecases.get_advice
 
 import br.com.passwordkeeper.domain.repository.AdviceRepository
 import br.com.passwordkeeper.domain.mapper.AdviceDomainMapper
-import br.com.passwordkeeper.domain.result.repository.GetAdviceRepositoryResult
-import br.com.passwordkeeper.domain.result.usecase.GetAdviceUseCaseResult
+import br.com.passwordkeeper.domain.repository.GetAdviceRepositoryResult
 
 class GetAdviceUseCaseImpl(
     private val adviceRepository: AdviceRepository,

@@ -1,7 +1,6 @@
 package br.com.passwordkeeper.domain.repository
 
 import br.com.passwordkeeper.commons.Categories
-import br.com.passwordkeeper.domain.result.repository.*
 
 interface CardRepository {
 

@@ -4,9 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import br.com.passwordkeeper.domain.result.usecase.GetCurrentUserUseCaseResult
-import br.com.passwordkeeper.domain.result.viewmodelstate.BottomNavigationState
-import br.com.passwordkeeper.domain.result.viewmodelstate.CurrentUserState
+import br.com.passwordkeeper.domain.usecases.get_current_user.GetCurrentUserUseCaseResult
 import br.com.passwordkeeper.domain.usecases.get_current_user.GetCurrentUserUseCase
 import kotlinx.coroutines.launch
 

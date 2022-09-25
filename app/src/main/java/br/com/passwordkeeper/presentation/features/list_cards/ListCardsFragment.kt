@@ -10,9 +10,9 @@ import androidx.navigation.fragment.navArgs
 import br.com.passwordkeeper.R
 import br.com.passwordkeeper.databinding.FragmentListCardsBinding
 import br.com.passwordkeeper.commons.FiltersListCard
-import br.com.passwordkeeper.domain.result.viewmodelstate.CurrentUserState
-import br.com.passwordkeeper.domain.result.viewmodelstate.GetAllCardsStateResult
+import br.com.passwordkeeper.presentation.features.CurrentUserState
 import br.com.passwordkeeper.presentation.features.MainViewModel
+import br.com.passwordkeeper.presentation.features.list_cards.states.GetAllCardsState
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -75,17 +75,17 @@ class ListCardsFragment : Fragment(R.layout.fragment_list_cards) {
     private fun observeCards() {
         listCardsViewModel.allCards.observe(viewLifecycleOwner) {
             when (it) {
-                is GetAllCardsStateResult.ErrorUnknown -> {
+                is GetAllCardsState.ErrorUnknown -> {
 
                 }
-                is GetAllCardsStateResult.Success -> {
+                is GetAllCardsState.Success -> {
                     binding.recyclerViewListCards.visibility = VISIBLE
                     binding.progressBar.visibility = GONE
                     val cardViewList = it.cardViewList
                     listCardsAdapter.updateList(cardViewList)
 
                 }
-                is GetAllCardsStateResult.Loading -> {
+                is GetAllCardsState.Loading -> {
                     binding.recyclerViewListCards.visibility = GONE
                     binding.progressBar.visibility = VISIBLE
                 }

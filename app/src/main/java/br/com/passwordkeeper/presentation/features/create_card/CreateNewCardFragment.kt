@@ -9,10 +9,10 @@ import br.com.passwordkeeper.R
 import br.com.passwordkeeper.databinding.FragmentCreateNewCardBinding
 import br.com.passwordkeeper.commons.Categories
 import br.com.passwordkeeper.commons.Categories.*
-import br.com.passwordkeeper.domain.result.viewmodelstate.CreateCardStateResult
-import br.com.passwordkeeper.domain.result.viewmodelstate.CurrentUserState
-import br.com.passwordkeeper.domain.result.viewmodelstate.FormValidationCardStateResult
+import br.com.passwordkeeper.presentation.features.CurrentUserState
 import br.com.passwordkeeper.presentation.features.MainViewModel
+import br.com.passwordkeeper.presentation.features.create_card.states.CreateCardState
+import br.com.passwordkeeper.presentation.features.create_card.states.FormValidationCardState
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -134,15 +134,15 @@ class CreateNewCardFragment : Fragment(R.layout.fragment_create_new_card) {
     private fun observeFormValidation() {
         createNewCardViewModel.formValidationCard.observe(viewLifecycleOwner) {
             when (it) {
-                is FormValidationCardStateResult.CategoryNotSelected -> {
+                is FormValidationCardState.CategoryNotSelected -> {
                     binding.textInputLayoutCategory.error =
                         getString(R.string.category_not_selected)
                 }
-                is FormValidationCardStateResult.DescriptionIsEmpty -> {
+                is FormValidationCardState.DescriptionIsEmpty -> {
                     binding.textInputLayoutDescription.error =
                         getString(R.string.description_is_empty)
                 }
-                is FormValidationCardStateResult.Success -> {
+                is FormValidationCardState.Success -> {
                     createNewCardViewModel.createCard(
                         description = it.description,
                         login = it.login,
@@ -159,13 +159,13 @@ class CreateNewCardFragment : Fragment(R.layout.fragment_create_new_card) {
     private fun observeCreateCard() {
         createNewCardViewModel.createCardState.observe(viewLifecycleOwner) {
             when (it) {
-                is CreateCardStateResult.ErrorUnknown -> {
+                is CreateCardState.ErrorUnknown -> {
                     goToErrorNoteFragment()
                 }
-                is CreateCardStateResult.Success -> {
+                is CreateCardState.Success -> {
                     goToSuccessNewNoteFragment()
                 }
-                is CreateCardStateResult.Loading -> {
+                is CreateCardState.Loading -> {
                     binding.buttonSave.text = ""
                     binding.progressBarSaving.visibility = VISIBLE
                 }

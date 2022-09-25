@@ -1,10 +1,5 @@
 package br.com.passwordkeeper.domain.repository
 
-import br.com.passwordkeeper.domain.result.repository.CreateUserRepositoryResult
-import br.com.passwordkeeper.domain.result.repository.GetCurrentUserRepositoryResult
-import br.com.passwordkeeper.domain.result.repository.SignInRepositoryResult
-import br.com.passwordkeeper.domain.result.repository.SignOutRepositoryResult
-
 interface AuthRepository {
 
     suspend fun signIn(email: String, password: String): SignInRepositoryResult

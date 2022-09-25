@@ -5,8 +5,7 @@ import br.com.passwordkeeper.domain.mapper.CardFirestoreMapper
 import br.com.passwordkeeper.domain.model.CardDomain
 import br.com.passwordkeeper.data.model.CardFirestore
 import br.com.passwordkeeper.commons.Categories
-import br.com.passwordkeeper.domain.repository.CardRepository
-import br.com.passwordkeeper.domain.result.repository.*
+import br.com.passwordkeeper.domain.repository.*
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
