@@ -1,7 +1,7 @@
 package br.com.passwordkeeper.domain.mapper
 
-import br.com.passwordkeeper.domain.model.UserData
-import br.com.passwordkeeper.domain.model.UserFirestore
+import br.com.passwordkeeper.data.model.UserData
+import br.com.passwordkeeper.data.model.UserFirestore
 
 class UserFirestoreMapper : BaseMapper<UserFirestore, UserData>() {
 

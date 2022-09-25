@@ -1,11 +1,13 @@
 package br.com.passwordkeeper.domain.usecase
 
-import br.com.passwordkeeper.data.repository.CardRepository
+import br.com.passwordkeeper.commons.Categories
+import br.com.passwordkeeper.domain.repository.CardRepository
 import br.com.passwordkeeper.domain.mapper.CardDomainMapper
 import br.com.passwordkeeper.domain.mapper.CategoryDomainMapper
 import br.com.passwordkeeper.domain.model.*
 import br.com.passwordkeeper.domain.result.repository.*
 import br.com.passwordkeeper.domain.result.usecase.*
+import br.com.passwordkeeper.presentation.model.CategoryView
 
 class FirebaseCardUseCaseImpl(
     private val cardRepository: CardRepository,

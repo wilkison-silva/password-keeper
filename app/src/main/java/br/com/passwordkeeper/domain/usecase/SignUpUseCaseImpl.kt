@@ -1,6 +1,6 @@
 package br.com.passwordkeeper.domain.usecase
 
-import br.com.passwordkeeper.data.repository.AuthRepository
+import br.com.passwordkeeper.domain.repository.AuthRepository
 import br.com.passwordkeeper.domain.result.repository.CreateUserRepositoryResult
 import br.com.passwordkeeper.domain.result.usecase.CreateUserUseCaseResult
 

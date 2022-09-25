@@ -1,7 +1,7 @@
 package br.com.passwordkeeper.domain.usecase
 
 import android.content.Context
-import br.com.passwordkeeper.domain.model.CardView
+import br.com.passwordkeeper.presentation.model.CardView
 
 class SortCardViewListUseCaseImpl(
     private val context: Context

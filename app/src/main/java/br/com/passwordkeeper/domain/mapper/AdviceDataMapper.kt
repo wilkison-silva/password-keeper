@@ -1,6 +1,6 @@
 package br.com.passwordkeeper.domain.mapper
 
-import br.com.passwordkeeper.domain.model.AdviceData
+import br.com.passwordkeeper.data.model.AdviceData
 import br.com.passwordkeeper.domain.model.AdviceDomain
 
 class AdviceDataMapper : BaseMapper<AdviceData, AdviceDomain>() {

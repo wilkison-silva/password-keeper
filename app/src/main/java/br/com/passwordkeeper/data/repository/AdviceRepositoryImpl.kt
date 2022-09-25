@@ -2,6 +2,7 @@ package br.com.passwordkeeper.data.repository
 
 import br.com.passwordkeeper.data.source.web.AdviceWebClient
 import br.com.passwordkeeper.domain.mapper.AdviceDataMapper
+import br.com.passwordkeeper.domain.repository.AdviceRepository
 import br.com.passwordkeeper.domain.result.repository.GetAdviceRepositoryResult
 import br.com.passwordkeeper.domain.result.webclient.GetAdviceWebClientResult
 

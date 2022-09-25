@@ -1,6 +1,6 @@
 package br.com.passwordkeeper.domain.result.usecase
 
-import br.com.passwordkeeper.domain.model.AdviceView
+import br.com.passwordkeeper.presentation.model.AdviceView
 
 sealed class GetAdviceUseCaseResult {
     data class Success(val adviceView: AdviceView) : GetAdviceUseCaseResult()

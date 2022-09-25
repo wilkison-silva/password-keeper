@@ -1,6 +1,6 @@
 package br.com.passwordkeeper.domain.usecase
 
-import br.com.passwordkeeper.data.repository.AdviceRepository
+import br.com.passwordkeeper.domain.repository.AdviceRepository
 import br.com.passwordkeeper.domain.mapper.AdviceDomainMapper
 import br.com.passwordkeeper.domain.result.repository.GetAdviceRepositoryResult
 import br.com.passwordkeeper.domain.result.usecase.GetAdviceUseCaseResult

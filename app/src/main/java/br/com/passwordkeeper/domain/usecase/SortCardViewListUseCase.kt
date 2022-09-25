@@ -1,6 +1,6 @@
 package br.com.passwordkeeper.domain.usecase
 
-import br.com.passwordkeeper.domain.model.CardView
+import br.com.passwordkeeper.presentation.model.CardView
 
 interface SortCardViewListUseCase {
 

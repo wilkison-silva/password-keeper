@@ -1,7 +1,7 @@
 package br.com.passwordkeeper.domain.mapper
 
 import br.com.passwordkeeper.domain.model.UserDomain
-import br.com.passwordkeeper.domain.model.UserView
+import br.com.passwordkeeper.presentation.model.UserView
 
 class UserDomainMapper : BaseMapper<UserDomain, UserView>() {
 

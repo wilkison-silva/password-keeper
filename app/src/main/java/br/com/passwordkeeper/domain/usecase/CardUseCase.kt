@@ -1,6 +1,6 @@
 package br.com.passwordkeeper.domain.usecase
 
-import br.com.passwordkeeper.domain.model.Categories
+import br.com.passwordkeeper.commons.Categories
 import br.com.passwordkeeper.domain.result.usecase.*
 
 interface CardUseCase {

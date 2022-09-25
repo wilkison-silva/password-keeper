@@ -2,8 +2,9 @@ package br.com.passwordkeeper.data.repository
 
 import br.com.passwordkeeper.domain.mapper.UserDataMapper
 import br.com.passwordkeeper.domain.mapper.UserFirestoreMapper
-import br.com.passwordkeeper.domain.model.UserData
-import br.com.passwordkeeper.domain.model.UserFirestore
+import br.com.passwordkeeper.data.model.UserData
+import br.com.passwordkeeper.data.model.UserFirestore
+import br.com.passwordkeeper.domain.repository.AuthRepository
 import br.com.passwordkeeper.domain.result.repository.CreateUserRepositoryResult
 import br.com.passwordkeeper.domain.result.repository.GetCurrentUserRepositoryResult
 import br.com.passwordkeeper.domain.result.repository.SignInRepositoryResult

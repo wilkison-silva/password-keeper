@@ -1,9 +1,9 @@
 package br.com.passwordkeeper.domain.mapper
 
 import br.com.passwordkeeper.R
-import br.com.passwordkeeper.domain.model.Categories
+import br.com.passwordkeeper.commons.Categories
 import br.com.passwordkeeper.domain.model.CategoryDomain
-import br.com.passwordkeeper.domain.model.CategoryView
+import br.com.passwordkeeper.presentation.model.CategoryView
 
 class CategoryDomainMapper : BaseMapper<CategoryDomain, CategoryView>() {
 

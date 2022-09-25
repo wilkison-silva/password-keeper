@@ -1,6 +1,6 @@
 package br.com.passwordkeeper.domain.result.usecase
 
-import br.com.passwordkeeper.domain.model.CardView
+import br.com.passwordkeeper.presentation.model.CardView
 
 sealed class GetCardByIdUseCaseResult {
     data class Success(val cardView: CardView) : GetCardByIdUseCaseResult()
