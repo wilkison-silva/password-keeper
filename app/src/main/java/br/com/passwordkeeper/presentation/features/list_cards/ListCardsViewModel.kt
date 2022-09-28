@@ -1,5 +1,6 @@
 package br.com.passwordkeeper.presentation.features.list_cards
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -47,6 +48,19 @@ class ListCardsViewModel(
             cardViewList = cardViewList
         )
         _cardsListState.value = GetCardsState.Success(sortedList)
+    }
+
+    private val _resultsForSearchingState = MutableStateFlow<List<CardView>>(listOf())
+    val resultsForSearchingState = _resultsForSearchingState.asStateFlow()
+
+    fun searchByDescription(description: String) {
+        if (_cardsListState.value is GetCardsState.Success) {
+            val list = (_cardsListState.value as GetCardsState.Success).cardViewList
+            val result = list.filter {
+                it.description.contains(description)
+            }
+            _resultsForSearchingState.value = result
+        }
     }
 
     fun updateCards(

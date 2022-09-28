@@ -46,6 +46,7 @@ class ListCardsFragment : Fragment(R.layout.fragment_list_cards) {
         setTitle()
         updateCurrentUser()
         observeCurrentUserState()
+        setupSearchForDescription()
     }
 
 
@@ -65,8 +66,9 @@ class ListCardsFragment : Fragment(R.layout.fragment_list_cards) {
                         setupButtonDate()
                         setupButtonCategory()
                         setupButtonFavorites()
+                        observeSearchByDescription()
                     }
-                    is CurrentUserState.EmptyState -> { }
+                    is CurrentUserState.EmptyState -> {}
                 }
             }
         }
@@ -100,6 +102,14 @@ class ListCardsFragment : Fragment(R.layout.fragment_list_cards) {
         }
     }
 
+    private fun observeSearchByDescription() {
+        lifecycleScope.launchWhenStarted {
+            listCardsViewModel.resultsForSearchingState.collect {
+                listCardsAdapter.updateList(it)
+            }
+        }
+    }
+
     private fun setupListCardsRecyclerView() {
         binding.recyclerViewListCards.adapter = listCardsAdapter
         listCardsAdapter.onClickItem = {
@@ -128,7 +138,7 @@ class ListCardsFragment : Fragment(R.layout.fragment_list_cards) {
 
     private fun setupButtonDescription() {
         binding.filterSortBar.filterDescription.setOnClickListener {
-         updateCards(filter = FiltersListCard.DESCRIPTION)
+            updateCards(filter = FiltersListCard.DESCRIPTION)
         }
     }
 
@@ -147,6 +157,13 @@ class ListCardsFragment : Fragment(R.layout.fragment_list_cards) {
     private fun setupButtonFavorites() {
         binding.filterSortBar.filterFavorites.setOnClickListener {
             updateCards(filter = FiltersListCard.FAVORITES)
+        }
+    }
+
+    private fun setupSearchForDescription() {
+        binding.searchbar.imageViewSearchButton.setOnClickListener {
+            val description = binding.searchbar.textInputSearchIcon.text.toString()
+            listCardsViewModel.searchByDescription(description)
         }
     }
 }
