@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -46,6 +47,8 @@ class ListCardsFragment : Fragment(R.layout.fragment_list_cards) {
         setTitle()
         updateCurrentUser()
         observeCurrentUserState()
+        setupSearchForDescription()
+        setupSearchEditText()
     }
 
 
@@ -65,8 +68,9 @@ class ListCardsFragment : Fragment(R.layout.fragment_list_cards) {
                         setupButtonDate()
                         setupButtonCategory()
                         setupButtonFavorites()
+                        observeSearchByDescription()
                     }
-                    is CurrentUserState.EmptyState -> { }
+                    is CurrentUserState.EmptyState -> {}
                 }
             }
         }
@@ -100,6 +104,14 @@ class ListCardsFragment : Fragment(R.layout.fragment_list_cards) {
         }
     }
 
+    private fun observeSearchByDescription() {
+        lifecycleScope.launchWhenStarted {
+            listCardsViewModel.resultsForSearchingState.collect {
+                listCardsAdapter.updateList(it)
+            }
+        }
+    }
+
     private fun setupListCardsRecyclerView() {
         binding.recyclerViewListCards.adapter = listCardsAdapter
         listCardsAdapter.onClickItem = {
@@ -128,7 +140,7 @@ class ListCardsFragment : Fragment(R.layout.fragment_list_cards) {
 
     private fun setupButtonDescription() {
         binding.filterSortBar.filterDescription.setOnClickListener {
-         updateCards(filter = FiltersListCard.DESCRIPTION)
+            updateCards(filter = FiltersListCard.DESCRIPTION)
         }
     }
 
@@ -148,5 +160,24 @@ class ListCardsFragment : Fragment(R.layout.fragment_list_cards) {
         binding.filterSortBar.filterFavorites.setOnClickListener {
             updateCards(filter = FiltersListCard.FAVORITES)
         }
+    }
+
+    private fun setupSearchEditText() {
+        binding.searchbar.textInputSearchEditText.addTextChangedListener {
+            if (it.toString() == "") {
+                searchForDescription()
+            }
+        }
+    }
+
+    private fun setupSearchForDescription() {
+        binding.searchbar.imageViewSearchButton.setOnClickListener {
+            searchForDescription()
+        }
+    }
+
+    private fun searchForDescription() {
+        val description = binding.searchbar.textInputSearchEditText.text.toString()
+        listCardsViewModel.searchByDescription(description)
     }
 }

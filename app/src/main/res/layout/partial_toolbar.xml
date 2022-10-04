@@ -4,12 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:paddingTop="8dp"
     android:background="@color/purple">
 
     <View
         android:id="@+id/view_circle"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
+        android:layout_width="45dp"
+        android:layout_height="45dp"
         android:layout_marginStart="20dp"
         android:background="@drawable/rounded_textview"
         android:backgroundTint="@color/purple_bottom_back"
@@ -18,14 +19,16 @@
 
     <ImageButton
         android:id="@+id/imageButtonBack"
-        android:layout_width="0dp"
-        android:layout_height="15dp"
+        android:layout_width="25dp"
+        android:layout_height="35dp"
         android:background="?attr/selectableItemBackgroundBorderless"
         android:backgroundTint="@color/purple"
         android:contentDescription="@string/image_about_the_card"
         android:src="@drawable/ic_bottom_back"
         app:layout_constraintBottom_toBottomOf="@+id/view_circle"
         app:layout_constraintEnd_toEndOf="@+id/view_circle"
+        app:layout_constraintHorizontal_bias="0.75"
+        app:layout_constraintStart_toStartOf="@+id/view_circle"
         app:layout_constraintTop_toTopOf="@+id/view_circle" />
 
     <TextView
@@ -36,6 +39,7 @@
         android:textColor="@color/white"
         android:textFontWeight="700"
         android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/view_circle2"
         app:layout_constraintStart_toEndOf="@+id/view_circle"
         app:layout_constraintTop_toTopOf="parent"

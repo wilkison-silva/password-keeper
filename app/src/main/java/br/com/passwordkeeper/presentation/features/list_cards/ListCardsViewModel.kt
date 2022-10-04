@@ -1,18 +1,17 @@
 package br.com.passwordkeeper.presentation.features.list_cards
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.com.passwordkeeper.R
-import br.com.passwordkeeper.presentation.model.CardView
 import br.com.passwordkeeper.commons.Categories
 import br.com.passwordkeeper.commons.FiltersListCard
+import br.com.passwordkeeper.domain.usecases.get_all_cards.GetAllCardsUseCase
 import br.com.passwordkeeper.domain.usecases.get_all_cards.GetAllCardsUseCaseResult
+import br.com.passwordkeeper.domain.usecases.get_cards_by_category.GetCardsByCategoryUseCase
 import br.com.passwordkeeper.domain.usecases.get_cards_by_category.GetCardsByCategoryUseCaseResult
 import br.com.passwordkeeper.domain.usecases.sort_cardview_list.SortCardViewListUseCase
-import br.com.passwordkeeper.domain.usecases.get_all_cards.GetAllCardsUseCase
-import br.com.passwordkeeper.domain.usecases.get_cards_by_category.GetCardsByCategoryUseCase
 import br.com.passwordkeeper.presentation.features.list_cards.states.GetCardsState
+import br.com.passwordkeeper.presentation.model.CardView
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
@@ -47,6 +46,19 @@ class ListCardsViewModel(
             cardViewList = cardViewList
         )
         _cardsListState.value = GetCardsState.Success(sortedList)
+    }
+
+    private val _resultsForSearchingState = MutableStateFlow<List<CardView>>(listOf())
+    val resultsForSearchingState = _resultsForSearchingState.asStateFlow()
+
+    fun searchByDescription(description: String) {
+        if (_cardsListState.value is GetCardsState.Success) {
+            val list = (_cardsListState.value as GetCardsState.Success).cardViewList
+            val result = list.filter {
+                it.description.contains(description)
+            }
+            _resultsForSearchingState.value = result
+        }
     }
 
     fun updateCards(

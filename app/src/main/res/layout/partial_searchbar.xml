@@ -6,7 +6,7 @@
     android:background="@color/purple">
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputSearch"
+        android:id="@+id/textInputSearchLayout"
         style="@style/InputLayout"
         android:layout_width="0dp"
         android:layout_height="50dp"
@@ -21,7 +21,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/textInputSearchIcon"
+            android:id="@+id/textInputSearchEditText"
             style="@style/TextInputEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -40,9 +40,9 @@
         android:background="@color/white"
         android:contentDescription="@string/icone_de_pesquisa"
         android:src="@drawable/ic_search"
-        app:layout_constraintBottom_toBottomOf="@+id/textInputSearch"
-        app:layout_constraintStart_toStartOf="@+id/textInputSearch"
-        app:layout_constraintTop_toTopOf="@+id/textInputSearch" />
+        app:layout_constraintBottom_toBottomOf="@+id/textInputSearchLayout"
+        app:layout_constraintStart_toStartOf="@+id/textInputSearchLayout"
+        app:layout_constraintTop_toTopOf="@+id/textInputSearchLayout" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
