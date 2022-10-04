@@ -1,6 +1,5 @@
 package br.com.passwordkeeper.presentation.features.list_cards
 
-import android.provider.ContactsContract
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.com.passwordkeeper.R

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -47,6 +48,7 @@ class ListCardsFragment : Fragment(R.layout.fragment_list_cards) {
         updateCurrentUser()
         observeCurrentUserState()
         setupSearchForDescription()
+        setupSearchEditText()
     }
 
 
@@ -160,10 +162,22 @@ class ListCardsFragment : Fragment(R.layout.fragment_list_cards) {
         }
     }
 
+    private fun setupSearchEditText() {
+        binding.searchbar.textInputSearchEditText.addTextChangedListener {
+            if (it.toString() == "") {
+                searchForDescription()
+            }
+        }
+    }
+
     private fun setupSearchForDescription() {
         binding.searchbar.imageViewSearchButton.setOnClickListener {
-            val description = binding.searchbar.textInputSearchIcon.text.toString()
-            listCardsViewModel.searchByDescription(description)
+            searchForDescription()
         }
+    }
+
+    private fun searchForDescription() {
+        val description = binding.searchbar.textInputSearchEditText.text.toString()
+        listCardsViewModel.searchByDescription(description)
     }
 }
