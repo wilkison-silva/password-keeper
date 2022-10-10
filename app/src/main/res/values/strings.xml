@@ -87,4 +87,5 @@
     <string name="unknown_category">Unkown Category</string>
     <string name="sort_by">Sort by:</string>
     <string name="date">Date</string>
+    <string name="edit">Edit</string>
 </resources>

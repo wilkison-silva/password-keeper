@@ -13,5 +13,8 @@
     <color name="gray_dark">#7D7D7D</color>
     <color name="green">#03AD00</color>
     <color name="red">#FF0000</color>
-    <color name="purple_bottom_back"> #4DFFFFFF</color>
+    <color name="purple_bottom_back">#4DFFFFFF</color>
+    <color name="purple_dialog_view_image">#EDDFFF</color>
+    <color name="gray_date">#626262</color>
+    <color name="purple_dialog">#EDDFFF</color>
 </resources>
