@@ -10,8 +10,9 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import br.com.passwordkeeper.R
-import br.com.passwordkeeper.databinding.FragmentListCardsBinding
 import br.com.passwordkeeper.commons.FiltersListCard
+import br.com.passwordkeeper.databinding.FragmentListCardsBinding
+import br.com.passwordkeeper.extensions.visualizeCardDialog
 import br.com.passwordkeeper.presentation.features.CurrentUserState
 import br.com.passwordkeeper.presentation.features.MainViewModel
 import br.com.passwordkeeper.presentation.features.list_cards.states.GetCardsState
@@ -115,7 +116,7 @@ class ListCardsFragment : Fragment(R.layout.fragment_list_cards) {
     private fun setupListCardsRecyclerView() {
         binding.recyclerViewListCards.adapter = listCardsAdapter
         listCardsAdapter.onClickItem = {
-
+            visualizeCardDialog(requireContext(), it)
         }
     }
 

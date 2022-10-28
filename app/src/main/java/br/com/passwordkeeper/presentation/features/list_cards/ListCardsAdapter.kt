@@ -48,6 +48,10 @@ class ListCardsAdapter(
             binding.textViewAllCategoriesTextType.text = context.getString(cardView.category)
             binding.textViewAllCategoriesDate.text = cardView.dateAsString
             binding.imageViewAllCategoriesIconHeart.setImageResource(cardView.iconHeart)
+
+            binding.constraintListCardItem.setOnClickListener{
+                onClickItem(cardView)
+            }
         }
 
     }

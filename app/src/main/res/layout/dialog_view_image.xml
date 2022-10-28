@@ -1,99 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+    <include
+        android:id="@+id/includeCardViewBack"
+        layout="@layout/partial_card_back"
+        android:layout_width="0dp"
+        android:layout_height="150dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="12dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cardViewImageCard"
-            android:layout_width="0dp"
-            android:layout_height="150dp"
-            android:layout_marginStart="12dp"
-            android:layout_marginTop="25dp"
-            android:layout_marginEnd="12dp"
-            app:cardBackgroundColor="@color/purple_dialog"
-            app:cardCornerRadius="10dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+    <include
+        android:id="@+id/includeCardViewFront"
+        layout="@layout/partial_card_front"
+        android:layout_width="0dp"
+        android:layout_height="150dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="12dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:fontFamily="@font/inter_bold"
-                android:textAlignment="center"
-                android:textColor="@color/purple"
-                android:textSize="18sp"
-                tools:text="Netflix" />
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/buttonEdit"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="25dp"
+        android:backgroundTint="@color/purple"
+        android:fontFamily="@font/inter_bold"
+        android:text="@string/edit"
+        android:textColor="@color/white"
+        android:textSize="12sp"
+        app:cornerRadius="30dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/includeCardViewFront" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:fontFamily="@font/inter_regular"
-                android:paddingTop="90dp"
-                android:textColor="@color/purple"
-                android:textSize="14sp"
-                android:textStyle="italic"
-                tools:text="Streaming" />
-
-            <TextView
-                android:layout_width="221dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:fontFamily="@font/inter_regular"
-                android:paddingTop="120dp"
-                android:textColor="@color/gray_date"
-                android:textSize="12sp"
-                tools:text="06/10/2022" />
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginStart="340dp"
-                android:paddingTop="100dp"
-                android:src="@drawable/ic_heart_empty" />
-
-        </androidx.cardview.widget.CardView>
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/buttonEdit"
-            android:layout_width="250dp"
-            android:layout_height="50dp"
-            android:layout_marginTop="30dp"
-            android:backgroundTint="@color/purple"
-            android:fontFamily="@font/inter_bold"
-            android:text="@string/edit"
-            android:textColor="@color/white"
-            android:textSize="12sp"
-            app:cornerRadius="30dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/cardViewImageCard" />
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/buttonDelete"
-            android:layout_width="250dp"
-            android:layout_height="50dp"
-            android:layout_marginTop="15dp"
-            android:backgroundTint="@color/white"
-            android:fontFamily="@font/inter_bold"
-            android:text="Delete"
-            android:textColor="@color/purple_700"
-            android:textSize="12sp"
-            app:cornerRadius="30dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/buttonEdit"
-            app:strokeColor="@color/purple_700"
-            app:strokeWidth="1dp" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/buttonDelete"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="15dp"
+        android:backgroundTint="@color/white"
+        android:fontFamily="@font/inter_bold"
+        android:text="@string/delete"
+        android:textColor="@color/purple_700"
+        android:textSize="12sp"
+        app:cornerRadius="30dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/buttonEdit"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:strokeColor="@color/purple_700"
+        app:strokeWidth="1dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
