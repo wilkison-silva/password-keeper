@@ -87,4 +87,10 @@
     <string name="unknown_category">Unkown Category</string>
     <string name="sort_by">Sort by:</string>
     <string name="date">Date</string>
+    <string name="edit">Edit</string>
+    <string name="login_max_lines">login no more than two lines long as it is here</string>
+    <string name="password_max_lines">password no more than two lines long as it is here</string>
+    <string name="delete">Delete</string>
+    <string name="login_username_email">Login/Username/Email</string>
+
 </resources>
